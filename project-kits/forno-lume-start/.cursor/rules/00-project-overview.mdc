@@ -1,0 +1,18 @@
+---
+description: Forno Lume START project identity, audit scope and Tretnix workflow
+alwaysApply: true
+---
+
+# Forno Lume START project overview
+
+- Read and follow the root `AGENTS.md` before non-trivial work.
+- This repository is the Tretnix pilot and the initial visual reference for Hospitality START.
+- The current first task is a read-only audit unless implementation is explicitly authorized.
+- Preserve the warm, artisanal and premium client identity.
+- Do not reinterpret the site as a generic SaaS design.
+- Do not assume that a visually canonical implementation is technically canonical.
+- Inspect code and deployment before proposing cross-project extraction.
+- Preserve mobile text-first editorial order, immediate route reset and viewport-triggered reveals.
+- Avoid unrelated changes, dependency updates and speculative cleanup.
+- Do not claim checks passed unless they were executed.
+- Report evidence level, severity, impact, recommendation and regression risk.
