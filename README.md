@@ -1,8 +1,8 @@
 # Tretnix Knowledge
 
-Versione iniziale della fonte canonica per identità, decisioni, standard tecnici, repository e procedure operative di Tretnix.
+Fonte canonica per identità, decisioni, standard tecnici, repository, procedure operative e adattatori degli strumenti Tretnix.
 
-**Versione:** 1.0  
+**Versione:** 1.1  
 **Aggiornato:** 16 luglio 2026  
 **Stato:** operativo iniziale  
 **Visibilità consigliata:** repository GitHub privato
@@ -21,7 +21,9 @@ La repository conserva ciò che deve rimanere stabile e verificabile:
 - decisioni approvate;
 - inventario dei repository;
 - procedure di audit;
-- in futuro, template e skill riutilizzabili.
+- adattatori sintetici per gli strumenti;
+- kit di configurazione per i repository;
+- in futuro, skill riutilizzabili.
 
 GitHub conserva la verità versionata. Le chat aiutano a ragionare, ma non sostituiscono la documentazione canonica.
 
@@ -33,7 +35,45 @@ GitHub conserva la verità versionata. Le chat aiutano a ragionare, ma non sosti
 
 ---
 
-## 3. File presenti
+## 3. Struttura
+
+```text
+tretnix-knowledge/
+├── README.md
+├── TRETNIX_MASTER_CONTEXT.md
+├── DEVELOPMENT_STANDARDS.md
+├── DECISIONS.md
+├── REPOSITORY_INDEX.md
+├── .gitignore
+│
+├── compiled/
+│   ├── README.md
+│   ├── CHATGPT_PROJECT_INSTRUCTIONS.md
+│   ├── LOVABLE_WORKSPACE_KNOWLEDGE.md
+│   └── CURSOR_USER_RULES.md
+│
+├── templates/
+│   ├── READ_ONLY_AUDIT.md
+│   └── project-foundation/
+│       ├── AGENTS.md
+│       ├── .cursorignore
+│       └── .cursor/
+│           └── rules/
+│               └── 00-project-overview.mdc
+│
+└── project-kits/
+    └── forno-lume-start/
+        ├── README.md
+        ├── AGENTS.md
+        ├── .cursorignore
+        └── .cursor/
+            └── rules/
+                └── 00-project-overview.mdc
+```
+
+---
+
+## 4. Documenti canonici
 
 | File | Funzione | Natura |
 |---|---|---|
@@ -45,7 +85,39 @@ GitHub conserva la verità versionata. Le chat aiutano a ragionare, ma non sosti
 
 ---
 
-## 4. Ordine di autorità
+## 5. Contenuti compilati
+
+La cartella [`compiled/`](./compiled/) contiene versioni sintetiche derivate dai documenti canonici e pronte da copiare nelle impostazioni degli strumenti.
+
+Questi file sono **adattatori**, non fonti autonome.
+
+Quando cambia una decisione o uno standard:
+
+1. aggiornare prima il documento canonico;
+2. aggiornare successivamente gli adattatori coinvolti;
+3. evitare di modificare soltanto la copia presente nello strumento.
+
+---
+
+## 6. Template e project kit
+
+### `templates/project-foundation`
+
+Contiene la base generica da adattare ai nuovi repository:
+
+- `AGENTS.md`;
+- `.cursorignore`;
+- regola Cursor iniziale.
+
+### `project-kits/forno-lume-start`
+
+Contiene la configurazione già adattata al progetto pilota Forno Lume START.
+
+Il kit deve essere copiato nella root del repository `forno-lume-START` tramite branch dedicata. Non modifica il sito o il comportamento runtime.
+
+---
+
+## 7. Ordine di autorità
 
 Quando due fonti sembrano contraddirsi, usare questo ordine:
 
@@ -60,7 +132,7 @@ Una chat non modifica automaticamente una decisione canonica. Una nuova decision
 
 ---
 
-## 5. Separazione delle responsabilità
+## 8. Separazione delle responsabilità
 
 ### Questa repository contiene
 
@@ -69,7 +141,9 @@ Una chat non modifica automaticamente una decisione canonica. Una nuova decision
 - decisioni;
 - procedure ricorrenti;
 - indice dei progetti;
-- modelli riutilizzabili.
+- adattatori degli strumenti;
+- template;
+- kit di adozione.
 
 ### I repository dei progetti contengono
 
@@ -96,7 +170,7 @@ Non inserire bug temporanei o task correnti nella knowledge permanente.
 
 ---
 
-## 6. Uso con gli strumenti
+## 9. Uso con gli strumenti
 
 ### ChatGPT
 
@@ -110,50 +184,43 @@ Usare questa repository per:
 - documentazione;
 - preparazione dei task.
 
-ChatGPT coordina il lavoro, ma le decisioni definitive devono essere riportate qui.
+Le istruzioni pronte da copiare sono in:
+
+```text
+compiled/CHATGPT_PROJECT_INSTRUCTIONS.md
+```
 
 ### Lovable
 
-Usare contenuti compilati e sintetici derivati da questi file:
+Usare:
 
-- regole globali di workspace;
-- knowledge specifica del progetto;
-- specifiche di feature;
-- criteri di accettazione.
+```text
+compiled/LOVABLE_WORKSPACE_KNOWLEDGE.md
+```
 
-Non copiare indiscriminatamente tutto il master context dentro ogni progetto Lovable.
+come base della Workspace Knowledge.
+
+La Project Knowledge di ogni progetto deve contenere soltanto contesto e vincoli specifici.
 
 ### Cursor
 
-Uso iniziale consigliato:
-
-- IDE principale;
-- lettura del repository;
-- terminale;
-- controllo dei diff;
-- audit;
-- debugging;
-- typecheck, lint, test e build;
-- implementazioni circoscritte.
-
-Ogni progetto dovrà progressivamente includere:
+Usare:
 
 ```text
-AGENTS.md
-.cursor/rules/
-.cursorignore
-docs/
+compiled/CURSOR_USER_RULES.md
+```
+
+nelle User Rules globali.
+
+Per il progetto pilota usare:
+
+```text
+project-kits/forno-lume-start/
 ```
 
 ### Claude Code
 
-Non è una dipendenza necessaria della prima fase. Potrà essere aggiunto per:
-
-- audit indipendenti;
-- RLS e sicurezza;
-- migrazioni;
-- refactoring estesi;
-- secondo reviewer tecnico.
+Non è una dipendenza necessaria della prima fase. Verrà aggiunto soltanto dopo aver verificato quanto Cursor copre il processo Tretnix.
 
 ### GitHub
 
@@ -170,7 +237,7 @@ Non è una dipendenza necessaria della prima fase. Potrà essere aggiunto per:
 
 ---
 
-## 7. Modalità di aggiornamento
+## 10. Modalità di aggiornamento
 
 Ogni modifica significativa deve:
 
@@ -178,22 +245,23 @@ Ogni modifica significativa deve:
 2. modificare soltanto i documenti pertinenti;
 3. indicare perché il contenuto cambia;
 4. evitare duplicazioni;
-5. aggiornare la data o la versione quando necessario;
+5. aggiornare data o versione quando necessario;
 6. essere revisionata tramite diff;
 7. essere unita solo dopo approvazione.
 
-Esempi di branch:
+Esempi:
 
 ```text
 docs/update-development-standards
 docs/add-hospitality-patterns
 docs/record-route-scroll-decision
+chore/add-cursor-adapters
 audit/add-new-repository
 ```
 
 ---
 
-## 8. Regole per aggiungere nuovi contenuti
+## 11. Regole per aggiungere nuovi contenuti
 
 Prima di aggiungere una nuova informazione, chiedere:
 
@@ -204,24 +272,24 @@ Prima di aggiungere una nuova informazione, chiedere:
 - è confermata oppure ancora da verificare?
 - deve diventare canonica oppure è soltanto un’osservazione?
 
-### Destinazione corretta
-
 | Tipo di informazione | Destinazione |
 |---|---|
 | Identità e modello operativo | `TRETNIX_MASTER_CONTEXT.md` |
 | Regola tecnica condivisa | `DEVELOPMENT_STANDARDS.md` |
 | Scelta approvata | `DECISIONS.md` |
 | Repository o relazione tra progetti | `REPOSITORY_INDEX.md` |
-| Procedura ricorrente | `templates/` o futura `skills/` |
+| Adattatore di uno strumento | `compiled/` |
+| Base riutilizzabile | `templates/` |
+| Configurazione pronta per un progetto | `project-kits/` |
 | Stato di un progetto | repository del progetto, `docs/STATUS.md` |
 | Attività futura | GitHub Issue o `docs/ROADMAP.md` |
 | Bug rilevato | audit o GitHub Issue |
 
 ---
 
-## 9. Adozione iniziale
+## 12. Adozione iniziale
 
-La prima adozione deve rimanere semplice:
+La prima adozione rimane:
 
 ```text
 ChatGPT + Lovable + GitHub + Cursor
@@ -229,25 +297,26 @@ ChatGPT + Lovable + GitHub + Cursor
 
 Ordine operativo:
 
-1. pubblicare questa repository privata;
-2. installare Cursor;
-3. aprire `forno-lume-START`;
-4. aggiungere le istruzioni locali senza modificare il sito;
-5. eseguire il primo audit in sola lettura;
-6. revisionare il report;
-7. correggere una sola categoria alla volta;
-8. trasformare le procedure realmente funzionanti in skill;
-9. estendere il sistema a `forno-lume-BUSINESS`;
-10. estenderlo a `tretnix`;
-11. valutare Claude Code soltanto quando emergerà un bisogno concreto.
+1. mantenere questa repository privata;
+2. copiare le istruzioni ChatGPT nel progetto Tretnix;
+3. copiare la Workspace Knowledge in Lovable;
+4. installare Cursor;
+5. impostare le User Rules;
+6. aprire `forno-lume-START`;
+7. copiare il project kit tramite branch dedicata;
+8. eseguire il primo audit in sola lettura;
+9. revisionare il report;
+10. correggere una sola categoria alla volta;
+11. trasformare procedure verificate in skill;
+12. valutare Claude Code soltanto quando emergerà un bisogno concreto.
 
 ---
 
-## 10. Limitazioni della versione 1
+## 13. Limitazioni
 
-Questa prima versione documenta le informazioni già definite. Non sostituisce l’audit dei repository.
+Questa versione documenta le informazioni già definite e prepara gli strumenti, ma non sostituisce l’audit dei repository.
 
-Gli aspetti tecnici non ancora verificati nel codice sono esplicitamente marcati come:
+Gli aspetti tecnici non ancora verificati nel codice devono restare marcati come:
 
 - da verificare;
 - probabili;
