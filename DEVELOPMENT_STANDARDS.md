@@ -1,7 +1,7 @@
 # Tretnix Development Standards
 
-**Versione:** 1.0  
-**Aggiornato:** 16 luglio 2026  
+**Versione:** 1.1
+**Aggiornato:** 17 luglio 2026
 **Ambito:** tutti i progetti Tretnix, salvo eccezioni documentate
 
 Le parole **DEVE**, **NON DEVE**, **DOVREBBE** e **PUÒ** esprimono il livello di obbligatorietà.
@@ -109,11 +109,20 @@ Per interventi significativi usare una pull request con:
 - rischi;
 - test manuali rimanenti.
 
-### Lovable e branch principale
+### Agenti, Lovable e branch principale
 
 La sincronizzazione GitHub di Lovable deve essere verificata prima di applicare protezioni che potrebbero interromperla.
 
-Non far modificare gli stessi file contemporaneamente a Lovable e a un editor locale senza coordinamento.
+Regole obbligatorie:
+
+- un solo agente o ambiente scrive sugli stessi file alla volta;
+- Lovable, Codex, Cursor Agent e Claude Code non devono modificare contemporaneamente lo stesso working tree;
+- ogni handoff deve partire da un branch, commit o diff identificabile;
+- il revisore deve iniziare in sola lettura;
+- i finding del revisore non vengono applicati automaticamente;
+- non lavorare direttamente su `main`;
+- non riscrivere la cronologia pubblicata di un progetto collegato a Lovable;
+- non usare force push, rebase, amend o squash su commit già sincronizzati quando può compromettere la history Lovable.
 
 ---
 
@@ -171,7 +180,78 @@ Non aggiornare dipendenze durante un task non correlato.
 
 ---
 
-## 6. Configurazione e contenuti
+## 6. Coordinamento degli agenti
+
+### Un solo writer
+
+Durante un task, un solo agente o sviluppatore ha il ruolo di writer sul working tree.
+
+Gli altri strumenti possono:
+
+- leggere;
+- revisionare il diff;
+- produrre finding;
+- proporre verifiche.
+
+Non possono applicare modifiche finché non ricevono un task approvato.
+
+### Checkpoint obbligatorio
+
+Ogni passaggio tra strumenti DEVE produrre almeno uno tra:
+
+- commit;
+- branch;
+- diff salvato;
+- pull request;
+- report con commit e stato Git.
+
+Il nuovo agente DEVE conoscere:
+
+- branch;
+- commit base;
+- specifica approvata;
+- file modificati;
+- controlli già eseguiti;
+- controlli mancanti.
+
+### Revisione indipendente
+
+La prima revisione di una modifica DEVE essere in sola lettura.
+
+Il revisore deve classificare ogni osservazione come:
+
+- confermata;
+- probabile;
+- potenziale;
+- verifica manuale richiesta;
+- fuori perimetro;
+- non valutabile.
+
+Ogni finding deve essere deciso da una persona come:
+
+- approvato;
+- rifiutato;
+- da verificare;
+- fuori perimetro;
+- miglioramento futuro.
+
+### Codex locale e cloud
+
+Per il lavoro ordinario DOVREBBE essere preferito Codex locale nell'IDE quando serve controllo immediato.
+
+Codex Cloud PUÒ essere usato per task isolati o più lunghi quando:
+
+- il repository e il branch sono identificati;
+- l'ambiente di setup è documentato;
+- non sono presenti credenziali di produzione non necessarie;
+- l'accesso di rete è limitato al minimo;
+- il risultato viene revisionato come diff o pull request.
+
+L'esecuzione in cloud non sostituisce il controllo del diff, i test né l'approvazione umana.
+
+---
+
+## 7. Configurazione e contenuti
 
 Informazioni ripetute come:
 
@@ -196,7 +276,7 @@ Evitare:
 
 ---
 
-## 7. Responsive
+## 8. Responsive
 
 Ogni progetto DEVE essere sviluppato mobile-first.
 
@@ -238,7 +318,7 @@ L’alternanza desktop può essere preservata tramite layout e proprietà di ord
 
 ---
 
-## 8. Routing, navigazione e scroll
+## 9. Routing, navigazione e scroll
 
 ### Cambio route
 
@@ -298,7 +378,7 @@ La navbar non deve provocare salti, flash o layout shift.
 
 ---
 
-## 9. Animazioni
+## 10. Animazioni
 
 Le animazioni DEVONO essere:
 
@@ -342,7 +422,7 @@ START, BUSINESS e BUSINESS PLUS dello stesso verticale devono conservare il ling
 
 ---
 
-## 10. Accessibilità
+## 11. Accessibilità
 
 Obiettivo minimo: conformità pratica ai principi WCAG 2.2 livello AA per i flussi rilevanti.
 
@@ -387,7 +467,7 @@ Testo, icone e controlli devono avere contrasto sufficiente, preservando il bran
 
 ---
 
-## 11. Form, stati ed errori
+## 12. Form, stati ed errori
 
 Ogni flusso asincrono DEVE considerare:
 
@@ -412,7 +492,7 @@ Ogni flusso asincrono DEVE considerare:
 
 ---
 
-## 12. Performance
+## 13. Performance
 
 Verificare:
 
@@ -446,7 +526,7 @@ Verificare:
 
 ---
 
-## 13. Sicurezza generale
+## 14. Sicurezza generale
 
 - Non committare `.env`.
 - Non mostrare segreti nei prompt, log o screenshot.
@@ -461,7 +541,7 @@ Verificare:
 
 ---
 
-## 14. Supabase e Lovable Cloud
+## 15. Supabase e Lovable Cloud
 
 ### Migrazioni
 
@@ -533,7 +613,7 @@ Non irrigidire le policy in modo da rompere media che devono essere pubblicament
 
 ---
 
-## 15. Test e verifica
+## 16. Test e verifica
 
 Ogni repository DOVREBBE definire comandi espliciti per:
 
@@ -576,7 +656,7 @@ Priorità:
 
 ---
 
-## 16. Build e deploy
+## 17. Build e deploy
 
 Prima del deploy:
 
@@ -611,7 +691,7 @@ Prima del deploy:
 
 ---
 
-## 17. SEO e aspetti pubblici
+## 18. SEO e aspetti pubblici
 
 Per siti pubblici verificare:
 
@@ -636,7 +716,7 @@ Il contenuto legale deve essere revisionato professionalmente quando necessario.
 
 ---
 
-## 18. Attribuzione Tretnix
+## 19. Attribuzione Tretnix
 
 Ogni progetto cliente attuale e futuro DEVE includere nel footer una firma discreta:
 
@@ -657,7 +737,7 @@ L’implementazione deve:
 
 ---
 
-## 19. Documentazione locale
+## 20. Documentazione locale
 
 Ogni repository dovrà progressivamente adottare:
 
@@ -680,7 +760,7 @@ Non è necessario creare documenti vuoti. Introdurli quando esiste contenuto uti
 
 ---
 
-## 20. Report finale di un intervento
+## 21. Report finale di un intervento
 
 Ogni intervento non banale deve riportare:
 

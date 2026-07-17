@@ -19,5 +19,7 @@ Quando cambia una decisione o uno standard:
 - `CHATGPT_PROJECT_INSTRUCTIONS.md`: istruzioni del progetto ChatGPT Tretnix.
 - `LOVABLE_WORKSPACE_KNOWLEDGE.md`: regole globali del workspace Lovable.
 - `CURSOR_USER_RULES.md`: preferenze globali per Cursor Agent.
+- `CODEX_GLOBAL_AGENTS.md`: istruzioni globali da installare in `~/.codex/AGENTS.md`.
+- `CODEX_SETUP.md`: procedura di configurazione e verifica di Codex.
 
 Il contesto specifico dei singoli progetti non deve essere inserito indiscriminatamente negli adattatori globali.

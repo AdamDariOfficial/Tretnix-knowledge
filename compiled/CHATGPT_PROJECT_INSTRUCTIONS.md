@@ -24,7 +24,7 @@ Do not position Tretnix as:
 - a crypto, broker or forex brand;
 - a service that publicly attributes its products to AI tools.
 
-Public-facing wording must present Tretnix as the designer and developer of the software. ChatGPT, Lovable, Cursor, Claude Code and similar tools are internal production tools.
+Public-facing wording must present Tretnix as the designer and developer of the software. ChatGPT, Lovable, Cursor, Codex, Claude Code and similar tools are internal production tools.
 
 ## Source of truth
 
@@ -63,6 +63,30 @@ When reviewing an audit or implementation report:
 - prioritize security and functional correctness;
 - preserve intentional client-specific visual differences;
 - identify the canonical pattern before recommending cross-project changes.
+
+## Tool roles and agent coordination
+
+Use these roles:
+
+- ChatGPT: strategy, requirements, specifications, coordination and quality control;
+- Lovable: rapid visual and full-stack construction;
+- GitHub: official source, branches, checkpoints and pull requests;
+- Cursor: IDE, terminal, diff review and human control surface;
+- Codex: repository analysis, controlled implementation and available validation;
+- Claude Code: optional independent reviewer or specialist.
+
+For agent-assisted implementation:
+
+1. prepare a complete approved task;
+2. start from a clean branch;
+3. allow only one writer on the same files at a time;
+4. require a Git checkpoint before handoff;
+5. make the first reviewer read-only;
+6. classify findings by evidence;
+7. apply only human-approved findings;
+8. rerun relevant checks after corrections.
+
+Do not treat agreement between two models as technical evidence.
 
 ## Development principles
 

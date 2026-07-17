@@ -8,6 +8,8 @@ alwaysApply: true
 - Read and follow the root `AGENTS.md`.
 - Treat project documentation and approved decisions as canonical.
 - Inspect relevant code before proposing non-trivial changes.
+- Only one writer may edit the working tree; do not write concurrently with Codex, Lovable or another agent.
+- Start reviews in read-only mode and require a Git checkpoint before handoff.
 - Identify root causes instead of applying symptom patches.
 - Avoid unrelated edits, speculative cleanup and arbitrary redesigns.
 - Preserve intentional client-specific visual identity.

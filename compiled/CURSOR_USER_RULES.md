@@ -58,4 +58,12 @@ When a task involves routing, navigation or UI, consider:
 - reduced motion;
 - console and network errors.
 
-Public-facing software is designed and developed by Tretnix. Do not add public references that attribute client software to ChatGPT, Lovable, Cursor, Claude Code or other AI tools.
+Agent coordination:
+
+- only one agent writes to the same working tree at a time;
+- do not edit files concurrently with Codex, Lovable or Claude Code;
+- require a branch, commit or diff checkpoint before handoff;
+- start reviews in read-only mode;
+- apply only findings explicitly approved by the user.
+
+Public-facing software is designed and developed by Tretnix. Do not add public references that attribute client software to ChatGPT, Lovable, Cursor, Codex, Claude Code or other AI tools.
