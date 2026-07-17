@@ -1,7 +1,7 @@
 # Tretnix Master Context
 
-**Versione:** 1.0  
-**Aggiornato:** 16 luglio 2026  
+**Versione:** 1.1
+**Aggiornato:** 17 luglio 2026
 **Stato:** canonico iniziale
 
 ---
@@ -55,7 +55,7 @@ Nei siti, nei materiali commerciali e nei prodotti per i clienti la formulazione
 
 > Tretnix progetta e sviluppa questi sistemi software.
 
-ChatGPT, Lovable, Cursor, Claude Code e altri strumenti sono strumenti interni di produzione. Non sono presentati pubblicamente come autori del lavoro.
+ChatGPT, Lovable, Cursor, Codex, Claude Code e altri strumenti sono strumenti interni di produzione. Non sono presentati pubblicamente come autori del lavoro.
 
 ---
 
@@ -168,26 +168,37 @@ GitHub conserva:
 
 GitHub è la memoria tecnica verificabile.
 
-### Cursor — ambiente tecnico quotidiano
+### Cursor — ambiente tecnico e controllo umano
 
-Cursor è lo strumento aggiuntivo da introdurre per primo.
-
-Deve diventare:
+Cursor è:
 
 - IDE principale;
 - ambiente per aprire e leggere i repository;
 - terminale;
-- strumento di audit;
-- supporto al debugging;
-- revisore dei diff;
-- ambiente per typecheck, lint, test e build;
-- ponte tra Lovable e un processo Git più professionale.
+- superficie per Git e diff;
+- ambiente per verifiche locali;
+- punto di controllo nel quale il fondatore approva o rifiuta modifiche.
 
-Nella prima fase Cursor non deve essere usato come agente completamente autonomo.
+Cursor non coincide con l'agente che esegue il task. Può ospitare Cursor Agent o l'estensione Codex, ma la responsabilità umana rimane separata.
+
+### Codex — agente operativo sul repository
+
+Codex viene adottato come agente principale per:
+
+- comprendere repository esistenti;
+- implementare task circoscritti;
+- modificare più file mantenendo il contesto;
+- eseguire comandi disponibili;
+- aggiungere o aggiornare test quando approvato;
+- controllare il diff;
+- preparare una pull request;
+- lavorare localmente nell'IDE o in un ambiente cloud isolato.
+
+Codex deve leggere l’`AGENTS.md` globale e quello del repository. Non lavora direttamente su `main`, non usa credenziali di produzione non necessarie e non opera contemporaneamente sugli stessi file insieme a un altro agente.
 
 ### Claude Code — specialista opzionale
 
-Claude Code verrà valutato dopo l’adozione di Cursor.
+Claude Code verrà valutato dopo il pilot operativo con Codex.
 
 Possibili impieghi:
 
@@ -199,7 +210,7 @@ Possibili impieghi:
 - revisione indipendente;
 - automazioni da terminale.
 
-Non deve essere acquistato o introdotto soltanto per duplicare ciò che Cursor già svolge adeguatamente.
+Non deve essere acquistato o introdotto soltanto per duplicare ciò che Codex e il workflow attuale svolgono adeguatamente.
 
 ### Supabase / Lovable Cloud — backend
 
@@ -220,6 +231,8 @@ Nessun agente deve indebolire il backend solo per eliminare un errore visibile n
 
 ## 5. Pipeline operativa
 
+### Flusso locale controllato
+
 ```text
 Cliente o idea
 ↓
@@ -227,32 +240,60 @@ ChatGPT
 ↓
 Brief, specifica, vincoli e criteri di accettazione
 ↓
-Lovable
-↓
-Prima costruzione visuale e funzionale
-↓
 GitHub
 ↓
-Repository ufficiale
+Branch e checkpoint iniziale
 ↓
 Cursor
 ↓
-Analisi, consolidamento, debugging, test e build
+Controllo umano del repository
 ↓
-Claude Code, soltanto quando necessario
+Codex
 ↓
-Revisione indipendente o intervento specialistico
+Analisi o prima implementazione
+↓
+Diff o commit verificabile
+↓
+Revisione in sola lettura
+↓
+Decisione umana sui finding
+↓
+Codex o intervento manuale per le sole correzioni approvate
+↓
+Typecheck, lint, test, build e browser
 ↓
 Pull request
-↓
-Revisione del diff
-↓
-Staging
 ↓
 QA
 ↓
 Produzione
 ```
+
+### Flusso con Lovable
+
+```text
+ChatGPT
+↓
+Specifica approvata
+↓
+Lovable
+↓
+Costruzione o iterazione visuale
+↓
+GitHub
+↓
+Checkpoint
+↓
+Cursor + Codex
+↓
+Consolidamento tecnico e validazione
+↓
+Revisione indipendente quando necessaria
+↓
+Pull request
+```
+
+Claude Code può essere inserito come revisore specialistico dopo un checkpoint, non come secondo autore contemporaneo.
 
 Flusso vietato:
 
@@ -343,11 +384,13 @@ Ogni repository di progetto dovrà progressivamente contenere soltanto il contes
 
 ```text
 AGENTS.md
-CLAUDE.md
 .cursor/
-.claude/
+.codex/        # solo quando serve configurazione condivisa verificata
+.claude/       # solo se Claude Code viene realmente adottato
 docs/
 ```
+
+`AGENTS.md` è il punto di ingresso comune per Codex e per gli altri agenti compatibili. Non creare file duplicati con le stesse regole senza una necessità reale.
 
 La separazione prevista è:
 
@@ -674,58 +717,70 @@ Prompt vaghi come “sistemami il sito” o “migliora il responsive” non son
 
 ### Fase 1 — Fondamenta
 
+Stato: completata.
+
 - pubblicare `tretnix-knowledge`;
-- mantenere ChatGPT, Lovable e GitHub;
+- configurare ChatGPT;
 - introdurre Cursor;
-- non introdurre ancora automazioni o MCP.
+- aggiungere foundation e regole al progetto pilota.
 
-### Fase 2 — Progetto pilota
+### Fase 2 — Audit del progetto pilota
 
-- aprire `forno-lume-START` in Cursor;
-- aggiungere `AGENTS.md`;
-- aggiungere una regola Cursor iniziale;
-- aggiungere `.cursorignore`;
-- non modificare il sito;
-- eseguire l’audit in sola lettura.
+Stato: audit statico e controllo qualità completati.
 
-### Fase 3 — Primo intervento controllato
+- auditare `forno-lume-START` in sola lettura;
+- correggere severità ed evidenze del report;
+- mantenere separati bug confermati, rischi, scelte intenzionali e controlli mancanti.
 
-- revisionare l’audit;
-- scegliere una categoria;
-- creare una branch;
-- implementare una correzione circoscritta;
-- controllare il diff;
-- eseguire i controlli;
+### Fase 3 — Introduzione di Codex
+
+Stato: approvata.
+
+- installare Codex nell'ambiente Cursor o usare l'app;
+- configurare le istruzioni globali;
+- verificare che Codex legga `AGENTS.md`;
+- usare Forno Lume START per il primo intervento controllato;
+- mantenere un solo writer;
+- revisionare il diff prima delle correzioni successive.
+
+### Fase 4 — Primo intervento controllato
+
+- preparare un task completo;
+- creare una branch dedicata;
+- far implementare a Codex il pacchetto approvato;
+- eseguire una revisione in sola lettura;
+- applicare soltanto finding approvati;
+- eseguire controlli disponibili;
 - aprire una pull request.
 
-### Fase 4 — Consolidamento
+### Fase 5 — Consolidamento
 
-- trasformare la procedura verificata in una skill;
+- trasformare procedure verificate in skill;
 - confrontare START e BUSINESS;
-- analizzare Tretnix.com;
-- estrarre standard confermati.
+- auditare Tretnix.com;
+- estrarre standard confermati;
+- configurare Lovable quando disponibile.
 
-### Fase 5 — Specializzazione
+### Fase 6 — Specializzazione
 
-- valutare Claude Code;
+- valutare Claude Code quando emerge un bisogno concreto;
 - aggiungere RLS review;
 - aggiungere pre-deploy;
-- valutare test browser e automazioni.
-
----
+- valutare test browser, Codex Cloud e automazioni dopo aver stabilizzato il processo.
 
 ## 15. Priorità corrente
 
-La priorità attuale non è correggere immediatamente tutte le repository.
+La priorità attuale è:
 
-È:
-
-1. creare la fonte canonica minima;
-2. introdurre Cursor senza alterare il metodo esistente;
-3. auditare Forno Lume START in sola lettura;
-4. revisionare i risultati;
-5. intervenire una categoria alla volta;
-6. estendere progressivamente il sistema.
+1. integrare Codex come agente operativo senza sostituire GitHub o il controllo umano;
+2. aggiornare e sincronizzare la knowledge;
+3. configurare Codex globalmente;
+4. verificare la lettura delle regole del progetto;
+5. preparare il primo task di remediation di Forno Lume START;
+6. intervenire con una branch e un solo writer;
+7. revisionare il diff in sola lettura;
+8. completare le verifiche eseguibili e manuali;
+9. registrare il pattern soltanto dopo conferma.
 
 ---
 
@@ -734,7 +789,7 @@ La priorità attuale non è correggere immediatamente tutte le repository.
 Non sono priorità immediate:
 
 - collegare molti MCP;
-- acquistare ogni strumento disponibile;
+- acquistare ogni strumento disponibile senza un ruolo e un bisogno verificato;
 - creare numerosi subagenti;
 - automatizzare i deploy;
 - consentire scrittura sul database di produzione;

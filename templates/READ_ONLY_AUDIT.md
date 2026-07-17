@@ -1,7 +1,7 @@
 # Tretnix Read-Only Repository Audit
 
-**Versione:** 1.0  
-**Aggiornato:** 16 luglio 2026  
+**Versione:** 1.1
+**Aggiornato:** 17 luglio 2026
 **Scopo:** analizzare un repository senza applicare correzioni
 
 ---
@@ -20,6 +20,8 @@ L’audit iniziale deve:
 8. evitare modifiche premature.
 
 L’audit non autorizza l’implementazione.
+
+Un solo agente esegue l’audit sul working tree. Eventuali seconde opinioni devono partire dallo stesso commit e produrre un report separato, non modifiche.
 
 ---
 
@@ -58,7 +60,7 @@ L’audit è valido rispetto al commit indicato.
 - leggere tutti i file versionati;
 - cercare riferimenti;
 - ispezionare cronologia e configurazioni;
-- installare dipendenze con il package manager esistente;
+- installare dipendenze soltanto se già previsto dal task e senza aggiornare il lockfile;
 - eseguire comandi non distruttivi;
 - eseguire typecheck, lint, test e build già configurati;
 - avviare il progetto localmente;
@@ -696,7 +698,7 @@ Le dipendenze tra interventi possono modificare l’ordine, ma devono essere spi
 
 ---
 
-## 12. Prompt pronto per Cursor o Claude Code
+## 12. Prompt pronto per Codex, Cursor Agent o Claude Code
 
 ```text
 Read the entire repository and do not modify any file.
@@ -779,7 +781,23 @@ Return the report in chat only.
 
 ---
 
-## 13. Checklist conclusiva
+## 13. Controllo qualità del report
+
+Dopo il primo audit, un secondo passaggio read-only DEVE:
+
+- verificare file e linee citate;
+- correggere severità sproporzionate;
+- separare configurazione confermata da comportamento runtime inferito;
+- distinguere scelte visuali e contenuti demo dai bug;
+- rifiutare claim non supportati;
+- elencare build, test e controlli browser mancanti;
+- confermare che il working tree sia ancora pulito.
+
+Il revisore non deve applicare fix.
+
+---
+
+## 14. Checklist conclusiva
 
 Prima di chiudere l’audit:
 

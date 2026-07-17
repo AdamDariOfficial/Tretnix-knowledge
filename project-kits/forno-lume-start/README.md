@@ -1,14 +1,22 @@
-# Forno Lume START — Cursor Foundation Kit
+# Forno Lume START — Agent Foundation Kit
 
-Questo kit deve essere copiato nella root del repository:
+This kit is the Tretnix Knowledge copy of the agent configuration for:
 
 ```text
 forno-lume-START
 ```
 
-Contiene soltanto istruzioni e protezioni per gli strumenti. Non modifica il sito.
+It supports Cursor and Codex through the same root `AGENTS.md`.
 
-## File da copiare
+## Current state
+
+- initial foundation merged into the project repository;
+- audited commit: `39d58126abb2fa9b63070e047db06c8027aaef6f`;
+- static read-only audit completed;
+- audit quality control completed;
+- controlled remediation not yet implemented.
+
+## Files
 
 ```text
 AGENTS.md
@@ -16,41 +24,44 @@ AGENTS.md
 .cursor/rules/00-project-overview.mdc
 ```
 
-## Procedura consigliata
+## Synchronization procedure
 
-Nel repository locale:
+Do not overwrite the project blindly.
 
-```bash
-git checkout main
-git pull
-git checkout -b chore/tretnix-agent-foundation
-```
-
-Copiare i tre elementi nella root, quindi controllare:
+From a clean local repository:
 
 ```bash
-git status
-git diff -- AGENTS.md .cursorignore .cursor/rules/00-project-overview.mdc
+git switch main
+git pull --ff-only
+git switch -c chore/update-agent-foundation
 ```
 
-Dopo la revisione:
+Compare the kit with the project:
 
 ```bash
-git add AGENTS.md .cursorignore .cursor/rules/00-project-overview.mdc
-git commit -m "chore: add Tretnix agent foundation"
-git push -u origin chore/tretnix-agent-foundation
+git diff --no-index AGENTS.md <path-to-kit>/AGENTS.md
+git diff --no-index .cursor/rules/00-project-overview.mdc <path-to-kit>/.cursor/rules/00-project-overview.mdc
 ```
 
-Aprire una pull request e verificare che il diff contenga soltanto questi file.
+Preserve the Lovable block at the top of the project `AGENTS.md`.
 
-## Cosa non fare in questa fase
+After copying only the approved documentation changes:
 
-- non modificare componenti;
-- non correggere bug;
-- non cambiare animazioni;
-- non aggiornare dipendenze;
-- non cambiare il lockfile;
-- non effettuare deploy;
-- non applicare migrazioni.
+```bash
+git status --short
+git diff --check
+git diff
+```
 
-Dopo il merge si può eseguire l’audit in sola lettura usando `templates/READ_ONLY_AUDIT.md`.
+Use a pull request and a normal merge. Do not rewrite published Lovable history.
+
+## Next operational use
+
+1. configure Codex global instructions;
+2. verify that Codex reads global and repository `AGENTS.md`;
+3. prepare the first approved remediation task;
+4. create a dedicated fix branch;
+5. allow Codex to implement only that scope;
+6. review the diff in read-only mode;
+7. run available checks;
+8. open a pull request after human approval.

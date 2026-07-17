@@ -1,7 +1,7 @@
 # Tretnix Decision Log
 
-**Versione:** 1.0  
-**Aggiornato:** 16 luglio 2026
+**Versione:** 1.1
+**Aggiornato:** 17 luglio 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
 
@@ -11,8 +11,8 @@ Ogni decisione rimane valida finché non viene sostituita esplicitamente da una 
 
 ## TRX-DEC-001 — Comunicazione pubblica degli strumenti interni
 
-**Stato:** approvata  
-**Data:** 13 luglio 2026  
+**Stato:** approvata
+**Data:** 13 luglio 2026
 **Ambito:** tutti i progetti e la comunicazione Tretnix
 
 ### Decisione
@@ -37,8 +37,8 @@ Gli strumenti fanno parte del processo interno. Il valore pubblico è la progett
 
 ## TRX-DEC-002 — GitHub come fonte tecnica ufficiale
 
-**Stato:** approvata  
-**Data:** 16 luglio 2026  
+**Stato:** approvata
+**Data:** 16 luglio 2026
 **Ambito:** tutti i progetti
 
 ### Decisione
@@ -61,8 +61,8 @@ Le conversazioni possono essere incomplete, non sincronizzate o difficili da ver
 
 ## TRX-DEC-003 — Ordine editoriale mobile
 
-**Stato:** approvata  
-**Data:** 13 luglio 2026  
+**Stato:** approvata
+**Data:** 13 luglio 2026
 **Ambito:** siti Tretnix e progetti cliente
 
 ### Decisione
@@ -94,8 +94,8 @@ L’alternanza immagine/testo su schermi piccoli crea un flusso di lettura incoe
 
 ## TRX-DEC-004 — Reset dello scroll al cambio route
 
-**Stato:** approvata  
-**Data:** 13 luglio 2026  
+**Stato:** approvata
+**Data:** 13 luglio 2026
 **Ambito:** applicazioni e siti multipagina
 
 ### Decisione
@@ -118,8 +118,8 @@ Lo smooth scroll può mostrare movimenti indesiderati, attivare reveal prematura
 
 ## TRX-DEC-005 — Reveal sotto la fold
 
-**Stato:** approvata  
-**Data:** 13 luglio 2026  
+**Stato:** approvata
+**Data:** 13 luglio 2026
 **Ambito:** siti con animazioni di ingresso
 
 ### Decisione
@@ -147,8 +147,8 @@ L’animazione deve accompagnare la lettura reale.
 
 ## TRX-DEC-006 — Attribuzione Tretnix
 
-**Stato:** approvata  
-**Data:** 13 luglio 2026  
+**Stato:** approvata
+**Data:** 13 luglio 2026
 **Ambito:** progetti cliente attuali e futuri
 
 ### Decisione
@@ -177,8 +177,8 @@ L’attribuzione rafforza portfolio, riconoscibilità e acquisizione senza compr
 
 ## TRX-DEC-007 — Evoluzione START → BUSINESS
 
-**Stato:** approvata  
-**Data:** 11 luglio 2026  
+**Stato:** approvata
+**Data:** 11 luglio 2026
 **Ambito:** famiglie di template Tretnix
 
 ### Decisione
@@ -218,8 +218,8 @@ Il piano superiore rappresenta un’evoluzione, non un prodotto visivamente estr
 
 ## TRX-DEC-008 — Standard tecnici condivisi, identità cliente preservata
 
-**Stato:** approvata  
-**Data:** 16 luglio 2026  
+**Stato:** approvata
+**Data:** 16 luglio 2026
 **Ambito:** tutti i repository
 
 ### Decisione
@@ -256,8 +256,8 @@ Un design system tecnico non deve rendere tutti i clienti visivamente uguali.
 
 ## TRX-DEC-009 — Audit in sola lettura prima delle correzioni trasversali
 
-**Stato:** approvata  
-**Data:** 16 luglio 2026  
+**Stato:** approvata
+**Data:** 16 luglio 2026
 **Ambito:** repository esistenti
 
 ### Decisione
@@ -287,8 +287,8 @@ Modificare subito può introdurre regressioni e uniformare pattern sbagliati.
 
 ## TRX-DEC-010 — Fonte canonica scelta per pattern
 
-**Stato:** approvata  
-**Data:** 16 luglio 2026  
+**Stato:** approvata
+**Data:** 16 luglio 2026
 **Ambito:** confronto tra repository
 
 ### Decisione
@@ -318,8 +318,8 @@ Per ogni pattern registrare:
 
 ## TRX-DEC-011 — Ruoli distinti degli strumenti
 
-**Stato:** approvata  
-**Data:** 16 luglio 2026  
+**Stato:** approvata
+**Data:** 16 luglio 2026
 **Ambito:** sistema operativo Tretnix
 
 ### Decisione
@@ -342,8 +342,8 @@ Nessun singolo strumento deve possedere tutto il processo o tutta la conoscenza.
 
 ## TRX-DEC-012 — Adozione graduale degli strumenti
 
-**Stato:** approvata  
-**Data:** 16 luglio 2026  
+**Stato:** approvata
+**Data:** 16 luglio 2026
 **Ambito:** processo interno
 
 ### Decisione
@@ -364,8 +364,8 @@ Automatizzare o complicare un processo non ancora stabile moltiplica gli errori.
 
 ## TRX-DEC-013 — Controlli dichiarati solo se realmente eseguiti
 
-**Stato:** approvata  
-**Data:** 16 luglio 2026  
+**Stato:** approvata
+**Data:** 16 luglio 2026
 **Ambito:** tutti i report tecnici
 
 ### Decisione
@@ -386,8 +386,8 @@ Ogni report deve distinguere:
 
 ## TRX-DEC-014 — Sicurezza backend non sostituibile dal frontend
 
-**Stato:** approvata  
-**Data:** 16 luglio 2026  
+**Stato:** approvata
+**Data:** 16 luglio 2026
 **Ambito:** Supabase, Lovable Cloud e backend futuri
 
 ### Decisione
@@ -405,3 +405,106 @@ Il client è controllabile dall’utente e non costituisce un confine di sicurez
 - Le modifiche allo schema passano tramite migrazioni.
 - Ruoli e accesso ai dati vengono verificati lato backend.
 - Le policy vengono testate per utenti anonimi, autenticati e amministratori.
+---
+
+## TRX-DEC-015 — Codex come agente operativo principale sul repository
+
+**Stato:** approvata
+**Data:** 17 luglio 2026
+**Ambito:** sistema operativo Tretnix
+
+### Decisione
+
+Codex viene introdotto come agente operativo principale per il lavoro controllato sul repository.
+
+Ruoli aggiornati:
+
+```text
+ChatGPT = strategia, specifiche, coordinamento e controllo qualità
+Lovable = costruzione rapida visuale e full-stack
+GitHub = fonte ufficiale e checkpoint
+Cursor = IDE e superficie di controllo umano
+Codex = analisi, implementazione, validazione e lavoro sul repository
+Claude Code = revisore o specialista opzionale
+```
+
+Questa decisione amplia `TRX-DEC-011` e sostituisce la composizione iniziale indicata in `TRX-DEC-012`.
+
+### Motivazione
+
+Cursor Agent ha mostrato utilità, ma i limiti di utilizzo non devono bloccare il piano. Codex è disponibile nell'IDE, nel terminale, nell'app e in cloud, legge `AGENTS.md` e può lavorare sullo stesso repository mantenendo GitHub come fonte verificabile.
+
+### Conseguenze
+
+- Codex viene testato su Forno Lume START.
+- Cursor rimane l'ambiente di supervisione, non la fonte della verità.
+- Lovable mantiene il ruolo visuale e full-stack quando disponibile.
+- Claude Code non viene introdotto finché non emerge un bisogno concreto.
+- L'adozione non autorizza autonomia illimitata o accessi di produzione.
+
+---
+
+## TRX-DEC-016 — Un solo writer e handoff tramite checkpoint
+
+**Stato:** approvata
+**Data:** 17 luglio 2026
+**Ambito:** tutti i task eseguiti con agenti
+
+### Decisione
+
+Un solo agente o sviluppatore modifica gli stessi file alla volta.
+
+Ogni handoff tra ChatGPT, Lovable, Cursor Agent, Codex, Claude Code o altri strumenti deve avvenire tramite un checkpoint identificabile:
+
+- branch;
+- commit;
+- diff;
+- pull request;
+- report riferito a commit e working tree.
+
+### Motivazione
+
+Agenti concorrenti possono sovrascrivere file, duplicare dipendenze, introdurre stili incompatibili e rendere difficile attribuire una regressione.
+
+### Conseguenze
+
+- Non avviare due writer sullo stesso working tree.
+- Terminare una fase prima di iniziare la revisione successiva.
+- Il nuovo agente deve conoscere commit base, task, diff e controlli eseguiti.
+- GitHub rimane il meccanismo ufficiale di handoff.
+
+---
+
+## TRX-DEC-017 — Revisione iniziale in sola lettura e decisione umana
+
+**Stato:** approvata
+**Data:** 17 luglio 2026
+**Ambito:** revisioni di diff, audit post-implementazione e seconda opinione
+
+### Decisione
+
+Il revisore deve iniziare in sola lettura e non correggere automaticamente il lavoro dell'autore.
+
+Ogni finding viene classificato e sottoposto a decisione umana:
+
+```text
+APPROVATO
+RIFIUTATO
+DA VERIFICARE
+FUORI PERIMETRO
+MIGLIORAMENTO FUTURO
+```
+
+Solo i finding approvati diventano un task di modifica.
+
+### Motivazione
+
+Una seconda opinione non è una prova tecnica. Due agenti possono condividere la stessa assunzione errata o preferire implementazioni diverse senza che quella esistente sia difettosa.
+
+### Conseguenze
+
+- Separare autore e revisore.
+- Richiedere evidenze da codice, esecuzione o browser.
+- Rifiutare claim non supportati.
+- Evitare che una review produca scope creep.
+- Eseguire nuovamente i controlli dopo le correzioni approvate.

@@ -1,18 +1,23 @@
 ---
-description: Forno Lume START project identity, audit scope and Tretnix workflow
+description: Forno Lume START project identity, controlled remediation and Tretnix workflow
 alwaysApply: true
 ---
 
 # Forno Lume START project overview
 
-- Read and follow the root `AGENTS.md` before non-trivial work.
-- This repository is the Tretnix pilot and the initial visual reference for Hospitality START.
-- The current first task is a read-only audit unless implementation is explicitly authorized.
+- Read and follow the root `AGENTS.md`.
+- This repository is the Tretnix pilot and initial visual reference for Hospitality START.
+- The initial static audit and its quality-control pass are complete.
+- Implementation requires an approved, scoped task.
 - Preserve the warm, artisanal and premium client identity.
-- Do not reinterpret the site as a generic SaaS design.
-- Do not assume that a visually canonical implementation is technically canonical.
-- Inspect code and deployment before proposing cross-project extraction.
+- Do not reinterpret the site as generic SaaS.
+- Visual canonical status does not automatically imply technical canonical status.
 - Preserve mobile text-first editorial order, immediate route reset and viewport-triggered reveals.
+- Only one writer may edit the working tree.
+- Do not write concurrently with Codex, Lovable, Cursor Agent or Claude Code.
+- Require a Git checkpoint before handoff.
+- Start reviews in read-only mode.
 - Avoid unrelated changes, dependency updates and speculative cleanup.
-- Do not claim checks passed unless they were executed.
-- Report evidence level, severity, impact, recommendation and regression risk.
+- Respect the Lovable Git-history warning in the root `AGENTS.md`.
+- Do not claim checks passed unless executed.
+- Report evidence, severity, impact, recommendation and regression risk.

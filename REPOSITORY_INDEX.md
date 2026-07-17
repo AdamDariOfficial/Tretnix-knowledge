@@ -1,8 +1,8 @@
 # Tretnix Repository Index
 
-**Versione:** 1.0  
-**Aggiornato:** 16 luglio 2026  
-**Stato dell’inventario:** completo rispetto ai tre repository attualmente dichiarati
+**Versione:** 1.1
+**Aggiornato:** 17 luglio 2026
+**Stato dell’inventario:** completo rispetto ai quattro repository attualmente dichiarati
 
 Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit del codice.
 
@@ -126,9 +126,9 @@ Questi aspetti richiedono audit.
 | Repository | `https://github.com/AdamDariOfficial/forno-lume-START.git` |
 | Deploy | `https://forno-lume.tretnix.com` |
 | Stato | produzione |
-| Branch principale | da verificare |
-| Commit auditato | non ancora auditato |
-| Ultimo audit | non eseguito |
+| Branch principale | `main` |
+| Commit auditato | `39d58126abb2fa9b63070e047db06c8027aaef6f` |
+| Ultimo audit | 17 luglio 2026 — audit statico read-only + controllo qualità |
 
 ### Relazione con altri progetti
 
@@ -160,13 +160,24 @@ Fonte iniziale per il verticale Hospitality START:
 
 I valori tecnici esatti devono essere verificati nel codice e documentati nel futuro design system del progetto.
 
-### Stato dichiarato
+### Stato verificato
 
-- completato;
-- deployato;
-- deve diventare una base tecnica pulita per i piani superiori.
+- completato e deployato;
+- foundation agent integrata in `main`;
+- primo audit statico read-only completato;
+- controllo qualità dell'audit completato;
+- build, lint, typecheck e browser interattivo ancora da eseguire;
+- prossimo passo: primo pacchetto di remediation controllato con Codex.
 
-### Aree da controllare
+### Finding prioritari confermati
+
+- attribuzione footer non conforme;
+- ordine editoriale mobile errato in `AboutSection`;
+- semantica/focus della navbar nascosta da correggere preservando il comportamento visuale;
+- drawer mobile senza gestione tastiera completa;
+- reduced motion incompleto per la FAQ.
+
+### Aree ancora da controllare
 
 - architettura;
 - struttura componenti;
@@ -186,7 +197,7 @@ I valori tecnici esatti devono essere verificati nel codice e documentati nel fu
 
 ### Ruolo canonico non ancora assegnabile
 
-START è fonte visuale dichiarata, ma l’implementazione tecnica dei pattern deve essere auditata prima di essere copiata.
+START è fonte visuale dichiarata. I pattern tecnici possono diventare canonici soltanto dopo remediation e verifiche esecutive/manuali.
 
 ---
 
@@ -263,6 +274,42 @@ Il ruolo canonico tecnico deve essere confermato tramite audit.
 
 ---
 
+
+## 2.4 Tretnix Knowledge
+
+### Identificazione
+
+| Campo | Valore |
+|---|---|
+| Nome | `Tretnix-knowledge` |
+| Categoria | repository operativo e documentale interno |
+| Piano | INTERNO |
+| Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
+| Deploy | non applicabile |
+| Stato | operativo |
+| Branch principale | `main` |
+| Commit auditato | repository ispezionata il 17 luglio 2026 |
+| Ultimo audit | revisione documentale per integrazione Codex |
+
+### Ruolo canonico
+
+- identità e posizionamento Tretnix;
+- decisioni approvate;
+- standard condivisi;
+- indice dei repository;
+- template e procedure;
+- adattatori per ChatGPT, Lovable, Cursor e Codex;
+- kit di configurazione dei progetti.
+
+### Regole
+
+- è la fonte canonica trasversale;
+- non contiene bug temporanei o task correnti dei progetti;
+- ogni modifica significativa usa branch, diff e pull request;
+- deve tornare privata dopo le operazioni che richiedono accesso pubblico, salvo decisione diversa.
+
+---
+
 # 3. Mappa delle relazioni
 
 ```text
@@ -296,18 +343,23 @@ Forno Lume START
 | RLS e sicurezza Supabase | nessuna fonte assegnata | da auditare |
 | Test | nessuna fonte assegnata | da inventariare |
 | Git workflow | `tretnix-knowledge` | standard condiviso |
+| Agent handoff | `tretnix-knowledge` | standard condiviso |
+| Codex workflow | `tretnix-knowledge` | approvato, pilota su START |
 
 ---
 
-# 5. Ordine iniziale degli audit
+# 5. Ordine operativo aggiornato
 
-1. `forno-lume-START`;
-2. `forno-lume-BUSINESS`;
-3. confronto START ↔ BUSINESS;
-4. `tretnix`;
-5. registro dei pattern canonici;
-6. piano di correzione;
-7. implementazione una categoria alla volta.
+1. configurare Codex e verificarne la lettura delle istruzioni;
+2. preparare il task di remediation prioritario per `forno-lume-START`;
+3. implementare una categoria alla volta;
+4. revisionare il diff in sola lettura;
+5. completare build, lint e verifiche browser;
+6. estrarre i pattern tecnici confermati;
+7. auditare `forno-lume-BUSINESS`;
+8. confrontare START ↔ BUSINESS;
+9. auditare `tretnix`;
+10. aggiornare il registro dei pattern canonici.
 
 Le vulnerabilità critiche o alte rilevate devono essere segnalate immediatamente e prioritarizzate.
 
@@ -342,15 +394,15 @@ Specificare se rappresenta un riferimento per componenti, animazioni, settore, U
 
 ### Informazioni confermate
 
-- 
+-
 
 ### Aspetti da verificare
 
-- 
+-
 
 ### Problemi già conosciuti
 
-- 
+-
 
 ### Accessi disponibili
 

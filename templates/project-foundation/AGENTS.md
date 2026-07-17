@@ -1,6 +1,6 @@
 # Tretnix Project Agent Instructions
 
-These instructions apply to any agent or AI-assisted tool working in this repository.
+These instructions apply to Codex, Cursor Agent, Lovable, Claude Code and any other agent working in this repository.
 
 ## Read first
 
@@ -8,22 +8,32 @@ Before non-trivial work:
 
 1. read this file;
 2. inspect the repository structure;
-3. read relevant files under `docs/`, when present;
-4. read the approved task specification;
+3. read relevant project documentation;
+4. read the approved task;
 5. inspect the implementation before proposing changes.
 
-Do not assume that a missing document means permission to redesign or restructure the project.
+Do not assume that missing documentation is permission to redesign or restructure the project.
 
 ## Source precedence
 
-When guidance conflicts, use this order:
+When guidance conflicts, use:
 
-1. approved project decisions;
-2. project-specific documentation;
-3. shared Tretnix decisions and development standards;
+1. approved decisions;
+2. shared Tretnix development standards;
+3. project-specific documentation;
 4. the approved current task;
 5. behavior confirmed in code and deployment;
-6. assumptions, which must be stated explicitly.
+6. assumptions or past conversations that still need formalization.
+
+## Agent coordination
+
+- Only one writer may modify the same working tree at a time.
+- Do not edit concurrently with another agent or Lovable.
+- Work on a dedicated branch, not `main`.
+- Require a branch, commit or diff checkpoint before handoff.
+- A reviewer starts in read-only mode.
+- Do not apply review findings until the user approves them.
+- Preserve published Lovable-connected history.
 
 ## Working method
 
@@ -34,9 +44,9 @@ For non-trivial changes:
 3. distinguish symptoms from root causes;
 4. search for related implementations;
 5. evaluate regressions;
-6. propose a concise plan;
+6. state a concise plan;
 7. list expected files;
-8. implement the smallest complete solution;
+8. implement the smallest complete approved solution;
 9. review the final diff;
 10. run available checks;
 11. report results and remaining risks.
@@ -72,7 +82,7 @@ Preserve intentional client-specific identity:
 - Keep components focused.
 - Avoid duplicated business logic.
 - Centralize repeated configuration.
-- Follow existing repository patterns unless they are the subject of the approved change.
+- Follow repository patterns unless they are the subject of the approved task.
 
 ## Responsive and accessibility
 
@@ -101,8 +111,9 @@ Preserve intentional client-specific identity:
 - Never place service-role keys in client code.
 - Client-side guards are not authorization controls.
 - Do not weaken RLS to hide a frontend error.
-- Use versioned migrations for schema changes.
+- Use versioned migrations.
 - Do not perform destructive database, storage, deployment or DNS actions without explicit approval.
+- Cloud agents receive only the minimum credentials and network access required.
 
 ## Validation
 
@@ -142,9 +153,11 @@ Report:
 4. files changed;
 5. commands and checks actually executed;
 6. results;
-7. unresolved issues;
-8. regression risk;
-9. manual tests still required.
+7. unavailable checks;
+8. unresolved issues;
+9. regression risk;
+10. manual tests still required;
+11. final Git status.
 
 Clearly distinguish confirmed findings, probable findings, potential risks and non-assessable areas.
 
@@ -152,7 +165,7 @@ Clearly distinguish confirmed findings, probable findings, potential risks and n
 
 Public-facing software is designed and developed by Tretnix.
 
-Do not add public references attributing the product to AI tools.
+Do not add public references attributing the product to internal tools.
 
 Client projects include a discreet footer attribution:
 
@@ -160,4 +173,6 @@ Client projects include a discreet footer attribution:
 
 linked to:
 
+```text
 https://tretnix.com
+```

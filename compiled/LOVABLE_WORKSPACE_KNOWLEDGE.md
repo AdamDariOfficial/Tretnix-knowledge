@@ -145,7 +145,9 @@ For affected flows verify:
 
 - Keep `main` deployable.
 - Use focused branches and commits for manual development.
-- Do not work on the same files concurrently from Lovable and another editor without coordination.
+- Do not work on the same files concurrently from Lovable, Codex, Cursor Agent, Claude Code or another editor.
+- Before handoff, sync to GitHub and provide a branch or commit checkpoint.
+- A technical reviewer starts in read-only mode and does not overwrite Lovable output automatically.
 - Do not change unrelated code, copy or design.
 - Do not perform deployment, DNS, production database or destructive operations without explicit approval.
 
