@@ -1,14 +1,14 @@
 ---
-description: Forno Lume START project identity, controlled remediation and Tretnix workflow
+description: Forno Lume START canonical identity, frozen state and Tretnix workflow
 alwaysApply: true
 ---
 
 # Forno Lume START project overview
 
 - Read and follow the root `AGENTS.md`.
-- This repository is the Tretnix pilot and initial visual reference for Hospitality START.
-- The initial static audit and its quality-control pass are complete.
-- Implementation requires an approved, scoped task.
+- This repository is the closed and frozen canonical visual and single-page reference for Hospitality START.
+- Audit, remediation, technical closure and owner production verification are complete at `d15f639267dfdd57194536154abfa1d0ff3b4542`.
+- Further source work requires a confirmed bug, regression, security issue or explicitly approved product requirement and a scoped task.
 - Preserve the warm, artisanal and premium client identity.
 - Do not reinterpret the site as generic SaaS.
 - Visual canonical status does not automatically imply technical canonical status.

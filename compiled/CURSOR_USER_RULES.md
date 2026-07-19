@@ -58,6 +58,10 @@ When a task involves routing, navigation or UI, consider:
 - reduced motion;
 - console and network errors.
 
+New routes open at the top immediately, while intentional same-page anchors may scroll smoothly. Cross-route section links navigate first and reach the section after mount. Do not disable browser scroll restoration broadly to hide routing defects.
+
+Keep structural layout containers static by default. Animate semantic editorial elements or small meaningful groups, use short stagger only when it improves reading order, and keep content visible with reduced motion. Hero sections, galleries and approved visual-first components may use a distinct documented treatment that preserves the client’s personality.
+
 Agent coordination:
 
 - only one agent writes to the same working tree at a time;
@@ -67,3 +71,5 @@ Agent coordination:
 - apply only findings explicitly approved by the user.
 
 Public-facing software is designed and developed by Tretnix. Do not add public references that attribute client software to ChatGPT, Lovable, Cursor, Codex, Claude Code or other AI tools.
+
+Client footers include the exact visible attribution “Progettato e sviluppato da Tretnix” linked to `https://tretnix.com`. Only “Tretnix” needs to be linked unless the approved design says otherwise. The discreet but perceivable link opens in a new tab with `target="_blank"` and `rel="noopener noreferrer"`, communicates that behavior accessibly and preserves visible keyboard focus. Decorative external-link icons are hidden from assistive technology.

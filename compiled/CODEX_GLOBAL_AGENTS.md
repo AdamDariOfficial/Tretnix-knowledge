@@ -153,3 +153,5 @@ linked to:
 ```text
 https://tretnix.com
 ```
+
+Only “Tretnix” needs to be linked unless the approved design says otherwise. The link must remain discreet but perceivable, open in a new tab with `target="_blank"` and `rel="noopener noreferrer"`, indicate the new-tab behavior accessibly and preserve visible keyboard focus. A restrained external-link icon is allowed; decorative icons must be hidden from assistive technology.

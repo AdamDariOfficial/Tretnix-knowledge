@@ -1,7 +1,7 @@
 # Tretnix Decision Log
 
-**Versione:** 1.1
-**Aggiornato:** 17 luglio 2026
+**Versione:** 1.2
+**Aggiornato:** 20 luglio 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
 
@@ -92,11 +92,17 @@ L’alternanza immagine/testo su schermi piccoli crea un flusso di lettura incoe
 
 ---
 
-## TRX-DEC-004 — Reset dello scroll al cambio route
+## TRX-DEC-004 — Navigazione tra route, anchor e scroll
 
 **Stato:** approvata
 **Data:** 13 luglio 2026
+**Aggiornata:** 20 luglio 2026
 **Ambito:** applicazioni e siti multipagina
+**Repository interessati:** tutti i repository con routing o navigazione a sezioni
+
+### Contesto
+
+Reset di route, anchor intenzionali e ripristino della posizione nella history rispondono a intenzioni diverse. Una gestione globale usata per mascherare un difetto può rompere direct URL, refresh, back e forward.
 
 ### Decisione
 
@@ -104,15 +110,30 @@ Quando si apre una nuova route, la pagina deve partire dall’alto con reset imm
 
 Non usare smooth scroll per il reset della route.
 
+La navigazione intenzionale verso un anchor nella stessa pagina può usare smooth scroll. Un link a una sezione in un’altra route deve prima completare la navigazione e il mount della destinazione, poi raggiungere la sezione prevista.
+
 ### Motivazione
 
 Lo smooth scroll può mostrare movimenti indesiderati, attivare reveal prematuramente e rendere la navigazione incoerente.
 
 ### Conseguenze
 
-- I link interni alla stessa pagina possono usare un comportamento diverso.
-- Back e forward devono essere verificati separatamente.
-- Non distruggere la history restoration corretta senza analisi.
+- Direct URL, refresh, back e forward restano comportamenti obbligatori da preservare e verificare.
+- Il reset di una nuova route non definisce il comportamento degli anchor intenzionali.
+- La destinazione cross-route non deve dipendere da timing fragili.
+
+### Guida all’implementazione
+
+- Distinguere nuova route, anchor same-page e anchor cross-route.
+- Per i link cross-route, trasportare l’intento della sezione e applicarlo quando la destinazione è disponibile.
+- Gestire header, focus e offset senza valori hard-coded fragili.
+- Verificare accesso diretto all’URL con hash quando supportato.
+
+### Esclusioni e limitazioni
+
+- Non disabilitare globalmente la scroll restoration del browser per nascondere un difetto di routing.
+- Non usare smooth scroll per il reset di una nuova route.
+- La strategia tecnica dipende dal router del repository e deve essere verificata localmente.
 
 ---
 
@@ -149,7 +170,13 @@ L’animazione deve accompagnare la lettura reale.
 
 **Stato:** approvata
 **Data:** 13 luglio 2026
+**Aggiornata:** 20 luglio 2026
 **Ambito:** progetti cliente attuali e futuri
+**Repository interessati:** tutti i siti e prodotti pubblici destinati ai clienti
+
+### Contesto
+
+La firma Tretnix deve sostenere riconoscibilità e acquisizione senza confondersi con il brand del cliente. Il collegamento esterno deve essere percepibile, sicuro, accessibile e coerente tra i progetti.
 
 ### Decisione
 
@@ -163,15 +190,32 @@ con collegamento a:
 https://tretnix.com
 ```
 
+Salvo diversa approvazione esplicita del design, è sufficiente collegare la sola parola “Tretnix”. Il collegamento apre in una nuova scheda con `target="_blank"` e `rel="noopener noreferrer"` e comunica in modo accessibile tale comportamento.
+
 ### Motivazione
 
 L’attribuzione rafforza portfolio, riconoscibilità e acquisizione senza compromettere il brand del cliente.
 
 ### Conseguenze
 
-- La firma deve essere accessibile.
-- Non deve dominare il footer.
-- Deve adattarsi all’identità del progetto.
+- La firma non è opzionale.
+- Il link deve essere chiaramente percepibile come interattivo, pur restando discreto.
+- L’interazione deve preservare la visibilità del focus da tastiera.
+- La firma non deve dominare il footer e deve adattarsi all’identità del progetto.
+
+### Guida all’implementazione
+
+- Mantenere esattamente il testo visibile “Progettato e sviluppato da Tretnix”.
+- Collegare “Tretnix” a `https://tretnix.com`, salvo diversa approvazione del design.
+- Includere un’indicazione accessibile che il link apre una nuova scheda.
+- È approvata un’icona esterna sobria, come `ArrowUpRight`.
+- Nascondere alle tecnologie assistive le icone puramente decorative.
+
+### Esclusioni e limitazioni
+
+- Non trasformare l’attribuzione in un elemento dominante rispetto all’identità del cliente.
+- Non rimuovere l’attribuzione perché assente da una singola implementazione precedente.
+- Non sostituire il testo approvato senza una decisione esplicita.
 
 ---
 
@@ -508,3 +552,113 @@ Una seconda opinione non è una prova tecnica. Due agenti possono condividere la
 - Rifiutare claim non supportati.
 - Evitare che una review produca scope creep.
 - Eseguire nuovamente i controlli dopo le correzioni approvate.
+
+---
+
+## TRX-DEC-018 — Chiusura e ruolo canonico di Forno Lume START
+
+**Stato:** approvata
+**Data:** 20 luglio 2026
+**Ambito:** famiglia Hospitality Tretnix
+**Repository interessati:** `forno-lume-START`, `forno-lume-BUSINESS` e futuri repository Hospitality correlati
+
+### Contesto
+
+Forno Lume START ha completato audit, remediation, chiusura tecnica, verifica in produzione da parte del proprietario del progetto e documentazione. La baseline sorgente autorevole della chiusura è `d15f639267dfdd57194536154abfa1d0ff3b4542`.
+
+### Decisione
+
+Forno Lume START è completato, rimediato, tecnicamente chiuso, verificato in produzione, documentato e congelato.
+
+È il riferimento canonico approvato per:
+
+- qualità visuale Hospitality;
+- qualità di tipografia e palette Hospitality;
+- struttura premium single-page START;
+- qualità responsive;
+- comportamento percepito della navbar;
+- sobrietà delle interazioni;
+- linguaggio del movimento;
+- reveal editoriali sotto la fold.
+
+Ulteriori modifiche sorgente richiedono un bug confermato, una regressione confermata, un problema di sicurezza o un requisito di prodotto approvato esplicitamente.
+
+### Motivazione
+
+Il ciclo di chiusura ha trasformato START da riferimento visuale iniziale a baseline verificata per gli aspetti elencati. Congelare la sorgente protegge tale baseline e impedisce che backlog o pulizie opzionali riaprano il progetto senza una necessità approvata.
+
+### Conseguenze
+
+- Il backlog residuo non autorizza implementazione.
+- Forno Lume BUSINESS è il prossimo repository Hospitality attivo per audit.
+- BUSINESS resta soltanto candidato per routing multipagina, gallerie e lightbox e funzionalità di piano superiore finché il proprio audit e la propria remediation non sono completi.
+- I confronti futuri devono riferirsi alla baseline di chiusura identificata.
+
+### Guida all’implementazione
+
+- Preservare in BUSINESS e nei piani correlati i comportamenti percepiti assegnati canonicamente a START.
+- Valutare separatamente l’implementazione tecnica di ogni pattern prima di trasferirla.
+- Trattare gli elementi di backlog come contesto non bloccante, non come scope approvato.
+- Documentare qualsiasi futura riapertura con causa confermata e task esplicito.
+
+### Esclusioni e limitazioni
+
+START non è automaticamente canonico per:
+
+- architettura di routing multipagina;
+- gallerie e lightbox;
+- funzionalità BUSINESS o BUSINESS PLUS;
+- sistemi amministrativi;
+- autenticazione e autorizzazione;
+- architettura backend;
+- database e storage.
+
+Questi ambiti devono essere valutati indipendentemente nel repository pertinente.
+
+---
+
+## TRX-DEC-019 — Granularità del motion editoriale
+
+**Stato:** approvata
+**Data:** 20 luglio 2026
+**Ambito:** siti e interfacce Tretnix con motion editoriale
+**Repository interessati:** tutti i repository di siti e prodotti cliente con animazioni
+
+### Contesto
+
+Animare container strutturali estesi come blocchi unici rende le pagine pesanti, indebolisce l’ordine di lettura e favorisce la copia meccanica di una stessa soluzione tra identità differenti. La granularità deve sostenere il contenuto e il carattere del cliente.
+
+### Decisione
+
+- I container strutturali di layout normalmente restano statici.
+- Si animano elementi editoriali semantici o piccoli gruppi significativi.
+- Intere sezioni estese non vengono animate come un unico blocco pesante.
+- Uno stagger breve e controllato è ammesso soltanto quando migliora l’ordine di lettura.
+- I reveal iniziano quando il contenuto entra nel viewport.
+- Con reduced motion il contenuto resta visibile.
+- Hero, gallerie e componenti visual-first approvati possono usare un trattamento distinto e documentato.
+- Tempi e trattamento preservano la personalità visuale del cliente invece di essere copiati meccanicamente tra progetti.
+
+### Motivazione
+
+Il motion deve accompagnare comprensione, ritmo editoriale e qualità percepita senza ritardare o nascondere il contenuto.
+
+### Conseguenze
+
+- La struttura della pagina non dipende dall’animazione.
+- I pattern condivisi definiscono principi e comportamento, non timing universali.
+- `prefers-reduced-motion` resta un requisito funzionale e non un miglioramento opzionale.
+- Questa decisione amplia `TRX-DEC-005` e applica al motion il principio di identità preservata di `TRX-DEC-008`.
+
+### Guida all’implementazione
+
+- Scegliere il più piccolo elemento semantico che esprime il reveal previsto.
+- Limitare numero, distanza, durata e stagger delle transizioni.
+- Documentare trattamenti distinti per hero, gallerie o componenti visual-first.
+- Verificare viewport entry, contenuto iniziale, reduced motion, responsive e assenza di flash.
+
+### Esclusioni e limitazioni
+
+- Non esiste un timing unico obbligatorio per tutti i clienti.
+- Le eccezioni visual-first non autorizzano animazioni invasive o contenuto inaccessibile.
+- La decisione non impone una libreria o una specifica tecnica di animazione.

@@ -18,7 +18,7 @@ These instructions apply to Codex, Cursor Agent, Lovable, Claude Code and any ot
 Forno Lume START is:
 
 - a completed and deployed Hospitality START website;
-- the initial canonical visual reference for the Tretnix Hospitality family;
+- the approved canonical visual and single-page reference for the Tretnix Hospitality family;
 - the source project from which Forno Lume BUSINESS evolved;
 - the pilot repository for the Tretnix controlled development workflow.
 
@@ -36,15 +36,18 @@ https://forno-lume.tretnix.com
 
 ## Verified project state
 
-Confirmed as of 17 July 2026:
+Confirmed as of 20 July 2026:
 
 - the agent foundation is merged into `main`;
-- a static read-only audit was completed at commit `39d58126abb2fa9b63070e047db06c8027aaef6f`;
-- the audit received an independent quality-control pass;
-- no remediation has yet been approved or implemented;
-- build, lint, typecheck and interactive browser verification are still required.
+- audit, remediation and technical closure are complete at source baseline `d15f639267dfdd57194536154abfa1d0ff3b4542`;
+- production verification was completed successfully by the project owner;
+- the project is documented and frozen;
+- `bun run typecheck`, `bun run build`, the client, SSR and Nitro/Cloudflare production builds, and `git diff --check` passed;
+- ESLint with the Prettier rule disabled returned zero errors;
+- full lint does not pass because the Windows checkout uses CRLF while Prettier expects LF;
+- six pre-existing `react-refresh/only-export-components` warnings remain in shadcn scaffold files and were not introduced by remediation.
 
-Implementation requires an explicit approved task.
+Further source changes require a confirmed bug, confirmed regression, security issue or explicitly approved product requirement, followed by an explicit approved task. Backlog alone does not authorize implementation.
 
 ## Source precedence
 
@@ -90,17 +93,18 @@ Do not:
 
 ## Canonical role and limitations
 
-Forno Lume START is the declared visual reference for:
+Forno Lume START is the approved canonical reference for:
 
-- Hospitality START identity;
-- typography;
-- palette;
+- Hospitality visual quality;
+- Hospitality typography and palette quality;
+- premium single-page START structure;
 - navbar perceived behavior;
-- reveal language;
-- interactions;
+- below-the-fold editorial reveal behavior;
+- interaction restraint;
+- motion language;
 - responsive quality.
 
-It is not automatically the technical canonical source for every implementation.
+It is not automatically canonical for multipage routing architecture, galleries or lightboxes, BUSINESS or BUSINESS PLUS functionality, admin systems, authentication, authorization, backend architecture, database design or storage design.
 
 Before copying a pattern:
 
@@ -135,14 +139,21 @@ Do not duplicate markup only to change order.
 - New routes open at the top.
 - Route reset is immediate, not smooth.
 - Preserve direct URL, refresh, browser back and forward.
-- Cross-route section links navigate before scrolling.
+- Intentional same-page anchor navigation may use smooth scrolling.
+- Cross-route section links navigate first and reach the intended section after it is mounted.
+- Do not disable browser scroll restoration broadly to hide a routing defect.
 
 ### Reveals
 
 - Below-the-fold reveals start when entering the viewport.
 - Avoid flashes and already-completed reveals.
+- Structural layout containers normally remain static.
+- Animate semantic editorial elements or small meaningful groups, not entire large sections as one heavy block.
+- Use short, controlled stagger only when it improves reading order.
 - Respect `prefers-reduced-motion`.
 - Content remains visible without animation.
+- Hero sections, galleries and approved visual-first components may use a distinct documented treatment.
+- Preserve the client’s visual personality instead of copying identical timings mechanically.
 
 ### Footer attribution
 
@@ -156,23 +167,25 @@ to:
 https://tretnix.com
 ```
 
+Only “Tretnix” needs to be linked unless the approved design says otherwise. The link is perceivable but discreet, opens in a new tab with `target="_blank"` and `rel="noopener noreferrer"`, indicates that behavior accessibly and preserves visible keyboard focus. A restrained external-link icon such as `ArrowUpRight` is approved; decorative icons are hidden from assistive technology.
+
 ### START → BUSINESS
 
 Forno Lume BUSINESS preserves the approved START identity and motion language while expanding routes, content, navigation and functionality.
 
-## Current approved backlog source
+## Non-blocking backlog
 
-The authoritative remediation scope must come from an approved task based on the quality-controlled audit.
+Recorded without authorizing implementation:
 
-Known priority candidates are:
+- approved custom favicon;
+- optimized horizontal social-preview image;
+- controlled SSR 500 fault test;
+- repository line-ending policy normalization;
+- unused shadcn scaffold review;
+- unused React Query provider review;
+- technical-warning cleanup only with appropriate regression checks.
 
-- footer attribution;
-- mobile order in `AboutSection`;
-- hidden navbar semantics and focus;
-- mobile drawer keyboard behavior;
-- FAQ reduced motion.
-
-This list is context, not permission to modify all items together.
+These items do not block work on Forno Lume BUSINESS and do not authorize reopening START.
 
 ## Working method
 

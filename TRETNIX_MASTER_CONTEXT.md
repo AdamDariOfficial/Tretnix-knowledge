@@ -1,8 +1,8 @@
 # Tretnix Master Context
 
-**Versione:** 1.1
-**Aggiornato:** 17 luglio 2026
-**Stato:** canonico iniziale
+**Versione:** 1.2
+**Aggiornato:** 20 luglio 2026
+**Stato:** canonico
 
 ---
 
@@ -442,7 +442,7 @@ Forno Lume BUSINESS
 futuro Forno Lume BUSINESS PLUS
 ```
 
-START definisce il linguaggio visuale e di interazione. BUSINESS espande architettura informativa, route, contenuti e funzionalità.
+START definisce il linguaggio visuale e di interazione approvato. BUSINESS espande architettura informativa, route, contenuti e funzionalità, ma i relativi pattern tecnici restano candidati fino al completamento del proprio audit e della propria remediation.
 
 ---
 
@@ -483,38 +483,31 @@ Aree note da controllare:
 
 Ruolo:
 
-- riferimento canonico Hospitality START;
-- fonte iniziale per identità visuale;
-- tipografia;
-- palette;
-- navbar;
-- animazioni;
-- reveal;
-- responsive;
-- interazioni.
+- riferimento canonico per la qualità visuale Hospitality;
+- riferimento canonico per tipografia e palette Hospitality;
+- riferimento canonico per la struttura premium single-page START;
+- riferimento canonico per qualità responsive e comportamento percepito della navbar;
+- riferimento canonico per sobrietà delle interazioni, linguaggio del movimento e reveal editoriali sotto la fold.
 
-Stato dichiarato:
+Stato verificato:
 
 - completato;
-- deployato;
-- deve diventare una base tecnica pulita per i piani superiori.
+- rimediato;
+- tecnicamente chiuso sulla baseline sorgente `d15f639267dfdd57194536154abfa1d0ff3b4542`;
+- verificato in produzione dal proprietario del progetto;
+- documentato;
+- congelato.
 
-Aree da controllare:
+Ulteriori modifiche sorgente richiedono:
 
-- architettura;
-- componenti;
-- navbar hide/show;
-- route e scroll;
-- responsive;
-- overflow;
-- ordine mobile;
-- animazioni;
-- accessibilità;
-- SEO;
-- duplicazioni;
-- test;
-- build;
-- preparazione alla duplicazione.
+- un bug confermato;
+- una regressione confermata;
+- un problema di sicurezza;
+- un requisito di prodotto approvato esplicitamente.
+
+La presenza di elementi nel backlog non autorizza pulizia opzionale o nuove modifiche.
+
+Il ruolo canonico non si estende automaticamente a routing multipagina, gallerie e lightbox, funzionalità BUSINESS o BUSINESS PLUS, sistemi amministrativi, autenticazione, autorizzazione, backend, database o storage. Questi ambiti devono essere valutati nel repository pertinente.
 
 ### Forno Lume BUSINESS
 
@@ -527,7 +520,10 @@ Ruolo:
 Stato dichiarato:
 
 - deployato;
+- prossimo repository Hospitality attivo per audit;
 - deve essere confrontato sistematicamente con START;
+- è soltanto candidato per routing multipagina, gallerie e lightbox e funzionalità di piano superiore;
+- nessun suo pattern è approvato come canonico prima del completamento di audit e remediation;
 - può contenere regressioni introdotte durante l’espansione.
 
 Route previste:
@@ -616,14 +612,16 @@ Esempi iniziali:
 | Pattern | Candidato iniziale |
 |---|---|
 | Brand istituzionale | `tretnix` |
-| Identità Hospitality | `forno-lume-START` |
-| Animazioni Hospitality | `forno-lume-START`, previa verifica |
-| Architettura multipagina Hospitality | `forno-lume-BUSINESS`, previa verifica |
+| Qualità visuale, tipografia e palette Hospitality | `forno-lume-START` |
+| Struttura premium single-page START | `forno-lume-START` |
+| Responsive, navbar percepita, interazioni, motion e reveal Hospitality | `forno-lume-START` |
+| Architettura multipagina Hospitality | `forno-lume-BUSINESS`, candidato da auditare |
+| Gallerie, lightbox e funzionalità di piano superiore | `forno-lume-BUSINESS`, candidato da auditare |
 | Evoluzione START → BUSINESS | confronto tra START e BUSINESS |
 | Sicurezza Supabase | da determinare tramite audit |
 | Standard tecnici generali | da estrarre dopo il confronto |
 
-Un progetto può essere fonte visuale canonica ma richiedere una correzione tecnica prima dell’estrazione del pattern.
+L’approvazione di un pattern percepito non rende automaticamente canonica ogni scelta implementativa interna del repository sorgente.
 
 ---
 
@@ -745,18 +743,20 @@ Stato: approvata.
 
 ### Fase 4 — Primo intervento controllato
 
-- preparare un task completo;
-- creare una branch dedicata;
-- far implementare a Codex il pacchetto approvato;
-- eseguire una revisione in sola lettura;
-- applicare soltanto finding approvati;
-- eseguire controlli disponibili;
-- aprire una pull request.
+Stato: completata su Forno Lume START.
+
+- task e remediation approvati completati;
+- chiusura tecnica verificata sulla baseline `d15f639267dfdd57194536154abfa1d0ff3b4542`;
+- produzione verificata dal proprietario del progetto;
+- repository documentato e congelato.
 
 ### Fase 5 — Consolidamento
 
+Stato: attiva.
+
+- auditare `forno-lume-BUSINESS` come prossimo repository Hospitality;
+- confrontare BUSINESS con la baseline canonica START;
 - trasformare procedure verificate in skill;
-- confrontare START e BUSINESS;
 - auditare Tretnix.com;
 - estrarre standard confermati;
 - configurare Lovable quando disponibile.
@@ -772,15 +772,12 @@ Stato: approvata.
 
 La priorità attuale è:
 
-1. integrare Codex come agente operativo senza sostituire GitHub o il controllo umano;
-2. aggiornare e sincronizzare la knowledge;
-3. configurare Codex globalmente;
-4. verificare la lettura delle regole del progetto;
-5. preparare il primo task di remediation di Forno Lume START;
-6. intervenire con una branch e un solo writer;
-7. revisionare il diff in sola lettura;
-8. completare le verifiche eseguibili e manuali;
-9. registrare il pattern soltanto dopo conferma.
+1. mantenere Forno Lume START chiuso e congelato salvo bug, regressioni, sicurezza o requisiti di prodotto approvati;
+2. auditare Forno Lume BUSINESS come prossimo repository Hospitality attivo;
+3. confrontare BUSINESS con i soli pattern canonici assegnati a START;
+4. valutare indipendentemente routing multipagina, gallerie, lightbox e funzionalità di piano superiore;
+5. approvare pattern BUSINESS soltanto dopo audit, remediation e verifiche;
+6. proseguire il consolidamento delle procedure Tretnix già verificate.
 
 ---
 

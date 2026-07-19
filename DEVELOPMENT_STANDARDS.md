@@ -1,7 +1,7 @@
 # Tretnix Development Standards
 
-**Versione:** 1.1
-**Aggiornato:** 17 luglio 2026
+**Versione:** 1.2
+**Aggiornato:** 20 luglio 2026
 **Ambito:** tutti i progetti Tretnix, salvo eccezioni documentate
 
 Le parole **DEVE**, **NON DEVE**, **DOVREBBE** e **PUÒ** esprimono il livello di obbligatorietà.
@@ -330,7 +330,7 @@ Il reset DEVE essere immediato, non smooth.
 
 Per una sezione nella route corrente:
 
-- usare scroll controllato quando appropriato;
+- lo scroll intenzionale può essere smooth quando appropriato;
 - rispettare header e focus;
 - evitare offset hard-coded fragili.
 
@@ -355,7 +355,7 @@ Verificare:
 - route non esistenti;
 - redirect.
 
-Non applicare un reset globale che distrugga la corretta scroll restoration della history senza una decisione esplicita.
+Non disabilitare o sovrascrivere globalmente la scroll restoration del browser per nascondere un difetto di routing.
 
 ### Navbar
 
@@ -387,6 +387,15 @@ Le animazioni DEVONO essere:
 - coerenti;
 - non invasive;
 - compatibili con accessibilità e performance.
+
+### Granularità
+
+- I container strutturali di layout normalmente restano statici.
+- Animare elementi editoriali semantici o piccoli gruppi significativi.
+- Non animare intere sezioni estese come un unico blocco pesante.
+- Usare stagger brevi e controllati soltanto quando migliorano l’ordine di lettura.
+- Hero, gallerie e componenti visual-first approvati possono adottare un trattamento distinto e documentato.
+- Preservare la personalità visuale del cliente; non copiare meccanicamente gli stessi tempi tra progetti.
 
 ### Reveal
 
@@ -730,10 +739,16 @@ https://tretnix.com
 
 L’implementazione deve:
 
-- essere accessibile;
+- collegare la sola parola “Tretnix”, salvo diversa approvazione esplicita del design;
+- rendere il link chiaramente percepibile come interattivo, pur mantenendolo discreto;
+- aprire il collegamento in una nuova scheda con `target="_blank"` e `rel="noopener noreferrer"`;
+- includere un’indicazione accessibile dell’apertura in una nuova scheda;
+- preservare la visibilità del focus da tastiera;
 - non competere con il brand del cliente;
 - non usare riferimenti pubblici agli strumenti interni;
 - preservare il layout del footer.
+
+È approvata un’icona esterna sobria, come `ArrowUpRight`; se decorativa, deve essere nascosta alle tecnologie assistive.
 
 ---
 
