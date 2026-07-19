@@ -1,7 +1,7 @@
 # Tretnix Repository Index
 
-**Versione:** 1.1
-**Aggiornato:** 17 luglio 2026
+**Versione:** 1.2
+**Aggiornato:** 20 luglio 2026
 **Stato dell’inventario:** completo rispetto ai quattro repository attualmente dichiarati
 
 Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit del codice.
@@ -125,10 +125,10 @@ Questi aspetti richiedono audit.
 | Piano | START |
 | Repository | `https://github.com/AdamDariOfficial/forno-lume-START.git` |
 | Deploy | `https://forno-lume.tretnix.com` |
-| Stato | produzione |
+| Stato | chiuso, verificato e congelato |
 | Branch principale | `main` |
-| Commit auditato | `39d58126abb2fa9b63070e047db06c8027aaef6f` |
-| Ultimo audit | 17 luglio 2026 — audit statico read-only + controllo qualità |
+| Baseline di chiusura | `d15f639267dfdd57194536154abfa1d0ff3b4542` |
+| Ultimo audit | 18 luglio 2026 — ciclo completo di audit, remediation e chiusura tecnica |
 
 ### Relazione con altri progetti
 
@@ -136,19 +136,18 @@ Questi aspetti richiedono audit.
 
 Forno Lume BUSINESS deriva da questo progetto.
 
-### Ruolo canonico dichiarato
+### Ruolo canonico approvato
 
-Fonte iniziale per il verticale Hospitality START:
+Baseline canonica per:
 
-- identità visuale;
-- tipografia;
-- palette;
-- animazioni;
-- navbar;
-- reveal;
-- interazioni;
-- responsive;
-- qualità percepita.
+- qualità visuale Hospitality;
+- qualità di tipografia e palette Hospitality;
+- struttura premium single-page START;
+- qualità responsive;
+- comportamento percepito della navbar;
+- sobrietà delle interazioni;
+- linguaggio del movimento;
+- reveal editoriali sotto la fold.
 
 ### Identità nota
 
@@ -160,44 +159,71 @@ Fonte iniziale per il verticale Hospitality START:
 
 I valori tecnici esatti devono essere verificati nel codice e documentati nel futuro design system del progetto.
 
-### Stato verificato
+### Chiusura verificata
 
-- completato e deployato;
-- foundation agent integrata in `main`;
-- primo audit statico read-only completato;
-- controllo qualità dell'audit completato;
-- build, lint, typecheck e browser interattivo ancora da eseguire;
-- prossimo passo: primo pacchetto di remediation controllato con Codex.
+- completato;
+- rimediato;
+- tecnicamente chiuso sulla baseline `d15f639267dfdd57194536154abfa1d0ff3b4542`;
+- verificato in produzione dal proprietario del progetto;
+- documentato;
+- congelato.
 
-### Finding prioritari confermati
+Ulteriori modifiche sorgente richiedono:
 
-- attribuzione footer non conforme;
-- ordine editoriale mobile errato in `AboutSection`;
-- semantica/focus della navbar nascosta da correggere preservando il comportamento visuale;
-- drawer mobile senza gestione tastiera completa;
-- reduced motion incompleto per la FAQ.
+- un bug confermato;
+- una regressione confermata;
+- un problema di sicurezza;
+- un requisito di prodotto approvato esplicitamente.
 
-### Aree ancora da controllare
+La presenza di backlog non autorizza pulizia opzionale.
 
-- architettura;
-- struttura componenti;
-- animazioni;
-- navbar hide/show;
-- route e scroll;
-- responsive;
-- overflow;
-- ordine mobile testo/immagine;
-- componenti riutilizzabili;
-- duplicazioni;
-- accessibilità;
-- SEO;
-- test;
-- build;
-- preparazione alla duplicazione.
+### Verifiche registrate
 
-### Ruolo canonico non ancora assegnabile
+Eseguite e superate durante la chiusura tecnica:
 
-START è fonte visuale dichiarata. I pattern tecnici possono diventare canonici soltanto dopo remediation e verifiche esecutive/manuali.
+- `bun run typecheck`;
+- `bun run build`;
+- build di produzione client;
+- build di produzione SSR;
+- build di produzione Nitro/Cloudflare;
+- `git diff --check`;
+- ESLint con la regola Prettier disabilitata: zero errori;
+- verifica browser in produzione completata con successo dal proprietario del progetto.
+
+Limitazioni note:
+
+- il lint completo fallisce perché il checkout Windows usa CRLF mentre Prettier richiede LF;
+- rimangono sei warning preesistenti `react-refresh/only-export-components` nei file scaffold shadcn;
+- i warning non sono stati introdotti dalla remediation;
+- non dichiarare il lint completo come superato.
+
+### Backlog START non bloccante
+
+Registrato senza autorizzare implementazione:
+
+- favicon personalizzata approvata;
+- immagine social-preview orizzontale ottimizzata;
+- test controllato di fault SSR 500;
+- normalizzazione della policy dei line ending del repository;
+- revisione dello scaffold shadcn inutilizzato;
+- revisione del provider React Query inutilizzato;
+- pulizia dei warning tecnici soltanto con controlli di regressione appropriati.
+
+Questi elementi non bloccano il lavoro su Forno Lume BUSINESS.
+
+### Ambiti non canonici
+
+START non è automaticamente canonico per:
+
+- architettura di routing multipagina;
+- gallerie e lightbox;
+- funzionalità BUSINESS o BUSINESS PLUS;
+- sistemi amministrativi;
+- autenticazione e autorizzazione;
+- architettura backend;
+- database e storage.
+
+Questi ambiti devono essere valutati indipendentemente nel repository pertinente.
 
 ---
 
@@ -212,7 +238,7 @@ START è fonte visuale dichiarata. I pattern tecnici possono diventare canonici 
 | Piano | BUSINESS |
 | Repository | `https://github.com/AdamDariOfficial/forno-lume-BUSINESS.git` |
 | Deploy | `https://forno-lume-business.tretnix.com` |
-| Stato | produzione / revisione |
+| Stato | produzione / prossimo audit Hospitality attivo |
 | Branch principale | da verificare |
 | Commit auditato | non ancora auditato |
 | Ultimo audit | non eseguito |
@@ -223,7 +249,7 @@ Deriva da Forno Lume START.
 
 Deve preservarne identità e linguaggio di animazione, espandendo struttura e contenuti.
 
-### Ruolo canonico candidato
+### Ruolo canonico candidato, non approvato
 
 - architettura multipagina Hospitality;
 - configurazione centralizzata;
@@ -231,7 +257,7 @@ Deve preservarne identità e linguaggio di animazione, espandendo struttura e co
 - galleria e lightbox;
 - espansione START → BUSINESS.
 
-Il ruolo canonico tecnico deve essere confermato tramite audit.
+Il ruolo canonico tecnico deve essere confermato soltanto dopo audit, remediation e verifiche. Non assumere validi i pattern BUSINESS prima di tale chiusura.
 
 ### Route previste
 
@@ -317,7 +343,7 @@ Tretnix.com
 └── sito istituzionale e sistema amministrativo interno
 
 Forno Lume START
-└── fonte visuale Hospitality START
+└── baseline canonica visuale e single-page Hospitality START
     └── Forno Lume BUSINESS
         └── futuro BUSINESS PLUS
 ```
@@ -330,14 +356,16 @@ Forno Lume START
 |---|---|---|
 | Brand Tretnix | `tretnix` | dichiarato, da documentare |
 | Esperienza istituzionale premium | `tretnix` | da auditare |
-| Identità Hospitality | `forno-lume-START` | dichiarato |
-| Tipografia Hospitality | `forno-lume-START` | dichiarato, valori da verificare |
-| Animazioni Hospitality | `forno-lume-START` | da auditare |
-| Navbar Hospitality | `forno-lume-START` | da auditare |
-| Responsive Hospitality | `forno-lume-START` | da auditare |
+| Qualità visuale Hospitality | `forno-lume-START` | canonico, baseline di chiusura verificata |
+| Tipografia e palette Hospitality | `forno-lume-START` | canonico |
+| Struttura premium single-page START | `forno-lume-START` | canonico |
+| Motion e reveal editoriali Hospitality | `forno-lume-START` | canonico per il comportamento percepito |
+| Navbar Hospitality | `forno-lume-START` | canonico per il comportamento percepito |
+| Responsive Hospitality | `forno-lume-START` | canonico |
 | Architettura multipagina Hospitality | `forno-lume-BUSINESS` | candidato |
 | Configurazione centralizzata | `forno-lume-BUSINESS` | candidato |
 | Lightbox | `forno-lume-BUSINESS` | candidato, da verificare |
+| Funzionalità di piano superiore | `forno-lume-BUSINESS` | candidato, da verificare |
 | Admin | `tretnix` | candidato, da auditare |
 | Autenticazione e ruoli | nessuna fonte assegnata | da auditare |
 | RLS e sicurezza Supabase | nessuna fonte assegnata | da auditare |
@@ -350,16 +378,15 @@ Forno Lume START
 
 # 5. Ordine operativo aggiornato
 
-1. configurare Codex e verificarne la lettura delle istruzioni;
-2. preparare il task di remediation prioritario per `forno-lume-START`;
-3. implementare una categoria alla volta;
-4. revisionare il diff in sola lettura;
-5. completare build, lint e verifiche browser;
-6. estrarre i pattern tecnici confermati;
-7. auditare `forno-lume-BUSINESS`;
-8. confrontare START ↔ BUSINESS;
-9. auditare `tretnix`;
-10. aggiornare il registro dei pattern canonici.
+1. mantenere `forno-lume-START` chiuso e congelato;
+2. auditare `forno-lume-BUSINESS` come prossimo repository Hospitality attivo;
+3. confrontare BUSINESS con la baseline START `d15f639267dfdd57194536154abfa1d0ff3b4542`;
+4. valutare indipendentemente routing multipagina, gallerie, lightbox e funzionalità di piano superiore;
+5. rimediare soltanto finding approvati;
+6. eseguire i controlli disponibili e la verifica manuale richiesta;
+7. approvare eventuali pattern BUSINESS soltanto dopo la chiusura del relativo ciclo;
+8. auditare `tretnix`;
+9. aggiornare il registro dei pattern canonici.
 
 Le vulnerabilità critiche o alte rilevate devono essere segnalate immediatamente e prioritarizzate.
 

@@ -3,8 +3,8 @@
 Fonte canonica per identità, decisioni, standard tecnici, repository, procedure operative e adattatori degli strumenti Tretnix.
 
 **Versione:** 1.2
-**Aggiornato:** 17 luglio 2026
-**Stato:** operativo iniziale
+**Aggiornato:** 20 luglio 2026
+**Stato:** operativo
 **Visibilità consigliata:** repository GitHub privato
 
 ---

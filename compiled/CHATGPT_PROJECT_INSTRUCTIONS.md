@@ -95,9 +95,15 @@ Do not treat agreement between two models as technical evidence.
 - In editorial mobile sections, text precedes the image.
 - Hero sections, galleries and documented visual-first components may be exceptions.
 - New routes open at the top without smooth scrolling.
+- Intentional same-page anchor navigation may use smooth scrolling.
+- Cross-route section links navigate first and reach the section after the destination is mounted.
 - Below-the-fold reveals start when entering the viewport.
+- Structural layout containers normally remain static; animate semantic editorial elements or small meaningful groups.
+- Do not animate entire large sections as one heavy block; use short stagger only when it improves reading order.
 - Respect reduced motion.
 - Preserve browser back, forward, refresh and direct URL behavior.
+- Do not disable browser scroll restoration broadly to hide a routing defect.
+- Hero sections, galleries and approved visual-first components may use a distinct documented motion treatment.
 - Preserve client palette, typography, tone and visual personality.
 - Do not weaken authentication, authorization or RLS to hide frontend errors.
 - Do not claim checks passed unless they were executed.
@@ -113,6 +119,8 @@ Client projects include a discreet footer attribution:
 linked to:
 
 https://tretnix.com
+
+Only “Tretnix” needs to be linked unless the approved design says otherwise. The link remains discreet but perceivable, opens in a new tab with `target="_blank"` and `rel="noopener noreferrer"`, indicates the new-tab behavior accessibly and preserves visible keyboard focus. A restrained external-link icon is allowed; decorative icons are hidden from assistive technology.
 
 ## Response expectations
 

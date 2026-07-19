@@ -11,10 +11,12 @@ It supports Cursor and Codex through the same root `AGENTS.md`.
 ## Current state
 
 - initial foundation merged into the project repository;
-- audited commit: `39d58126abb2fa9b63070e047db06c8027aaef6f`;
-- static read-only audit completed;
-- audit quality control completed;
-- controlled remediation not yet implemented.
+- authoritative technical-closure baseline: `d15f639267dfdd57194536154abfa1d0ff3b4542`;
+- audit, remediation and technical closure completed;
+- production verification completed successfully by the project owner;
+- project documented and frozen.
+
+Further source changes require a confirmed bug, confirmed regression, security issue or explicitly approved product requirement. Backlog items do not authorize optional cleanup.
 
 ## Files
 
@@ -57,11 +59,8 @@ Use a pull request and a normal merge. Do not rewrite published Lovable history.
 
 ## Next operational use
 
-1. configure Codex global instructions;
-2. verify that Codex reads global and repository `AGENTS.md`;
-3. prepare the first approved remediation task;
-4. create a dedicated fix branch;
-5. allow Codex to implement only that scope;
-6. review the diff in read-only mode;
-7. run available checks;
-8. open a pull request after human approval.
+1. keep Forno Lume START closed and frozen;
+2. use the kit only as synchronized project context;
+3. reopen source work only for an allowed trigger and an explicitly approved task;
+4. audit Forno Lume BUSINESS as the next active Hospitality repository;
+5. treat BUSINESS routing, gallery, lightbox and higher-plan patterns as candidates until its own audit and remediation are complete.

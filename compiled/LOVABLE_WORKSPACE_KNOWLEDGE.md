@@ -69,10 +69,11 @@ Do not duplicate markup only to change responsive order.
 
 - New routes open at the top.
 - Route reset is immediate, never smooth.
+- Intentional same-page anchor navigation may use smooth scrolling.
 - Preserve direct URL, refresh, browser back and browser forward behavior.
 - For cross-route section links, navigate first and scroll only after the destination is mounted.
 - Do not introduce fragile timing or hard-coded offsets.
-- Do not apply a global scroll reset that breaks correct history restoration.
+- Do not disable or override browser scroll restoration broadly to hide a routing defect.
 
 ## Navbar
 
@@ -94,11 +95,15 @@ Avoid flashes, jumps and layout shift.
 ## Animation
 
 - Animations must feel refined, restrained and consistent.
+- Structural layout containers normally remain static.
+- Animate semantic editorial elements or small meaningful groups, not entire large sections as one heavy block.
+- Use short, controlled stagger only when it improves reading order.
 - Below-the-fold reveals start only when entering the viewport.
 - Avoid flashing already-animated content during route changes.
 - Keep content visible when motion is reduced or unavailable.
+- Hero sections, galleries and approved visual-first components may use a distinct documented treatment.
 - Preserve the approved animation language between related START, BUSINESS and BUSINESS PLUS projects.
-- Technical improvements may change implementation but must preserve the approved perceived behavior.
+- Technical improvements may change implementation but must preserve the approved perceived behavior and each client’s visual personality rather than copying identical timings.
 
 ## Security and Supabase
 
@@ -160,6 +165,8 @@ Every Tretnix client project includes a discreet footer attribution:
 linked to:
 
 https://tretnix.com
+
+Only “Tretnix” needs to be linked unless the approved design says otherwise. The link remains discreet but perceivable, opens in a new tab with `target="_blank"` and `rel="noopener noreferrer"`, indicates the new-tab behavior accessibly and preserves visible keyboard focus. A restrained external-link icon such as `ArrowUpRight` is allowed; decorative icons must be hidden from assistive technology.
 
 ## Project-specific knowledge
 

@@ -98,11 +98,18 @@ Preserve intentional client-specific identity:
 ## Routing, scroll and animation
 
 - New routes open at the top without smooth scrolling.
+- Intentional same-page anchor navigation may use smooth scrolling.
 - Preserve direct URL, refresh, back and forward behavior.
-- Cross-route section links navigate before scrolling.
+- Cross-route section links navigate first and reach the section after the destination is mounted.
+- Do not disable browser scroll restoration broadly to hide a routing defect.
+- Structural layout containers normally remain static.
+- Animate semantic editorial elements or small meaningful groups, not entire large sections as one heavy block.
+- Use short, controlled stagger only when it improves reading order.
 - Below-the-fold reveals start when entering the viewport.
 - Avoid flashes, jumps and layout shift.
-- Preserve approved animation language between related project tiers.
+- Keep content visible with reduced motion.
+- Hero sections, galleries and approved visual-first components may use a distinct documented motion treatment.
+- Preserve approved animation language and client personality between related project tiers without mechanically copying identical timings.
 
 ## Security
 
@@ -176,3 +183,5 @@ linked to:
 ```text
 https://tretnix.com
 ```
+
+Only “Tretnix” needs to be linked unless the approved design says otherwise. The link must remain discreet but perceivable, open in a new tab with `target="_blank"` and `rel="noopener noreferrer"`, indicate the new-tab behavior accessibly and preserve visible keyboard focus. A restrained external-link icon is allowed; decorative icons must be hidden from assistive technology.
