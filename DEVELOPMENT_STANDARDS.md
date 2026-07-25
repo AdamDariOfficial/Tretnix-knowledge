@@ -1,7 +1,7 @@
 # Tretnix Development Standards
 
-**Versione:** 1.2
-**Aggiornato:** 20 luglio 2026
+**Versione:** 1.3
+**Aggiornato:** 25 luglio 2026
 **Ambito:** tutti i progetti Tretnix, salvo eccezioni documentate
 
 Le parole **DEVE**, **NON DEVE**, **DOVREBBE** e **PUÒ** esprimono il livello di obbligatorietà.
@@ -722,6 +722,23 @@ Per siti pubblici verificare:
 - pagine legali richieste.
 
 Il contenuto legale deve essere revisionato professionalmente quando necessario. Un agente non deve presentare un testo generico come consulenza legale definitiva.
+
+### Demo pubbliche e dati strutturati
+
+Una demo pubblicamente consultabile che non rappresenta un’attività reale DEVE:
+
+- emettere `noindex, follow` su tutte le route pubbliche, incluse 404 e pagine legali;
+- rimanere scansionabile quando il crawler deve leggere il meta `noindex`;
+- evitare sitemap che pubblicizzano deliberatamente route demo destinate a non essere indicizzate;
+- non pubblicare entità commerciali fittizie come `Restaurant`, `LocalBusiness` o `Organization`;
+- non serializzare indirizzi, coordinate, telefono, orari, prezzi, offerte, recensioni, rating, prenotazioni o menu fittizi;
+- non usare `FAQPage`, `Menu`, `MenuSection` o `MenuItem` per ottenere rich result;
+- usare, quando utile, soltanto tipi generici e non ingannevoli come `WebSite`, `WebPage`, `AboutPage`, `CollectionPage` e `ContactPage`;
+- mantenere il JSON-LD deterministico tra server e client, route-aware e privo di duplicazioni durante la navigazione;
+- serializzare in modo sicuro il JSON-LD, escapando almeno `<` quando il framework non lo gestisce già;
+- attivare entità commerciali soltanto dopo l’inserimento di dati reali, verificati e approvati.
+
+La presenza di contenuti commerciali visibili in una demo non autorizza automaticamente la loro pubblicazione come dati strutturati.
 
 ---
 

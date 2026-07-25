@@ -122,6 +122,10 @@ https://tretnix.com
 
 Only “Tretnix” needs to be linked unless the approved design says otherwise. The link remains discreet but perceivable, opens in a new tab with `target="_blank"` and `rel="noopener noreferrer"`, indicates the new-tab behavior accessibly and preserves visible keyboard focus. A restrained external-link icon is allowed; decorative icons are hidden from assistive technology.
 
+## Public demo indexing
+
+A publicly accessible demo that does not represent a real business uses `noindex, follow` on every public route, including legal pages and 404. Do not block crawlers that need to read the noindex directive. Do not publish fictional commercial structured data such as `Restaurant`, `LocalBusiness`, `Organization`, addresses, coordinates, telephone, opening hours, prices, offers, ratings, reviews, reservations, `FAQPage`, `Menu`, `MenuSection` or `MenuItem`. Generic `WebSite`, `WebPage`, `AboutPage`, `CollectionPage` and `ContactPage` markup is allowed when accurate, route-aware, deterministic and safely serialized.
+
 ## Response expectations
 
 Explain strategic and technical findings in Italian unless another language is requested.

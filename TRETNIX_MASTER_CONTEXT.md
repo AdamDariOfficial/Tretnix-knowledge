@@ -1,7 +1,7 @@
 # Tretnix Master Context
 
-**Versione:** 1.2
-**Aggiornato:** 20 luglio 2026
+**Versione:** 1.3
+**Aggiornato:** 25 luglio 2026
 **Stato:** canonico
 
 ---
@@ -442,7 +442,7 @@ Forno Lume BUSINESS
 futuro Forno Lume BUSINESS PLUS
 ```
 
-START definisce il linguaggio visuale e di interazione approvato. BUSINESS espande architettura informativa, route, contenuti e funzionalità, ma i relativi pattern tecnici restano candidati fino al completamento del proprio audit e della propria remediation.
+START definisce il linguaggio visuale e di interazione approvato. BUSINESS espande architettura informativa, route, contenuti e funzionalità. I pattern verificati nei Package A, B, B2 e C sono approvati nel perimetro documentato; il Package D e gli ambiti futuri restano separati.
 
 ---
 
@@ -515,16 +515,16 @@ Ruolo:
 
 - evoluzione multipagina di START;
 - espansione della famiglia Hospitality;
-- riferimento candidato per l’architettura multipagina.
+- riferimento tecnico approvato per i pattern multipagina verificati fino al Package C.
 
-Stato dichiarato:
+Stato verificato:
 
-- deployato;
-- prossimo repository Hospitality attivo per audit;
-- deve essere confrontato sistematicamente con START;
-- è soltanto candidato per routing multipagina, gallerie e lightbox e funzionalità di piano superiore;
-- nessun suo pattern è approvato come canonico prima del completamento di audit e remediation;
-- può contenere regressioni introdotte durante l’espansione.
+- Package A, B, micro-fix “L'incontro”, B2 e C completati e uniti;
+- baseline Package C su `main`: `15a8bf4de41bc1657a79f58699859a015ee7820d`;
+- build Cloudflare Pages completata tramite Bun e lockfile;
+- deploy di produzione verificato dal proprietario il 25 luglio 2026;
+- Package D ancora pendente e separato;
+- non ancora congelato come repository completa.
 
 Route previste:
 
@@ -537,20 +537,19 @@ Route previste:
 - `/cookie`;
 - pagina 404.
 
-Aree da controllare:
+Pattern approvati fino al Package C:
 
-- conservazione dell’identità;
-- animazioni mancanti o alterate;
-- route reset;
-- navbar;
-- configurazione centralizzata;
-- SEO multipagina;
-- lightbox `100dvh`;
+- conservazione dell’identità START con implementazione tecnica migliorata;
+- accessibilità di drawer e lightbox;
+- route reset, history restoration, direct URL e refresh;
 - ordine editoriale mobile;
-- direct URL;
-- refresh;
-- back e forward;
-- regressioni.
+- motion e reduced motion coerenti con START;
+- fallback runtime e 404;
+- demo `noindex, follow`;
+- JSON-LD generico e non commerciale;
+- attribuzione Tretnix nel footer.
+
+I dettagli del contratto e delle policy sono in `HOSPITALITY_FAMILY.md`.
 
 ---
 
@@ -615,8 +614,8 @@ Esempi iniziali:
 | Qualità visuale, tipografia e palette Hospitality | `forno-lume-START` |
 | Struttura premium single-page START | `forno-lume-START` |
 | Responsive, navbar percepita, interazioni, motion e reveal Hospitality | `forno-lume-START` |
-| Architettura multipagina Hospitality | `forno-lume-BUSINESS`, candidato da auditare |
-| Gallerie, lightbox e funzionalità di piano superiore | `forno-lume-BUSINESS`, candidato da auditare |
+| Architettura multipagina Hospitality | `forno-lume-BUSINESS`, approvato fino al Package C |
+| Drawer, lightbox, routing, error handling e demo SEO | `forno-lume-BUSINESS`, approvati nei pattern verificati |
 | Evoluzione START → BUSINESS | confronto tra START e BUSINESS |
 | Sicurezza Supabase | da determinare tramite audit |
 | Standard tecnici generali | da estrarre dopo il confronto |
@@ -754,8 +753,9 @@ Stato: completata su Forno Lume START.
 
 Stato: attiva.
 
-- auditare `forno-lume-BUSINESS` come prossimo repository Hospitality;
-- confrontare BUSINESS con la baseline canonica START;
+- preservare i pattern BUSINESS verificati nei Package A, B, B2 e C;
+- aprire il Package D come task separato;
+- mantenere il confronto con la baseline canonica START;
 - trasformare procedure verificate in skill;
 - auditare Tretnix.com;
 - estrarre standard confermati;
@@ -773,10 +773,10 @@ Stato: attiva.
 La priorità attuale è:
 
 1. mantenere Forno Lume START chiuso e congelato salvo bug, regressioni, sicurezza o requisiti di prodotto approvati;
-2. auditare Forno Lume BUSINESS come prossimo repository Hospitality attivo;
-3. confrontare BUSINESS con i soli pattern canonici assegnati a START;
-4. valutare indipendentemente routing multipagina, gallerie, lightbox e funzionalità di piano superiore;
-5. approvare pattern BUSINESS soltanto dopo audit, remediation e verifiche;
+2. preservare i pattern BUSINESS approvati nei Package A, B, B2 e C e aprire il Package D separatamente;
+3. confrontare ogni intervento BUSINESS con i soli pattern canonici assegnati a START;
+4. trattare il Package D e ogni funzionalità futura come perimetri separati;
+5. approvare nuovi pattern BUSINESS soltanto dopo audit, remediation e verifiche;
 6. proseguire il consolidamento delle procedure Tretnix già verificate.
 
 ---
