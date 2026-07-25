@@ -1,7 +1,7 @@
 # Tretnix Development Standards
 
-**Versione:** 1.3
-**Aggiornato:** 25 luglio 2026
+**Versione:** 1.4
+**Aggiornato:** 26 luglio 2026
 **Ambito:** tutti i progetti Tretnix, salvo eccezioni documentate
 
 Le parole **DEVE**, **NON DEVE**, **DOVREBBE** e **PUÒ** esprimono il livello di obbligatorietà.
@@ -108,6 +108,77 @@ Per interventi significativi usare una pull request con:
 - screenshot quando utili;
 - rischi;
 - test manuali rimanenti.
+
+### Snapshot canonico e patch verificabili
+
+Quando una modifica viene preparata fuori dal working tree canonico verificato, NON usare una copia presunta o un allegato storico come baseline.
+
+Il proprietario del repository DEVE prima:
+
+1. sincronizzare il branch sorgente approvato;
+2. verificare che il working tree sia pulito;
+3. registrare l’hash completo di `HEAD`;
+4. generare un archivio immutabile direttamente dal commit.
+
+Sequenza di riferimento:
+
+```text
+git switch main
+git pull --ff-only origin main
+git status --short
+git rev-parse HEAD
+git archive --format=zip --output="<repository>-<short-hash>.zip" HEAD
+```
+
+Chi prepara la modifica DEVE:
+
+- ricevere archivio, hash e perimetro approvato;
+- lavorare su una copia isolata;
+- preservare encoding e line ending;
+- produrre una patch focalizzata;
+- produrre un report con file, statistiche e controlli realmente eseguiti;
+- evitare staging, commit, push, pull request, merge o deploy non autorizzati.
+
+La patch DEVE essere validata su una seconda estrazione pulita della stessa baseline:
+
+1. creare una baseline Git temporanea e non pubblicata;
+2. eseguire `git apply --check`;
+3. applicare realmente la patch;
+4. eseguire `git diff --check`;
+5. verificare l’elenco esatto dei file modificati;
+6. confrontare l’albero risultante con quello preparato.
+
+Per repository CRLF, il controllo whitespace PUÒ usare:
+
+```text
+git -c core.whitespace=cr-at-eol diff --check
+```
+
+Nel repository reale applicare la patch su una branch dedicata e procedere per checkpoint distinti:
+
+```text
+git apply --check <patch>
+git apply <patch>
+git diff --check
+git diff --stat
+git diff --name-only
+```
+
+Dopo la revisione del diff non staged:
+
+- aggiungere esplicitamente soltanto i file previsti;
+- eseguire `git diff --cached --check`;
+- verificare `git diff --cached --stat` e `git diff --cached --name-only`;
+- committare soltanto dopo approvazione;
+- eseguire push e pull request come passaggi separati;
+- unire soltanto dopo revisione finale;
+- aggiornare `main` e rimuovere le branch concluse.
+
+Questo workflow è obbligatorio per patch multi-file o strutturali preparate fuori dal working tree verificato e per handoff tra chat, agenti o ambienti diversi.
+
+Può essere omesso per una correzione minima eseguita direttamente in un working tree pulito e controllato. In quel caso rimangono obbligatori branch dedicata, scope limitato, diff review e verifiche pertinenti.
+
+La verifica di applicabilità della patch NON sostituisce typecheck, lint, test, build, browser check, security review o deployment check richiesti dal progetto.
 
 ### Agenti, Lovable e branch principale
 

@@ -48,6 +48,21 @@ For non-trivial work:
 9. run only available repository-defined checks;
 10. report results, limitations and regression risks.
 
+## External patch workflow
+
+When Codex prepares a multi-file, documentation or structural patch outside the verified canonical working tree:
+
+- require the exact repository, source branch, full commit hash, clean-state evidence and a ZIP produced with `git archive` from that commit;
+- do not use a stale checkout, historical attachment or assumed repository state as the baseline;
+- work on an isolated extraction and preserve encoding and line endings;
+- generate a focused patch and a report of changed files and checks actually executed;
+- validate the patch on a second pristine extraction with `git apply --check`, actual application, whitespace checks and exact tree comparison;
+- report separately any typecheck, lint, tests, build, browser, security or deployment checks not executed.
+
+Do not stage, commit, push, open or merge a pull request, or deploy unless that checkpoint is explicitly authorized. The generated ZIP is a reference artifact and does not become canonical until the change is merged into the official repository.
+
+A minimal edit made directly in a verified clean working tree may skip the archive but still requires a dedicated branch, limited scope, diff review and relevant checks.
+
 ## Agent coordination
 
 - Only one writer may modify the same working tree at a time.
