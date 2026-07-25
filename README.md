@@ -2,8 +2,8 @@
 
 Fonte canonica per identità, decisioni, standard tecnici, repository, procedure operative e adattatori degli strumenti Tretnix.
 
-**Versione:** 1.3
-**Aggiornato:** 25 luglio 2026
+**Versione:** 1.4
+**Aggiornato:** 26 luglio 2026
 **Stato:** operativo
 **Visibilità consigliata:** repository GitHub privato
 
@@ -292,6 +292,19 @@ docs/record-route-scroll-decision
 chore/add-codex-adapters
 audit/add-new-repository
 ```
+
+### Aggiornamenti preparati fuori dal working tree
+
+Per modifiche multi-file, documentali o strutturali preparate in un’altra chat, da un altro agente o in un ambiente isolato, usare una baseline esatta invece di una copia presunta:
+
+```text
+git rev-parse HEAD
+git archive --format=zip --output="<repository>-<short-hash>.zip" HEAD
+```
+
+La patch deve essere preparata sull’archive, verificata su una seconda estrazione pulita e applicata nel repository reale con diff, staging, commit, push, pull request e merge separati.
+
+La procedura completa è definita in `DEVELOPMENT_STANDARDS.md`; la decisione approvata è `TRX-DEC-022`.
 
 ---
 

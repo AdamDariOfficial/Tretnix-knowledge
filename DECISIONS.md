@@ -1,7 +1,7 @@
 # Tretnix Decision Log
 
-**Versione:** 1.3
-**Aggiornato:** 25 luglio 2026
+**Versione:** 1.4
+**Aggiornato:** 26 luglio 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
 
@@ -751,3 +751,78 @@ Il markup strutturato deve descrivere entità reali e verificabili. Presentare u
 ### Fonte operativa
 
 La mappatura Hospitality e i dati vietati sono documentati in `HOSPITALITY_FAMILY.md`.
+
+---
+
+## TRX-DEC-022 — Snapshot canonico e patch verificabile per modifiche esterne
+
+**Stato:** approvata
+**Data:** 26 luglio 2026
+**Ambito:** tutti i repository Tretnix e gli handoff tra chat, agenti o ambienti differenti
+
+### Contesto
+
+Una patch preparata da una copia presunta, incompleta o non allineata può applicarsi al repository sbagliato, sovrascrivere decisioni più recenti o produrre un diff tecnicamente valido ma semanticamente obsoleto.
+
+Questo rischio aumenta quando chi prepara la modifica non opera direttamente nel working tree canonico verificato.
+
+### Decisione
+
+Quando una modifica multi-file, documentale o strutturale viene preparata fuori dal working tree canonico, la baseline DEVE essere acquisita da un commit esatto e pulito tramite `git archive`.
+
+Il checkpoint minimo comprende:
+
+- repository e branch sorgente;
+- hash completo del commit;
+- working tree pulito;
+- archivio generato direttamente da `HEAD`;
+- perimetro approvato della modifica.
+
+Comando di riferimento:
+
+```text
+git archive --format=zip --output="<repository>-<short-hash>.zip" HEAD
+```
+
+La modifica viene preparata su una copia isolata dell’archivio e consegnata come:
+
+- patch applicabile;
+- report dei file modificati e dei controlli realmente eseguiti;
+- facoltativamente, ZIP completo risultante come riferimento non canonico.
+
+Prima della consegna, la patch DEVE essere verificata su una seconda estrazione pulita della stessa baseline mediante:
+
+- `git apply --check`;
+- applicazione effettiva della patch;
+- controllo whitespace del diff;
+- confronto del set di file modificati;
+- confronto tra albero validato e albero preparato.
+
+Nel repository reale, l’applicazione resta manuale e controllata: diff non staged, staging esplicito, diff cached, commit, push, pull request e merge avvengono come passaggi separati.
+
+### Motivazione
+
+Lo snapshot rende la baseline immutabile e identificabile. La seconda applicazione dimostra che la patch non dipende accidentalmente dall’ambiente in cui è stata generata.
+
+Separare applicazione, staging, commit, push e merge conserva il controllo umano e limita gli errori di perimetro.
+
+### Conseguenze
+
+- Non generare patch riutilizzabili da allegati storici o copie non verificate.
+- Non assumere che il nome di un file o una conversazione identifichi l’HEAD corrente.
+- Preservare la policy dei line ending del repository; nei repository CRLF usare controlli compatibili come `core.whitespace=cr-at-eol` quando necessario.
+- Dichiarare separatamente controlli documentali, test applicativi, build, browser check e verifiche di deployment.
+- La validazione della patch non sostituisce i test richiesti dal repository modificato.
+- La produzione di una patch non autorizza staging, commit, push, pull request, merge o deploy.
+- Gli artefatti derivati non diventano fonte canonica finché la modifica non viene integrata nel repository ufficiale.
+
+### Applicabilità
+
+Il workflow è obbligatorio quando:
+
+- la patch viene preparata fuori dal working tree verificato dell’utente;
+- il lavoro passa tra chat, agenti o ambienti differenti;
+- la baseline esatta è essenziale;
+- la modifica interessa più file o documenti canonici.
+
+Una correzione minima eseguita direttamente in un working tree pulito e controllato può evitare l’archive, ma mantiene branch dedicata, diff review, verifiche e approvazione umana.

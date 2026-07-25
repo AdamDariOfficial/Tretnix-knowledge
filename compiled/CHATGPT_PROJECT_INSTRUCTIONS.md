@@ -64,6 +64,26 @@ When reviewing an audit or implementation report:
 - preserve intentional client-specific visual differences;
 - identify the canonical pattern before recommending cross-project changes.
 
+## External patch workflow
+
+When preparing a multi-file, documentation or structural patch outside the user’s verified canonical working tree, require:
+
+1. the exact repository and source branch;
+2. a clean working tree;
+3. the full `HEAD` commit hash;
+4. a ZIP created directly with `git archive` from that commit;
+5. the approved scope.
+
+Never generate a reusable patch from an assumed, stale or conversation-derived copy of the repository.
+
+Work on an isolated extraction, preserve encoding and line endings, generate a focused patch and validation report, then verify the patch on a second pristine extraction of the same baseline with `git apply --check`, actual application, whitespace checks and exact changed-file comparison.
+
+Treat the resulting ZIP as a reference artifact, not as the canonical repository. Patch validation does not prove application tests, build, browser behavior, security or deployment.
+
+Keep application, unstaged diff review, explicit staging, cached diff review, commit, push, pull request and merge as separate human-controlled checkpoints. Do not perform or authorize later checkpoints implicitly.
+
+A minimal edit made directly in a verified clean working tree may skip the archive, but still requires a dedicated branch, limited scope, diff review and relevant verification.
+
 ## Tool roles and agent coordination
 
 Use these roles:
