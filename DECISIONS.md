@@ -1,7 +1,7 @@
 # Tretnix Decision Log
 
-**Versione:** 1.2
-**Aggiornato:** 20 luglio 2026
+**Versione:** 1.3
+**Aggiornato:** 25 luglio 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
 
@@ -590,8 +590,8 @@ Il ciclo di chiusura ha trasformato START da riferimento visuale iniziale a base
 ### Conseguenze
 
 - Il backlog residuo non autorizza implementazione.
-- Forno Lume BUSINESS è il prossimo repository Hospitality attivo per audit.
-- BUSINESS resta soltanto candidato per routing multipagina, gallerie e lightbox e funzionalità di piano superiore finché il proprio audit e la propria remediation non sono completi.
+- Forno Lume BUSINESS è stato il repository Hospitality successivo a START per audit e remediation controllata.
+- Dopo i Package A, B, B2 e C, i pattern BUSINESS elencati in `TRX-DEC-020` sono approvati; il Package D e le funzionalità future restano separati e non automaticamente canonici.
 - I confronti futuri devono riferirsi alla baseline di chiusura identificata.
 
 ### Guida all’implementazione
@@ -662,3 +662,92 @@ Il motion deve accompagnare comprensione, ritmo editoriale e qualità percepita 
 - Non esiste un timing unico obbligatorio per tutti i clienti.
 - Le eccezioni visual-first non autorizzano animazioni invasive o contenuto inaccessibile.
 - La decisione non impone una libreria o una specifica tecnica di animazione.
+
+---
+
+## TRX-DEC-020 — Contratto Hospitality e fonti canoniche per pattern
+
+**Stato:** approvata
+**Data:** 25 luglio 2026
+**Sostituisce parzialmente:** le conseguenze temporanee di `TRX-DEC-018` relative allo stato candidato di BUSINESS
+**Ambito:** famiglia Hospitality Tretnix
+**Repository interessati:** `forno-lume-START`, `forno-lume-BUSINESS` e futuri repository Hospitality correlati
+
+### Contesto
+
+Forno Lume START definisce l’identità e il comportamento percepito della famiglia. Forno Lume BUSINESS ha completato i Package A, B, B2 e C, introducendo implementazioni tecniche più robuste senza alterare involontariamente l’esperienza approvata.
+
+### Decisione
+
+La fonte canonica viene assegnata per singolo pattern:
+
+- START è canonico per identità visuale, tipografia, palette, qualità responsive, navbar percepita, drawer e FAQ percepiti, interazioni, motion e reveal editoriali;
+- BUSINESS, sulla baseline `15a8bf4de41bc1657a79f58699859a015ee7820d`, è canonico per i pattern già chiusi relativi ad accessibilità di drawer e lightbox, routing e history, ordine editoriale mobile, fallback runtime, 404, policy demo, JSON-LD generico e attribuzione footer.
+
+Il contratto Hospitality richiede parità visuale e interattiva percepita con START, consentendo miglioramenti tecnici in accessibilità, routing, lifecycle, focus management, reduced motion, componentizzazione, type safety, error handling e metadata.
+
+### Motivazione
+
+Una repository può essere la migliore fonte visuale mentre un’altra contiene l’implementazione tecnica più robusta. Separare i ruoli evita sia regressioni visive sia la copia di limiti tecnici.
+
+### Conseguenze
+
+- Non copiare automaticamente l’intera implementazione di START.
+- Non modificare in BUSINESS identità, ritmo o motion percepita senza requisito approvato.
+- Preservare testo prima dell’immagine nelle sezioni editoriali mobile.
+- Preservare route reset immediato, history restoration, direct URL e refresh.
+- Preservare Reveal nel viewport e reduced motion.
+- Preservare focus trap, Escape, inertness, scroll lock e focus return nei dialog.
+- Il Package D rimane separato e non è autorizzato dal completamento del Package C.
+
+### Fonte operativa
+
+I dettagli verificati sono documentati in `HOSPITALITY_FAMILY.md`.
+
+---
+
+## TRX-DEC-021 — Policy delle demo: noindex e structured data non commerciale
+
+**Stato:** approvata
+**Data:** 25 luglio 2026
+**Ambito:** demo pubbliche Tretnix che non rappresentano attività reali, a partire dalla famiglia Forno Lume
+
+### Contesto
+
+Le demo Tretnix devono essere consultabili da clienti e visitatori, ma non devono essere interpretate dai motori di ricerca come aziende, sedi, offerte o attività locali reali.
+
+### Decisione
+
+Le demo pubbliche non reali devono:
+
+- emettere `noindex, follow` su tutte le route pubbliche;
+- permettere al crawler di leggere il meta `noindex`;
+- evitare sitemap destinate a pubblicizzare route demo non indicizzabili;
+- non pubblicare `Restaurant`, `LocalBusiness`, `Organization` commerciale fittizia o altri schemi commerciali con dati non verificati;
+- non pubblicare indirizzi, coordinate, telefono, orari, prezzi, offerte, recensioni, rating, prenotazioni o menu fittizi come dati strutturati;
+- non usare `FAQPage`, `Menu`, `MenuSection` o `MenuItem` per cercare rich result;
+- usare soltanto markup generico e non ingannevole, quando utile.
+
+Sono consentiti:
+
+- `WebSite`;
+- `WebPage`;
+- `AboutPage`;
+- `CollectionPage`;
+- `ContactPage`.
+
+### Motivazione
+
+Il markup strutturato deve descrivere entità reali e verificabili. Presentare una demo come attività commerciale reale sarebbe ingannevole e danneggerebbe qualità, affidabilità e indicizzazione.
+
+### Conseguenze
+
+- Il JSON-LD deve essere route-aware, deterministico e privo di duplicazioni.
+- Gli `@id`, URL, nomi e description devono essere coerenti con la route e il dominio reale della demo.
+- La serializzazione deve essere sicura.
+- Un futuro cliente può abilitare una entità commerciale soltanto con dati reali, verificati, approvati e senza placeholder.
+- Non promettere rich result per tipi generici.
+
+### Fonte operativa
+
+La mappatura Hospitality e i dati vietati sono documentati in `HOSPITALITY_FAMILY.md`.

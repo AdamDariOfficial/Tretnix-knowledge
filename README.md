@@ -2,8 +2,8 @@
 
 Fonte canonica per identità, decisioni, standard tecnici, repository, procedure operative e adattatori degli strumenti Tretnix.
 
-**Versione:** 1.2
-**Aggiornato:** 20 luglio 2026
+**Versione:** 1.3
+**Aggiornato:** 25 luglio 2026
 **Stato:** operativo
 **Visibilità consigliata:** repository GitHub privato
 
@@ -44,6 +44,7 @@ tretnix-knowledge/
 ├── DEVELOPMENT_STANDARDS.md
 ├── DECISIONS.md
 ├── REPOSITORY_INDEX.md
+├── HOSPITALITY_FAMILY.md
 ├── .gitignore
 │
 ├── compiled/
@@ -85,6 +86,7 @@ tretnix-knowledge/
 | [`DEVELOPMENT_STANDARDS.md`](./DEVELOPMENT_STANDARDS.md) | Regole tecniche trasversali | Normativa |
 | [`DECISIONS.md`](./DECISIONS.md) | Decisioni approvate e motivazioni | Normativa |
 | [`REPOSITORY_INDEX.md`](./REPOSITORY_INDEX.md) | Inventario e ruolo dei progetti | Descrittiva |
+| [`HOSPITALITY_FAMILY.md`](./HOSPITALITY_FAMILY.md) | Contratto, policy e baseline verificate della famiglia Hospitality | Normativa e descrittiva |
 | [`templates/READ_ONLY_AUDIT.md`](./templates/READ_ONLY_AUDIT.md) | Procedura standard di audit senza modifiche | Operativa |
 
 ---

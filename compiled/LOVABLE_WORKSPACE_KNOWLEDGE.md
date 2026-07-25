@@ -168,6 +168,10 @@ https://tretnix.com
 
 Only “Tretnix” needs to be linked unless the approved design says otherwise. The link remains discreet but perceivable, opens in a new tab with `target="_blank"` and `rel="noopener noreferrer"`, indicates the new-tab behavior accessibly and preserves visible keyboard focus. A restrained external-link icon such as `ArrowUpRight` is allowed; decorative icons must be hidden from assistive technology.
 
+## Demo indexing
+
+A public demo that does not represent a real business uses `noindex, follow` on every public route, including legal pages and 404. Do not publish fictional `Restaurant`, `LocalBusiness`, commercial `Organization`, address, geo, telephone, opening hours, prices, offers, reviews, ratings, reservations, `FAQPage`, `Menu`, `MenuSection` or `MenuItem` structured data. Generic page markup is allowed only when accurate and route-aware.
+
 ## Project-specific knowledge
 
 Workspace knowledge contains only rules shared across projects.

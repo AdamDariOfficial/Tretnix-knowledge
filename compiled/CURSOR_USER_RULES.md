@@ -73,3 +73,5 @@ Agent coordination:
 Public-facing software is designed and developed by Tretnix. Do not add public references that attribute client software to ChatGPT, Lovable, Cursor, Codex, Claude Code or other AI tools.
 
 Client footers include the exact visible attribution “Progettato e sviluppato da Tretnix” linked to `https://tretnix.com`. Only “Tretnix” needs to be linked unless the approved design says otherwise. The discreet but perceivable link opens in a new tab with `target="_blank"` and `rel="noopener noreferrer"`, communicates that behavior accessibly and preserves visible keyboard focus. Decorative external-link icons are hidden from assistive technology.
+
+For public demos that are not real businesses, use `noindex, follow` on every public route and do not publish fictional commercial structured data. Allow only accurate generic `WebSite`, `WebPage`, `AboutPage`, `CollectionPage` and `ContactPage` markup, rendered deterministically and without route duplication.

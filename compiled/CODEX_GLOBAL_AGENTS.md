@@ -155,3 +155,7 @@ https://tretnix.com
 ```
 
 Only “Tretnix” needs to be linked unless the approved design says otherwise. The link must remain discreet but perceivable, open in a new tab with `target="_blank"` and `rel="noopener noreferrer"`, indicate the new-tab behavior accessibly and preserve visible keyboard focus. A restrained external-link icon is allowed; decorative icons must be hidden from assistive technology.
+
+## Public demo indexing
+
+For a public demo that is not a real business, emit `noindex, follow` on all public routes, including 404 and legal pages. Do not block the crawler from reading that directive. Do not publish fictional commercial structured data or fields. Allowed generic types are `WebSite`, `WebPage`, `AboutPage`, `CollectionPage` and `ContactPage` when accurate, deterministic, route-aware and safely serialized.

@@ -61,6 +61,6 @@ Use a pull request and a normal merge. Do not rewrite published Lovable history.
 
 1. keep Forno Lume START closed and frozen;
 2. use the kit only as synchronized project context;
-3. reopen source work only for an allowed trigger and an explicitly approved task;
-4. audit Forno Lume BUSINESS as the next active Hospitality repository;
-5. treat BUSINESS routing, gallery, lightbox and higher-plan patterns as candidates until its own audit and remediation are complete.
+3. reopen START source work only for an allowed trigger and an explicitly approved task;
+4. use `HOSPITALITY_FAMILY.md` in Tretnix Knowledge for the current START → BUSINESS contract and verified BUSINESS patterns;
+5. treat Package D and later BUSINESS functionality as separate scopes that require their own audit, approval and verification.

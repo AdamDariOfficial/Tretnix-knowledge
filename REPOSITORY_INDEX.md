@@ -1,7 +1,7 @@
 # Tretnix Repository Index
 
-**Versione:** 1.2
-**Aggiornato:** 20 luglio 2026
+**Versione:** 1.3
+**Aggiornato:** 25 luglio 2026
 **Stato dell’inventario:** completo rispetto ai quattro repository attualmente dichiarati
 
 Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit del codice.
@@ -238,10 +238,11 @@ Questi ambiti devono essere valutati indipendentemente nel repository pertinente
 | Piano | BUSINESS |
 | Repository | `https://github.com/AdamDariOfficial/forno-lume-BUSINESS.git` |
 | Deploy | `https://forno-lume-business.tretnix.com` |
-| Stato | produzione / prossimo audit Hospitality attivo |
-| Branch principale | da verificare |
-| Commit auditato | non ancora auditato |
-| Ultimo audit | non eseguito |
+| Stato | produzione; Package A, B, B2 e C completati; Package D pendente |
+| Branch principale | `main` |
+| Baseline verificata Package C | `15a8bf4de41bc1657a79f58699859a015ee7820d` |
+| Commit implementazione Package C | `f85e351` |
+| Ultimo ciclo verificato | 25 luglio 2026 — remediation controllata, merge PR #5 e verifica produzione |
 
 ### Relazione con altri progetti
 
@@ -249,15 +250,21 @@ Deriva da Forno Lume START.
 
 Deve preservarne identità e linguaggio di animazione, espandendo struttura e contenuti.
 
-### Ruolo canonico candidato, non approvato
+### Ruolo canonico approvato per i pattern chiusi
+
+Sulla baseline verificata del Package C, BUSINESS è fonte tecnica approvata per:
 
 - architettura multipagina Hospitality;
-- configurazione centralizzata;
-- navigazione tra route;
-- galleria e lightbox;
-- espansione START → BUSINESS.
+- drawer e lightbox accessibili;
+- navigazione tra route, direct URL, refresh, Back e Forward;
+- route reset e scroll restoration;
+- ordine editoriale mobile senza duplicazione DOM;
+- fallback runtime e pagina 404;
+- policy demo `noindex, follow`;
+- JSON-LD generico e route-aware;
+- attribuzione Tretnix nel footer.
 
-Il ruolo canonico tecnico deve essere confermato soltanto dopo audit, remediation e verifiche. Non assumere validi i pattern BUSINESS prima di tale chiusura.
+Rimangono separati e non automaticamente canonici gli ambiti del Package D e qualsiasi funzionalità futura non ancora verificata.
 
 ### Route previste
 
@@ -282,21 +289,16 @@ Il ruolo canonico tecnico deve essere confermato soltanto dopo audit, remediatio
 - composizione approvata;
 - linguaggio di animazione dello START.
 
-### Aree da controllare
+### Stato verificato dei package
 
-- confronto visuale e tecnico con START;
-- animazioni mancanti o alterate;
-- route reset;
-- navbar;
-- configurazione centralizzata;
-- SEO multipagina;
-- lightbox `100dvh`;
-- ordine editoriale mobile;
-- navigazione;
-- direct URL;
-- refresh;
-- back e forward;
-- regressioni introdotte durante l’espansione.
+- Package A: completato e unito;
+- Package B: completato e unito;
+- micro-fix “L'incontro”: completato e unito;
+- Package B2: completato e unito;
+- Package C: completato, unito, costruito e verificato in produzione;
+- Package D: pendente e da gestire separatamente.
+
+La configurazione Cloudflare Pages verificata usa Bun, `bun.lock`, output `dist` e il preset Nitro `cloudflare-pages`. I dettagli sono registrati in `HOSPITALITY_FAMILY.md`.
 
 ---
 
@@ -362,10 +364,11 @@ Forno Lume START
 | Motion e reveal editoriali Hospitality | `forno-lume-START` | canonico per il comportamento percepito |
 | Navbar Hospitality | `forno-lume-START` | canonico per il comportamento percepito |
 | Responsive Hospitality | `forno-lume-START` | canonico |
-| Architettura multipagina Hospitality | `forno-lume-BUSINESS` | candidato |
-| Configurazione centralizzata | `forno-lume-BUSINESS` | candidato |
-| Lightbox | `forno-lume-BUSINESS` | candidato, da verificare |
-| Funzionalità di piano superiore | `forno-lume-BUSINESS` | candidato, da verificare |
+| Architettura multipagina Hospitality | `forno-lume-BUSINESS` | canonico per i pattern verificati fino al Package C |
+| Routing, history e scroll multipagina | `forno-lume-BUSINESS` | canonico per il pattern verificato |
+| Drawer e lightbox accessibili | `forno-lume-BUSINESS` | canonico per il pattern verificato |
+| Error fallback, 404, demo SEO e JSON-LD | `forno-lume-BUSINESS` | canonico per il pattern verificato |
+| Funzionalità di piano superiore oltre il Package C | `forno-lume-BUSINESS` | da verificare nel Package D o in task successivi |
 | Admin | `tretnix` | candidato, da auditare |
 | Autenticazione e ruoli | nessuna fonte assegnata | da auditare |
 | RLS e sicurezza Supabase | nessuna fonte assegnata | da auditare |
@@ -379,14 +382,13 @@ Forno Lume START
 # 5. Ordine operativo aggiornato
 
 1. mantenere `forno-lume-START` chiuso e congelato;
-2. auditare `forno-lume-BUSINESS` come prossimo repository Hospitality attivo;
-3. confrontare BUSINESS con la baseline START `d15f639267dfdd57194536154abfa1d0ff3b4542`;
-4. valutare indipendentemente routing multipagina, gallerie, lightbox e funzionalità di piano superiore;
-5. rimediare soltanto finding approvati;
-6. eseguire i controlli disponibili e la verifica manuale richiesta;
-7. approvare eventuali pattern BUSINESS soltanto dopo la chiusura del relativo ciclo;
-8. auditare `tretnix`;
-9. aggiornare il registro dei pattern canonici.
+2. preservare in BUSINESS i pattern approvati nei Package A, B, B2 e C;
+3. aprire il Package D in una chat e in un task separati;
+4. confrontare ogni intervento BUSINESS con la baseline START `d15f639267dfdd57194536154abfa1d0ff3b4542`;
+5. eseguire controlli automatici, browser e produzione realmente documentati;
+6. congelare BUSINESS soltanto dopo la chiusura del Package D e della documentazione locale;
+7. auditare `tretnix`;
+8. aggiornare il registro dei pattern canonici quando nuovi pattern vengono verificati.
 
 Le vulnerabilità critiche o alte rilevate devono essere segnalate immediatamente e prioritarizzate.
 
