@@ -1,6 +1,6 @@
 # Tretnix Master Context
 
-**Versione:** 1.4
+**Versione:** 1.5
 **Aggiornato:** 26 luglio 2026
 **Stato:** canonico
 
@@ -418,7 +418,10 @@ CURRENT_STATE.md
 = indice trasversale sintetico, non sostitutivo degli status locali
 
 SOURCE_ARTIFACT_REGISTER.md
-= allegati acquisiti, mancanti e fonti da migrare
+= artefatti, checksum, ingestione e fonti residue
+
+family-kits/
+= specifiche complete e versionate dei verticali
 ```
 
 ### Precedenza
@@ -446,9 +449,9 @@ Il primo verticale operativo è Food & Hospitality.
 
 La mappa corrente comprende inoltre:
 
-- Beauty & Wellness, con specifica `v1.1` approvata e primo progetto `RITO Studio START` ancora non implementato;
-- Professional Services, segnalato come preparato ma con artefatti completi ancora da acquisire;
-- Home & Local Services, segnalato come preparato ma con artefatti completi ancora da acquisire.
+- Beauty & Wellness, con specifica `v1.1` completa in `family-kits/beauty-wellness-v1.1/` e primo progetto `RITO Studio START` non implementato;
+- Professional Services, con specifica `v1.0` completa in `family-kits/professional-services-v1.0/` e concept `QUADRA Studio`;
+- Home & Local Services, con specifica `v1.0` completa in `family-kits/home-local-services-v1.0/` e concept `NODO Servizi`.
 
 La mappa, il lifecycle e i gate sono in `PORTFOLIO_AND_VERTICALS.md`.
 
@@ -595,7 +598,7 @@ Prima di qualsiasi chiamata a Lovable sono obbligatori entrambi i gate:
 1. conferma dell’abbonamento Lovable attivo;
 2. autorizzazione esplicita all’avvio di `RITO Studio START`.
 
-Prima dei gate non creare progetti, non consumare crediti, non creare repository remote, non pubblicare e non iniziare BUSINESS. La governance completa disponibile è in `BEAUTY_WELLNESS_FAMILY.md`; i dettagli della specifica v1.1 devono essere acquisiti dal development pack registrato in `SOURCE_ARTIFACT_REGISTER.md`.
+Prima dei gate non creare progetti, non consumare crediti, non creare repository remote, non pubblicare e non iniziare BUSINESS. La governance è in `BEAUTY_WELLNESS_FAMILY.md`; la specifica completa è in `family-kits/beauty-wellness-v1.1/`.
 
 ---
 
@@ -809,13 +812,13 @@ Stato: attiva.
 
 ### Fase 6 — Portfolio e conservazione del contesto
 
-Stato: attiva.
+Stato: documentazione acquisita; verifica finale in corso.
 
-- acquisire integralmente il development pack del 25 luglio 2026;
-- formalizzare Beauty & Wellness senza reinterpretare la specifica v1.1;
-- mantenere `RITO Studio START` fermo fino ai due gate;
-- registrare Professional Services e Home & Local Services soltanto con artefatti verificabili;
-- migrare le informazioni necessarie prima di cancellare le chat;
+- development pack del 25 luglio acquisito, verificato ed estratto;
+- Beauty v1.1, Professional v1.0 e Home v1.0 versionati come family kit;
+- `RITO Studio START` resta fermo fino ai due gate;
+- eseguire la prova di ricostruzione senza chat dopo il merge;
+- conservare offline lo ZIP originale;
 - usare `CURRENT_STATE.md` per lo stato trasversale e le issue per i task.
 
 ### Fase 7 — Specializzazione
@@ -829,16 +832,16 @@ Stato: attiva.
 
 La priorità attuale è:
 
-1. integrare e revisionare l’aggiornamento della knowledge repository;
-2. acquisire integralmente il development pack del 25 luglio e le specifiche ancora non versionate;
-3. riconciliare lo stato CF-1 di Tretnix.com con branch, PR, commit e verifiche;
-4. completare il merge CF-1, sincronizzare `main` e verificare il working tree pulito;
-5. investigare in sola lettura il mismatch `data-tsd-source`;
-6. proseguire i finding Tretnix.com uno per branch;
-7. mantenere Forno Lume START chiuso e congelato;
-8. preservare i pattern BUSINESS approvati e trattare Package D separatamente;
-9. mantenere `RITO Studio START` in `IMPLEMENTATION_NOT_STARTED` finché non risultano entrambi i gate;
-10. non dichiarare repository, deploy o specifiche complete per i verticali ancora privi di artefatti acquisiti.
+1. completare e revisionare il branch di consolidamento della knowledge repository;
+2. aprire la pull request, unire e registrare il commit canonico finale;
+3. eseguire una prova di ricostruzione senza chat;
+4. riconciliare lo stato CF-1 di Tretnix.com con branch, PR, commit e verifiche;
+5. completare il merge CF-1, sincronizzare `main` e verificare il working tree pulito;
+6. investigare in sola lettura il mismatch `data-tsd-source`;
+7. proseguire i finding Tretnix.com uno per branch;
+8. mantenere Forno Lume START chiuso e congelato;
+9. preservare i pattern BUSINESS approvati e trattare Package D separatamente;
+10. mantenere `RITO Studio START` in `IMPLEMENTATION_NOT_STARTED` finché non risultano entrambi i gate.
 
 ---
 

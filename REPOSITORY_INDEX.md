@@ -1,6 +1,6 @@
 # Tretnix Repository Index
 
-**Versione:** 1.4
+**Versione:** 1.5
 **Aggiornato:** 26 luglio 2026
 **Stato dell’inventario:** completo rispetto ai quattro repository attualmente dichiarati
 
@@ -322,8 +322,10 @@ La configurazione Cloudflare Pages verificata usa Bun, `bun.lock`, output `dist`
 | Deploy | non applicabile |
 | Stato | operativo |
 | Branch principale | `main` |
-| Commit auditato | `60ac030d0c231443f1879c9bafc46f2626769f3d` |
-| Ultimo audit | consolidamento documentale completo della baseline il 26 luglio 2026 |
+| Baseline precedente | `60ac030d0c231443f1879c9bafc46f2626769f3d` |
+| Primo commit di consolidamento | `9ff9546` sul branch `docs/consolidate-tretnix-state-2026-07-26` |
+| Commit canonico finale | da registrare dopo merge |
+| Ultimo audit | consolidamento documentale e ingestione development pack il 26 luglio 2026 |
 
 ### Ruolo canonico
 
@@ -333,7 +335,9 @@ La configurazione Cloudflare Pages verificata usa Bun, `bun.lock`, output `dist`
 - indice dei repository;
 - template e procedure;
 - adattatori per ChatGPT, Lovable, Cursor e Codex;
-- kit di configurazione dei progetti.
+- kit di configurazione dei progetti;
+- family kit completi Beauty, Professional e Home;
+- manifest, handoff e provenienza degli artefatti sorgente.
 
 ### Regole
 
@@ -359,13 +363,18 @@ Forno Lume START
 
 Beauty & Wellness v1.1
 └── RITO Studio START
-    └── pianificato, non implementato e privo di repository dichiarata
+    └── pianificato, non implementato e privo di repository
+        └── RITO Studio BUSINESS dopo freeze START
 
-Professional Services
-└── artefatti completi da acquisire
+Professional Services v1.0
+└── QUADRA Studio START
+    └── pianificato, non implementato e privo di repository
+        └── QUADRA Studio BUSINESS dopo freeze START
 
-Home & Local Services
-└── artefatti completi da acquisire
+Home & Local Services v1.0
+└── NODO Servizi START
+    └── pianificato, non implementato e privo di repository
+        └── NODO Servizi BUSINESS dopo freeze START
 ```
 
 ---
@@ -399,48 +408,56 @@ Home & Local Services
 
 # 5. Progetti pianificati senza repository
 
-Questa sezione evita di confondere una specifica approvata con un repository esistente.
+Questa sezione registra nomi e gate senza descrivere risorse remote inesistenti.
 
-## 5.1 RITO Studio START
+## 5.1 RITO Studio
 
-| Campo | Valore |
-|---|---|
-| Nome | `RITO Studio START` |
-| Verticale | Beauty & Wellness |
-| Piano | START |
-| Stato preparazione | `PREPARATION_COMPLETE` |
-| Stato implementazione | `IMPLEMENTATION_NOT_STARTED` |
-| Repository | non creata / non dichiarata |
-| Deploy | non creato / non dichiarato |
-| Lovable project | non creato |
+| Campo | START | BUSINESS |
+|---|---|---|
+| Verticale | Beauty & Wellness | Beauty & Wellness |
+| Repository previsto | `rito-studio-START` | `rito-studio-BUSINESS` |
+| Stato | `PREPARATION_COMPLETE / IMPLEMENTATION_NOT_STARTED` | bloccato fino al freeze START |
+| Repository reale | non creata | non creata |
+| Specifica | `family-kits/beauty-wellness-v1.1/` | stessa famiglia, contratto START → BUSINESS |
 
-Gate mancanti:
+Gate START: abbonamento Lovable confermato e autorizzazione esplicita a `RITO Studio START`, oltre al runbook operativo.
 
-1. conferma abbonamento Lovable attivo;
-2. autorizzazione esplicita all’avvio.
+## 5.2 QUADRA Studio
 
-Prima di entrambi i gate non creare il progetto, non consumare crediti, non creare repository remote, non pubblicare e non iniziare BUSINESS.
+| Campo | START | BUSINESS |
+|---|---|---|
+| Verticale | Professional Services | Professional Services |
+| Repository previsto | `quadra-studio-START` | `quadra-studio-BUSINESS` |
+| Stato | `PREPARATION_COMPLETE / IMPLEMENTATION_NOT_STARTED` | bloccato fino al freeze START |
+| Repository reale | non creata | non creata |
+| Specifica | `family-kits/professional-services-v1.0/` | stessa famiglia, contratto START → BUSINESS |
 
-## 5.2 Famiglie senza progetto dichiarato
+## 5.3 NODO Servizi
 
-- Professional Services: materiali segnalati, specifica integrale non acquisita;
-- Home & Local Services: materiali segnalati, specifica integrale non acquisita.
+| Campo | START | BUSINESS |
+|---|---|---|
+| Verticale | Home & Local Services | Home & Local Services |
+| Repository previsto | `nodo-servizi-START` | `nodo-servizi-BUSINESS` |
+| Stato | `PREPARATION_COMPLETE / IMPLEMENTATION_NOT_STARTED` | stretch goal, bloccato fino al freeze START |
+| Repository reale | non creata | non creata |
+| Specifica | `family-kits/home-local-services-v1.0/` | stessa famiglia, contratto START → BUSINESS |
 
-Non assegnare URL, repository, deploy, route o stato di implementazione senza evidenza.
+Per tutti i progetti: nessun URL, branch, commit, deploy, test o verifica viene registrato finché non esiste evidenza reale.
 
 ---
 
 # 6. Ordine operativo aggiornato
 
-1. integrare la patch di consolidamento della knowledge dopo diff review;
-2. acquisire il development pack del 25 luglio e registrarne checksum e contenuti;
-3. riconciliare CF-1 con PR, branch, commit e verifiche nel repository `tretnix`;
-4. investigare `data-tsd-source` in sola lettura dopo il merge e la sincronizzazione di `main`;
-5. proseguire i finding `tretnix` uno per branch;
-6. mantenere `forno-lume-START` chiuso e congelato;
-7. preservare in BUSINESS i pattern approvati e aprire Package D separatamente;
-8. avviare `RITO Studio START` soltanto dopo i due gate;
-9. aggiornare il registro dei pattern canonici quando nuovi pattern vengono verificati.
+1. completare la revisione del branch di consolidamento Tretnix Knowledge;
+2. aprire e unire la pull request dopo diff review;
+3. sincronizzare `main` e registrare il commit canonico finale;
+4. eseguire una prova di ricostruzione senza chat;
+5. riconciliare CF-1 con PR, branch, commit e verifiche nel repository `tretnix`;
+6. investigare `data-tsd-source` in sola lettura;
+7. proseguire i finding `tretnix` uno per branch;
+8. mantenere `forno-lume-START` congelato e Package D separato;
+9. avviare esclusivamente `RITO Studio START` dopo i gate;
+10. aggiornare il registro dei pattern canonici quando nuovi pattern vengono verificati.
 
 Le vulnerabilità critiche o alte rilevate devono essere segnalate immediatamente e prioritarizzate.
 

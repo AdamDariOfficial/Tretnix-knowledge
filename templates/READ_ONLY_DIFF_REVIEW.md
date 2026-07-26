@@ -52,6 +52,8 @@ Verify:
 - validation claims;
 - documentation affected by the change;
 - unauthorized lifecycle transition;
+- divergence from the approved family-kit version;
+- use of historical source snapshots as active requirements;
 - use of paid tools or creation of remote resources without a gate;
 - invented repository, deploy, branch or validation state;
 - mismatch between handoff claims and commit/PR evidence.

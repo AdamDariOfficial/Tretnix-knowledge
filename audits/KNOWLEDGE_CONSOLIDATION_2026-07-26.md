@@ -147,8 +147,8 @@ Totale verificato: **23 file / 6.175 righe**. I file invariati sono stati manten
 - nessun push, branch remoto, PR o merge eseguito;
 - baseline acquisita file per file dalla tree pubblica, non tramite `git archive` originale;
 - nessuna verifica della cronologia Git completa o secret scan storico;
-- development pack e handoff completi del 25 luglio non disponibili nei file locali;
-- dettagli Beauty & Wellness non ricostruiti senza fonte;
+- development pack e handoff completi non erano disponibili durante la prima fase; sono stati acquisiti nella seconda fase documentata in `DEVELOPMENT_PACK_INGESTION_2026-07-26.md`;
+- i dettagli Beauty, Professional e Home sono ora versionati nei family kit;
 - stato CF-1 non verificato contro la repository `tretnix`.
 
 ---
@@ -178,12 +178,15 @@ Limite: la baseline è stata acquisita file per file dal commit pubblico, non tr
 
 ## 9. Condizione per eliminare tutte le chat
 
-L’aggiornamento riduce fortemente la dipendenza dalle conversazioni, ma la cancellazione totale non è ancora sicura finché:
+Il development pack, Beauty v1.1, Professional v1.0 e Home v1.0 sono stati acquisiti nella fase successiva.
 
-- il development pack del 25 luglio non viene acquisito;
-- la specifica Beauty & Wellness v1.1 non è presente integralmente;
-- i pack Professional Services e Home & Local Services non vengono acquisiti;
-- CF-1 non viene riconciliato con PR, branch e commit;
-- una nuova sessione non supera la prova di ricostruzione prevista da `CHAT_RETENTION_AND_HANDOFF.md`.
+La cancellazione totale resta subordinata a:
 
-Le chat prive di allegati unici o informazioni non migrate possono invece essere eliminate dopo il merge di questa patch.
+- merge dell'integrazione finale;
+- sincronizzazione di `main`;
+- conservazione offline dell'archivio originale;
+- riconciliazione di CF-1 e degli stati Tretnix.com successivi;
+- prova di ricostruzione prevista da `CHAT_RETENTION_AND_HANDOFF.md`;
+- verifica che non esistano altri allegati unici nelle chat.
+
+Vedere `DEVELOPMENT_PACK_INGESTION_2026-07-26.md`.

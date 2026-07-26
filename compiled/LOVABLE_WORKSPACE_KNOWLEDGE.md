@@ -204,3 +204,13 @@ Project Knowledge must define the specific project’s:
 - current canonical references.
 
 When project-specific knowledge intentionally differs from a workspace default, follow the more specific documented project rule.
+
+## Prepared family specifications
+
+Project Knowledge for prepared concepts must be derived from the applicable versioned family kit:
+
+- Beauty & Wellness v1.1 — RITO Studio;
+- Professional Services v1.0 — QUADRA Studio;
+- Home & Local Services v1.0 — NODO Servizi.
+
+Do not mix the visual identity, copy or routes of different families. Do not infer authorization from the presence of a Lovable prompt. The current project gate and explicit user command remain required.

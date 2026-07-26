@@ -1,0 +1,142 @@
+{
+  "family": "Home & Local Services",
+  "concept": "NODO Servizi",
+  "version": "1.0",
+  "date": "2026-07-25",
+  "status": "PREPARATION_READY",
+  "implementation_started": false,
+  "remote_repositories_created": false,
+  "lovable_project_created": false,
+  "files": [
+    {
+      "path": "README.md",
+      "size_bytes": 2360,
+      "sha256": "af33f0dc18b0271f9596b1c52f2c739b00f17ba20da2c47d541c89451072a2ed"
+    },
+    {
+      "path": "checklists/BUSINESS_FREEZE_CHECKLIST.md",
+      "size_bytes": 1020,
+      "sha256": "fae11a91549d7597f3fa9e164158b840a57fe1723d454516cd36c2a84e78227f"
+    },
+    {
+      "path": "checklists/START_FREEZE_CHECKLIST.md",
+      "size_bytes": 935,
+      "sha256": "4cff5b474544cc6c9cdf2ee29dcb48b7ba7977c991f8b9f7e3a6d8d72dd68134"
+    },
+    {
+      "path": "checklists/SUBSCRIPTION_ACTIVATION_RUNBOOK.md",
+      "size_bytes": 1301,
+      "sha256": "00b239acedb1193ee2e6b540b3d4e76c99ef73499dc76a0c171d68a3ff40a7ed"
+    },
+    {
+      "path": "docs/ANIMATIONS.md",
+      "size_bytes": 2440,
+      "sha256": "42ca7d33a58c2cb1e1d8f921ddcd84e07f188db1a99b11200102c44883cbe14f"
+    },
+    {
+      "path": "docs/APPROVAL.md",
+      "size_bytes": 562,
+      "sha256": "007d70ca67a9ebfc0a80388eb732f36aacecd23f059402a8a9670c431815e93e"
+    },
+    {
+      "path": "docs/ASSET_PLAN.md",
+      "size_bytes": 1653,
+      "sha256": "9d1b454cdf92cd9c2447bc08df6e0c2f498302c4e59a0b086fcc5fc0a3fe5847"
+    },
+    {
+      "path": "docs/CLIENT_DISCOVERY.md",
+      "size_bytes": 2196,
+      "sha256": "b7e3b5a89e194c89d9fd74f3696f1b53e44459ddfd57280a68572cedd17de50c"
+    },
+    {
+      "path": "docs/COMMERCIAL_OFFER.md",
+      "size_bytes": 2219,
+      "sha256": "11d08e716abcdc2b64135382ec18682a6b58fc1034019ddc3613f45c40230092"
+    },
+    {
+      "path": "docs/CONTENT.md",
+      "size_bytes": 7658,
+      "sha256": "ff046152587718f42d87cc3f00eb862ce9b4414ac9004c069836c7b5cd009018"
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "size_bytes": 1601,
+      "sha256": "3cfad459decc60d34e37679f5a52a0ea8bf1088f759b51eaafd7af2beb5f62ae"
+    },
+    {
+      "path": "docs/DESIGN.md",
+      "size_bytes": 5523,
+      "sha256": "117fdc9cee358e82811229583fcea61f7364f193e8d5ced06a0fd1e782611ee1"
+    },
+    {
+      "path": "docs/PRELAUNCH_READINESS_REVIEW.md",
+      "size_bytes": 1325,
+      "sha256": "dd750319b1b293bfb6c92d661a1052df88f214e2393d97fce98cad485e2ce82d"
+    },
+    {
+      "path": "docs/PRODUCT.md",
+      "size_bytes": 6904,
+      "sha256": "dae55314f155f69bb8a506b6ae78ba95f54a5ffd4f97166b2a1be6a4a3f0aa04"
+    },
+    {
+      "path": "docs/REPOSITORY_BOOTSTRAP.md",
+      "size_bytes": 1696,
+      "sha256": "7e8b915d1109839413eeca3ceca7af46f6bb89cee3ca19e79a48b56863d1418b"
+    },
+    {
+      "path": "docs/ROUTES.md",
+      "size_bytes": 4131,
+      "sha256": "3ac1142e985fc27a1d8e2613a2ce453990dfbc6bd3b3531525d96ece0de136e1"
+    },
+    {
+      "path": "docs/START_BUSINESS_CONTRACT.md",
+      "size_bytes": 1960,
+      "sha256": "bbc2fa8b873e04a9757dc59d66df3650f039bbf52c499360ade4b6471ba2be37"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "size_bytes": 946,
+      "sha256": "1a009ca9f3ea79a28580f86fd95b5b3e9b80c04e2204c6471dfaab95dcf61e39"
+    },
+    {
+      "path": "docs/TESTING.md",
+      "size_bytes": 3236,
+      "sha256": "61319b26e54a0f2df92df9334dba748df90243e6af0c0d53613579502e07a69a"
+    },
+    {
+      "path": "docs/VERTICAL_ADAPTERS.md",
+      "size_bytes": 3051,
+      "sha256": "d10bbe14a594539643393cd2adb96fdbaa5c94db13e76dc7748c652122868e61"
+    },
+    {
+      "path": "prompts/CODEX_BUSINESS_CONSOLIDATION.md",
+      "size_bytes": 787,
+      "sha256": "19df5e92023559173dc712030439ee2fba91e7e5aecc44226503664a3381f4d8"
+    },
+    {
+      "path": "prompts/CODEX_START_READ_ONLY_AUDIT.md",
+      "size_bytes": 753,
+      "sha256": "ded068ce19a4d9f66cf50ab94d019d19fe4ee2547254252f6ce447e3b645f075"
+    },
+    {
+      "path": "prompts/IMPECCABLE_BUSINESS_PARITY_REVIEW.md",
+      "size_bytes": 419,
+      "sha256": "72660e341bd5965ade0a7dc93b82054a064edbd9d081dac41bba7845c2a8dc62"
+    },
+    {
+      "path": "prompts/IMPECCABLE_START_REVIEW.md",
+      "size_bytes": 808,
+      "sha256": "3b54f23b13d303b994d326e864901c3dd3e75bc280a0de514f2883284ef8e1bf"
+    },
+    {
+      "path": "prompts/LOVABLE_BUSINESS_PROMPT.md",
+      "size_bytes": 1662,
+      "sha256": "a32cf2c641203dc02c6ce3aaa507a6e8f3c57846b378c3e605c034aa3b7662b5"
+    },
+    {
+      "path": "prompts/LOVABLE_START_PROMPT.md",
+      "size_bytes": 4248,
+      "sha256": "3e532149e49289a675cbfdebd6207e2a4c12ee50da234bb6645f16b97af22740"
+    }
+  ]
+}

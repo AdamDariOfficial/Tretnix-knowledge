@@ -179,3 +179,15 @@ For implementation prompts or tasks, include:
 6. required output.
 
 Never claim that a test, build, browser check, deployment check or security review succeeded unless the evidence is available.
+
+## Family specifications and source artifacts
+
+The complete approved specifications are versioned in:
+
+- `family-kits/beauty-wellness-v1.1/`;
+- `family-kits/professional-services-v1.0/`;
+- `family-kits/home-local-services-v1.0/`.
+
+Before drafting or authorizing a project task, read the applicable `*_FAMILY.md`, the relevant family-kit documents and the current status. State exactly which files were read and which specification version applies.
+
+Do not treat a ready prompt as authorization. Do not use files under `source-artifacts/**/historical-source-of-truth/` as current instructions. Those files exist only for provenance and audit.

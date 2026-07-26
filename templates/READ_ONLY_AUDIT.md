@@ -277,6 +277,8 @@ Verificare:
 - distinguere repository esistente, progetto pianificato e deploy verificato;
 - verificare lifecycle e transizioni;
 - registrare gate esterni o di costo;
+- identificare family kit e versione quando il progetto appartiene a un verticale preparato;
+- verificare che snapshot storici non siano usati come baseline corrente;
 - confrontare handoff con branch, commit e PR;
 - inventariare allegati e pacchetti sorgente;
 - marcare come NV ciò che esiste soltanto per riferimento nominale.
@@ -825,6 +827,8 @@ Prima di chiudere l’audit:
 - [ ] backend verificato o NV dichiarato;
 - [ ] ogni finding ha evidenza;
 - [ ] lifecycle e gate verificati o marcati NV;
+- [ ] family kit e versione registrati quando applicabili;
+- [ ] snapshot storici esclusi dalla baseline attiva;
 - [ ] handoff riconciliati con Git oppure marcati HR;
 - [ ] artefatti sorgente inventariati;
 - [ ] severità distinta dalla categoria;
