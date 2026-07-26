@@ -1,6 +1,6 @@
 # Tretnix Decision Log
 
-**Versione:** 1.4
+**Versione:** 1.5
 **Aggiornato:** 26 luglio 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
@@ -826,3 +826,167 @@ Il workflow è obbligatorio quando:
 - la modifica interessa più file o documenti canonici.
 
 Una correzione minima eseguita direttamente in un working tree pulito e controllato può evitare l’archive, ma mantiene branch dedicata, diff review, verifiche e approvazione umana.
+
+---
+
+## TRX-DEC-023 — Cancellazione delle chat soltanto dopo formalizzazione verificata
+
+**Stato:** approvata
+**Data:** 26 luglio 2026
+**Ambito:** tutte le chat, gli handoff e gli allegati Tretnix
+
+### Contesto
+
+Le chat possono contenere decisioni, specifiche, stato, task e allegati che non esistono ancora in una fonte versionata. Cancellarle prima della migrazione può rendere impossibile ricostruire il lavoro.
+
+### Decisione
+
+Una chat Tretnix può essere cancellata soltanto dopo aver trasferito e verificato ogni informazione rilevante nella destinazione canonica appropriata.
+
+Il gate minimo comprende:
+
+- decisioni registrate;
+- specifiche integrali versionate;
+- stato corrente registrato;
+- task e bug trasferiti alle issue o alla roadmap;
+- repository, branch e commit identificati;
+- allegati essenziali acquisiti o archiviati con checksum;
+- adattatori degli strumenti sincronizzati;
+- handoff completo;
+- prova che una nuova sessione possa ricostruire correttamente il lavoro dai file.
+
+### Conseguenze
+
+- Archiviare, invece di cancellare, quando rimane un artefatto non acquisito.
+- Non usare la memory del modello come sostituto della repository.
+- Non conservare branch, PR, bug e gate momentanei nella memory permanente.
+- Usare `CHAT_RETENTION_AND_HANDOFF.md` come procedura operativa.
+- Usare `SOURCE_ARTIFACT_REGISTER.md` per allegati e pacchetti.
+
+---
+
+## TRX-DEC-024 — Lifecycle esplicito e distinzione tra preparazione e autorizzazione
+
+**Stato:** approvata
+**Data:** 26 luglio 2026
+**Ambito:** tutti i verticali e progetti Tretnix
+
+### Decisione
+
+Ogni progetto deve usare stati espliciti e non ambigui. In particolare:
+
+```text
+PREPARATION_COMPLETE
+```
+
+non significa:
+
+```text
+IMPLEMENTATION_AUTHORIZED
+```
+
+Un progetto in `IMPLEMENTATION_NOT_STARTED` non deve essere descritto come costruito, pubblicato o dotato di repository se tali risorse non esistono.
+
+### Conseguenze
+
+- Ogni transizione registra fonte, data e gate.
+- Le risorse remote non vengono create per anticipare una possibile autorizzazione.
+- `REPOSITORY_INDEX.md` separa repository attuali e progetti pianificati.
+- `PORTFOLIO_AND_VERTICALS.md` contiene il lifecycle condiviso.
+
+---
+
+## TRX-DEC-025 — Gate Lovable per RITO Studio START
+
+**Stato:** approvata
+**Data:** 26 luglio 2026
+**Ambito:** Beauty & Wellness e `RITO Studio START`
+
+### Contesto
+
+La preparazione di `RITO Studio START` è completa, ma l’implementazione non è iniziata.
+
+### Decisione
+
+Prima di qualsiasi chiamata a Lovable devono essere presenti entrambi i gate:
+
+1. conferma esplicita che l’abbonamento Lovable è attivo;
+2. autorizzazione esplicita ad avviare `RITO Studio START`.
+
+Finché manca un gate è vietato:
+
+- creare il progetto Lovable;
+- consumare crediti;
+- creare o modificare repository remote per il progetto;
+- pubblicare;
+- iniziare BUSINESS;
+- reinterpretare o ridisegnare fuori dalla specifica Beauty & Wellness v1.1.
+
+### Conseguenze
+
+- Il development pack può essere letto e consolidato offline.
+- Nessun agente deduce l’autorizzazione da conversazioni precedenti o dallo stato `PREPARATION_COMPLETE`.
+- Il primo task autorizzato deve citare versione della specifica, gate, criteri di accettazione, verifiche e checkpoint.
+
+---
+
+## TRX-DEC-026 — Registrare i progetti pianificati senza inventare repository o deploy
+
+**Stato:** approvata
+**Data:** 26 luglio 2026
+**Ambito:** inventario, portfolio, comunicazione e report
+
+### Decisione
+
+Un progetto pianificato può essere registrato con nome, verticale, piano, stato e gate, ma non deve ricevere URL, repository, deploy, branch, commit o verifiche inventati.
+
+### Conseguenze
+
+- `RITO Studio START` resta nella sezione dei progetti pianificati finché la repository non esiste.
+- Professional Services e Home & Local Services non ricevono specifiche ricostruite senza i file sorgente.
+- I report distinguono `VR`, `VD`, `HR` e `NV` come definito in `CURRENT_STATE.md`.
+
+---
+
+## TRX-DEC-027 — Raccomandazione del modello prima di ogni incarico Codex
+
+**Stato:** approvata
+**Data:** 26 luglio 2026
+**Ambito:** task Codex Tretnix
+
+### Decisione
+
+Prima di ogni incarico Codex, ChatGPT deve indicare:
+
+- il modello consigliato tra quelli effettivamente disponibili;
+- la motivazione rispetto a complessità, profondità di analisi, rischio e costo;
+- eventuali limiti o alternativa.
+
+Il nome di un modello non viene fissato permanentemente nei documenti canonici, perché disponibilità e capacità possono cambiare.
+
+### Conseguenze
+
+- Il task registra la raccomandazione e la data.
+- La scelta del modello non sostituisce specifica, scope, verifiche o review.
+- Un modello più potente non autorizza autonomia, accessi o operazioni più ampie.
+
+---
+
+## TRX-DEC-028 — Stato trasversale sintetico, stato locale dettagliato
+
+**Stato:** approvata
+**Data:** 26 luglio 2026
+**Ambito:** knowledge repository e repository di progetto
+
+### Decisione
+
+`CURRENT_STATE.md` può conservare uno snapshot trasversale sintetico necessario al coordinamento, con data e livello di evidenza.
+
+Lo stato dettagliato, la cronologia, i task e i bug restano nel repository del progetto, nelle issue, nelle pull request e nei commit.
+
+### Conseguenze
+
+- Non trasformare `CURRENT_STATE.md` in un diario completo.
+- Aggiornare o rimuovere gli stati superati.
+- Usare Git per la cronologia.
+- Non elevare un handoff riportato a fatto verificato senza evidenza tecnica.

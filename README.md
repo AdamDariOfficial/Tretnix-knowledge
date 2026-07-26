@@ -2,10 +2,11 @@
 
 Fonte canonica per identità, decisioni, standard tecnici, repository, procedure operative e adattatori degli strumenti Tretnix.
 
-**Versione:** 1.4
+**Versione:** 1.5
 **Aggiornato:** 26 luglio 2026
 **Stato:** operativo
-**Visibilità consigliata:** repository GitHub privato
+**Visibilità osservata:** repository GitHub pubblica al 26 luglio 2026
+**Visibilità desiderata:** da confermare dal proprietario; non dedurre la scelta dai documenti storici
 
 ---
 
@@ -45,7 +46,15 @@ tretnix-knowledge/
 ├── DECISIONS.md
 ├── REPOSITORY_INDEX.md
 ├── HOSPITALITY_FAMILY.md
+├── BEAUTY_WELLNESS_FAMILY.md
+├── PORTFOLIO_AND_VERTICALS.md
+├── CURRENT_STATE.md
+├── CHAT_RETENTION_AND_HANDOFF.md
+├── SOURCE_ARTIFACT_REGISTER.md
 ├── .gitignore
+│
+├── audits/
+│   └── KNOWLEDGE_CONSOLIDATION_2026-07-26.md
 │
 ├── compiled/
 │   ├── README.md
@@ -87,6 +96,11 @@ tretnix-knowledge/
 | [`DECISIONS.md`](./DECISIONS.md) | Decisioni approvate e motivazioni | Normativa |
 | [`REPOSITORY_INDEX.md`](./REPOSITORY_INDEX.md) | Inventario e ruolo dei progetti | Descrittiva |
 | [`HOSPITALITY_FAMILY.md`](./HOSPITALITY_FAMILY.md) | Contratto, policy e baseline verificate della famiglia Hospitality | Normativa e descrittiva |
+| [`BEAUTY_WELLNESS_FAMILY.md`](./BEAUTY_WELLNESS_FAMILY.md) | Governance, stato e gate della famiglia Beauty & Wellness | Normativa e descrittiva; specifica completa ancora da acquisire |
+| [`PORTFOLIO_AND_VERTICALS.md`](./PORTFOLIO_AND_VERTICALS.md) | Mappa dei verticali, lifecycle e gate di avvio | Normativa e descrittiva |
+| [`CURRENT_STATE.md`](./CURRENT_STATE.md) | Snapshot operativo trasversale con livelli di evidenza | Operativa e temporale |
+| [`CHAT_RETENTION_AND_HANDOFF.md`](./CHAT_RETENTION_AND_HANDOFF.md) | Gate per handoff e cancellazione sicura delle chat | Normativa e operativa |
+| [`SOURCE_ARTIFACT_REGISTER.md`](./SOURCE_ARTIFACT_REGISTER.md) | Registro degli allegati e delle fonti acquisite o mancanti | Operativa |
 | [`templates/READ_ONLY_AUDIT.md`](./templates/READ_ONLY_AUDIT.md) | Procedura standard di audit senza modifiche | Operativa |
 
 ---
@@ -155,7 +169,12 @@ Una chat non modifica automaticamente una decisione canonica. Una nuova decision
 - indice dei progetti;
 - adattatori degli strumenti;
 - template;
-- kit di adozione.
+- kit di adozione;
+- mappa trasversale dei verticali;
+- uno snapshot sintetico dello stato quando serve a coordinare più repository;
+- registro degli artefatti sorgente e dei gap di acquisizione.
+
+Lo snapshot trasversale non sostituisce lo stato dettagliato dei singoli progetti.
 
 ### I repository dei progetti contengono
 
@@ -325,6 +344,10 @@ Prima di aggiungere una nuova informazione, chiedere:
 | Regola tecnica condivisa | `DEVELOPMENT_STANDARDS.md` |
 | Scelta approvata | `DECISIONS.md` |
 | Repository o relazione tra progetti | `REPOSITORY_INDEX.md` |
+| Verticale, lifecycle e progetto pianificato | `PORTFOLIO_AND_VERTICALS.md` |
+| Stato trasversale sintetico | `CURRENT_STATE.md` |
+| Allegato o pacchetto sorgente | `SOURCE_ARTIFACT_REGISTER.md` |
+| Procedura di handoff e cancellazione chat | `CHAT_RETENTION_AND_HANDOFF.md` |
 | Adattatore di uno strumento | `compiled/` |
 | Base riutilizzabile | `templates/` |
 | Configurazione pronta per un progetto | `project-kits/` |
@@ -359,6 +382,10 @@ Ordine operativo:
 
 Regole operative:
 
+- prima di ogni incarico Codex, ChatGPT indica il modello consigliato e la motivazione senza fissare un modello permanente;
+- un task che consuma crediti, crea risorse remote o pubblica richiede un gate esplicito;
+- `PREPARATION_COMPLETE` non equivale ad autorizzazione di implementazione;
+- un progetto pianificato non viene dichiarato repository o deploy finché non esiste;
 - un solo agente scrive alla volta;
 - ogni passaggio produce un checkpoint Git o un report;
 - nessun agente lavora direttamente su `main`;
@@ -380,3 +407,5 @@ Gli aspetti tecnici non ancora verificati nel codice devono restare marcati come
 - non ancora auditati.
 
 Non dichiarare una vulnerabilità, una build riuscita o un comportamento del codice come confermato senza evidenza.
+
+La repository non può rendere indipendenti dalle chat gli artefatti che non sono stati acquisiti. I file mancanti e i relativi blocchi sono registrati in `SOURCE_ARTIFACT_REGISTER.md`. Prima di cancellare tutte le conversazioni applicare il gate di `CHAT_RETENTION_AND_HANDOFF.md`.

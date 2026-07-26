@@ -75,3 +75,13 @@ Public-facing software is designed and developed by Tretnix. Do not add public r
 Client footers include the exact visible attribution “Progettato e sviluppato da Tretnix” linked to `https://tretnix.com`. Only “Tretnix” needs to be linked unless the approved design says otherwise. The discreet but perceivable link opens in a new tab with `target="_blank"` and `rel="noopener noreferrer"`, communicates that behavior accessibly and preserves visible keyboard focus. Decorative external-link icons are hidden from assistive technology.
 
 For public demos that are not real businesses, use `noindex, follow` on every public route and do not publish fictional commercial structured data. Allow only accurate generic `WebSite`, `WebPage`, `AboutPage`, `CollectionPage` and `ContactPage` markup, rendered deterministically and without route duplication.
+
+## Project state and handoff
+
+- Treat `PREPARATION_COMPLETE` and `IMPLEMENTATION_AUTHORIZED` as different states.
+- Do not invent a repository, branch, deploy or verification for a planned project.
+- Verify explicit gates before actions that consume credits, create remote resources, push, publish, deploy or start a higher plan.
+- Keep one writer and create a Git checkpoint before handoff.
+- Record decisions, status, tasks and source artifacts in their canonical files before a chat is deleted.
+- Report handoff claims as unverified until reconciled with commit, PR or execution evidence.
+- For `RITO Studio START`, do not call Lovable or start BUSINESS without the two approved gates.
