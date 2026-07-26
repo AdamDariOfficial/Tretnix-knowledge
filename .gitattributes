@@ -1,6 +1,6 @@
-# Preserve imported source artifacts byte-for-byte. Some Markdown files use
-# intentional trailing spaces for hard line breaks; they are verified through
-# their manifests and checksums instead of generic whitespace rules.
+# Preserve imported text content and intentional trailing spaces for hard
+# line breaks. Source manifests use LF bytes; validation normalizes CRLF to LF
+# before checking declared sizes and SHA-256 values.
 family-kits/** whitespace=-trailing-space,-space-before-tab
 operations/development-launch-2026-07-25/** whitespace=-trailing-space,-space-before-tab
 source-artifacts/2026-07-25-development-pack/** whitespace=-trailing-space,-space-before-tab

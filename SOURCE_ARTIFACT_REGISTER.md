@@ -1,6 +1,6 @@
 # Tretnix Source Artifact Register
 
-**Versione:** 1.1
+**Versione:** 1.2
 **Aggiornato:** 26 luglio 2026
 **Stato:** operativo; development pack del 25 luglio acquisito ed estratto
 
@@ -22,18 +22,23 @@ Un nome citato in chat non costituisce acquisizione. Un artefatto è acquisito q
 
 ## 2. Tretnix Knowledge
 
-### Baseline precedente all'integrazione
+### Baseline e snapshot della patch di governance
 
 | Campo | Valore |
 |---|---|
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
 | Branch sorgente | `main` |
-| Commit baseline originario | `60ac030d0c231443f1879c9bafc46f2626769f3d` |
-| Branch di consolidamento | `docs/consolidate-tretnix-state-2026-07-26` |
-| Primo commit di consolidamento | `9ff9546` |
-| Stato remoto osservato | branch pubblicato; PR non ancora aperta al momento della verifica |
+| Commit baseline originario prima del consolidamento | `60ac030d0c231443f1879c9bafc46f2626769f3d` |
+| Primo commit storico di consolidamento | `9ff9546` sul branch `docs/consolidate-tretnix-state-2026-07-26` |
+| Commit canonico verificato dopo l’ingestione | `de29f4f3bde0b4f91266505fd73d128f74d11e3f` |
+| Snapshot ricevuto | `Tretnix-knowledge-de29f4f3.zip` |
+| SHA-256 snapshot | `3cf34a6f145a1834d211f65917950dc92e940f259d7585f16342d1bb00730032` |
+| Dimensione snapshot | `296459` byte |
+| File versionati nello snapshot | `128` |
+| File Markdown nello snapshot | `118` |
+| Stato verifica | archive leggibile, struttura inventariata e baseline usata per la patch esterna |
 
-La seconda integrazione deve essere applicata sul branch che contiene `9ff9546`, non sulla vecchia baseline `main`.
+La patch di governance associata deve essere applicata esclusivamente a un working tree pulito sul commit `de29f4f3bde0b4f91266505fd73d128f74d11e3f`. Il commit risultante deve essere registrato dopo il merge. I riferimenti a `9ff9546` restano storici e non descrivono più lo stato corrente di `main`.
 
 ---
 
@@ -52,7 +57,7 @@ La seconda integrazione deve essere applicata sul branch che contiene `9ff9546`,
 | Righe testuali Markdown/JSON | 16.891 |
 | Stato manifest | verificato |
 | Stato estrazione | completata |
-| Stato contenuti testuali | acquisiti nella repository e conservati byte per byte |
+| Stato contenuti testuali | acquisiti integralmente; i manifest sorgente vengono verificati sui byte normalizzati `CRLF → LF` |
 | Stato ZIP binario | non duplicato nel Git repository; conservarne una copia offline |
 
 ### Handoff separato
@@ -129,7 +134,7 @@ Contiene:
 - registro di ingestione;
 - copie storiche dei file `01_SOURCE_OF_TRUTH` del pacchetto.
 
-Le copie storiche non sono fonti attive. Restano disponibili per audit e confronto; i documenti canonici alla root hanno precedenza. I file importati dal pacchetto sono conservati byte per byte; `.gitattributes` esclude soltanto queste aree dai controlli generici sugli spazi finali Markdown, mentre manifest e SHA-256 ne verificano l’integrità.
+Le copie storiche non sono fonti attive. Restano disponibili per audit e confronto; i documenti canonici alla root hanno precedenza. I contenuti importati sono conservati integralmente, ma il checkout Git può usare `CRLF` mentre i manifest sorgente sono calcolati su `LF`. La validazione converte soltanto `CRLF → LF` prima di confrontare dimensioni e SHA-256; `.gitattributes` esclude inoltre queste aree dai controlli generici sugli spazi finali Markdown intenzionali.
 
 ---
 
@@ -173,7 +178,28 @@ Regole:
 
 ---
 
-## 7. Informazioni ora recuperabili senza chat
+## 7. Alias storici dei documenti canonici
+
+Durante l’audit multi-repository sono comparsi nomi con suffisso `(2)` provenienti da download o caricamenti duplicati. Non rappresentano documenti canonici aggiuntivi né allegati obbligatori mancanti.
+
+| Alias storico | Documento canonico corrente |
+|---|---|
+| `DECISIONS(2).md` | `DECISIONS.md` |
+| `DEVELOPMENT_STANDARDS(2).md` | `DEVELOPMENT_STANDARDS.md` |
+| `TRETNIX_MASTER_CONTEXT(2).md` | `TRETNIX_MASTER_CONTEXT.md` |
+| `REPOSITORY_INDEX(2).md` | `REPOSITORY_INDEX.md` |
+| `READ_ONLY_AUDIT(2).md` | `templates/READ_ONLY_AUDIT.md` |
+
+Regole:
+
+- usare sempre nome e percorso canonici nei nuovi task;
+- trattare il suffisso `(2)` come alias storico, non come versione superiore;
+- confrontare una copia esterna soltanto quando i suoi byte sono realmente disponibili;
+- non creare file duplicati nella root per soddisfare un alias storico.
+
+---
+
+## 8. Informazioni ora recuperabili senza chat
 
 Dopo il merge dell'integrazione sono recuperabili integralmente:
 
@@ -190,7 +216,7 @@ Dopo il merge dell'integrazione sono recuperabili integralmente:
 
 ---
 
-## 8. Cancellazione delle chat
+## 9. Cancellazione delle chat
 
 Il development pack non rappresenta più un blocco alla cancellazione delle chat dopo che:
 
@@ -204,7 +230,7 @@ Restano da formalizzare separatamente eventuali stati Tretnix.com successivi, br
 
 ---
 
-## 9. Regola per future acquisizioni
+## 10. Regola per future acquisizioni
 
 Per ogni nuovo pacchetto:
 
@@ -213,7 +239,7 @@ Per ogni nuovo pacchetto:
 3. verificare il manifest;
 4. estrarre i contenuti leggibili;
 5. separare snapshot storici e fonti attive;
-6. preservare byte per byte i sorgenti quando sono accompagnati da manifest e checksum;
+6. preservare integralmente i sorgenti e documentare l’eventuale normalizzazione dei line ending usata per verificare manifest e checksum;
 7. isolare con `.gitattributes` soltanto gli spazi Markdown intenzionali degli artefatti importati;
 8. evitare binari duplicati quando il contenuto è già versionato;
 9. aggiornare documenti canonici e adattatori;

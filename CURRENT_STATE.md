@@ -1,6 +1,6 @@
 # Tretnix Current State
 
-**Versione:** 1.1
+**Versione:** 1.2
 **Aggiornato:** 26 luglio 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
@@ -22,15 +22,15 @@
 | Campo | Valore |
 |---|---|
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
-| `main` osservato | versione 1.4, commit precedente al consolidamento |
-| Branch di lavoro | `docs/consolidate-tretnix-state-2026-07-26` |
-| Primo commit branch | `9ff9546` |
-| Stato branch | pubblicato sul remoto secondo output Git fornito dall'utente |
-| Pull request | non ancora aperta al momento dell'ultima verifica |
-| Development pack | acquisito, verificato ed estratto |
-| Evidenza | `VR` per artefatti locali; `HR` per stato remoto del branch |
+| `main` verificato | `de29f4f3bde0b4f91266505fd73d128f74d11e3f` |
+| Snapshot canonico ricevuto | `Tretnix-knowledge-de29f4f3.zip` |
+| Development pack | acquisito, verificato, estratto e integrato in `main` |
+| Family kit | Beauty v1.1, Professional v1.0 e Home v1.0 presenti |
+| Visibilità | pubblica temporaneamente secondo `TRX-DEC-031` |
+| Validazione knowledge | introdotta dalla patch preparata sulla baseline `de29f4f3…`; esito da registrare nella PR |
+| Evidenza | `VR` per commit, archive e contenuti versionati |
 
-Il branch contiene il primo consolidamento di 22 file. La presente integrazione aggiunge i family kit completi e deve essere committata sullo stesso branch prima di aprire la PR.
+La precedente fase di consolidamento è confluita in `main`. I riferimenti al branch `docs/consolidate-tretnix-state-2026-07-26` e al primo commit `9ff9546` restano nella cronologia Git e nel registro degli artefatti, ma non rappresentano più lo stato operativo corrente.
 
 ---
 
@@ -68,17 +68,16 @@ Interventi ammessi: bug, regressione, sicurezza o requisito approvato.
 | Stato | produzione, remediation controllata |
 | Evidenza dello stato recente | `HR` |
 
-Da riconciliare:
+Stato operativo riportato e ancora da riconciliare completamente con le evidenze del repository:
 
-- CF-1 riportato come implementato e verificato;
-- PR CF-1 da identificare e unire;
-- `main` locale da sincronizzare;
-- working tree da verificare pulito;
-- `data-tsd-source` da investigare in sola lettura;
-- finding successivi uno per branch;
-- modello Codex consigliato prima di ogni incarico.
+- CF-1 risulta unito; registrare PR, merge commit e controlli eseguiti;
+- investigare il mismatch `data-tsd-source` in sola lettura;
+- dopo la diagnosi usare una sola branch `fix/impeccable-homepage-optimization` per CF-2, CF-3, CF-4 e CF-5;
+- usare un solo writer, reviewer read-only in parallelo e una sola pull request finale;
+- mantenere CF-6 rinviato finché non esistono asset definitivi;
+- indicare il modello Codex consigliato prima di ogni incarico.
 
-Servono PR, branch, commit completo, output dei controlli e report hydration per elevare lo stato a `VR`.
+Servono PR, branch, commit completo, output dei controlli e report hydration per elevare i singoli elementi da `HR` a `VR`.
 
 ---
 
@@ -133,16 +132,17 @@ RITO_STUDIO_START_AUTHORIZED
 
 ## 9. Ordine operativo
 
-1. completare e revisionare l'integrazione del development pack sul branch corrente;
-2. aprire la PR Tretnix Knowledge e verificare l'intero diff;
-3. unire e sincronizzare `main`;
-4. eseguire la prova di ricostruzione senza chat;
-5. riconciliare CF-1 e hydration nel repository `tretnix`;
-6. mantenere Forno Lume START congelato;
-7. trattare Package D BUSINESS separatamente;
-8. attivare gli abbonamenti soltanto quando deciso;
-9. avviare esclusivamente RITO Studio START dopo i gate;
-10. non iniziare BUSINESS prima del freeze START.
+1. applicare, validare, revisionare e unire la patch di governance preparata sulla baseline `de29f4f3…`;
+2. sincronizzare `main` ed eseguire la prova di ricostruzione senza chat;
+3. riconciliare CF-1 nel repository `tretnix` con PR, merge commit e controlli;
+4. investigare `data-tsd-source` in sola lettura;
+5. eseguire CF-2, CF-3, CF-4 e CF-5 nella sola branch `fix/impeccable-homepage-optimization` con una PR finale;
+6. mantenere CF-6 rinviato finché non esistono asset definitivi;
+7. mantenere Forno Lume START congelato salvo scope esplicitamente approvato;
+8. trattare Forno Lume BUSINESS e Package D soltanto dopo la stabilizzazione della baseline precedente;
+9. attivare gli abbonamenti soltanto quando deciso;
+10. avviare esclusivamente RITO Studio START dopo entrambi i gate;
+11. non iniziare RITO Studio BUSINESS prima del freeze START.
 
 ---
 
@@ -152,10 +152,10 @@ Il development pack e le tre specifiche non sono più un blocco documentale dopo
 
 Prima di cancellare tutte le chat devono comunque essere completati:
 
-- merge della knowledge aggiornata;
+- merge della patch di governance aggiornata;
 - sincronizzazione locale di `main`;
 - prova di bootstrap in una nuova sessione;
-- conservazione offline dello ZIP originale;
+- conservazione offline dello ZIP originale del development pack e dello snapshot `de29f4f3…` usato per la patch;
 - formalizzazione degli stati Tretnix.com non presenti nel pack;
 - trasferimento di eventuali allegati unici residui.
 

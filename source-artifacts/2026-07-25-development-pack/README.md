@@ -40,4 +40,4 @@ ebae0ebda463dbd7efcc29d56d102cdbc136c29625018bf28ac88dc5ebceca4d
 
 Il file ZIP originale non è duplicato nella repository. Conservarne una copia offline.
 
-I file importati dal pacchetto sono conservati byte per byte. Alcuni Markdown originali usano spazi finali intenzionali per hard line break; `.gitattributes` esclude esclusivamente queste directory dal controllo generico `git diff --check`. Per l’integrità fanno fede `MANIFEST.json` e gli SHA-256 registrati.
+I file importati dal pacchetto sono conservati integralmente. Alcuni Markdown originali usano spazi finali intenzionali per hard line break; `.gitattributes` esclude esclusivamente queste directory dal controllo generico `git diff --check`. I manifest sorgente sono calcolati sui byte `LF`: quando il checkout usa `CRLF`, la verifica normalizza esclusivamente `CRLF → LF` prima di confrontare dimensioni e SHA-256.
