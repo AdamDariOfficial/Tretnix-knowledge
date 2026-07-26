@@ -1,6 +1,6 @@
 # Tretnix Repository Index
 
-**Versione:** 1.5
+**Versione:** 1.6
 **Aggiornato:** 26 luglio 2026
 **Stato dell’inventario:** completo rispetto ai quattro repository attualmente dichiarati
 
@@ -67,15 +67,16 @@ L’inventario è completo soltanto rispetto al manifest approvato.
 
 Il sito è in produzione e in remediation controllata.
 
-Handoff operativo più recente disponibile, ancora da riconciliare con commit e pull request:
+Handoff operativo più recente disponibile, ancora da riconciliare completamente con commit e pull request:
 
-- `CF-1`, accessibilità del form contatti, riportato come implementato e verificato;
-- pull request CF-1 riportata come ancora da unire;
-- sincronizzazione di `main` e verifica working tree pulito da eseguire dopo il merge;
+- `CF-1`, accessibilità del form contatti, riportato come unito e verificato;
+- PR, merge commit e output dei controlli CF-1 da registrare;
 - mismatch hydration relativo a `data-tsd-source` da investigare in sola lettura;
-- finding successivi da trattare uno per branch.
+- `CF-2`, `CF-3`, `CF-4` e `CF-5` da gestire insieme nella branch `fix/impeccable-homepage-optimization`;
+- un solo writer, reviewer read-only in parallelo e una sola pull request finale;
+- `CF-6` rinviato finché non esistono asset definitivi.
 
-Questi elementi hanno evidenza `HR` in `CURRENT_STATE.md`. Non dichiarare merge o chiusura verificati finché non sono registrati PR, branch, SHA e output dei controlli.
+Questi elementi hanno evidenza `HR` in `CURRENT_STATE.md`. Non dichiarare chiusura verificata finché non sono registrati PR, branch, SHA, output dei controlli e report hydration.
 
 Restano inoltre aree di revisione su SEO, aspetti legali e colori.
 
@@ -322,10 +323,11 @@ La configurazione Cloudflare Pages verificata usa Bun, `bun.lock`, output `dist`
 | Deploy | non applicabile |
 | Stato | operativo |
 | Branch principale | `main` |
-| Baseline precedente | `60ac030d0c231443f1879c9bafc46f2626769f3d` |
-| Primo commit di consolidamento | `9ff9546` sul branch `docs/consolidate-tretnix-state-2026-07-26` |
-| Commit canonico finale | da registrare dopo merge |
-| Ultimo audit | consolidamento documentale e ingestione development pack il 26 luglio 2026 |
+| Commit canonico verificato | `de29f4f3bde0b4f91266505fd73d128f74d11e3f` |
+| Snapshot usato per la patch esterna | `Tretnix-knowledge-de29f4f3.zip` |
+| SHA-256 snapshot | `3cf34a6f145a1834d211f65917950dc92e940f259d7585f16342d1bb00730032` |
+| Commit della patch di governance | da registrare dopo merge |
+| Ultima revisione | 26 luglio 2026 — baseline post-ingestione e preparazione governance/validazione |
 
 ### Ruolo canonico
 
@@ -344,9 +346,10 @@ La configurazione Cloudflare Pages verificata usa Bun, `bun.lock`, output `dist`
 - è la fonte canonica trasversale;
 - non contiene bug temporanei o task correnti dei progetti;
 - ogni modifica significativa usa branch, diff e pull request;
-- la visibilità osservata il 26 luglio 2026 è pubblica;
-- la preferenza precedente per una repository privata non deve essere trattata come impostazione già applicata;
-- la visibilità definitiva richiede decisione esplicita del proprietario.
+- la visibilità corrente è pubblica durante audit e consolidamento secondo `TRX-DEC-031`;
+- durante la fase pubblica non contiene segreti, dati personali non necessari, dati cliente riservati o accessi di produzione;
+- il passaggio a privata richiede completamento del ciclo, verifica delle dipendenze di accesso e conferma esplicita del proprietario;
+- la validazione locale e CI non sostituisce la diff review umana.
 
 ---
 
@@ -448,16 +451,16 @@ Per tutti i progetti: nessun URL, branch, commit, deploy, test o verifica viene 
 
 # 6. Ordine operativo aggiornato
 
-1. completare la revisione del branch di consolidamento Tretnix Knowledge;
-2. aprire e unire la pull request dopo diff review;
-3. sincronizzare `main` e registrare il commit canonico finale;
-4. eseguire una prova di ricostruzione senza chat;
-5. riconciliare CF-1 con PR, branch, commit e verifiche nel repository `tretnix`;
-6. investigare `data-tsd-source` in sola lettura;
-7. proseguire i finding `tretnix` uno per branch;
-8. mantenere `forno-lume-START` congelato e Package D separato;
-9. avviare esclusivamente `RITO Studio START` dopo i gate;
-10. aggiornare il registro dei pattern canonici quando nuovi pattern vengono verificati.
+1. applicare, validare e unire la patch Tretnix Knowledge preparata sulla baseline `de29f4f3…`;
+2. sincronizzare `main`, registrare il nuovo commit canonico ed eseguire la prova di ricostruzione senza chat;
+3. riconciliare CF-1 con PR, merge commit e verifiche nel repository `tretnix`;
+4. investigare `data-tsd-source` in sola lettura;
+5. eseguire CF-2, CF-3, CF-4 e CF-5 nella sola branch `fix/impeccable-homepage-optimization`, con un writer e una PR finale;
+6. mantenere CF-6 rinviato finché non esistono asset definitivi;
+7. mantenere `forno-lume-START` congelato salvo scope approvato e trattare BUSINESS/Package D soltanto dopo la stabilizzazione precedente;
+8. avviare esclusivamente `RITO Studio START` dopo entrambi i gate;
+9. non iniziare RITO Studio BUSINESS prima del freeze START;
+10. aggiornare il registro dei pattern canonici soltanto quando nuovi pattern vengono verificati.
 
 Le vulnerabilità critiche o alte rilevate devono essere segnalate immediatamente e prioritarizzate.
 

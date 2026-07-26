@@ -1,6 +1,6 @@
 # Tretnix Decision Log
 
-**Versione:** 1.6
+**Versione:** 1.7
 **Aggiornato:** 26 luglio 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
@@ -1066,3 +1066,46 @@ Questo mantiene provenienza e auditabilità senza creare fonti concorrenti o gon
 - Le specifiche attive vengono spostate in `family-kits/` e gli handoff operativi in `operations/`.
 - Gli agenti non devono leggere `historical-source-of-truth/` come baseline corrente.
 - La cancellazione delle chat resta subordinata al merge e alla prova di ricostruzione.
+
+---
+
+## TRX-DEC-031 — Visibilità pubblica temporanea della knowledge repository
+
+**Stato:** approvata
+**Data:** 26 luglio 2026
+**Ambito:** repository `Tretnix-knowledge`, audit e accessi degli strumenti
+
+### Contesto
+
+Durante il completamento dell’audit multi-repository e del consolidamento documentale, l’accesso pubblico consente agli strumenti autorizzati di leggere la knowledge repository e le altre repository pubbliche senza dipendere da integrazioni private non ancora verificate.
+
+La visibilità pubblica non deve essere interpretata come destinazione permanente né come autorizzazione a pubblicare informazioni riservate.
+
+### Decisione
+
+`Tretnix-knowledge` rimane pubblica durante il ciclo corrente di audit, consolidamento, verifica degli accessi e ricostruzione senza chat.
+
+Il passaggio a privata avviene soltanto quando:
+
+1. il ciclo corrente è dichiarato completo con evidenza;
+2. le patch e gli audit necessari sono stati revisionati e uniti;
+3. è stata verificata l’assenza di dipendenze operative da URL raw pubblici;
+4. ChatGPT, Cursor, Codex, Lovable e gli altri strumenti necessari dispongono di un metodo di accesso approvato;
+5. il proprietario conferma esplicitamente il cambio di visibilità.
+
+Finché la repository è pubblica è vietato versionare:
+
+- credenziali, token, cookie, chiavi o file di ambiente;
+- dati personali non necessari;
+- dati cliente riservati;
+- accessi di produzione;
+- screenshot, log o export contenenti informazioni sensibili;
+- materiale commerciale confidenziale non destinato alla pubblicazione.
+
+### Conseguenze
+
+- `README.md`, `REPOSITORY_INDEX.md` e `CURRENT_STATE.md` distinguono visibilità corrente e visibilità successiva.
+- Nessun agente deve rendere privata la repository automaticamente.
+- Prima del cambio di visibilità deve essere eseguito un controllo delle dipendenze di accesso.
+- Una futura scelta di mantenerla pubblica in modo permanente richiede una nuova decisione esplicita.
+- La pubblicità temporanea non riduce i requisiti di branch, review, validazione e protezione dei dati.

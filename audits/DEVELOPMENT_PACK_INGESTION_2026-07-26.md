@@ -73,7 +73,7 @@ Non sono baseline correnti.
 
 ### Binari
 
-I tre ZIP famiglia e lo ZIP principale non vengono duplicati nel repository. Manifest e checksum sono conservati; i contenuti leggibili sono versionati integralmente e byte per byte. Una copia degli archivi originali deve restare offline.
+I tre ZIP famiglia e lo ZIP principale non vengono duplicati nel repository. Manifest e checksum sono conservati; i contenuti leggibili sono versionati integralmente. Poiché il checkout Git può usare `CRLF` mentre i manifest sorgente sono calcolati su `LF`, la verifica di dimensioni e SHA-256 normalizza esclusivamente `CRLF → LF`. Una copia degli archivi originali deve restare offline.
 
 ---
 

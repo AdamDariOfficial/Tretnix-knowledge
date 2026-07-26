@@ -2,11 +2,11 @@
 
 Fonte canonica per identità, decisioni, standard tecnici, repository, procedure operative e adattatori degli strumenti Tretnix.
 
-**Versione:** 1.6
+**Versione:** 1.7
 **Aggiornato:** 26 luglio 2026
 **Stato:** operativo
-**Visibilità osservata:** repository GitHub pubblica al 26 luglio 2026
-**Visibilità desiderata:** da confermare dal proprietario; non dedurre la scelta dai documenti storici
+**Visibilità corrente:** repository GitHub pubblica durante il completamento dell’audit e del consolidamento Tretnix
+**Visibilità successiva:** passaggio a privata soltanto dopo completamento del ciclo, verifica delle dipendenze di accesso e nuova conferma esplicita del proprietario (`TRX-DEC-031`)
 
 ---
 
@@ -41,6 +41,7 @@ GitHub conserva la verità versionata. Le chat aiutano a ragionare, ma non sosti
 ```text
 tretnix-knowledge/
 ├── README.md
+├── AGENTS.md
 ├── TRETNIX_MASTER_CONTEXT.md
 ├── DEVELOPMENT_STANDARDS.md
 ├── DECISIONS.md
@@ -54,6 +55,13 @@ tretnix-knowledge/
 ├── CHAT_RETENTION_AND_HANDOFF.md
 ├── SOURCE_ARTIFACT_REGISTER.md
 ├── .gitignore
+│
+├── .github/
+│   └── workflows/
+│       └── knowledge-validation.yml
+│
+├── scripts/
+│   └── validate_knowledge.py
 │
 ├── audits/
 │   ├── KNOWLEDGE_CONSOLIDATION_2026-07-26.md
@@ -136,6 +144,19 @@ Quando cambia una decisione o uno standard:
 ---
 
 ## 6. Template e project kit
+
+### Istruzioni locali e validazione
+
+Il file [`AGENTS.md`](./AGENTS.md) definisce i confini operativi per gli agenti che lavorano direttamente su questa repository.
+
+La validazione locale si esegue con:
+
+```text
+python scripts/validate_knowledge.py
+git -c core.whitespace=cr-at-eol diff --check
+```
+
+Il workflow `.github/workflows/knowledge-validation.yml` esegue lo stesso validatore sulle pull request e sui push a `main`. Il validatore non sostituisce la review umana: controlla struttura, link locali, JSON, manifest dei family kit, sequenza delle decisioni e file sensibili tracciati.
 
 ### `templates/project-foundation`
 
@@ -336,7 +357,18 @@ Ogni modifica significativa deve:
 4. evitare duplicazioni;
 5. aggiornare data o versione quando necessario;
 6. essere revisionata tramite diff;
-7. essere unita solo dopo approvazione.
+7. superare i controlli disponibili e pertinenti;
+8. essere unita solo dopo approvazione.
+
+Per questa repository, prima del commit eseguire almeno:
+
+```text
+python scripts/validate_knowledge.py
+git -c core.whitespace=cr-at-eol diff --check
+git status --short
+```
+
+Dichiarare soltanto controlli realmente eseguiti.
 
 Esempi:
 
