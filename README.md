@@ -2,7 +2,7 @@
 
 Fonte canonica per identità, decisioni, standard tecnici, repository, procedure operative e adattatori degli strumenti Tretnix.
 
-**Versione:** 1.5
+**Versione:** 1.6
 **Aggiornato:** 26 luglio 2026
 **Stato:** operativo
 **Visibilità osservata:** repository GitHub pubblica al 26 luglio 2026
@@ -47,6 +47,8 @@ tretnix-knowledge/
 ├── REPOSITORY_INDEX.md
 ├── HOSPITALITY_FAMILY.md
 ├── BEAUTY_WELLNESS_FAMILY.md
+├── PROFESSIONAL_SERVICES_FAMILY.md
+├── HOME_LOCAL_SERVICES_FAMILY.md
 ├── PORTFOLIO_AND_VERTICALS.md
 ├── CURRENT_STATE.md
 ├── CHAT_RETENTION_AND_HANDOFF.md
@@ -54,7 +56,19 @@ tretnix-knowledge/
 ├── .gitignore
 │
 ├── audits/
-│   └── KNOWLEDGE_CONSOLIDATION_2026-07-26.md
+│   ├── KNOWLEDGE_CONSOLIDATION_2026-07-26.md
+│   └── DEVELOPMENT_PACK_INGESTION_2026-07-26.md
+│
+├── family-kits/
+│   ├── beauty-wellness-v1.1/
+│   ├── professional-services-v1.0/
+│   └── home-local-services-v1.0/
+│
+├── operations/
+│   └── development-launch-2026-07-25/
+│
+├── source-artifacts/
+│   └── 2026-07-25-development-pack/
 │
 ├── compiled/
 │   ├── README.md
@@ -96,11 +110,13 @@ tretnix-knowledge/
 | [`DECISIONS.md`](./DECISIONS.md) | Decisioni approvate e motivazioni | Normativa |
 | [`REPOSITORY_INDEX.md`](./REPOSITORY_INDEX.md) | Inventario e ruolo dei progetti | Descrittiva |
 | [`HOSPITALITY_FAMILY.md`](./HOSPITALITY_FAMILY.md) | Contratto, policy e baseline verificate della famiglia Hospitality | Normativa e descrittiva |
-| [`BEAUTY_WELLNESS_FAMILY.md`](./BEAUTY_WELLNESS_FAMILY.md) | Governance, stato e gate della famiglia Beauty & Wellness | Normativa e descrittiva; specifica completa ancora da acquisire |
+| [`BEAUTY_WELLNESS_FAMILY.md`](./BEAUTY_WELLNESS_FAMILY.md) | Indice e governance Beauty & Wellness | Normativa e descrittiva |
+| [`PROFESSIONAL_SERVICES_FAMILY.md`](./PROFESSIONAL_SERVICES_FAMILY.md) | Indice e governance Professional Services | Normativa e descrittiva |
+| [`HOME_LOCAL_SERVICES_FAMILY.md`](./HOME_LOCAL_SERVICES_FAMILY.md) | Indice e governance Home & Local Services | Normativa e descrittiva |
 | [`PORTFOLIO_AND_VERTICALS.md`](./PORTFOLIO_AND_VERTICALS.md) | Mappa dei verticali, lifecycle e gate di avvio | Normativa e descrittiva |
 | [`CURRENT_STATE.md`](./CURRENT_STATE.md) | Snapshot operativo trasversale con livelli di evidenza | Operativa e temporale |
 | [`CHAT_RETENTION_AND_HANDOFF.md`](./CHAT_RETENTION_AND_HANDOFF.md) | Gate per handoff e cancellazione sicura delle chat | Normativa e operativa |
-| [`SOURCE_ARTIFACT_REGISTER.md`](./SOURCE_ARTIFACT_REGISTER.md) | Registro degli allegati e delle fonti acquisite o mancanti | Operativa |
+| [`SOURCE_ARTIFACT_REGISTER.md`](./SOURCE_ARTIFACT_REGISTER.md) | Registro di artefatti, checksum, ingestione e fonti residue | Operativa |
 | [`templates/READ_ONLY_AUDIT.md`](./templates/READ_ONLY_AUDIT.md) | Procedura standard di audit senza modifiche | Operativa |
 
 ---
@@ -141,6 +157,24 @@ Contiene la configurazione adattata al progetto pilota Forno Lume START.
 
 La foundation iniziale è già stata integrata nel repository del progetto. Il kit rimane la copia di riferimento da sincronizzare tramite branch dedicata quando cambiano le istruzioni; non modifica il sito o il comportamento runtime.
 
+### `family-kits/`
+
+Contiene le specifiche complete approvate dei verticali preparati:
+
+- Beauty & Wellness v1.1;
+- Professional Services v1.0;
+- Home & Local Services v1.0.
+
+Ogni kit conserva documenti, prompt, checklist e manifest. I prompt non autorizzano automaticamente l'esecuzione.
+
+### `operations/development-launch-2026-07-25/`
+
+Contiene sequenza, checklist, handoff e messaggio di bootstrap per il primo ciclo di sviluppo.
+
+### `source-artifacts/`
+
+Conserva manifest, provenienza e snapshot storici. Le copie storiche non competono con i documenti canonici correnti.
+
 ---
 
 ## 7. Ordine di autorità
@@ -172,7 +206,9 @@ Una chat non modifica automaticamente una decisione canonica. Una nuova decision
 - kit di adozione;
 - mappa trasversale dei verticali;
 - uno snapshot sintetico dello stato quando serve a coordinare più repository;
-- registro degli artefatti sorgente e dei gap di acquisizione.
+- registro degli artefatti sorgente e della loro ingestione;
+- specifiche complete dei verticali preparati;
+- handoff e runbook di lancio versionati.
 
 Lo snapshot trasversale non sostituisce lo stato dettagliato dei singoli progetti.
 
@@ -345,6 +381,9 @@ Prima di aggiungere una nuova informazione, chiedere:
 | Scelta approvata | `DECISIONS.md` |
 | Repository o relazione tra progetti | `REPOSITORY_INDEX.md` |
 | Verticale, lifecycle e progetto pianificato | `PORTFOLIO_AND_VERTICALS.md` |
+| Governance sintetica della famiglia | documento `*_FAMILY.md` |
+| Specifica completa della famiglia | `family-kits/` |
+| Handoff e runbook di lancio | `operations/` |
 | Stato trasversale sintetico | `CURRENT_STATE.md` |
 | Allegato o pacchetto sorgente | `SOURCE_ARTIFACT_REGISTER.md` |
 | Procedura di handoff e cancellazione chat | `CHAT_RETENTION_AND_HANDOFF.md` |
@@ -408,4 +447,4 @@ Gli aspetti tecnici non ancora verificati nel codice devono restare marcati come
 
 Non dichiarare una vulnerabilità, una build riuscita o un comportamento del codice come confermato senza evidenza.
 
-La repository non può rendere indipendenti dalle chat gli artefatti che non sono stati acquisiti. I file mancanti e i relativi blocchi sono registrati in `SOURCE_ARTIFACT_REGISTER.md`. Prima di cancellare tutte le conversazioni applicare il gate di `CHAT_RETENTION_AND_HANDOFF.md`.
+Il development pack del 25 luglio è stato acquisito ed estratto. Prima di cancellare tutte le conversazioni resta obbligatorio applicare il gate di `CHAT_RETENTION_AND_HANDOFF.md`, verificare che non esistano allegati unici residui e completare una prova di ricostruzione da repository pulita.

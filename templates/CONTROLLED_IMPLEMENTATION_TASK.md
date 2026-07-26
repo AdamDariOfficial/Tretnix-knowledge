@@ -26,6 +26,18 @@ Describe:
 - related approved decisions;
 - canonical visual or technical reference.
 
+
+## Family specification
+
+- family:
+- family-kit path and version:
+- root `*_FAMILY.md` read:
+- task-relevant kit files read:
+- local decision log reviewed:
+- historical source snapshots excluded as baseline: yes / no
+
+A ready prompt inside a family kit does not satisfy the authorization gate by itself.
+
 ## Objective
 
 State one measurable result.

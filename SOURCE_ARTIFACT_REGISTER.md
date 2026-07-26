@@ -1,8 +1,8 @@
 # Tretnix Source Artifact Register
 
-**Versione:** 1.0
+**Versione:** 1.1
 **Aggiornato:** 26 luglio 2026
-**Stato:** operativo
+**Stato:** operativo; development pack del 25 luglio acquisito ed estratto
 
 ---
 
@@ -10,121 +10,212 @@
 
 Questo registro distingue:
 
-- artefatti effettivamente disponibili e verificati;
-- file citati ma non acquisiti;
-- snapshot storici;
-- documenti canonici derivati;
+- artefatti effettivamente acquisiti e verificati;
+- contenuti estratti e resi versionabili;
+- snapshot storici non canonici;
+- file binari conservati fuori dalla repository;
 - blocchi che impediscono la cancellazione sicura delle chat.
 
-Il nome di un allegato non dimostra che il suo contenuto sia conservato nella repository.
+Un nome citato in chat non costituisce acquisizione. Un artefatto è acquisito quando origine, checksum, contenuto e destinazione sono registrati.
 
 ---
 
-## 2. Baseline Tretnix Knowledge analizzata
+## 2. Tretnix Knowledge
+
+### Baseline precedente all'integrazione
 
 | Campo | Valore |
 |---|---|
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
-| Branch | `main` |
-| Commit completo | `60ac030d0c231443f1879c9bafc46f2626769f3d` |
-| Data acquisizione | 26 luglio 2026 |
-| File | 23 |
-| Righe | 6.175 |
-| Metodo disponibile | download dei file raw dalla tree pubblica |
-| `git archive` originale | non disponibile nell’ambiente di questa attività |
-| Manifest SHA-256 locale | generato per i 23 file acquisiti |
+| Branch sorgente | `main` |
+| Commit baseline originario | `60ac030d0c231443f1879c9bafc46f2626769f3d` |
+| Branch di consolidamento | `docs/consolidate-tretnix-state-2026-07-26` |
+| Primo commit di consolidamento | `9ff9546` |
+| Stato remoto osservato | branch pubblicato; PR non ancora aperta al momento della verifica |
 
-Questa baseline è identificata dal commit, ma la patch prodotta da questa attività deve essere revisionata e applicata manualmente nel working tree canonico.
+La seconda integrazione deve essere applicata sul branch che contiene `9ff9546`, non sulla vecchia baseline `main`.
 
 ---
 
-## 3. Snapshot storici caricati nella sessione
+## 3. Development pack acquisito
 
-| Artefatto | Data contenuto | Stato | Uso consentito |
-|---|---|---|---|
-| `READ_ONLY_AUDIT(2).md` | 16 luglio 2026 | storico, superato dalla repository corrente | confronto soltanto |
-| `DECISIONS(2).md` | 16 luglio 2026 | storico, superato | confronto soltanto |
-| `REPOSITORY_INDEX(2).md` | 16 luglio 2026 | storico, superato | confronto soltanto |
-| `TRETNIX_MASTER_CONTEXT(2).md` | 16 luglio 2026 | storico, superato | confronto soltanto |
-| `DEVELOPMENT_STANDARDS(2).md` | 16 luglio 2026 | storico, superato | confronto soltanto |
-
-Non usare questi file come baseline di una patch destinata a `main`.
-
----
-
-## 4. Development pack del 25 luglio 2026
-
-### `TRETNIX_NEW_CHAT_DEVELOPMENT_PACK_2026-07-25.zip`
+### Archivio originale
 
 | Campo | Valore |
 |---|---|
-| Citato in handoff | sì |
-| Dichiarato fonte approvata | sì |
-| Byte disponibili nella baseline analizzata | no |
-| Checksum disponibile | no |
-| Contenuto integrale verificato in questa attività | no |
-| Dipendenze note | Beauty & Wellness v1.1; RITO Studio START; preparazione dei verticali successivi |
-| Stato | `REQUIRED_SOURCE_NOT_INGESTED` |
+| Nome ricevuto | `TRETNIX_NEW_CHAT_DEVELOPMENT_PACK_2026-07-25(2).zip` |
+| Nome logico | `TRETNIX_NEW_CHAT_DEVELOPMENT_PACK_2026-07-25.zip` |
+| Data contenuto | 25 luglio 2026 |
+| SHA-256 archivio ricevuto | `ebae0ebda463dbd7efcc29d56d102cdbc136c29625018bf28ac88dc5ebceca4d` |
+| Dimensione osservata | circa 308 KiB |
+| File contenuti | 96 |
+| Righe testuali Markdown/JSON | 16.891 |
+| Stato manifest | verificato |
+| Stato estrazione | completata |
+| Stato contenuti testuali | acquisiti nella repository e conservati byte per byte |
+| Stato ZIP binario | non duplicato nel Git repository; conservarne una copia offline |
 
-### `TRETNIX_DEVELOPMENT_START_HANDOFF_2026-07-25.md`
+### Handoff separato
 
 | Campo | Valore |
 |---|---|
-| Citato in handoff | sì |
-| Dichiarato da leggere integralmente | sì |
-| Contenuto disponibile nella baseline analizzata | no |
-| Contenuto integrale verificato in questa attività | no |
-| Stato | `REQUIRED_SOURCE_NOT_INGESTED` |
-
-### Conseguenza
-
-Non cancellare la chat o il luogo che contiene l’unica copia di questi artefatti finché:
-
-1. i file non vengono recuperati;
-2. viene calcolato un checksum;
-3. vengono archiviati in una posizione approvata;
-4. i contenuti canonici vengono estratti;
-5. le eventuali discrepanze vengono revisionate;
-6. questo registro viene aggiornato.
+| Nome ricevuto | `TRETNIX_DEVELOPMENT_START_HANDOFF_2026-07-25(2).md` |
+| Nome logico | `TRETNIX_DEVELOPMENT_START_HANDOFF_2026-07-25.md` |
+| SHA-256 | `ac323c9f8591251f3b8a632b2ef956a868c9f78878c5fb38eb434fc73383eb0a` |
+| Confronto con la copia nello ZIP | identico byte per byte |
+| Destinazione versionata | `operations/development-launch-2026-07-25/` |
 
 ---
 
-## 5. Informazioni recuperate dagli handoff
+## 4. Contenuti importati
 
-Sono state formalizzate, con il corretto livello di evidenza:
+### Family kit completi
 
-- Beauty & Wellness `v1.1` approvata e congelata;
-- `RITO Studio START` come primo progetto;
-- `PREPARATION_COMPLETE`;
-- `IMPLEMENTATION_NOT_STARTED`;
-- doppio gate Lovable;
-- divieto di progetto, crediti, repository, pubblicazione e BUSINESS prima dei gate;
-- stato operativo riportato di CF-1 e indagine `data-tsd-source`;
-- esistenza dichiarata di materiali per Professional Services e Home & Local Services.
+| Famiglia | Versione | Destinazione | Stato |
+|---|---:|---|---|
+| Beauty & Wellness | 1.1 | `family-kits/beauty-wellness-v1.1/` | completo |
+| Professional Services | 1.0 | `family-kits/professional-services-v1.0/` | completo |
+| Home & Local Services | 1.0 | `family-kits/home-local-services-v1.0/` | completo |
 
-Non sono stati inventati i dettagli non disponibili.
+Ogni family kit conserva:
 
----
+- `MANIFEST.json`;
+- README;
+- prodotto;
+- design;
+- contenuti;
+- route;
+- animazioni;
+- testing;
+- decisioni locali;
+- stato e approvazione;
+- contratto START → BUSINESS;
+- offerta commerciale;
+- vertical adapter;
+- client discovery;
+- asset plan;
+- repository bootstrap;
+- readiness review;
+- prompt Lovable, Codex e Impeccable;
+- checklist di attivazione e freeze.
 
-## 6. Procedura di acquisizione
+### Documenti di lancio
 
-Per acquisire un artefatto:
-
-1. copiare il file originale senza modificarlo;
-2. registrare data e origine;
-3. calcolare SHA-256;
-4. inventariare il contenuto;
-5. distinguere fonte approvata, bozza e output generato;
-6. estrarre decisioni, standard, specifiche, stato e task nei file corretti;
-7. mantenere il sorgente quando necessario per auditabilità;
-8. aggiornare questo registro;
-9. aprire una pull request documentale.
-
-Directory suggerita, solo dopo approvazione della policy sui file binari:
+Destinazione:
 
 ```text
-source-artifacts/
-└── 2026-07-25-development-pack/
+operations/development-launch-2026-07-25/
 ```
 
-Alternativa preferibile per file grandi: GitHub Release privata o storage documentale controllato, con checksum e link nel registro.
+Contenuti:
+
+- `DEVELOPMENT_SEQUENCE.md`;
+- `SUBSCRIPTION_AND_FIRST_BUILD_CHECKLIST.md`;
+- `TRETNIX_DEVELOPMENT_START_HANDOFF_2026-07-25.md`;
+- `TRETNIX_NEW_CHAT_START_MESSAGE_2026-07-25.md`.
+
+### Manifest e snapshot storico
+
+Destinazione:
+
+```text
+source-artifacts/2026-07-25-development-pack/
+```
+
+Contiene:
+
+- manifest originale;
+- README originale;
+- registro di ingestione;
+- copie storiche dei file `01_SOURCE_OF_TRUTH` del pacchetto.
+
+Le copie storiche non sono fonti attive. Restano disponibili per audit e confronto; i documenti canonici alla root hanno precedenza. I file importati dal pacchetto sono conservati byte per byte; `.gitattributes` esclude soltanto queste aree dai controlli generici sugli spazi finali Markdown, mentre manifest e SHA-256 ne verificano l’integrità.
+
+---
+
+## 5. Archivi interni non duplicati
+
+Il pack includeva anche tre ZIP di famiglia. Il loro contenuto è stato estratto e versionato integralmente. Gli archivi binari non vengono duplicati nel repository per evitare copie ridondanti.
+
+| Archivio | SHA-256 dichiarato nel manifest |
+|---|---|
+| `TRETNIX_BEAUTY_WELLNESS_PRELAUNCH_v1.1_2026-07-25.zip` | `a5f32ad686bebf217eed48056dc59987522638756405a17f3825901a20730c8b` |
+| `TRETNIX_PROFESSIONAL_SERVICES_PRELAUNCH_v1.0_2026-07-25.zip` | `b9886f59ca1ad6d4159f7e60e51308989a71ac35856dd8052320c51b4430dc52` |
+| `TRETNIX_HOME_LOCAL_SERVICES_PRELAUNCH_v1.0_2026-07-25.zip` | `f45d655dfaa49b93c4670b185fae020515b6f0b5c5d246e2407b454ec9a585ba` |
+
+Conservare almeno una copia offline dell'archivio principale originale. La repository conserva il contenuto leggibile e versionabile necessario al lavoro.
+
+---
+
+## 6. Snapshot storici del 16 luglio
+
+I seguenti contenuti sono conservati esclusivamente come fonti storiche:
+
+```text
+source-artifacts/2026-07-25-development-pack/historical-source-of-truth/
+```
+
+Comprendono:
+
+- `DECISIONS.md`;
+- `DEVELOPMENT_STANDARDS.md`;
+- `PREVIOUS_HANDOFF.md`;
+- `READ_ONLY_AUDIT.md`;
+- `REPOSITORY_INDEX.md`;
+- `TRETNIX_MASTER_CONTEXT.md`.
+
+Regole:
+
+- non usarli come baseline di implementazione;
+- non copiare decisioni superate sopra i documenti correnti;
+- usarli soltanto per audit, provenienza e confronto;
+- la root della repository e i family kit versionati rappresentano le fonti attive.
+
+---
+
+## 7. Informazioni ora recuperabili senza chat
+
+Dopo il merge dell'integrazione sono recuperabili integralmente:
+
+- portfolio Food & Hospitality, Beauty & Wellness, Professional Services e Home & Local Services;
+- concept RITO, QUADRA e NODO;
+- scope START e BUSINESS;
+- copy, design, route, motion e testing dei tre nuovi verticali;
+- prompt e checklist;
+- gate di abbonamento e autorizzazione;
+- pipeline del mese intensivo;
+- regole START → BUSINESS;
+- handoff di sviluppo;
+- manifest e checksum del pacchetto.
+
+---
+
+## 8. Cancellazione delle chat
+
+Il development pack non rappresenta più un blocco alla cancellazione delle chat dopo che:
+
+1. questa integrazione è stata revisionata e unita a `main`;
+2. `main` è stato sincronizzato localmente;
+3. il working tree è pulito;
+4. una nuova sessione ricostruisce correttamente RITO, QUADRA, NODO, i gate e l'ordine operativo usando soltanto la repository;
+5. la copia offline dello ZIP originale è conservata.
+
+Restano da formalizzare separatamente eventuali stati Tretnix.com successivi, branch, PR, finding o allegati non contenuti nel development pack.
+
+---
+
+## 9. Regola per future acquisizioni
+
+Per ogni nuovo pacchetto:
+
+1. conservare il file originale;
+2. registrare origine, nome logico e SHA-256;
+3. verificare il manifest;
+4. estrarre i contenuti leggibili;
+5. separare snapshot storici e fonti attive;
+6. preservare byte per byte i sorgenti quando sono accompagnati da manifest e checksum;
+7. isolare con `.gitattributes` soltanto gli spazi Markdown intenzionali degli artefatti importati;
+8. evitare binari duplicati quando il contenuto è già versionato;
+9. aggiornare documenti canonici e adattatori;
+10. validare link, checksum e diff;
+11. unire tramite pull request.

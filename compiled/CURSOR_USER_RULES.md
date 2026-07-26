@@ -85,3 +85,9 @@ For public demos that are not real businesses, use `noindex, follow` on every pu
 - Record decisions, status, tasks and source artifacts in their canonical files before a chat is deleted.
 - Report handoff claims as unverified until reconciled with commit, PR or execution evidence.
 - For `RITO Studio START`, do not call Lovable or start BUSINESS without the two approved gates.
+
+## Family kits and historical sources
+
+For prepared verticals, use the versioned files under `family-kits/` and the corresponding root `*_FAMILY.md`. Do not reconstruct design, copy, routes or acceptance criteria from chat memory.
+
+Treat `source-artifacts/**/historical-source-of-truth/` as read-only provenance. Never use it as the current baseline for edits.

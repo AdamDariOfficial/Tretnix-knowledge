@@ -1,0 +1,138 @@
+{
+  "package": "Tretnix Beauty & Wellness Prelaunch",
+  "version": "1.1",
+  "date": "2026-07-25",
+  "status": "PREPARATION_READY",
+  "files": [
+    {
+      "path": "README.md",
+      "size": 2284,
+      "sha256": "b81267e6e96438faa6394ac9a123caf700676a83343ccecf47c11e9cea7ecb1f"
+    },
+    {
+      "path": "checklists/BUSINESS_FREEZE_CHECKLIST.md",
+      "size": 1082,
+      "sha256": "bea7daaa7a3221b4d516408171d0d862dccc8e9e56dff9da685cc3b1b6bd8807"
+    },
+    {
+      "path": "checklists/START_FREEZE_CHECKLIST.md",
+      "size": 1323,
+      "sha256": "37d988ae890d316e3bc55be3a49a4a51a383776f5496a27e91050289756b4a5b"
+    },
+    {
+      "path": "checklists/SUBSCRIPTION_ACTIVATION_RUNBOOK.md",
+      "size": 2826,
+      "sha256": "065795776ed575bf0d33706817339faf0aa4f17017f856696f867a81776cdcb6"
+    },
+    {
+      "path": "docs/ANIMATIONS.md",
+      "size": 4643,
+      "sha256": "2b20fc2875c23d013fa86030e689b926fe951f3e0613b2ff54ba3691298685b2"
+    },
+    {
+      "path": "docs/APPROVAL.md",
+      "size": 957,
+      "sha256": "4415f7d262edd13cb9bb9f9ea5e8255cfb74cea44f0075593e015c77cf7481cb"
+    },
+    {
+      "path": "docs/ASSET_PLAN.md",
+      "size": 4130,
+      "sha256": "bd9a82ede277b31ac9772aa60dd3037f9959e453dec5d5fd27b2feab4474e127"
+    },
+    {
+      "path": "docs/CLIENT_DISCOVERY.md",
+      "size": 3176,
+      "sha256": "5cc3ceaf885e5e1740ac2c724769dc277c33f5e564864fbea744e71d01e0f7dc"
+    },
+    {
+      "path": "docs/COMMERCIAL_OFFER.md",
+      "size": 4180,
+      "sha256": "66039caba99ace4310504ce3f68ad34768bfea781270ddb7ecf778cbacb49c8f"
+    },
+    {
+      "path": "docs/CONTENT.md",
+      "size": 8541,
+      "sha256": "f2708f04bf357e1d3f445dec8af7beb2f821f37101e8685390b39a5686260d75"
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "size": 3705,
+      "sha256": "fe4a5181f77c3844d72ad8e7912f847f3ed6f5b5c13656b9721b65dae1fda647"
+    },
+    {
+      "path": "docs/DESIGN.md",
+      "size": 7597,
+      "sha256": "4472a1cf3fda02a154a85d72c5ba1f5908d690d272222d078dadbaec0252dd24"
+    },
+    {
+      "path": "docs/PRELAUNCH_READINESS_REVIEW.md",
+      "size": 3147,
+      "sha256": "8ce70a63236dac3bfe3dfebfbe850c8fe5858811ec5d4b96093d5ab03eb431d3"
+    },
+    {
+      "path": "docs/PRODUCT.md",
+      "size": 8599,
+      "sha256": "91f24435ea84696950be282dbca0b099d39192ea4f44d0092397bba0c92d82ea"
+    },
+    {
+      "path": "docs/REPOSITORY_BOOTSTRAP.md",
+      "size": 2937,
+      "sha256": "968587dc9d756361512484b014c9c4cc9bfb4cb5d0351e2d31f1ed90035974df"
+    },
+    {
+      "path": "docs/ROUTES.md",
+      "size": 5505,
+      "sha256": "99ef4ca2cc534e5b2a2f30e3c8d8f17be4a7c70a8f72a10ca38e7b0e65462ab9"
+    },
+    {
+      "path": "docs/START_BUSINESS_CONTRACT.md",
+      "size": 2977,
+      "sha256": "8a77f8825b717701131073e40998c44089169c4fbfe2aadf8ba2f3474ed38d61"
+    },
+    {
+      "path": "docs/STATUS.md",
+      "size": 2769,
+      "sha256": "dd974066d6570dc534f53e01e081b46d113ca57a1554dc16e0b919877fa07c90"
+    },
+    {
+      "path": "docs/TESTING.md",
+      "size": 5144,
+      "sha256": "208efe854d7da4eb0acea8dbb941a513a613945319fed79c6534ab73a527a762"
+    },
+    {
+      "path": "docs/VERTICAL_ADAPTERS.md",
+      "size": 4313,
+      "sha256": "02e996c84a195124077e9437b4d4a377e35a8a13c00bb96055086ce308becdd9"
+    },
+    {
+      "path": "prompts/CODEX_BUSINESS_CONSOLIDATION.md",
+      "size": 1296,
+      "sha256": "6fd52346383cd407d1f6d40b878327f444727ecbfde645a16b26992af7a2489a"
+    },
+    {
+      "path": "prompts/CODEX_START_READ_ONLY_AUDIT.md",
+      "size": 1276,
+      "sha256": "9a126bb567d8bd76799f104e1b1ee03e3760e8aaed2f7c7483fb3c26378b9949"
+    },
+    {
+      "path": "prompts/IMPECCABLE_BUSINESS_PARITY_REVIEW.md",
+      "size": 827,
+      "sha256": "6c977c47c99807ee74de9101fb976dc6942e0b9ae328e998ad039d7c710d38bb"
+    },
+    {
+      "path": "prompts/IMPECCABLE_START_REVIEW.md",
+      "size": 980,
+      "sha256": "ab7eb03ac2b7714611c4950c9be5b26f2f69d1cab9297bb0495070068c0f6533"
+    },
+    {
+      "path": "prompts/LOVABLE_BUSINESS_PROMPT.md",
+      "size": 3891,
+      "sha256": "c936f0fee3beda7b5b39460c9e3a574894361f1a779538ac07173994389cd27b"
+    },
+    {
+      "path": "prompts/LOVABLE_START_PROMPT.md",
+      "size": 8895,
+      "sha256": "77a4c25a3b31f3514b3fe7e70b1b2079ffc1a5951dba4a85579e3be52afe3b1b"
+    }
+  ]
+}

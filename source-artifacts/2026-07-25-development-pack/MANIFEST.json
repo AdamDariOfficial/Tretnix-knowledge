@@ -1,0 +1,486 @@
+{
+  "name": "Tretnix New Chat Development Pack",
+  "date": "2026-07-25",
+  "status": "PREPARATION_COMPLETE / IMPLEMENTATION_NOT_STARTED",
+  "first_project": "RITO Studio START",
+  "lovable_authorized": false,
+  "remote_repositories_created_for_new_families": false,
+  "family_packages_included_as_zip_and_extracted": true,
+  "included_files": [
+    {
+      "path": "01_SOURCE_OF_TRUTH/DECISIONS.md",
+      "size_bytes": 9064,
+      "sha256": "8743f8931496ee304313b755a4bbd6fe12ce0542f895b3d314bf43b30b1545b8"
+    },
+    {
+      "path": "01_SOURCE_OF_TRUTH/DEVELOPMENT_STANDARDS.md",
+      "size_bytes": 14802,
+      "sha256": "183faef97c6ee64f72427dbc87a121a6131f4469fe3494f0f5902673f6873db1"
+    },
+    {
+      "path": "01_SOURCE_OF_TRUTH/PREVIOUS_HANDOFF.md",
+      "size_bytes": 7671,
+      "sha256": "c51ba56db7779164ddf0535cb4775eb22fcb2b5d68b2a79c079ff69202941641"
+    },
+    {
+      "path": "01_SOURCE_OF_TRUTH/READ_ONLY_AUDIT.md",
+      "size_bytes": 14022,
+      "sha256": "347f14d539b8a4f08568dfa391b9b6eafb7bb00288801e04f268ce20fd04f67e"
+    },
+    {
+      "path": "01_SOURCE_OF_TRUTH/REPOSITORY_INDEX.md",
+      "size_bytes": 7973,
+      "sha256": "41d892c90616fb436f46f779a7164457a7cd7126ea6618cab5136571c17b50f7"
+    },
+    {
+      "path": "01_SOURCE_OF_TRUTH/TRETNIX_MASTER_CONTEXT.md",
+      "size_bytes": 15206,
+      "sha256": "bee197b5fcfb9019c44e9e88ef89e7a89b7097989058855d1d5e5b7f6aa00266"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/TRETNIX_BEAUTY_WELLNESS_PRELAUNCH_v1.1_2026-07-25.zip",
+      "size_bytes": 52616,
+      "sha256": "a5f32ad686bebf217eed48056dc59987522638756405a17f3825901a20730c8b"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/TRETNIX_HOME_LOCAL_SERVICES_PRELAUNCH_v1.0_2026-07-25.zip",
+      "size_bytes": 37228,
+      "sha256": "f45d655dfaa49b93c4670b185fae020515b6f0b5c5d246e2407b454ec9a585ba"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/TRETNIX_PROFESSIONAL_SERVICES_PRELAUNCH_v1.0_2026-07-25.zip",
+      "size_bytes": 44884,
+      "sha256": "b9886f59ca1ad6d4159f7e60e51308989a71ac35856dd8052320c51b4430dc52"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/MANIFEST.json",
+      "size_bytes": 4300,
+      "sha256": "fa367639a868f921ce8c10e985ed65f6e8392fdfa401e45dc61ef7fa067109c8"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/README.md",
+      "size_bytes": 2284,
+      "sha256": "b81267e6e96438faa6394ac9a123caf700676a83343ccecf47c11e9cea7ecb1f"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/checklists/BUSINESS_FREEZE_CHECKLIST.md",
+      "size_bytes": 1082,
+      "sha256": "bea7daaa7a3221b4d516408171d0d862dccc8e9e56dff9da685cc3b1b6bd8807"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/checklists/START_FREEZE_CHECKLIST.md",
+      "size_bytes": 1323,
+      "sha256": "37d988ae890d316e3bc55be3a49a4a51a383776f5496a27e91050289756b4a5b"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/checklists/SUBSCRIPTION_ACTIVATION_RUNBOOK.md",
+      "size_bytes": 2826,
+      "sha256": "065795776ed575bf0d33706817339faf0aa4f17017f856696f867a81776cdcb6"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/docs/ANIMATIONS.md",
+      "size_bytes": 4643,
+      "sha256": "2b20fc2875c23d013fa86030e689b926fe951f3e0613b2ff54ba3691298685b2"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/docs/APPROVAL.md",
+      "size_bytes": 957,
+      "sha256": "4415f7d262edd13cb9bb9f9ea5e8255cfb74cea44f0075593e015c77cf7481cb"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/docs/ASSET_PLAN.md",
+      "size_bytes": 4130,
+      "sha256": "bd9a82ede277b31ac9772aa60dd3037f9959e453dec5d5fd27b2feab4474e127"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/docs/CLIENT_DISCOVERY.md",
+      "size_bytes": 3176,
+      "sha256": "5cc3ceaf885e5e1740ac2c724769dc277c33f5e564864fbea744e71d01e0f7dc"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/docs/COMMERCIAL_OFFER.md",
+      "size_bytes": 4180,
+      "sha256": "66039caba99ace4310504ce3f68ad34768bfea781270ddb7ecf778cbacb49c8f"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/docs/CONTENT.md",
+      "size_bytes": 8541,
+      "sha256": "f2708f04bf357e1d3f445dec8af7beb2f821f37101e8685390b39a5686260d75"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/docs/DECISIONS.md",
+      "size_bytes": 3705,
+      "sha256": "fe4a5181f77c3844d72ad8e7912f847f3ed6f5b5c13656b9721b65dae1fda647"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/docs/DESIGN.md",
+      "size_bytes": 7597,
+      "sha256": "4472a1cf3fda02a154a85d72c5ba1f5908d690d272222d078dadbaec0252dd24"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/docs/PRELAUNCH_READINESS_REVIEW.md",
+      "size_bytes": 3147,
+      "sha256": "8ce70a63236dac3bfe3dfebfbe850c8fe5858811ec5d4b96093d5ab03eb431d3"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/docs/PRODUCT.md",
+      "size_bytes": 8599,
+      "sha256": "91f24435ea84696950be282dbca0b099d39192ea4f44d0092397bba0c92d82ea"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/docs/REPOSITORY_BOOTSTRAP.md",
+      "size_bytes": 2937,
+      "sha256": "968587dc9d756361512484b014c9c4cc9bfb4cb5d0351e2d31f1ed90035974df"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/docs/ROUTES.md",
+      "size_bytes": 5505,
+      "sha256": "99ef4ca2cc534e5b2a2f30e3c8d8f17be4a7c70a8f72a10ca38e7b0e65462ab9"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/docs/START_BUSINESS_CONTRACT.md",
+      "size_bytes": 2977,
+      "sha256": "8a77f8825b717701131073e40998c44089169c4fbfe2aadf8ba2f3474ed38d61"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/docs/STATUS.md",
+      "size_bytes": 2769,
+      "sha256": "dd974066d6570dc534f53e01e081b46d113ca57a1554dc16e0b919877fa07c90"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/docs/TESTING.md",
+      "size_bytes": 5144,
+      "sha256": "208efe854d7da4eb0acea8dbb941a513a613945319fed79c6534ab73a527a762"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/docs/VERTICAL_ADAPTERS.md",
+      "size_bytes": 4313,
+      "sha256": "02e996c84a195124077e9437b4d4a377e35a8a13c00bb96055086ce308becdd9"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/prompts/CODEX_BUSINESS_CONSOLIDATION.md",
+      "size_bytes": 1296,
+      "sha256": "6fd52346383cd407d1f6d40b878327f444727ecbfde645a16b26992af7a2489a"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/prompts/CODEX_START_READ_ONLY_AUDIT.md",
+      "size_bytes": 1276,
+      "sha256": "9a126bb567d8bd76799f104e1b1ee03e3760e8aaed2f7c7483fb3c26378b9949"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/prompts/IMPECCABLE_BUSINESS_PARITY_REVIEW.md",
+      "size_bytes": 827,
+      "sha256": "6c977c47c99807ee74de9101fb976dc6942e0b9ae328e998ad039d7c710d38bb"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/prompts/IMPECCABLE_START_REVIEW.md",
+      "size_bytes": 980,
+      "sha256": "ab7eb03ac2b7714611c4950c9be5b26f2f69d1cab9297bb0495070068c0f6533"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/prompts/LOVABLE_BUSINESS_PROMPT.md",
+      "size_bytes": 3891,
+      "sha256": "c936f0fee3beda7b5b39460c9e3a574894361f1a779538ac07173994389cd27b"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/beauty-wellness-v1.1/tretnix-beauty-wellness-prelaunch-v1.1/prompts/LOVABLE_START_PROMPT.md",
+      "size_bytes": 8895,
+      "sha256": "77a4c25a3b31f3514b3fe7e70b1b2079ffc1a5951dba4a85579e3be52afe3b1b"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/MANIFEST.json",
+      "size_bytes": 4578,
+      "sha256": "fea49c405b4130d6f0e70ab6b1f7b29037f35f32d573350b5d2c0a287562f67c"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/README.md",
+      "size_bytes": 2360,
+      "sha256": "af33f0dc18b0271f9596b1c52f2c739b00f17ba20da2c47d541c89451072a2ed"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/checklists/BUSINESS_FREEZE_CHECKLIST.md",
+      "size_bytes": 1020,
+      "sha256": "fae11a91549d7597f3fa9e164158b840a57fe1723d454516cd36c2a84e78227f"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/checklists/START_FREEZE_CHECKLIST.md",
+      "size_bytes": 935,
+      "sha256": "4cff5b474544cc6c9cdf2ee29dcb48b7ba7977c991f8b9f7e3a6d8d72dd68134"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/checklists/SUBSCRIPTION_ACTIVATION_RUNBOOK.md",
+      "size_bytes": 1301,
+      "sha256": "00b239acedb1193ee2e6b540b3d4e76c99ef73499dc76a0c171d68a3ff40a7ed"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/docs/ANIMATIONS.md",
+      "size_bytes": 2440,
+      "sha256": "42ca7d33a58c2cb1e1d8f921ddcd84e07f188db1a99b11200102c44883cbe14f"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/docs/APPROVAL.md",
+      "size_bytes": 562,
+      "sha256": "007d70ca67a9ebfc0a80388eb732f36aacecd23f059402a8a9670c431815e93e"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/docs/ASSET_PLAN.md",
+      "size_bytes": 1653,
+      "sha256": "9d1b454cdf92cd9c2447bc08df6e0c2f498302c4e59a0b086fcc5fc0a3fe5847"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/docs/CLIENT_DISCOVERY.md",
+      "size_bytes": 2196,
+      "sha256": "b7e3b5a89e194c89d9fd74f3696f1b53e44459ddfd57280a68572cedd17de50c"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/docs/COMMERCIAL_OFFER.md",
+      "size_bytes": 2219,
+      "sha256": "11d08e716abcdc2b64135382ec18682a6b58fc1034019ddc3613f45c40230092"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/docs/CONTENT.md",
+      "size_bytes": 7658,
+      "sha256": "ff046152587718f42d87cc3f00eb862ce9b4414ac9004c069836c7b5cd009018"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/docs/DECISIONS.md",
+      "size_bytes": 1601,
+      "sha256": "3cfad459decc60d34e37679f5a52a0ea8bf1088f759b51eaafd7af2beb5f62ae"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/docs/DESIGN.md",
+      "size_bytes": 5523,
+      "sha256": "117fdc9cee358e82811229583fcea61f7364f193e8d5ced06a0fd1e782611ee1"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/docs/PRELAUNCH_READINESS_REVIEW.md",
+      "size_bytes": 1325,
+      "sha256": "dd750319b1b293bfb6c92d661a1052df88f214e2393d97fce98cad485e2ce82d"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/docs/PRODUCT.md",
+      "size_bytes": 6904,
+      "sha256": "dae55314f155f69bb8a506b6ae78ba95f54a5ffd4f97166b2a1be6a4a3f0aa04"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/docs/REPOSITORY_BOOTSTRAP.md",
+      "size_bytes": 1696,
+      "sha256": "7e8b915d1109839413eeca3ceca7af46f6bb89cee3ca19e79a48b56863d1418b"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/docs/ROUTES.md",
+      "size_bytes": 4131,
+      "sha256": "3ac1142e985fc27a1d8e2613a2ce453990dfbc6bd3b3531525d96ece0de136e1"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/docs/START_BUSINESS_CONTRACT.md",
+      "size_bytes": 1960,
+      "sha256": "bbc2fa8b873e04a9757dc59d66df3650f039bbf52c499360ade4b6471ba2be37"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/docs/STATUS.md",
+      "size_bytes": 946,
+      "sha256": "1a009ca9f3ea79a28580f86fd95b5b3e9b80c04e2204c6471dfaab95dcf61e39"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/docs/TESTING.md",
+      "size_bytes": 3236,
+      "sha256": "61319b26e54a0f2df92df9334dba748df90243e6af0c0d53613579502e07a69a"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/docs/VERTICAL_ADAPTERS.md",
+      "size_bytes": 3051,
+      "sha256": "d10bbe14a594539643393cd2adb96fdbaa5c94db13e76dc7748c652122868e61"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/prompts/CODEX_BUSINESS_CONSOLIDATION.md",
+      "size_bytes": 787,
+      "sha256": "19df5e92023559173dc712030439ee2fba91e7e5aecc44226503664a3381f4d8"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/prompts/CODEX_START_READ_ONLY_AUDIT.md",
+      "size_bytes": 753,
+      "sha256": "ded068ce19a4d9f66cf50ab94d019d19fe4ee2547254252f6ce447e3b645f075"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/prompts/IMPECCABLE_BUSINESS_PARITY_REVIEW.md",
+      "size_bytes": 419,
+      "sha256": "72660e341bd5965ade0a7dc93b82054a064edbd9d081dac41bba7845c2a8dc62"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/prompts/IMPECCABLE_START_REVIEW.md",
+      "size_bytes": 808,
+      "sha256": "3b54f23b13d303b994d326e864901c3dd3e75bc280a0de514f2883284ef8e1bf"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/prompts/LOVABLE_BUSINESS_PROMPT.md",
+      "size_bytes": 1662,
+      "sha256": "a32cf2c641203dc02c6ce3aaa507a6e8f3c57846b378c3e605c034aa3b7662b5"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/home-local-services-v1.0/tretnix-home-local-services-prelaunch-v1.0/prompts/LOVABLE_START_PROMPT.md",
+      "size_bytes": 4248,
+      "sha256": "3e532149e49289a675cbfdebd6207e2a4c12ee50da234bb6645f16b97af22740"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/MANIFEST.json",
+      "size_bytes": 4583,
+      "sha256": "156520091d9a207915a78a188ea0e46ee0965ab081b8c08a608b7953060168d3"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/README.md",
+      "size_bytes": 2389,
+      "sha256": "4cf58f6c2d2fedbf5bc0c0fd3327ff0ebe78a2bb5110ae67320972b1b94886f6"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/checklists/BUSINESS_FREEZE_CHECKLIST.md",
+      "size_bytes": 1240,
+      "sha256": "5c3b3774f741f244bebc2af8c8d63a8f639eaa5790ce1bcdb44e9690151de3bd"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/checklists/START_FREEZE_CHECKLIST.md",
+      "size_bytes": 1143,
+      "sha256": "0c574b269a380a721f17c42d50cc5d1ba39cf84f70b3ab556952dcbb8cea2efd"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/checklists/SUBSCRIPTION_ACTIVATION_RUNBOOK.md",
+      "size_bytes": 1696,
+      "sha256": "abbbeee9b2826c7690649d7dc94022ab0d1394651e4c8332cb19f77908b5dfb5"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/docs/ANIMATIONS.md",
+      "size_bytes": 3521,
+      "sha256": "5145809177ff6214835d2c3a2fcef3198b3a50604908fb03d60ac1aa81444505"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/docs/APPROVAL.md",
+      "size_bytes": 682,
+      "sha256": "d0268bc25a1eed937dc72510878f7637b1bdcc4be4244000efa8263e8251212e"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/docs/ASSET_PLAN.md",
+      "size_bytes": 2274,
+      "sha256": "dd55940be2a5d856acd1e65acfd330f1ac8d3c9d39df974a72f31c5ddba6af21"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/docs/CLIENT_DISCOVERY.md",
+      "size_bytes": 3026,
+      "sha256": "22fb9877dab7a9f26a9cae52a459a71a93fcffee8cc571d0591fea2d635529ce"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/docs/COMMERCIAL_OFFER.md",
+      "size_bytes": 3022,
+      "sha256": "b6bc6508d7f50dc6d52b9f951977d21aba80f9e38c96e34fca17a410fed8f36e"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/docs/CONTENT.md",
+      "size_bytes": 9462,
+      "sha256": "bfbefafb09be76b5acf3da10342a72af8d75fd42b9383a2f6781ce8b7f84e2ef"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/docs/DECISIONS.md",
+      "size_bytes": 2251,
+      "sha256": "f1ec1c46e0e939b4daa3121a153b75abe335613e300982881284270c3d6f6bd0"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/docs/DESIGN.md",
+      "size_bytes": 7060,
+      "sha256": "a10a39797ca955ff258d964d7768a369cb05c725922e2fbe3180d22a159b06eb"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/docs/PRELAUNCH_READINESS_REVIEW.md",
+      "size_bytes": 1889,
+      "sha256": "6288cfcc5f96f4c06c1bda78cc5e7d4f59c123b55eee939d2ded3e80c0d59b7e"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/docs/PRODUCT.md",
+      "size_bytes": 8100,
+      "sha256": "c4ae9eb5b347bba0d63ec61dbbc2eb91196010b44ca3cea0171d8ba53da59061"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/docs/REPOSITORY_BOOTSTRAP.md",
+      "size_bytes": 2088,
+      "sha256": "1998f4e98e9bf1096a73fdf8e2256ffbe90811f73071c9dcb9b1d4cfc66dc44c"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/docs/ROUTES.md",
+      "size_bytes": 5427,
+      "sha256": "34333e43c5696411bdb3bdf185e3b80913a6c6623e1ffa5c05928e534be2fc26"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/docs/START_BUSINESS_CONTRACT.md",
+      "size_bytes": 2351,
+      "sha256": "c2939dbb3f4aa2bc07ddebcc848652a19c372e911ee9c0902207a4bbc982811b"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/docs/STATUS.md",
+      "size_bytes": 995,
+      "sha256": "c7c941eb4c69addd18d3cc54154c289f554aa6e6af8d8bc333ddf46211ab1378"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/docs/TESTING.md",
+      "size_bytes": 4091,
+      "sha256": "5b4bbac8a7da23c7b560df5341f7bcc70df8b5000556068c1adcbf48b3ed9781"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/docs/VERTICAL_ADAPTERS.md",
+      "size_bytes": 3885,
+      "sha256": "2b5f607bba0ee59dd4329cca6ce107506872ccbb0d4cbad77d27d3a069504976"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/prompts/CODEX_BUSINESS_CONSOLIDATION.md",
+      "size_bytes": 1326,
+      "sha256": "15e10915b0d1596371b73e700edf3cdd2d7a9c8cb5906e29c00a1512879736cb"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/prompts/CODEX_START_READ_ONLY_AUDIT.md",
+      "size_bytes": 1271,
+      "sha256": "b33de8e19af88fc9304aee3f43ab881e6fc48f85199803263a101a8393578536"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/prompts/IMPECCABLE_BUSINESS_PARITY_REVIEW.md",
+      "size_bytes": 686,
+      "sha256": "95c67276560f5d2e03dac28245ab093c4fde92b384898fd9c6940ee0131600ec"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/prompts/IMPECCABLE_START_REVIEW.md",
+      "size_bytes": 1004,
+      "sha256": "f5cd08e763a3c1f5e1d86e0745a41d6e27fb3a6a05853298fc04f061e866d5fe"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/prompts/LOVABLE_BUSINESS_PROMPT.md",
+      "size_bytes": 2720,
+      "sha256": "a976b68806a539471ca99f6b5b2c364c4036e410a5f305c7b16a8c0b61cfa7f6"
+    },
+    {
+      "path": "02_FAMILY_SPECIFICATIONS/professional-services-v1.0/tretnix-professional-services-prelaunch-v1.0/prompts/LOVABLE_START_PROMPT.md",
+      "size_bytes": 5510,
+      "sha256": "9ba1e51cc55d9148c3f54c11ec282f081833f042a3edde04898914f85d7c1912"
+    },
+    {
+      "path": "03_DEVELOPMENT_LAUNCH/DEVELOPMENT_SEQUENCE.md",
+      "size_bytes": 1024,
+      "sha256": "c632a8486e7a76948d9644141bce3b6c6d1edd96771eb3f49ee368cdda4490b4"
+    },
+    {
+      "path": "03_DEVELOPMENT_LAUNCH/SUBSCRIPTION_AND_FIRST_BUILD_CHECKLIST.md",
+      "size_bytes": 1433,
+      "sha256": "14cc5cca006fe321390a4648f37d220e5eb1b2a355c61e85297835438628a883"
+    },
+    {
+      "path": "03_DEVELOPMENT_LAUNCH/TRETNIX_DEVELOPMENT_START_HANDOFF_2026-07-25.md",
+      "size_bytes": 8032,
+      "sha256": "ac323c9f8591251f3b8a632b2ef956a868c9f78878c5fb38eb434fc73383eb0a"
+    },
+    {
+      "path": "03_DEVELOPMENT_LAUNCH/TRETNIX_NEW_CHAT_START_MESSAGE_2026-07-25.md",
+      "size_bytes": 1274,
+      "sha256": "321d5aeb47054afa67a1f5b37f7d7d2afd18bbc03defa0b7b7b5e4e9ef0d2c72"
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 585,
+      "sha256": "de1f14549eb8d601c918a57df9d94a29c98498bcb9c1a9d652831012aeaac075"
+    }
+  ]
+}

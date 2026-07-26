@@ -122,3 +122,13 @@ Every implementation report must include:
 - manual checks;
 - remaining risks;
 - final `git status --short`.
+
+## Prepared verticals
+
+Before the first task for RITO, QUADRA or NODO:
+
+1. verify the applicable family-kit version;
+2. read its `README.md`, `docs/STATUS.md`, `docs/APPROVAL.md`, `docs/DECISIONS.md` and the task-relevant product/design/content/routes/testing files;
+3. list the files actually read;
+4. verify the required state transition and gates;
+5. reject historical source snapshots as an implementation baseline.

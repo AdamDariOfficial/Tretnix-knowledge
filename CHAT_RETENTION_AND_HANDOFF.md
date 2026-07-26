@@ -1,6 +1,6 @@
 # Tretnix Chat Retention and Handoff
 
-**Versione:** 1.0
+**Versione:** 1.1
 **Aggiornato:** 26 luglio 2026
 **Stato:** canonico
 
@@ -42,7 +42,7 @@ Se anche un punto essenziale fallisce, archiviare la chat ma non cancellarla anc
 | identità e modello operativo | `TRETNIX_MASTER_CONTEXT.md` |
 | scelta approvata | `DECISIONS.md` |
 | regola tecnica condivisa | `DEVELOPMENT_STANDARDS.md` |
-| famiglia/verticale | documento della famiglia e `PORTFOLIO_AND_VERTICALS.md` |
+| famiglia/verticale | documento della famiglia, `PORTFOLIO_AND_VERTICALS.md` e `family-kits/` |
 | repository e relazione | `REPOSITORY_INDEX.md` |
 | stato trasversale | `CURRENT_STATE.md` |
 | stato specifico | `docs/STATUS.md` nel repository del progetto |
@@ -167,11 +167,11 @@ Non usare la sola capacità del modello di “ricordare” come prova di complet
 
 Al 26 luglio 2026:
 
-- Hospitality è ampiamente formalizzato;
-- il workflow Codex e patch esterne è formalizzato;
-- Beauty & Wellness e RITO hanno governance e gate formalizzati con questo aggiornamento;
-- lo stato operativo Tretnix.com è registrato come handoff riportato, ma richiede riconciliazione con PR e commit;
-- il development pack del 25 luglio è citato ma non presente integralmente nella baseline verificata;
-- Professional Services e Home & Local Services non sono ancora documentati integralmente.
+- Hospitality è formalizzato nei documenti canonici;
+- workflow Codex, patch esterne e handoff sono formalizzati;
+- Beauty & Wellness v1.1, Professional Services v1.0 e Home & Local Services v1.0 sono acquisiti integralmente in `family-kits/`;
+- sequenza, checklist e handoff del primo sviluppo sono in `operations/`;
+- manifest, checksum e snapshot storico sono in `source-artifacts/`;
+- lo stato operativo Tretnix.com resta riportato e richiede riconciliazione con PR e commit.
 
-Di conseguenza, le chat contenenti gli unici byte di quei pacchetti non devono essere cancellate finché gli artefatti non vengono acquisiti.
+Le chat che contenevano soltanto il development pack possono essere eliminate dopo il merge, la sincronizzazione di `main`, la conservazione offline dello ZIP e una prova di ricostruzione riuscita. Le chat con stati Tretnix.com, allegati unici o decisioni successive restano bloccate finché tali elementi non vengono formalizzati.

@@ -1,202 +1,353 @@
 # Tretnix Beauty & Wellness Family
 
-**Versione:** 1.0
+**Versione:** 1.1
 **Aggiornato:** 26 luglio 2026
-**Stato:** canonico per governance, stato e gate; specifica visuale e contenutistica completa da acquisire dal development pack v1.1
+**Stato:** canonico per governance e indice; specifica completa acquisita in `family-kits/beauty-wellness-v1.1/`
 
 ---
 
 ## 1. Scopo
 
-Questo documento conserva il contratto operativo confermato della famiglia Beauty & Wellness e impedisce che l’avvio del primo progetto dipenda esclusivamente da una chat.
-
-Non ricostruisce dettagli mancanti della specifica `v1.1`. Palette, tipografia, immagini, copy, route, sezioni, componenti e motion devono essere importati dai file sorgente approvati prima dell’implementazione.
-
----
-
-## 2. Fonte approvata
-
-La fonte dichiarata è la specifica:
+Questo documento è l'indice canonico della famiglia Beauty & Wellness. La specifica completa, i prompt e le checklist sono versionati in:
 
 ```text
-Beauty & Wellness v1.1
+family-kits/beauty-wellness-v1.1/
 ```
 
-contenuta o referenziata nel pacchetto:
+Non duplicare o ricostruire da memoria i dettagli presenti nel family kit. In caso di conflitto:
 
-```text
-TRETNIX_NEW_CHAT_DEVELOPMENT_PACK_2026-07-25.zip
-TRETNIX_DEVELOPMENT_START_HANDOFF_2026-07-25.md
-```
-
-Stato della specifica:
-
-- approvata;
-- congelata;
-- destinata al primo progetto `RITO Studio START`;
-- non sostituibile con una ricostruzione da memoria;
-- non ancora presente integralmente nella baseline verificata di questa repository.
-
-L’assenza dei byte sorgente è registrata in `SOURCE_ARTIFACT_REGISTER.md`.
+1. prevalgono le decisioni Tretnix trasversali;
+2. seguono gli standard condivisi;
+3. seguono `family-kits/beauty-wellness-v1.1/docs/DECISIONS.md` e gli altri documenti approvati del kit;
+4. lo stato operativo corrente prevale soltanto per i gate e le transizioni, non per reinterpretare la specifica.
 
 ---
 
-## 3. Principi della famiglia
-
-Beauty & Wellness deve rispettare l’identità generale Tretnix:
-
-- premium;
-- elegante;
-- minimale;
-- professionale;
-- affidabile;
-- chiara;
-- personalizzata.
-
-La famiglia non deve essere trasformata in:
-
-- una landing generica intercambiabile;
-- un’estetica SaaS;
-- un template economico non personalizzato;
-- una copia visuale di Hospitality;
-- un progetto che attribuisce pubblicamente il prodotto agli strumenti interni.
-
-Le differenze visuali intenzionali rispetto agli altri verticali devono essere preservate. Gli standard tecnici condivisi restano obbligatori.
-
----
-
-## 4. Primo progetto
-
-### RITO Studio START
+## 2. Baseline approvata
 
 | Campo | Valore |
 |---|---|
-| Verticale | Beauty & Wellness |
-| Piano | START |
-| Ruolo | primo progetto della famiglia |
-| Preparazione | `PREPARATION_COMPLETE` |
-| Implementazione | `IMPLEMENTATION_NOT_STARTED` |
-| Repository | non dichiarata perché non ancora creata |
-| Deploy | non dichiarato perché non ancora creato |
-| BUSINESS | non autorizzato |
+| Famiglia | Beauty & Wellness |
+| Concept portfolio | `RITO Studio` |
+| Descriptor | `Beauty & Care Atelier` |
+| Tagline | `La bellezza, nel suo ritmo.` |
+| Versione | `1.1` |
+| Data approvazione | 25 luglio 2026 |
+| Stato preparazione | `PREPARATION_COMPLETE` |
+| Stato implementazione | `IMPLEMENTATION_NOT_STARTED` |
+| Primo progetto | `RITO Studio START` |
+| Repository previsto START | `rito-studio-START` |
+| Repository previsto BUSINESS | `rito-studio-BUSINESS` |
+| Repository realmente creati | nessuno al momento della baseline |
 
-Questa tabella descrive uno stato, non autorizza una transizione.
+Naming e dominio del concept non risultano verificati per l'uso con un cliente reale.
 
 ---
 
-## 5. Gate di avvio
+## 3. Cliente ideale e perimetro
 
-Prima di qualsiasi chiamata a Lovable devono essere presenti due autorizzazioni esplicite:
+La famiglia serve principalmente:
+
+- parrucchieri;
+- barber shop;
+- centri estetici;
+- nail studio;
+- spa;
+- massaggiatori;
+- piccoli studi wellness.
+
+L'evoluzione prevista è:
+
+```text
+sito
+→ prenotazioni
+→ clienti
+→ pacchetti e fidelity
+→ gestionale
+```
+
+START e BUSINESS v1 non includono agenda live, pagamenti, fidelity, CRM o gestionale. Questi ambiti appartengono a BUSINESS PLUS, CUSTOM o a un task futuro approvato.
+
+Il concept è modulare: un cliente reale usa soltanto categorie e moduli pertinenti. Non è obbligato a offrire contemporaneamente Hair, Skin, Nails e Wellness.
+
+---
+
+## 4. Identità approvata
+
+Direzione:
+
+- ariosa;
+- tattile;
+- elegante;
+- contemporanea;
+- intima senza essere fragile;
+- premium senza cliché rosa o medicali.
+
+Baseline visuale:
+
+- palette porcellana, inchiostro e borgogna;
+- tipografia `Newsreader` per il display;
+- tipografia `Manrope` per UI e testo;
+- composizione asimmetrica;
+- fotografia tattile e autentica;
+- uso limitato delle card;
+- nessun cursore personalizzato;
+- nessun glassmorphism, gradient text generico o estetica SaaS.
+
+I token esatti, la scala tipografica, le spaziature, i componenti e i criteri visuali sono in:
+
+```text
+family-kits/beauty-wellness-v1.1/docs/DESIGN.md
+```
+
+La fotografia, gli asset minimi, i rapporti e i brief sono in:
+
+```text
+family-kits/beauty-wellness-v1.1/docs/ASSET_PLAN.md
+```
+
+---
+
+## 5. START
+
+`RITO Studio START` è:
+
+- statico;
+- mobile-first;
+- one-page;
+- senza backend;
+- senza autenticazione;
+- senza database;
+- senza booking nativo;
+- con privacy, cookie e 404;
+- con CTA verso telefono, WhatsApp, provider esterno o modalità demo configurata.
+
+Route previste:
+
+```text
+/
+/privacy
+/cookie
+/*
+```
+
+Anchor previsti:
+
+```text
+#trattamenti
+#metodo
+#studio
+#contatti
+```
+
+L'ordine esatto delle sezioni, il copy completo e i dati demo sono in:
+
+```text
+family-kits/beauty-wellness-v1.1/docs/ROUTES.md
+family-kits/beauty-wellness-v1.1/docs/CONTENT.md
+```
+
+---
+
+## 6. BUSINESS
+
+`RITO Studio BUSINESS` deve derivare dal commit canonico dello START congelato e può aggiungere:
+
+- catalogo trattamenti;
+- dettaglio trattamento;
+- studio;
+- team;
+- galleria;
+- FAQ;
+- contatti;
+- prenotazione configurabile;
+- SEO route-specific.
+
+Booking mode supportati:
+
+```text
+external
+whatsapp
+request
+demo
+```
+
+BUSINESS non include di default agenda live, pagamenti, account, pacchetti, fidelity o gestionale.
+
+Le route e il contratto di eredità sono in:
+
+```text
+family-kits/beauty-wellness-v1.1/docs/ROUTES.md
+family-kits/beauty-wellness-v1.1/docs/START_BUSINESS_CONTRACT.md
+```
+
+---
+
+## 7. Motion
+
+Il linguaggio di animazione deve essere raffinato, controllato e accessibile:
+
+- hero con entrata coordinata;
+- reveal sotto la fold al momento dell'ingresso nel viewport;
+- image reveal sobrio;
+- hover senza layout shift;
+- drawer e navbar accessibili;
+- gallery e lightbox BUSINESS controllate;
+- route reset immediato;
+- `prefers-reduced-motion` rispettato;
+- nessun parallax invasivo, counter, marquee o replay casuale.
+
+La specifica completa è in:
+
+```text
+family-kits/beauty-wellness-v1.1/docs/ANIMATIONS.md
+```
+
+---
+
+## 8. Integrità dei contenuti
+
+Sono vietati:
+
+- recensioni inventate;
+- metriche o risultati inventati;
+- certificazioni non verificate;
+- attività reali fittizie;
+- prezzi non approvati;
+- invio di dati personali nella demo;
+- riferimenti pubblici agli strumenti interni.
+
+La demo deve dichiarare il proprio stato e non trasmettere dati. Il copy approvato e le regole demo sono in `docs/CONTENT.md` del family kit.
+
+---
+
+## 9. Gate operativo
+
+Prima di qualsiasi chiamata a Lovable devono essere presenti entrambi:
 
 ```text
 LOVABLE_SUBSCRIPTION_CONFIRMED
 RITO_STUDIO_START_AUTHORIZED
 ```
 
-Interpretazione:
+Inoltre, prima dell'effettiva build devono essere completati i controlli del runbook:
 
-1. il fondatore conferma che l’abbonamento Lovable è attivo;
-2. il fondatore autorizza esplicitamente l’avvio di `RITO Studio START`.
+- piano e rinnovo registrati;
+- workspace corretto;
+- saldo crediti verificato;
+- ricarica automatica indesiderata disabilitata;
+- repository START creato;
+- specifica v1.1 copiata;
+- branch iniziale;
+- `STATUS.md` portato a `IMPLEMENTATION_AUTHORIZED`;
+- prompt START revisionato;
+- backend, auth, database e upload confermati fuori scope.
 
-Non dedurre i gate da:
+Finché i due gate espliciti mancano, è vietato:
 
-- una domanda generica;
-- una conversazione precedente;
-- la disponibilità tecnica dello strumento;
-- la presenza del development pack;
-- lo stato `PREPARATION_COMPLETE`;
-- un’autorizzazione riferita a un altro progetto.
+- creare il progetto Lovable;
+- consumare crediti;
+- creare repository remote;
+- pubblicare;
+- iniziare BUSINESS;
+- reinterpretare la specifica.
 
----
+Runbook e checklist:
 
-## 6. Azioni vietate prima dei gate
-
-Finché entrambi i gate non risultano soddisfatti:
-
-- non creare progetti Lovable;
-- non inviare prompt di implementazione a Lovable;
-- non consumare crediti;
-- non creare repository remote;
-- non eseguire push;
-- non pubblicare deploy;
-- non creare domini o sottodomini;
-- non iniziare BUSINESS;
-- non modificare la specifica congelata;
-- non proporre redesign fuori specifica come se fossero requisiti approvati.
-
-Sono consentiti:
-
-- lettura;
-- inventario;
-- consolidamento documentale;
-- verifica della completezza degli artefatti;
-- preparazione offline di task e checklist che non attivano strumenti esterni.
+```text
+family-kits/beauty-wellness-v1.1/checklists/SUBSCRIPTION_ACTIVATION_RUNBOOK.md
+operations/development-launch-2026-07-25/SUBSCRIPTION_AND_FIRST_BUILD_CHECKLIST.md
+```
 
 ---
 
-## 7. Requisiti del primo handoff di implementazione
+## 10. Pipeline approvata
 
-Il primo incarico autorizzato deve includere:
+```text
+specifica Beauty v1.1
+→ repository rito-studio-START
+→ Lovable START
+→ sincronizzazione GitHub
+→ stop Lovable
+→ Impeccable detector e critique read-only
+→ approvazione manuale dei finding
+→ applicazione dei soli finding approvati
+→ Codex audit e consolidamento
+→ verifiche disponibili
+→ browser QA
+→ freeze START
+→ SHA + tag beauty-start-v1.0
+→ BUSINESS derivato dallo START
+```
 
-1. contesto della famiglia;
-2. nome e piano del progetto;
-3. versione esatta della specifica;
-4. elenco dei file realmente letti;
-5. stato iniziale;
-6. obiettivo circoscritto;
-7. vincoli visuali, tecnici e commerciali;
-8. criteri di accettazione;
-9. verifiche obbligatorie;
-10. output richiesto;
-11. azioni vietate;
-12. checkpoint Git e stato finale consentito.
-
-L’agente non deve chiedere di ridefinire decisioni già presenti nei file sorgente. Deve invece segnalare con precisione un eventuale file mancante o una contraddizione.
-
----
-
-## 8. Passaggio START → BUSINESS
-
-`RITO Studio BUSINESS` non può iniziare finché `RITO Studio START` non è:
-
-- implementato;
-- verificato;
-- approvato visualmente e funzionalmente;
-- documentato;
-- consolidato tecnicamente;
-- congelato su una baseline Git identificabile.
-
-BUSINESS deve preservare gli elementi approvati di START ed espandere il prodotto. Non deve nascere come redesign indipendente.
+Lovable, Codex e altri agenti non devono modificare contemporaneamente gli stessi file.
 
 ---
 
-## 9. Aspetti non ancora acquisiti
+## 11. Verifiche
 
-Nella baseline verificata della knowledge repository non sono disponibili integralmente:
+Eseguire soltanto comandi realmente configurati e registrare per ciascuno comando, exit code, risultato e limiti.
 
-- target e perimetro dettagliato della famiglia;
-- struttura esatta delle pagine o sezioni;
-- copy approvato;
-- palette;
-- tipografia;
-- asset e trattamento fotografico;
-- motion language;
-- responsive specification;
-- CTA e dati di configurazione;
-- differenze definitive tra START e BUSINESS;
-- criteri visuali completi di accettazione.
+Matrice minima:
 
-Questi elementi non devono essere inventati. Devono essere copiati o trasformati in documentazione canonica a partire dal development pack approvato.
+- 360 px;
+- 390 px;
+- 430 px;
+- 768 px;
+- desktop;
+- overflow;
+- tastiera e focus;
+- contrasto;
+- reduced motion;
+- direct URL;
+- refresh;
+- back e forward;
+- console e rete;
+- immagini e layout shift;
+- legal pages;
+- 404;
+- metadata;
+- attribuzione Tretnix.
+
+Specifiche complete:
+
+```text
+family-kits/beauty-wellness-v1.1/docs/TESTING.md
+family-kits/beauty-wellness-v1.1/checklists/START_FREEZE_CHECKLIST.md
+family-kits/beauty-wellness-v1.1/checklists/BUSINESS_FREEZE_CHECKLIST.md
+```
 
 ---
 
-## 10. Criterio di chiusura della migrazione
+## 12. Adattatori e prompt
 
-La famiglia può essere considerata indipendente dalle chat quando:
+Il kit contiene adattatori per:
 
-- i due artefatti sorgente risultano archiviati o integralmente estratti;
-- la specifica v1.1 è presente in forma verificabile;
-- non rimangono decisioni soltanto conversazionali;
-- gli adattatori degli strumenti puntano ai file canonici;
-- lo stato del progetto è aggiornato;
-- eventuali task sono in GitHub Issues o roadmap.
+- Hair Salon;
+- Barber Shop;
+- Beauty Centre;
+- Nail Studio;
+- Spa;
+- Massage / Wellness Studio.
+
+Contiene inoltre prompt approvati per Lovable, Codex e Impeccable. Questi prompt sono input operativi versionati, non autorizzazioni automatiche all'esecuzione.
+
+---
+
+## 13. Criterio di indipendenza dalle chat
+
+La famiglia è documentalmente ricostruibile dalla repository quando questa modifica è unita a `main`, perché sono presenti:
+
+- specifica completa;
+- decisioni locali;
+- design;
+- contenuti;
+- route;
+- motion;
+- testing;
+- prompt;
+- checklist;
+- manifest e checksum sorgente;
+- handoff di sviluppo.
+
+Restano nelle chat o nelle issue soltanto task e stati successivi non ancora formalizzati.

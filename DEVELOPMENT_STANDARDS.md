@@ -1,6 +1,6 @@
 # Tretnix Development Standards
 
-**Versione:** 1.5
+**Versione:** 1.6
 **Aggiornato:** 26 luglio 2026
 **Ambito:** tutti i progetti Tretnix, salvo eccezioni documentate
 
@@ -965,3 +965,71 @@ La scelta del modello non amplia automaticamente:
 - segreti;
 - autonomia Git;
 - autorizzazione al deploy.
+
+---
+
+## 25. Family kit e specifiche versionate
+
+Una famiglia preparata DEVE conservare la specifica completa in:
+
+```text
+family-kits/<family>-v<version>/
+```
+
+Il kit DEVE includere o collegare in modo verificabile:
+
+- manifest e versione;
+- approvazione e stato;
+- prodotto e scope;
+- design e asset;
+- contenuti;
+- route;
+- animazioni;
+- testing;
+- decisioni locali;
+- contratto START → BUSINESS;
+- prompt;
+- checklist.
+
+Prima di un task relativo alla famiglia, l'agente DEVE:
+
+1. leggere il documento `*_FAMILY.md` applicabile;
+2. leggere i file pertinenti del family kit;
+3. registrare versione e file letti;
+4. distinguere baseline approvata e stato corrente;
+5. non dedurre autorizzazione da un prompt pronto.
+
+NON DEVE:
+
+- ricostruire una specifica dalla memoria quando il kit è disponibile;
+- usare una versione precedente senza dichiararlo;
+- copiare l'intero family kit in ogni repository senza adattamento;
+- modificare il kit come effetto collaterale di un task cliente;
+- descrivere una demo come cliente reale.
+
+---
+
+## 26. Artefatti sorgente e snapshot storici
+
+Per ogni pacchetto o handoff acquisito registrare:
+
+- nome ricevuto;
+- nome logico;
+- origine e data;
+- SHA-256;
+- manifest;
+- numero e tipo dei file;
+- destinazioni versionate;
+- contenuti omessi e motivo;
+- eventuale copia offline.
+
+Gli snapshot storici DEVONO vivere sotto `source-artifacts/` e contenere un avviso esplicito di non canonicità.
+
+Quando un archivio binario duplica contenuti testuali già estratti:
+
+- il repository PUÒ conservare manifest, checksum e contenuti estratti senza duplicare il binario;
+- almeno una copia originale DEVE restare in storage controllato;
+- il report DEVE dichiarare che il binario non è nel repository;
+- la prova di ricostruzione DEVE usare i file versionati, non la chat originale.
+
+Non cancellare la sorgente originale prima di aver verificato integrità, completezza e ricostruibilità.

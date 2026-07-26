@@ -1,8 +1,8 @@
 # Tretnix Portfolio and Verticals
 
-**Versione:** 1.0
+**Versione:** 1.1
 **Aggiornato:** 26 luglio 2026
-**Stato:** canonico per mappa del portfolio, lifecycle e gate; le specifiche di famiglia restano nei documenti dedicati
+**Stato:** canonico per portfolio, lifecycle e gate; le specifiche complete sono nei documenti e family kit dedicati
 
 ---
 
@@ -10,51 +10,18 @@
 
 Questo documento registra:
 
-- i verticali Tretnix approvati o in preparazione;
-- la relazione tra famiglia, piano e progetto concreto;
-- gli stati operativi ammessi;
-- i gate che autorizzano consumo di crediti, creazione di repository, pubblicazione e passaggio di piano;
-- ciò che è confermato, pianificato o ancora non formalizzato.
+- verticali approvati;
+- concept portfolio;
+- piani e progetti previsti;
+- lifecycle;
+- gate di implementazione;
+- relazione tra START, BUSINESS e livelli successivi.
 
-Non sostituisce:
-
-- la specifica completa di una famiglia;
-- la documentazione locale di un progetto;
-- lo stato dettagliato nel repository del progetto;
-- le GitHub Issues;
-- un’autorizzazione esplicita del fondatore.
+Non sostituisce i family kit, gli status locali, le issue o un'autorizzazione esplicita.
 
 ---
 
-## 2. Definizioni
-
-### Verticale
-
-Una famiglia commerciale e progettuale rivolta a un insieme coerente di attività, bisogni, contenuti e pattern.
-
-### Piano
-
-Il livello dell’offerta:
-
-- `START`;
-- `BUSINESS`;
-- `BUSINESS PLUS`;
-- `CUSTOM`;
-- `INTERNO`.
-
-### Progetto
-
-Un’implementazione concreta appartenente a un verticale e a un piano, con identità, specifica, repository, stato e verifiche propri.
-
-### Baseline approvata
-
-Il commit o pacchetto documentale da cui deriva il lavoro successivo. Una baseline non si identifica tramite il solo nome di una chat o di un file storico.
-
----
-
-## 3. Lifecycle standard
-
-Gli stati operativi ammessi sono:
+## 2. Lifecycle
 
 ```text
 DISCOVERY
@@ -62,6 +29,7 @@ SPECIFICATION_DRAFT
 SPECIFICATION_APPROVED
 PREPARATION_COMPLETE
 IMPLEMENTATION_NOT_STARTED
+IMPLEMENTATION_AUTHORIZED
 IMPLEMENTATION_ACTIVE
 QA_ACTIVE
 RELEASED
@@ -71,38 +39,29 @@ ARCHIVED
 
 Regole:
 
-- ogni stato deve avere una fonte e una data;
-- `PREPARATION_COMPLETE` non autorizza automaticamente l’implementazione;
-- `IMPLEMENTATION_NOT_STARTED` vieta di descrivere il progetto come esistente, costruito o pubblicato;
-- `RELEASED` richiede evidenza di deploy e verifica;
-- `FROZEN` consente modifiche soltanto per bug, regressioni, sicurezza o requisiti approvati;
-- un progetto pianificato non viene inserito tra le repository attuali finché la repository non esiste realmente;
+- ogni stato ha data e fonte;
+- `PREPARATION_COMPLETE` non equivale a `IMPLEMENTATION_AUTHORIZED`;
+- un progetto pianificato non riceve repository, deploy o verifiche inventati;
+- `RELEASED` richiede deploy e verifica;
+- `FROZEN` consente soltanto bug, regressioni, sicurezza o requisiti approvati;
 - una demo non viene presentata come cliente reale.
 
 ---
 
-## 4. Portfolio corrente
+## 3. Portfolio corrente
 
-| Verticale | Stato della famiglia | Progetti confermati | Stato operativo |
-|---|---|---|---|
-| Food & Hospitality | operativo e documentato | Forno Lume START; Forno Lume BUSINESS | START congelato; BUSINESS verificato fino al Package C, Package D separato |
-| Beauty & Wellness | specifica v1.1 approvata e congelata; governance canonica parziale in repository | RITO Studio START | `PREPARATION_COMPLETE`; `IMPLEMENTATION_NOT_STARTED` |
-| Professional Services | famiglia e pacchetto di preparazione segnalati nelle conversazioni di progetto; contenuti completi non ancora acquisiti nella baseline verificata | nessuna repository dichiarata | non autorizzata all’implementazione |
-| Home & Local Services | famiglia e pacchetto di preparazione segnalati nelle conversazioni di progetto; contenuti completi non ancora acquisiti nella baseline verificata | nessuna repository dichiarata | non autorizzata all’implementazione |
+| Verticale | Concept | Specifica | Progetti | Stato |
+|---|---|---|---|---|
+| Food & Hospitality | Forno Lume | `HOSPITALITY_FAMILY.md` | START; BUSINESS | START congelato; BUSINESS verificato fino al Package C; Package D separato |
+| Beauty & Wellness | RITO Studio | `family-kits/beauty-wellness-v1.1/` | START; BUSINESS | preparazione completa; implementazione non iniziata |
+| Professional Services | QUADRA Studio | `family-kits/professional-services-v1.0/` | START; BUSINESS | preparazione completa; implementazione non iniziata |
+| Home & Local Services | NODO Servizi | `family-kits/home-local-services-v1.0/` | START; BUSINESS | preparazione completa; implementazione non iniziata |
 
-Le ultime due righe registrano l’esistenza del lavoro dichiarato, non ne ricostruiscono requisiti, copy o design senza i relativi artefatti sorgente.
+Le specifiche dei tre nuovi verticali sono approvate come baseline di preparazione. Non autorizzano automaticamente Lovable, repository remote, backend, deploy o raccolta dati.
 
 ---
 
-## 5. Food & Hospitality
-
-La famiglia Food & Hospitality è documentata in:
-
-```text
-HOSPITALITY_FAMILY.md
-```
-
-Stato sintetico:
+## 4. Food & Hospitality
 
 ```text
 Forno Lume START
@@ -112,134 +71,186 @@ Forno Lume START
             └── Package D separato e pendente
 ```
 
-Le baseline, i pattern canonici e le policy demo sono registrati nei documenti esistenti. Questo documento non li duplica.
-
----
-
-## 6. Beauty & Wellness
-
-La famiglia Beauty & Wellness usa come specifica approvata la versione `v1.1` definita nel development pack del 25 luglio 2026.
-
-Regole già confermate:
-
-- la specifica `v1.1` è approvata e congelata;
-- il primo progetto è `RITO Studio START`;
-- non reinterpretare liberamente identità, struttura, copy, responsive o motion;
-- non iniziare `BUSINESS` prima dell’approvazione, verifica e congelamento di `START`;
-- il passaggio a un piano superiore è evolutivo, non un redesign estraneo;
-- i dettagli completi devono essere acquisiti dal development pack, non ricostruiti da memoria o chat parziali.
-
-Il contratto operativo disponibile è in:
+Fonte:
 
 ```text
-BEAUTY_WELLNESS_FAMILY.md
+HOSPITALITY_FAMILY.md
 ```
 
 ---
 
-## 7. RITO Studio START
-
-### Identificazione
+## 5. Beauty & Wellness
 
 | Campo | Valore |
 |---|---|
-| Nome progetto | `RITO Studio START` |
-| Verticale | Beauty & Wellness |
-| Piano | START |
-| Stato preparazione | `PREPARATION_COMPLETE` |
-| Stato implementazione | `IMPLEMENTATION_NOT_STARTED` |
-| Repository remota | non creata / non dichiarata |
-| Deploy | non creato / non dichiarato |
-| Lovable project | non creato |
+| Concept | `RITO Studio` |
+| Descriptor | `Beauty & Care Atelier` |
+| Tagline | `La bellezza, nel suo ritmo.` |
+| START previsto | `rito-studio-START` |
+| BUSINESS previsto | `rito-studio-BUSINESS` |
+| Primo deliverable | RITO Studio START |
 
-### Gate obbligatori prima dell’avvio
+Evoluzione:
 
-Entrambi i gate devono essere soddisfatti:
+```text
+sito → prenotazioni → clienti → pacchetti/fidelity → gestionale
+```
 
-1. il fondatore conferma che l’abbonamento Lovable è attivo;
-2. il fondatore autorizza esplicitamente l’avvio di `RITO Studio START`.
+Fonti:
 
-Finché manca anche un solo gate, è vietato:
-
-- creare il progetto Lovable;
-- consumare crediti Lovable;
-- creare o modificare repository remote per il progetto;
-- pubblicare una demo o un deploy;
-- iniziare `RITO Studio BUSINESS`;
-- sostituire la specifica approvata con un redesign o con requisiti inventati.
-
-### Avvio autorizzato
-
-Dopo i due gate, il task di avvio deve comunque registrare:
-
-- specifica e versione sorgente;
-- baseline documentale;
-- obiettivo del primo pass;
-- vincoli;
-- criteri di accettazione;
-- verifiche;
-- output richiesto;
-- checkpoint Git previsto;
-- stato iniziale e stato finale consentito.
+```text
+BEAUTY_WELLNESS_FAMILY.md
+family-kits/beauty-wellness-v1.1/
+```
 
 ---
 
-## 8. Evoluzione dei piani
+## 6. Professional Services
 
-Pattern generale:
+| Campo | Valore |
+|---|---|
+| Concept | `QUADRA Studio` |
+| Descriptor | `Consulenza professionale` |
+| Tagline | `Chiarezza per decisioni solide.` |
+| START previsto | `quadra-studio-START` |
+| BUSINESS previsto | `quadra-studio-BUSINESS` |
+
+Evoluzione:
+
+```text
+sito → lead qualificati → portale cliente → documenti/pratiche → CRM
+```
+
+Fonti:
+
+```text
+PROFESSIONAL_SERVICES_FAMILY.md
+family-kits/professional-services-v1.0/
+```
+
+---
+
+## 7. Home & Local Services
+
+| Campo | Valore |
+|---|---|
+| Concept | `NODO Servizi` |
+| Descriptor | `Interventi, impianti e manutenzione` |
+| Tagline | `Il lavoro fatto bene, dal primo contatto.` |
+| START previsto | `nodo-servizi-START` |
+| BUSINESS previsto | `nodo-servizi-BUSINESS` |
+
+Evoluzione:
+
+```text
+sito → richieste/preventivi → sopralluoghi → calendario tecnici → gestionale
+```
+
+Fonti:
+
+```text
+HOME_LOCAL_SERVICES_FAMILY.md
+family-kits/home-local-services-v1.0/
+```
+
+---
+
+## 8. Ordine del mese intensivo
+
+Priorità approvata:
+
+```text
+1. RITO Studio START
+2. RITO Studio BUSINESS
+3. QUADRA Studio START
+4. QUADRA Studio BUSINESS
+5. NODO Servizi START
+```
+
+Stretch goal:
+
+```text
+6. NODO Servizi BUSINESS
+```
+
+Qualità, QA e freeze dei deliverable precedenti hanno priorità sullo stretch goal.
+
+---
+
+## 9. Gate START
+
+Prima di ogni nuovo START:
+
+- abbonamenti necessari attivi;
+- workspace e consumi verificati;
+- comando esplicito riferito al progetto corretto;
+- repository e branch iniziali identificati;
+- specifica copiata e congelata;
+- `STATUS.md` su `IMPLEMENTATION_AUTHORIZED`;
+- scope e prompt revisionati;
+- backend, auth, database, upload e raccolta dati confermati fuori scope quando previsto;
+- nessun secondo agente sugli stessi file.
+
+Per RITO valgono inoltre i due gate espliciti:
+
+```text
+LOVABLE_SUBSCRIPTION_CONFIRMED
+RITO_STUDIO_START_AUTHORIZED
+```
+
+---
+
+## 10. START → BUSINESS
 
 ```text
 specifica approvata
-↓
-START
-↓
-verifica, remediation e approvazione
-↓
-freeze della baseline START
-↓
-BUSINESS
-↓
-verifica, remediation e approvazione
-↓
-BUSINESS PLUS, quando previsto
+→ START
+→ Impeccable read-only
+→ finding approvati
+→ Codex e QA
+→ freeze e tag START
+→ contratto di eredità
+→ autorizzazione BUSINESS
+→ BUSINESS derivato dalla baseline START
+→ consolidamento e parity review
+→ QA comparativa
+→ freeze BUSINESS
 ```
 
-Principi:
+BUSINESS eredita identità, palette, tipografia, spacing, immagini, componenti, navbar, footer, pulsanti, motion, tono e comportamento mobile. Può espandere route, contenuti, SEO e funzionalità approvate.
 
-- il piano superiore deriva dalla baseline approvata del piano precedente;
-- identità, palette, tipografia, trattamento visivo, motion e componenti approvati vengono preservati;
-- architettura informativa, route, contenuti, SEO e funzionalità possono espandersi;
-- correzioni tecniche trasferibili devono essere verificate per pattern;
-- non dichiarare una repository intera canonica per ogni aspetto;
-- ogni nuovo piano usa un task e una branch separati.
+Non ricostruire BUSINESS da un progetto vuoto e non applicare redesign indipendenti.
 
 ---
 
-## 9. Separazione tra stato, decisione e specifica
+## 11. Separazione delle fonti
 
-| Informazione | Destinazione canonica |
+| Informazione | Destinazione |
 |---|---|
-| decisione permanente | `DECISIONS.md` |
-| mappa dei verticali e lifecycle | questo documento |
-| specifica di famiglia | documento della famiglia |
-| progetto/repository esistente | `REPOSITORY_INDEX.md` |
-| stato trasversale sintetico | `CURRENT_STATE.md` |
-| stato dettagliato del progetto | repository del progetto, `docs/STATUS.md` |
-| task, bug e finding aperti | GitHub Issues / audit / roadmap |
-| artefatti sorgente non ancora acquisiti | `SOURCE_ARTIFACT_REGISTER.md` |
+| decisione trasversale | `DECISIONS.md` |
+| standard condiviso | `DEVELOPMENT_STANDARDS.md` |
+| mappa portfolio e lifecycle | questo documento |
+| governance famiglia | documento `*_FAMILY.md` |
+| specifica completa | `family-kits/` |
+| repository reale | `REPOSITORY_INDEX.md` |
+| stato trasversale | `CURRENT_STATE.md` |
+| stato locale | repository progetto, `docs/STATUS.md` |
+| task e bug | issue, PR, audit o roadmap |
+| provenienza pacchetti | `SOURCE_ARTIFACT_REGISTER.md` |
 
 ---
 
-## 10. Criterio di completezza
+## 12. Criterio di completezza
 
-Una famiglia è completamente migrata fuori dalle chat soltanto quando:
+Una famiglia è indipendente dalle chat quando:
 
-- la specifica integrale è versionata;
-- le decisioni sono registrate;
-- il primo progetto e il suo stato sono registrati;
-- i gate sono espliciti;
-- gli artefatti sorgente sono accessibili e verificabili;
-- i task residui sono in issue o roadmap;
-- gli adattatori degli strumenti sono sincronizzati.
+- specifica completa versionata;
+- decisioni e gate registrati;
+- concept e repository previsti documentati;
+- prompt e checklist disponibili;
+- manifest e provenienza registrati;
+- stato aggiornato;
+- task residui trasferiti fuori dalle chat;
+- una nuova sessione ricostruisce correttamente il lavoro dai file.
 
-La sola presenza del nome del verticale non soddisfa questo criterio.
+Beauty, Professional e Home soddisfano il criterio documentale dopo il merge di questa integrazione. L'implementazione resta non autorizzata finché i rispettivi gate non vengono soddisfatti.

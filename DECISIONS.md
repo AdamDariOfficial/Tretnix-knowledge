@@ -1,6 +1,6 @@
 # Tretnix Decision Log
 
-**Versione:** 1.5
+**Versione:** 1.6
 **Aggiornato:** 26 luglio 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
@@ -990,3 +990,79 @@ Lo stato dettagliato, la cronologia, i task e i bug restano nel repository del p
 - Aggiornare o rimuovere gli stati superati.
 - Usare Git per la cronologia.
 - Non elevare un handoff riportato a fatto verificato senza evidenza tecnica.
+
+---
+
+## TRX-DEC-029 — Specifiche complete dei verticali come family kit versionati
+
+**Stato:** approvata
+**Data:** 26 luglio 2026
+**Ambito:** Beauty & Wellness, Professional Services, Home & Local Services e futuri verticali
+
+### Contesto
+
+Riepiloghi trasversali e chat non sono sufficienti a ricostruire copy, design, route, motion, testing, prompt e checklist di una famiglia.
+
+### Decisione
+
+Le specifiche complete approvate vengono conservate in directory versionate sotto:
+
+```text
+family-kits/<family>-v<version>/
+```
+
+Ogni family kit deve mantenere almeno:
+
+- manifest;
+- README;
+- prodotto;
+- design;
+- contenuti;
+- route;
+- animazioni;
+- testing;
+- decisioni locali;
+- stato e approvazione;
+- contratto START → BUSINESS;
+- prompt;
+- checklist.
+
+I documenti `*_FAMILY.md` alla root restano indici e contratti di governance. Non duplicano integralmente il kit.
+
+### Conseguenze
+
+- Gli agenti leggono il family kit applicabile prima di implementare.
+- Una nuova versione usa una directory distinta o una modifica versionata esplicita.
+- I prompt versionati non costituiscono autorizzazione automatica all'esecuzione.
+- Le decisioni trasversali prevalgono sulle copie locali obsolete.
+- Un progetto cliente copia nel proprio repository soltanto il contesto necessario e approvato.
+
+---
+
+## TRX-DEC-030 — Conservazione estratta degli artefatti e separazione degli snapshot storici
+
+**Stato:** approvata
+**Data:** 26 luglio 2026
+**Ambito:** pacchetti, handoff, ZIP e snapshot Tretnix
+
+### Decisione
+
+Quando un archivio contiene documenti leggibili già estratti e versionabili:
+
+- conservare checksum e manifest dell'archivio originale;
+- versionare i contenuti testuali necessari;
+- non duplicare automaticamente ZIP binari ridondanti nel repository;
+- conservare almeno una copia offline dell'originale;
+- isolare gli snapshot storici in `source-artifacts/`;
+- marcare chiaramente che gli snapshot storici non sono fonti canoniche correnti.
+
+### Motivazione
+
+Questo mantiene provenienza e auditabilità senza creare fonti concorrenti o gonfiare il repository con copie binarie dello stesso contenuto.
+
+### Conseguenze
+
+- `SOURCE_ARTIFACT_REGISTER.md` registra origine, nome logico, SHA-256, contenuti importati e file non duplicati.
+- Le specifiche attive vengono spostate in `family-kits/` e gli handoff operativi in `operations/`.
+- Gli agenti non devono leggere `historical-source-of-truth/` come baseline corrente.
+- La cancellazione delle chat resta subordinata al merge e alla prova di ricostruzione.

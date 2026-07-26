@@ -196,3 +196,17 @@ Only “Tretnix” needs to be linked unless the approved design says otherwise.
 ## Public demo indexing
 
 For a public demo that is not a real business, emit `noindex, follow` on all public routes, including 404 and legal pages. Do not block the crawler from reading that directive. Do not publish fictional commercial structured data or fields. Allowed generic types are `WebSite`, `WebPage`, `AboutPage`, `CollectionPage` and `ContactPage` when accurate, deterministic, route-aware and safely serialized.
+
+## Family kits
+
+When a task belongs to a prepared vertical, inspect the applicable family kit before editing:
+
+```text
+family-kits/beauty-wellness-v1.1/
+family-kits/professional-services-v1.0/
+family-kits/home-local-services-v1.0/
+```
+
+Record the version and files used. A prompt inside a kit is an approved task template, not permission to run external tools, consume credits, create repositories, push or deploy.
+
+Never use `source-artifacts/**/historical-source-of-truth/` as the current baseline. Current root decisions, standards and project-local documentation take precedence.
