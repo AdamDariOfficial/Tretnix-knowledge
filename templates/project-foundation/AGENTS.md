@@ -51,6 +51,22 @@ For non-trivial changes:
 10. run available checks;
 11. report results and remaining risks.
 
+## Project state and task admission
+
+Before writing, verify:
+
+- repository and full base commit;
+- current lifecycle state;
+- required external or cost gates;
+- evidence that each gate is satisfied;
+- approved scope and allowed final state.
+
+`PREPARATION_COMPLETE` does not authorize implementation. Do not invent repository, branch, deploy or validation details for a planned project.
+
+Do not consume credits, create projects or remote repositories, push, publish, deploy or begin a higher plan without explicit authorization in the current task.
+
+Before handoff, record state, evidence, checks and source artifacts. Do not leave the only copy of a required decision or artifact in a chat.
+
 ## Scope control
 
 Do not:
@@ -164,7 +180,9 @@ Report:
 8. unresolved issues;
 9. regression risk;
 10. manual tests still required;
-11. final Git status.
+11. initial and final lifecycle state;
+12. gate evidence;
+13. final Git status.
 
 Clearly distinguish confirmed findings, probable findings, potential risks and non-assessable areas.
 

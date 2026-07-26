@@ -74,6 +74,26 @@ A minimal edit made directly in a verified clean working tree may skip the archi
 - Never rewrite published Lovable-connected history.
 - Do not force push, rebase, amend or squash already-pushed commits when it can damage Lovable history.
 
+## Task admission and project state
+
+Before modifying files, verify that the task provides:
+
+- repository and full base commit;
+- current project state;
+- required start or external-service gates;
+- approved scope;
+- acceptance criteria;
+- required verification;
+- prohibited actions.
+
+`PREPARATION_COMPLETE` does not authorize implementation. A planned project has no repository, branch, deploy or validation until those resources actually exist.
+
+Do not create paid-tool projects, consume credits, create remote repositories, push, publish, deploy or begin a higher plan unless explicitly authorized by the current task.
+
+If the task concerns `RITO Studio START`, require both Lovable gates recorded in the approved task. Do not begin BUSINESS.
+
+The model recommendation is recorded by ChatGPT before assignment. It does not expand Codex permissions or scope.
+
 ## Scope control
 
 Do not:
@@ -141,7 +161,9 @@ Report:
 7. checks not executed;
 8. unresolved issues;
 9. regression risk;
-10. final Git status.
+10. final Git status;
+11. initial and final project state;
+12. gate evidence used.
 
 Clearly distinguish:
 

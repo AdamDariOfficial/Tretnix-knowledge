@@ -1,7 +1,7 @@
 # Tretnix Read-Only Repository Audit
 
-**Versione:** 1.1
-**Aggiornato:** 17 luglio 2026
+**Versione:** 1.2
+**Aggiornato:** 26 luglio 2026
 **Scopo:** analizzare un repository senza applicare correzioni
 
 ---
@@ -48,6 +48,10 @@ Compilare prima di iniziare.
 | Accesso Supabase | nessuno / read-only / altro |
 | Credenziali necessarie | |
 | Esclusioni | |
+| Stato lifecycle dichiarato | |
+| Gate esterni richiesti | |
+| Artefatti sorgente disponibili | |
+| Handoff da riconciliare | |
 
 L’audit è valido rispetto al commit indicato.
 
@@ -267,6 +271,15 @@ Produrre una mappa dei flussi principali.
 ## Fase C — Audit statico
 
 Verificare:
+
+### Stato, fonti e autorizzazioni
+
+- distinguere repository esistente, progetto pianificato e deploy verificato;
+- verificare lifecycle e transizioni;
+- registrare gate esterni o di costo;
+- confrontare handoff con branch, commit e PR;
+- inventariare allegati e pacchetti sorgente;
+- marcare come NV ciò che esiste soltanto per riferimento nominale.
 
 ### Architettura
 
@@ -811,6 +824,9 @@ Prima di chiudere l’audit:
 - [ ] deploy verificato o limite dichiarato;
 - [ ] backend verificato o NV dichiarato;
 - [ ] ogni finding ha evidenza;
+- [ ] lifecycle e gate verificati o marcati NV;
+- [ ] handoff riconciliati con Git oppure marcati HR;
+- [ ] artefatti sorgente inventariati;
 - [ ] severità distinta dalla categoria;
 - [ ] differenze stilistiche preservate;
 - [ ] nessun file modificato;

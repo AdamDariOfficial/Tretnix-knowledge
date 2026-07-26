@@ -12,7 +12,8 @@ Quando cambia una decisione o uno standard:
 2. identificare gli adattatori coinvolti;
 3. aggiornare gli adattatori;
 4. copiare la nuova versione nello strumento;
-5. registrare la modifica tramite Git.
+5. verificare che stato, gate e source artifacts non siano rimasti soltanto in chat;
+6. registrare la modifica tramite Git.
 
 ## File
 
@@ -22,4 +23,4 @@ Quando cambia una decisione o uno standard:
 - `CODEX_GLOBAL_AGENTS.md`: istruzioni globali da installare in `~/.codex/AGENTS.md`.
 - `CODEX_SETUP.md`: procedura di configurazione e verifica di Codex.
 
-Il contesto specifico dei singoli progetti non deve essere inserito indiscriminatamente negli adattatori globali.
+Il contesto specifico dei singoli progetti non deve essere inserito indiscriminatamente negli adattatori globali. I gate trasversali restano globali; specifiche, stato dettagliato e task restano nei file del progetto. Dopo il merge di una modifica canonica, sincronizzare manualmente le copie presenti nelle impostazioni degli strumenti.

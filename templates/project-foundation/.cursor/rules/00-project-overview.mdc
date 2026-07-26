@@ -10,6 +10,10 @@ alwaysApply: true
 - Inspect relevant code before proposing non-trivial changes.
 - Only one writer may edit the working tree; do not write concurrently with Codex, Lovable or another agent.
 - Start reviews in read-only mode and require a Git checkpoint before handoff.
+- Distinguish preparation, implementation authorization, release and freeze states.
+- Verify explicit gates before consuming credits, creating remote resources, pushing, publishing, deploying or starting a higher plan.
+- Do not invent repository, branch, deploy or verification details for planned projects.
+- Move decisions, status, tasks and source artifacts to canonical files before a chat is deleted.
 - Identify root causes instead of applying symptom patches.
 - Avoid unrelated edits, speculative cleanup and arbitrary redesigns.
 - Preserve intentional client-specific visual identity.

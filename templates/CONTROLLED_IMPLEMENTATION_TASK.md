@@ -2,6 +2,19 @@
 
 Use this template for Codex, Cursor Agent, Lovable or another implementation agent.
 
+## Task admission
+
+Record:
+
+- recommendation date;
+- recommended model and reason;
+- current project lifecycle state;
+- required external/cost gates;
+- evidence that each gate is satisfied;
+- allowed final state.
+
+If a required gate is missing, stop before implementation.
+
 ## Context
 
 Describe:
@@ -89,7 +102,9 @@ The agent must report:
 9. manual checks remaining;
 10. regression risk;
 11. final diff summary;
-12. final `git status --short`.
+12. initial and final lifecycle state;
+13. gate evidence used;
+14. final `git status --short`.
 
 ## Prohibited actions
 
@@ -102,4 +117,8 @@ The agent must report:
 - DNS changes;
 - production database changes;
 - secret exposure;
-- unapproved scope expansion.
+- unapproved scope expansion;
+- paid-tool use without a gate;
+- creation of unapproved remote resources;
+- treating preparation as implementation authorization;
+- beginning a higher plan without approval.

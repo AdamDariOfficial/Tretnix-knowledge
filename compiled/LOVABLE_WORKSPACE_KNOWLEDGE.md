@@ -172,6 +172,19 @@ Only “Tretnix” needs to be linked unless the approved design says otherwise.
 
 A public demo that does not represent a real business uses `noindex, follow` on every public route, including legal pages and 404. Do not publish fictional `Restaurant`, `LocalBusiness`, commercial `Organization`, address, geo, telephone, opening hours, prices, offers, reviews, ratings, reservations, `FAQPage`, `Menu`, `MenuSection` or `MenuItem` structured data. Generic page markup is allowed only when accurate and route-aware.
 
+## Project start authorization
+
+Do not create a new Lovable project, consume credits, connect or create a remote repository, publish, deploy or begin a higher plan unless the current project task explicitly authorizes that operation.
+
+`PREPARATION_COMPLETE` means that offline preparation is complete. It does not mean implementation is authorized.
+
+For `RITO Studio START`, require both:
+
+1. explicit confirmation that the Lovable subscription is active;
+2. explicit authorization to start `RITO Studio START`.
+
+Until both are present, do not create the project, use credits, create or modify remote repositories, publish or begin BUSINESS. Do not reinterpret the frozen Beauty & Wellness v1.1 specification.
+
 ## Project-specific knowledge
 
 Workspace knowledge contains only rules shared across projects.

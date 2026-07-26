@@ -42,6 +42,26 @@ git status --short
 
 The working tree must remain unchanged.
 
+## Model recommendation and task admission
+
+Before each Codex assignment, ChatGPT records:
+
+- recommendation date;
+- currently available model recommended;
+- reason based on complexity, risk and cost;
+- alternative or limitation when relevant.
+
+Before Codex starts, the task records:
+
+- repository and full base commit;
+- initial project state;
+- required external or cost gates and their evidence;
+- approved scope;
+- acceptance criteria;
+- prohibited actions.
+
+A model choice does not authorize push, deploy, external spending or scope expansion.
+
 ## Controlled implementation workflow
 
 ```text
@@ -89,7 +109,10 @@ Before a Codex Cloud task:
 
 Every implementation report must include:
 
+- recommendation date and model used;
 - branch and base commit;
+- initial and final project state;
+- gate evidence;
 - objective;
 - root cause;
 - files changed;

@@ -1,7 +1,7 @@
 # Tretnix Master Context
 
-**Versione:** 1.3
-**Aggiornato:** 25 luglio 2026
+**Versione:** 1.4
+**Aggiornato:** 26 luglio 2026
 **Stato:** canonico
 
 ---
@@ -364,11 +364,21 @@ Registrano una scelta approvata e il motivo.
 
 Descrive lo stato corrente di un progetto.
 
+Lo stato dettagliato appartiene al repository del progetto. Quando serve coordinare più repository, `CURRENT_STATE.md` conserva soltanto uno snapshot trasversale sintetico, datato e classificato per evidenza.
+
 ### Tasks
 
 Descrivono ciò che deve ancora essere fatto.
 
-Status e task appartengono ai repository o al project tracking, non alla memory permanente.
+Status e task appartengono ai repository o al project tracking, non alla memory permanente. La knowledge trasversale non deve diventare una cronologia infinita di task.
+
+### Source artifacts
+
+Pacchetti, handoff, allegati e snapshot necessari devono essere registrati in `SOURCE_ARTIFACT_REGISTER.md`. Citare il nome di un file in una chat non equivale ad averne acquisito il contenuto.
+
+### Chat handoff
+
+Le chat possono essere cancellate soltanto dopo il gate definito in `CHAT_RETENTION_AND_HANDOFF.md`. Decisioni, specifiche, stato, task, evidenze e allegati devono essere trasferiti alle rispettive fonti canoniche.
 
 ---
 
@@ -403,6 +413,12 @@ repository del progetto
 
 GitHub Issues
 = task e bug operativi
+
+CURRENT_STATE.md
+= indice trasversale sintetico, non sostitutivo degli status locali
+
+SOURCE_ARTIFACT_REGISTER.md
+= allegati acquisiti, mancanti e fonti da migrare
 ```
 
 ### Precedenza
@@ -426,7 +442,15 @@ Tretnix utilizza livelli di offerta:
 - CUSTOM;
 - INTERNO.
 
-Il primo verticale concreto è Food & Hospitality.
+Il primo verticale operativo è Food & Hospitality.
+
+La mappa corrente comprende inoltre:
+
+- Beauty & Wellness, con specifica `v1.1` approvata e primo progetto `RITO Studio START` ancora non implementato;
+- Professional Services, segnalato come preparato ma con artefatti completi ancora da acquisire;
+- Home & Local Services, segnalato come preparato ma con artefatti completi ancora da acquisire.
+
+La mappa, il lifecycle e i gate sono in `PORTFOLIO_AND_VERTICALS.md`.
 
 ### Principio di evoluzione
 
@@ -550,6 +574,28 @@ Pattern approvati fino al Package C:
 - attribuzione Tretnix nel footer.
 
 I dettagli del contratto e delle policy sono in `HOSPITALITY_FAMILY.md`.
+
+### RITO Studio START
+
+Ruolo:
+
+- primo progetto Beauty & Wellness;
+- piano START;
+- progetto preparato offline ma non ancora implementato.
+
+Stato corrente:
+
+```text
+PREPARATION_COMPLETE
+IMPLEMENTATION_NOT_STARTED
+```
+
+Prima di qualsiasi chiamata a Lovable sono obbligatori entrambi i gate:
+
+1. conferma dell’abbonamento Lovable attivo;
+2. autorizzazione esplicita all’avvio di `RITO Studio START`.
+
+Prima dei gate non creare progetti, non consumare crediti, non creare repository remote, non pubblicare e non iniziare BUSINESS. La governance completa disponibile è in `BEAUTY_WELLNESS_FAMILY.md`; i dettagli della specifica v1.1 devono essere acquisiti dal development pack registrato in `SOURCE_ARTIFACT_REGISTER.md`.
 
 ---
 
@@ -761,7 +807,18 @@ Stato: attiva.
 - estrarre standard confermati;
 - configurare Lovable quando disponibile.
 
-### Fase 6 — Specializzazione
+### Fase 6 — Portfolio e conservazione del contesto
+
+Stato: attiva.
+
+- acquisire integralmente il development pack del 25 luglio 2026;
+- formalizzare Beauty & Wellness senza reinterpretare la specifica v1.1;
+- mantenere `RITO Studio START` fermo fino ai due gate;
+- registrare Professional Services e Home & Local Services soltanto con artefatti verificabili;
+- migrare le informazioni necessarie prima di cancellare le chat;
+- usare `CURRENT_STATE.md` per lo stato trasversale e le issue per i task.
+
+### Fase 7 — Specializzazione
 
 - valutare Claude Code quando emerge un bisogno concreto;
 - aggiungere RLS review;
@@ -772,12 +829,16 @@ Stato: attiva.
 
 La priorità attuale è:
 
-1. mantenere Forno Lume START chiuso e congelato salvo bug, regressioni, sicurezza o requisiti di prodotto approvati;
-2. preservare i pattern BUSINESS approvati nei Package A, B, B2 e C e aprire il Package D separatamente;
-3. confrontare ogni intervento BUSINESS con i soli pattern canonici assegnati a START;
-4. trattare il Package D e ogni funzionalità futura come perimetri separati;
-5. approvare nuovi pattern BUSINESS soltanto dopo audit, remediation e verifiche;
-6. proseguire il consolidamento delle procedure Tretnix già verificate.
+1. integrare e revisionare l’aggiornamento della knowledge repository;
+2. acquisire integralmente il development pack del 25 luglio e le specifiche ancora non versionate;
+3. riconciliare lo stato CF-1 di Tretnix.com con branch, PR, commit e verifiche;
+4. completare il merge CF-1, sincronizzare `main` e verificare il working tree pulito;
+5. investigare in sola lettura il mismatch `data-tsd-source`;
+6. proseguire i finding Tretnix.com uno per branch;
+7. mantenere Forno Lume START chiuso e congelato;
+8. preservare i pattern BUSINESS approvati e trattare Package D separatamente;
+9. mantenere `RITO Studio START` in `IMPLEMENTATION_NOT_STARTED` finché non risultano entrambi i gate;
+10. non dichiarare repository, deploy o specifiche complete per i verticali ancora privi di artefatti acquisiti.
 
 ---
 

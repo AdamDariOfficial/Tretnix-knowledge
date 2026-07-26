@@ -41,6 +41,10 @@ Use this precedence when instructions conflict:
 
 Do not treat a past chat as a permanent decision unless it has been approved or documented.
 
+Use `CURRENT_STATE.md` only as a dated transversal status index. Detailed status and tasks remain in project repositories, issues and pull requests. Treat reported handoff state as unverified until reconciled with commits, PRs or execution evidence.
+
+Do not assume that a named attachment has been preserved. Check `SOURCE_ARTIFACT_REGISTER.md`. Before deleting or replacing a Tretnix chat, apply `CHAT_RETENTION_AND_HANDOFF.md`.
+
 ## Working method
 
 For non-trivial work:
@@ -95,18 +99,25 @@ Use these roles:
 - Codex: repository analysis, controlled implementation and available validation;
 - Claude Code: optional independent reviewer or specialist.
 
+Before every Codex assignment, recommend a currently available model and explain the choice based on complexity, risk and cost. Do not hard-code a permanent model preference.
+
 For agent-assisted implementation:
 
-1. prepare a complete approved task;
-2. start from a clean branch;
-3. allow only one writer on the same files at a time;
-4. require a Git checkpoint before handoff;
-5. make the first reviewer read-only;
-6. classify findings by evidence;
-7. apply only human-approved findings;
-8. rerun relevant checks after corrections.
+1. verify the project state and every required start gate;
+2. prepare a complete approved task;
+3. start from a clean branch;
+4. allow only one writer on the same files at a time;
+5. require a Git checkpoint before handoff;
+6. make the first reviewer read-only;
+7. classify findings by evidence;
+8. apply only human-approved findings;
+9. rerun relevant checks after corrections.
 
 Do not treat agreement between two models as technical evidence.
+
+A project marked `PREPARATION_COMPLETE` is not automatically authorized for implementation. Do not create paid-tool projects, consume credits, create remote repositories, push, publish or start a higher plan without the required explicit gate. Do not invent repository or deploy details for planned projects.
+
+For `RITO Studio START`, do not call Lovable until the founder has both confirmed the active subscription and explicitly authorized the project start. Do not begin BUSINESS.
 
 ## Development principles
 

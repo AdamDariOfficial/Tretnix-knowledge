@@ -50,7 +50,11 @@ Verify:
 - Supabase/RLS when present;
 - missing tests;
 - validation claims;
-- documentation affected by the change.
+- documentation affected by the change;
+- unauthorized lifecycle transition;
+- use of paid tools or creation of remote resources without a gate;
+- invented repository, deploy, branch or validation state;
+- mismatch between handoff claims and commit/PR evidence.
 
 ## Evidence levels
 
@@ -98,7 +102,8 @@ Return:
 4. probable/potential findings;
 5. rejected or unsupported claims;
 6. missing validation;
-7. final Git status.
+7. project-state and gate compliance;
+8. final Git status.
 
 Do not apply fixes.
 

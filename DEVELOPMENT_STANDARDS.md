@@ -1,6 +1,6 @@
 # Tretnix Development Standards
 
-**Versione:** 1.4
+**Versione:** 1.5
 **Aggiornato:** 26 luglio 2026
 **Ambito:** tutti i progetti Tretnix, salvo eccezioni documentate
 
@@ -878,3 +878,90 @@ Ogni intervento non banale deve riportare:
 - problemi non risolti;
 - rischio di regressione;
 - controlli manuali ancora necessari.
+
+---
+
+## 22. Lifecycle, gate e creazione di risorse
+
+Ogni nuovo progetto DEVE registrare uno stato esplicito tra quelli definiti in `PORTFOLIO_AND_VERTICALS.md`.
+
+### Distinzioni obbligatorie
+
+- preparazione non equivale a implementazione;
+- implementazione non equivale a release;
+- repository pianificata non equivale a repository esistente;
+- deploy previsto non equivale a deploy verificato;
+- autorizzazione di un progetto non si estende ad altri piani o progetti.
+
+### Operazioni soggette a gate
+
+Richiedono autorizzazione esplicita quando non già inclusa in un task approvato:
+
+- consumo di crediti o servizi a pagamento;
+- creazione di progetti su strumenti esterni;
+- creazione di repository remote;
+- push;
+- apertura o merge di pull request;
+- deploy;
+- DNS;
+- migrazioni o dati di produzione;
+- passaggio START → BUSINESS.
+
+Un agente NON DEVE dedurre un gate da un’intenzione generale o da una chat precedente.
+
+Per `RITO Studio START` valgono i gate specifici di `TRX-DEC-025`.
+
+---
+
+## 23. Handoff e cancellazione delle chat
+
+Prima di sostituire o cancellare una chat operativa:
+
+1. registrare repository, branch e hash completi;
+2. trasferire decisioni e standard;
+3. versionare la specifica completa;
+4. registrare stato ed evidenza;
+5. trasferire task e bug a issue o roadmap;
+6. acquisire gli allegati necessari;
+7. sincronizzare gli adattatori;
+8. produrre un handoff;
+9. verificare che una nuova sessione ricostruisca il lavoro dai file.
+
+Non cancellare una chat che contiene l’unica copia di un pacchetto o allegato essenziale.
+
+Usare:
+
+- `CHAT_RETENTION_AND_HANDOFF.md`;
+- `SOURCE_ARTIFACT_REGISTER.md`;
+- `CURRENT_STATE.md`.
+
+---
+
+## 24. Ammissione del task Codex e scelta del modello
+
+Prima di ogni task Codex, ChatGPT DEVE indicare il modello consigliato e la motivazione usando le opzioni realmente disponibili in quel momento.
+
+Il task DEVE includere:
+
+- data della raccomandazione;
+- modello consigliato;
+- motivo;
+- repository e baseline;
+- stato iniziale;
+- gate richiesti e loro esito;
+- scope;
+- acceptance criteria;
+- verifiche;
+- output;
+- azioni vietate.
+
+Non inserire nei documenti canonici una preferenza permanente per un nome di modello soggetto a cambiamento.
+
+La scelta del modello non amplia automaticamente:
+
+- scope;
+- permessi;
+- accesso di rete;
+- segreti;
+- autonomia Git;
+- autorizzazione al deploy.

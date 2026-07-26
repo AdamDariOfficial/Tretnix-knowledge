@@ -1,7 +1,7 @@
 # Tretnix Repository Index
 
-**Versione:** 1.3
-**Aggiornato:** 25 luglio 2026
+**Versione:** 1.4
+**Aggiornato:** 26 luglio 2026
 **Stato dell’inventario:** completo rispetto ai quattro repository attualmente dichiarati
 
 Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit del codice.
@@ -65,13 +65,19 @@ L’inventario è completo soltanto rispetto al manifest approvato.
 
 ### Stato dichiarato
 
-Completato. Rimangono revisioni di dettaglio:
+Il sito è in produzione e in remediation controllata.
 
-- SEO;
-- aspetti legali;
-- colori.
+Handoff operativo più recente disponibile, ancora da riconciliare con commit e pull request:
 
-Queste revisioni non sono considerate problemi gravi già confermati.
+- `CF-1`, accessibilità del form contatti, riportato come implementato e verificato;
+- pull request CF-1 riportata come ancora da unire;
+- sincronizzazione di `main` e verifica working tree pulito da eseguire dopo il merge;
+- mismatch hydration relativo a `data-tsd-source` da investigare in sola lettura;
+- finding successivi da trattare uno per branch.
+
+Questi elementi hanno evidenza `HR` in `CURRENT_STATE.md`. Non dichiarare merge o chiusura verificati finché non sono registrati PR, branch, SHA e output dei controlli.
+
+Restano inoltre aree di revisione su SEO, aspetti legali e colori.
 
 ### Funzionalità note da verificare nel codice
 
@@ -316,8 +322,8 @@ La configurazione Cloudflare Pages verificata usa Bun, `bun.lock`, output `dist`
 | Deploy | non applicabile |
 | Stato | operativo |
 | Branch principale | `main` |
-| Commit auditato | repository ispezionata il 17 luglio 2026 |
-| Ultimo audit | revisione documentale per integrazione Codex |
+| Commit auditato | `60ac030d0c231443f1879c9bafc46f2626769f3d` |
+| Ultimo audit | consolidamento documentale completo della baseline il 26 luglio 2026 |
 
 ### Ruolo canonico
 
@@ -334,7 +340,9 @@ La configurazione Cloudflare Pages verificata usa Bun, `bun.lock`, output `dist`
 - è la fonte canonica trasversale;
 - non contiene bug temporanei o task correnti dei progetti;
 - ogni modifica significativa usa branch, diff e pull request;
-- deve tornare privata dopo le operazioni che richiedono accesso pubblico, salvo decisione diversa.
+- la visibilità osservata il 26 luglio 2026 è pubblica;
+- la preferenza precedente per una repository privata non deve essere trattata come impostazione già applicata;
+- la visibilità definitiva richiede decisione esplicita del proprietario.
 
 ---
 
@@ -348,6 +356,16 @@ Forno Lume START
 └── baseline canonica visuale e single-page Hospitality START
     └── Forno Lume BUSINESS
         └── futuro BUSINESS PLUS
+
+Beauty & Wellness v1.1
+└── RITO Studio START
+    └── pianificato, non implementato e privo di repository dichiarata
+
+Professional Services
+└── artefatti completi da acquisire
+
+Home & Local Services
+└── artefatti completi da acquisire
 ```
 
 ---
@@ -379,22 +397,56 @@ Forno Lume START
 
 ---
 
-# 5. Ordine operativo aggiornato
+# 5. Progetti pianificati senza repository
 
-1. mantenere `forno-lume-START` chiuso e congelato;
-2. preservare in BUSINESS i pattern approvati nei Package A, B, B2 e C;
-3. aprire il Package D in una chat e in un task separati;
-4. confrontare ogni intervento BUSINESS con la baseline START `d15f639267dfdd57194536154abfa1d0ff3b4542`;
-5. eseguire controlli automatici, browser e produzione realmente documentati;
-6. congelare BUSINESS soltanto dopo la chiusura del Package D e della documentazione locale;
-7. auditare `tretnix`;
-8. aggiornare il registro dei pattern canonici quando nuovi pattern vengono verificati.
+Questa sezione evita di confondere una specifica approvata con un repository esistente.
+
+## 5.1 RITO Studio START
+
+| Campo | Valore |
+|---|---|
+| Nome | `RITO Studio START` |
+| Verticale | Beauty & Wellness |
+| Piano | START |
+| Stato preparazione | `PREPARATION_COMPLETE` |
+| Stato implementazione | `IMPLEMENTATION_NOT_STARTED` |
+| Repository | non creata / non dichiarata |
+| Deploy | non creato / non dichiarato |
+| Lovable project | non creato |
+
+Gate mancanti:
+
+1. conferma abbonamento Lovable attivo;
+2. autorizzazione esplicita all’avvio.
+
+Prima di entrambi i gate non creare il progetto, non consumare crediti, non creare repository remote, non pubblicare e non iniziare BUSINESS.
+
+## 5.2 Famiglie senza progetto dichiarato
+
+- Professional Services: materiali segnalati, specifica integrale non acquisita;
+- Home & Local Services: materiali segnalati, specifica integrale non acquisita.
+
+Non assegnare URL, repository, deploy, route o stato di implementazione senza evidenza.
+
+---
+
+# 6. Ordine operativo aggiornato
+
+1. integrare la patch di consolidamento della knowledge dopo diff review;
+2. acquisire il development pack del 25 luglio e registrarne checksum e contenuti;
+3. riconciliare CF-1 con PR, branch, commit e verifiche nel repository `tretnix`;
+4. investigare `data-tsd-source` in sola lettura dopo il merge e la sincronizzazione di `main`;
+5. proseguire i finding `tretnix` uno per branch;
+6. mantenere `forno-lume-START` chiuso e congelato;
+7. preservare in BUSINESS i pattern approvati e aprire Package D separatamente;
+8. avviare `RITO Studio START` soltanto dopo i due gate;
+9. aggiornare il registro dei pattern canonici quando nuovi pattern vengono verificati.
 
 Le vulnerabilità critiche o alte rilevate devono essere segnalate immediatamente e prioritarizzate.
 
 ---
 
-# 6. Template per una nuova repository
+# 7. Template per una nuova repository
 
 ```md
 ## Nome progetto
