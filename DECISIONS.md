@@ -1,6 +1,6 @@
 # Tretnix Decision Log
 
-**Versione:** 1.8
+**Versione:** 1.9
 **Aggiornato:** 27 luglio 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
@@ -1153,3 +1153,49 @@ skills/CONTROLLED_CHANGE_PACKAGE.md
 - Un formatter globale non viene usato per nascondere errori lint senza approvazione esplicita.
 - Una modifica piccola in un working tree verificato può continuare a usare il normale workflow di branch e diff.
 - Il successo dei controlli automatici non autorizza implicitamente commit, push, migrazione o deploy.
+
+---
+
+## TRX-DEC-033 — Avvio parallelo controllato di RITO Studio START
+
+**Stato:** approvata
+**Data:** 27 luglio 2026
+**Ambito:** famiglia Beauty & Wellness e chiusura Tretnix/Hospitality
+
+### Contesto
+
+Tretnix, Forno Lume START e Forno Lume BUSINESS hanno superato i controlli automatici dell'ultimo ciclo Impeccable, ma restano browser QA conclusivo, checkpoint Git finali e gate separati di staging o deploy.
+
+Per ridurre i tempi senza perdere controllo, il lavoro sulla seconda famiglia può iniziare in una corsia separata, purché non interrompa la chiusura dei progetti già in corso e non anticipi piani non autorizzati.
+
+### Decisione
+
+RITO Studio START può entrare in preparazione e implementazione controllata in parallelo alla chiusura finale di Tretnix e Hospitality.
+
+L'avvio effettivo del progetto Lovable e il consumo intenzionale di crediti richiedono ancora:
+
+1. conferma esplicita che l'abbonamento Lovable sia attivo;
+2. verifica del workspace corretto e del saldo iniziale;
+3. un comando esplicito dell'utente per iniziare l'implementazione;
+4. repository o procedura di sincronizzazione START definita.
+
+Il parallelismo è limitato a **RITO Studio START**. RITO Studio BUSINESS e BUSINESS PLUS rimangono bloccati fino a un gate separato successivo alla stabilizzazione di START.
+
+Il lavoro deve usare repository, branch, chat e writer separati. Nessun agente può modificare in parallelo gli stessi file usati da un altro strumento senza coordinamento.
+
+### Vincoli
+
+- La chiusura di Tretnix e Hospitality resta obbligatoria e non viene sostituita.
+- Beauty & Wellness conserva identità, copy, palette, tipografia e motion distinti da Hospitality.
+- START resta statico e one-page, senza backend, autenticazione o booking nativo.
+- Non usare dati reali di clienti.
+- Non pubblicare, deployare, collegare domini o attivare infrastruttura di produzione senza autorizzazione esplicita.
+- La presenza di prompt e Project Knowledge non costituisce autorizzazione automatica all'esecuzione.
+- Le modifiche non banali preparate fuori dal working tree seguono il Controlled Change Package.
+
+### Conseguenze
+
+- È autorizzata la preparazione del Project Knowledge, del bootstrap repository e degli input di implementazione START.
+- L'abbonamento può essere attivato quando il proprietario decide di iniziare il mese operativo.
+- Il gate operativo viene registrato in `family-kits/beauty-wellness-v1.1/docs/STATUS.md`.
+- BUSINESS e BUSINESS PLUS non devono essere creati o sviluppati in questa fase.

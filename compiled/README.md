@@ -18,7 +18,8 @@ Quando cambia una decisione o uno standard:
 
 ## File
 
-- `CHATGPT_PROJECT_INSTRUCTIONS.md`: istruzioni del progetto ChatGPT Tretnix.
+- `CHATGPT_PROJECT_INSTRUCTIONS.md`: versione completa delle istruzioni del progetto ChatGPT Tretnix.
+- `CHATGPT_PROJECT_INSTRUCTIONS_COMPACT.md`: adattatore entro il limite di 8.000 caratteri del campo Project Instructions.
 - `LOVABLE_WORKSPACE_KNOWLEDGE.md`: regole globali del workspace Lovable.
 - `CURSOR_USER_RULES.md`: preferenze globali per Cursor Agent.
 - `CODEX_GLOBAL_AGENTS.md`: istruzioni globali da installare in `~/.codex/AGENTS.md`.
@@ -30,3 +31,11 @@ Il contesto specifico dei singoli progetti non deve essere inserito indiscrimina
 ## Procedura riutilizzabile
 
 La procedura canonica per applicare e validare modifiche non banali preparate fuori dal working tree è in `../skills/CONTROLLED_CHANGE_PACKAGE.md`. Gli adattatori sintetizzano la regola, ma non sostituiscono la skill canonica.
+
+## Adattatori specifici di progetto
+
+Gli adattatori specifici non appartengono a questa cartella globale. Vivono nel relativo family kit, per esempio:
+
+- `../family-kits/beauty-wellness-v1.1/compiled/LOVABLE_START_PROJECT_KNOWLEDGE.md`.
+
+Questi file devono essere sincronizzati nel Project Knowledge del singolo progetto e non nel Workspace Knowledge.
