@@ -91,3 +91,8 @@ For public demos that are not real businesses, use `noindex, follow` on every pu
 For prepared verticals, use the versioned files under `family-kits/` and the corresponding root `*_FAMILY.md`. Do not reconstruct design, copy, routes or acceptance criteria from chat memory.
 
 Treat `source-artifacts/**/historical-source-of-truth/` as read-only provenance. Never use it as the current baseline for edits.
+
+
+## Controlled Change Package
+
+Per modifiche non banali preparate fuori dal checkout verificato, preferisci il pacchetto `Apply` + `Validate`. Controlla SHA, branch, allowlist, hash, diff non staged, file testuali untracked e, dopo lo stage esplicito, `git diff --cached --check`; mantieni commit, push, PR, deploy e migrazioni come passaggi umani separati.

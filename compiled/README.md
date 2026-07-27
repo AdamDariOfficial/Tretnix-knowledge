@@ -25,3 +25,8 @@ Quando cambia una decisione o uno standard:
 - `CODEX_SETUP.md`: procedura di configurazione e verifica di Codex.
 
 Il contesto specifico dei singoli progetti non deve essere inserito indiscriminatamente negli adattatori globali. I gate trasversali restano globali; specifiche complete restano nei `family-kits/`; stato dettagliato e task restano nei file del progetto. Dopo il merge di una modifica canonica, sincronizzare manualmente le copie presenti nelle impostazioni degli strumenti.
+
+
+## Procedura riutilizzabile
+
+La procedura canonica per applicare e validare modifiche non banali preparate fuori dal working tree è in `../skills/CONTROLLED_CHANGE_PACKAGE.md`. Gli adattatori sintetizzano la regola, ma non sostituiscono la skill canonica.

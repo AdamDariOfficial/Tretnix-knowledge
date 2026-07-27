@@ -1,7 +1,7 @@
 # Tretnix Source Artifact Register
 
-**Versione:** 1.2
-**Aggiornato:** 26 luglio 2026
+**Versione:** 1.3
+**Aggiornato:** 27 luglio 2026
 **Stato:** operativo; development pack del 25 luglio acquisito ed estratto
 
 ---
@@ -39,6 +39,22 @@ Un nome citato in chat non costituisce acquisizione. Un artefatto è acquisito q
 | Stato verifica | archive leggibile, struttura inventariata e baseline usata per la patch esterna |
 
 La patch di governance associata deve essere applicata esclusivamente a un working tree pulito sul commit `de29f4f3bde0b4f91266505fd73d128f74d11e3f`. Il commit risultante deve essere registrato dopo il merge. I riferimenti a `9ff9546` restano storici e non descrivono più lo stato corrente di `main`.
+
+---
+
+
+
+### Controlled Change Package formalization
+
+| Campo | Valore |
+|---|---|
+| Nome logico | `tretnix-controlled-change-process-formalization.zip` |
+| Data | 27 luglio 2026 |
+| SHA-256 | `b970255efb3bd4303d5b6f4ca327800b88280dddd4588a3c74f4d414183e3e10` |
+| Contenuti importati | skill, manifest template e decisione formalizzata |
+| Destinazioni canoniche | `skills/CONTROLLED_CHANGE_PACKAGE.md`, `templates/CONTROLLED_CHANGE_PACKAGE_MANIFEST.md`, `TRX-DEC-032` |
+| ZIP binario | conservazione offline; non necessario nel repository dopo l’estrazione |
+
 
 ---
 

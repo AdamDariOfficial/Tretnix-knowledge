@@ -2,8 +2,8 @@
 
 Fonte canonica per identità, decisioni, standard tecnici, repository, procedure operative e adattatori degli strumenti Tretnix.
 
-**Versione:** 1.7
-**Aggiornato:** 26 luglio 2026
+**Versione:** 1.8
+**Aggiornato:** 27 luglio 2026
 **Stato:** operativo
 **Visibilità corrente:** repository GitHub pubblica durante il completamento dell’audit e del consolidamento Tretnix
 **Visibilità successiva:** passaggio a privata soltanto dopo completamento del ciclo, verifica delle dipendenze di accesso e nuova conferma esplicita del proprietario (`TRX-DEC-031`)
@@ -24,7 +24,7 @@ La repository conserva ciò che deve rimanere stabile e verificabile:
 - procedure di audit;
 - adattatori sintetici per gli strumenti;
 - kit di configurazione per i repository;
-- in futuro, skill riutilizzabili.
+- skill operative riutilizzabili e validate.
 
 GitHub conserva la verità versionata. Le chat aiutano a ragionare, ma non sostituiscono la documentazione canonica.
 
@@ -61,11 +61,13 @@ tretnix-knowledge/
 │       └── knowledge-validation.yml
 │
 ├── scripts/
-│   └── validate_knowledge.py
+│   ├── validate_knowledge.py
+│   └── validate_knowledge.ps1
 │
 ├── audits/
 │   ├── KNOWLEDGE_CONSOLIDATION_2026-07-26.md
-│   └── DEVELOPMENT_PACK_INGESTION_2026-07-26.md
+│   ├── DEVELOPMENT_PACK_INGESTION_2026-07-26.md
+│   └── CONTROLLED_CHANGE_PACKAGE_VALIDATION_2026-07-27.md
 │
 ├── family-kits/
 │   ├── beauty-wellness-v1.1/
@@ -86,9 +88,13 @@ tretnix-knowledge/
 │   ├── CODEX_GLOBAL_AGENTS.md
 │   └── CODEX_SETUP.md
 │
+├── skills/
+│   └── CONTROLLED_CHANGE_PACKAGE.md
+│
 ├── templates/
 │   ├── READ_ONLY_AUDIT.md
 │   ├── CONTROLLED_IMPLEMENTATION_TASK.md
+│   ├── CONTROLLED_CHANGE_PACKAGE_MANIFEST.md
 │   ├── READ_ONLY_DIFF_REVIEW.md
 │   └── project-foundation/
 │       ├── AGENTS.md
@@ -126,6 +132,7 @@ tretnix-knowledge/
 | [`CHAT_RETENTION_AND_HANDOFF.md`](./CHAT_RETENTION_AND_HANDOFF.md) | Gate per handoff e cancellazione sicura delle chat | Normativa e operativa |
 | [`SOURCE_ARTIFACT_REGISTER.md`](./SOURCE_ARTIFACT_REGISTER.md) | Registro di artefatti, checksum, ingestione e fonti residue | Operativa |
 | [`templates/READ_ONLY_AUDIT.md`](./templates/READ_ONLY_AUDIT.md) | Procedura standard di audit senza modifiche | Operativa |
+| [`skills/CONTROLLED_CHANGE_PACKAGE.md`](./skills/CONTROLLED_CHANGE_PACKAGE.md) | Applicazione e validazione controllata di modifiche esterne | Operativa e normativa |
 
 ---
 
@@ -149,14 +156,42 @@ Quando cambia una decisione o uno standard:
 
 Il file [`AGENTS.md`](./AGENTS.md) definisce i confini operativi per gli agenti che lavorano direttamente su questa repository.
 
-La validazione locale si esegue con:
+La validazione locale su Windows non richiede Python:
 
-```text
-python scripts/validate_knowledge.py
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate_knowledge.ps1
 git -c core.whitespace=cr-at-eol diff --check
 ```
 
-Il workflow `.github/workflows/knowledge-validation.yml` esegue lo stesso validatore sulle pull request e sui push a `main`. Il validatore non sostituisce la review umana: controlla struttura, link locali, JSON, manifest dei family kit, sequenza delle decisioni e file sensibili tracciati.
+Dopo lo stage, prima del commit:
+
+```powershell
+git -c core.whitespace=cr-at-eol diff --cached --check
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate_knowledge.ps1
+```
+
+Il validatore include anche i file testuali untracked, non coperti da `git diff --check`.
+
+Quando Python è disponibile, il validatore cross-platform equivalente rimane:
+
+```text
+python scripts/validate_knowledge.py
+```
+
+Il workflow `.github/workflows/knowledge-validation.yml` usa Python sulle pull request e sui push a `main`. I due validatori applicano lo stesso contratto e non sostituiscono la review umana: controllano struttura, link locali, JSON, manifest dei family kit, sequenza delle decisioni e file sensibili tracciati.
+
+
+### `skills/`
+
+Contiene procedure riutilizzabili già validate sul lavoro reale. Il Controlled Change Package separa applicazione, validazione, QA e operazioni Git/remoto tramite script PowerShell controllati.
+
+Esecuzione standard:
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\Apply-<TaskName>.ps1
+.\Validate-<TaskName>.ps1
+```
 
 ### `templates/project-foundation`
 
@@ -170,6 +205,7 @@ I template operativi condivisi includono inoltre:
 
 - `READ_ONLY_AUDIT.md`;
 - `CONTROLLED_IMPLEMENTATION_TASK.md`;
+- `CONTROLLED_CHANGE_PACKAGE_MANIFEST.md`;
 - `READ_ONLY_DIFF_REVIEW.md`.
 
 ### `project-kits/forno-lume-start`
@@ -360,12 +396,24 @@ Ogni modifica significativa deve:
 7. superare i controlli disponibili e pertinenti;
 8. essere unita solo dopo approvazione.
 
-Per questa repository, prima del commit eseguire almeno:
+Per questa repository, prima del commit eseguire almeno su Windows:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate_knowledge.ps1
+git -c core.whitespace=cr-at-eol diff --check
+git status --short
+```
+
+Dopo `git add`, ripetere il validatore ed eseguire:
+
+```powershell
+git -c core.whitespace=cr-at-eol diff --cached --check
+```
+
+Su ambienti con Python è ammesso il comando equivalente:
 
 ```text
 python scripts/validate_knowledge.py
-git -c core.whitespace=cr-at-eol diff --check
-git status --short
 ```
 
 Dichiarare soltanto controlli realmente eseguiti.

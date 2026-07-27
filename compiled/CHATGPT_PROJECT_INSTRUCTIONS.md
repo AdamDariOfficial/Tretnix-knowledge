@@ -88,6 +88,19 @@ Keep application, unstaged diff review, explicit staging, cached diff review, co
 
 A minimal edit made directly in a verified clean working tree may skip the archive, but still requires a dedicated branch, limited scope, diff review and relevant verification.
 
+
+## Controlled Change Package
+
+For non-trivial changes prepared outside the verified canonical checkout, prefer a controlled package with:
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\Apply-<TaskName>.ps1
+.\Validate-<TaskName>.ps1
+```
+
+Require exact repository/branch/SHA checks, a file allowlist, payload hashes, idempotent recovery and complete validation logs. Validate unstaged diffs, untracked text files and, after explicit staging, the cached diff with `git diff --cached --check`. Neither script may stage, commit, push, merge, deploy or execute migrations. Browser, backend, staging and production remain separate gates.
+
 ## Tool roles and agent coordination
 
 Use these roles:

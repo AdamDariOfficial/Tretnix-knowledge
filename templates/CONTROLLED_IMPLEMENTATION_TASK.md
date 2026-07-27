@@ -15,6 +15,17 @@ Record:
 
 If a required gate is missing, stop before implementation.
 
+
+## Delivery mode
+
+Choose one:
+
+- direct controlled edit in the verified working tree;
+- `git apply` patch tied to an exact archive;
+- Controlled Change Package with separate `Apply` and `Validate` scripts.
+
+Use the Controlled Change Package for non-trivial multi-file or multi-repository work prepared outside the canonical checkout. Record the target branch, allowed base SHA, allowlist, validation commands and excluded remote/database actions.
+
 ## Context
 
 Describe:
