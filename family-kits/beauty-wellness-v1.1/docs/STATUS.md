@@ -1,48 +1,57 @@
 # RITO Studio — Status
 
-**Data:** 25 luglio 2026  
-**Famiglia:** Beauty & Wellness  
-**Versione specifica:** 1.1  
-**Stato complessivo:** preparazione offline completa; implementazione non avviata
+**Data:** 27 luglio 2026
+**Famiglia:** Beauty & Wellness
+**Versione specifica:** 1.1
+**Stato complessivo:** preparazione parallela START autorizzata; implementazione in attesa dei gate di attivazione
 
 ## Gate corrente
 
 ```text
-PREPARATION_READY
+PARALLEL_PREPARATION_AUTHORIZED
 ```
 
-La specifica è pronta per essere usata quando verranno attivati gli abbonamenti, ma Lovable e Codex non devono ancora essere avviati.
+`TRX-DEC-033` autorizza RITO Studio START a procedere in parallelo alla chiusura di Tretnix e Hospitality, usando repository, chat e writer separati.
+
+Questa autorizzazione non attiva automaticamente Lovable e non autorizza BUSINESS o BUSINESS PLUS.
 
 ## Autorizzato ora
 
-- revisione dei documenti;
-- modifica delle decisioni prima dell'attivazione;
-- preparazione delle altre famiglie;
-- preparazione manuale degli asset;
-- pianificazione commerciale;
-- archiviazione del pacchetto.
+- sincronizzare ChatGPT Project Instructions e fonti Beauty;
+- sincronizzare Cursor User Rules;
+- sincronizzare Lovable Workspace Knowledge;
+- preparare e sincronizzare il Project Knowledge START;
+- attivare manualmente Lovable Pro;
+- registrare workspace, saldo, data di attivazione e rinnovo;
+- preparare il bootstrap controllato di `rito-studio-START`;
+- pianificare e avviare START dopo il completamento dei gate seguenti.
 
-## Non autorizzato ora
+## Gate mancanti prima del primo intervento Lovable
 
-- creare un progetto Lovable;
-- inviare prompt a Lovable;
-- consumare crediti intenzionalmente;
-- creare o modificare repository GitHub remoti;
-- eseguire Codex su repository ancora inesistenti;
-- pubblicare il concept;
+```text
+LOVABLE_SUBSCRIPTION_CONFIRMED
+LOVABLE_WORKSPACE_AND_BALANCE_CONFIRMED
+RITO_STUDIO_START_IMPLEMENTATION_COMMAND
+RITO_STUDIO_START_REPOSITORY_READY
+```
+
+Quando tutti i gate sono verificati, aggiornare lo stato a:
+
+```text
+IMPLEMENTATION_AUTHORIZED
+```
+
+## Non autorizzato
+
+- creare o sviluppare RITO Studio BUSINESS;
+- creare o sviluppare BUSINESS PLUS;
+- pubblicare o deployare il concept;
+- collegare un dominio;
 - abilitare database, autenticazione o integrazioni;
-- usare dati reali di un cliente.
-
-## Condizioni per passare a `IMPLEMENTATION_AUTHORIZED`
-
-1. Gli abbonamenti previsti sono stati acquistati manualmente.
-2. Sono registrate data di attivazione e data di rinnovo.
-3. Ricariche automatiche non desiderate sono disattivate.
-4. È stato scelto il workspace Lovable corretto.
-5. È stato verificato il saldo iniziale dei crediti.
-6. L'utente ha dato un nuovo comando esplicito per iniziare Beauty START.
-7. Il repository START è stato creato o ne è stata definita la procedura di sincronizzazione.
-8. I documenti 1.1 sono stati congelati come input iniziale.
+- applicare migrazioni;
+- usare dati reali di un cliente;
+- modificare gli stessi file contemporaneamente da Lovable e un altro writer;
+- reinterpretare o copiare l'identità Hospitality.
 
 ## Baseline approvata
 
@@ -50,17 +59,17 @@ La specifica è pronta per essere usata quando verranno attivati gli abbonamenti
 - Descriptor: `Beauty & Care Atelier`
 - Tagline: `La bellezza, nel suo ritmo.`
 - START: statico, one-page, senza backend
-- BUSINESS: multipagina, derivato dal commit canonico START
+- BUSINESS: multipagina, derivato dal commit canonico START e non autorizzato nella fase corrente
 - Booking START: demo o canale esterno configurato
-- Booking BUSINESS: `external`, `whatsapp`, `request` o `demo`
 - Identità: porcellana, inchiostro, borgogna; Newsreader + Manrope
 - Attribuzione: `Progettato e sviluppato da Tretnix`
+- Project Knowledge: `compiled/LOVABLE_START_PROJECT_KNOWLEDGE.md`
 
 ## Completato
 
 - posizionamento e cliente ideale;
 - scope START e BUSINESS;
-- roadmap BUSINESS PLUS e CUSTOM;
+- roadmap futura;
 - direzione visuale e motion;
 - copy START e architettura contenuti BUSINESS;
 - route e booking adapters;
@@ -72,17 +81,22 @@ La specifica è pronta per essere usata quando verranno attivati gli abbonamenti
 - prompt START e BUSINESS;
 - prompt di audit e review;
 - checklist di attivazione e freeze;
-- revisione di readiness.
+- revisione di readiness;
+- Workspace Knowledge condiviso;
+- Project Knowledge START preparato;
+- autorizzazione al parallelismo START.
 
-## Non ancora eseguito
+## Non ancora verificato o eseguito
 
-- acquisto abbonamenti;
+- conferma acquisto e rinnovo Lovable;
+- registrazione workspace e saldo iniziale;
 - verifica legale naming e dominio;
-- creazione repository;
+- creazione repository START;
+- creazione progetto Lovable START;
 - implementazione;
 - typecheck, lint, test e build;
 - browser QA e accessibilità;
-- detector o critique Impeccable;
-- audit Codex;
+- review Impeccable;
+- audit tecnico;
 - deploy;
-- freeze START o BUSINESS.
+- freeze START.

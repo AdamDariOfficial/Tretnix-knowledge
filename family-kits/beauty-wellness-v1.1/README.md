@@ -1,33 +1,40 @@
 # Tretnix — Beauty & Wellness Family
 
-**Concept portfolio:** RITO Studio  
-**Versione:** 1.1  
-**Data:** 25 luglio 2026  
-**Stato:** preparazione offline completa; implementazione bloccata fino all'attivazione degli abbonamenti
+**Concept portfolio:** RITO Studio
+**Versione:** 1.1
+**Data:** 27 luglio 2026
+**Stato:** preparazione parallela START autorizzata; implementazione subordinata ai gate di attivazione
 
-Questa cartella definisce la famiglia Beauty & Wellness prima dell'avvio di Lovable e Codex.
+Questa cartella definisce la famiglia Beauty & Wellness e il primo progetto RITO Studio START.
 
 ## Gate operativo
 
-La specifica è approvata come baseline di preparazione. Non autorizza ancora:
+`TRX-DEC-033` autorizza RITO Studio START a procedere in una corsia separata rispetto alla chiusura di Tretnix e Hospitality.
 
-- creazione del progetto Lovable;
-- consumo di crediti;
-- creazione o modifica di repository remoti;
-- attivazione di backend;
-- pubblicazione o deploy.
+Sono autorizzati:
 
-L'implementazione può iniziare soltanto dopo:
+- preparazione del Project Knowledge;
+- configurazione degli strumenti;
+- attivazione manuale dell'abbonamento;
+- bootstrap controllato della repository START;
+- implementazione START dopo il completamento dei gate registrati in `docs/STATUS.md`.
 
-1. attivazione manuale degli abbonamenti previsti;
-2. verifica del workspace e dei consumi;
-3. nuovo comando esplicito dell'utente;
-4. registrazione dell'avvio in `docs/STATUS.md`.
+Non sono autorizzati:
+
+- RITO Studio BUSINESS;
+- RITO Studio BUSINESS PLUS;
+- backend, autenticazione o booking nativo nello START;
+- dati reali di clienti;
+- pubblicazione, deploy, dominio o infrastruttura di produzione senza gate esplicito.
+
+La presenza dei prompt non costituisce autorizzazione automatica all'esecuzione.
 
 ## Repository previsti
 
 - `rito-studio-START`
 - `rito-studio-BUSINESS`
+
+`rito-studio-BUSINESS` non deve essere creato o sviluppato nella fase corrente. BUSINESS PLUS richiede una decisione separata.
 
 I nomi sono approvati come concept portfolio. Marchio, denominazione e dominio restano non verificati e non devono essere usati per un cliente reale senza controlli.
 
@@ -50,6 +57,12 @@ I nomi sono approvati come concept portfolio. Marchio, denominazione e dominio r
 - `docs/STATUS.md`
 - `docs/APPROVAL.md`
 
+## Adattatori compilati
+
+- `compiled/LOVABLE_START_PROJECT_KNOWLEDGE.md`: contenuto da sincronizzare nel Project Knowledge del solo progetto START.
+
+Workspace Knowledge e Project Knowledge non devono essere confusi: le regole condivise restano nel workspace, mentre scope, identità, route e vincoli RITO vivono nell'adattatore specifico.
+
 ## Prompt e procedure pronte
 
 - `prompts/LOVABLE_START_PROMPT.md`
@@ -61,6 +74,8 @@ I nomi sono approvati come concept portfolio. Marchio, denominazione e dominio r
 - `checklists/SUBSCRIPTION_ACTIVATION_RUNBOOK.md`
 - `checklists/START_FREEZE_CHECKLIST.md`
 - `checklists/BUSINESS_FREEZE_CHECKLIST.md`
+
+Usare il prompt START soltanto dopo i gate di `docs/STATUS.md`. Non usare il prompt BUSINESS nella fase corrente.
 
 ## Regola fondamentale
 

@@ -1,6 +1,6 @@
 # Tretnix Current State
 
-**Versione:** 1.4
+**Versione:** 1.5
 **Aggiornato:** 27 luglio 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
@@ -22,14 +22,14 @@
 | Campo | Valore |
 |---|---|
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
-| `main` verificato | `de29f4f3bde0b4f91266505fd73d128f74d11e3f` |
+| `main` verificato | `996d6b8` — merge PR #8, Controlled Change Package formalizzato |
 | Snapshot canonico ricevuto | `Tretnix-knowledge-de29f4f3.zip` |
 | Development pack | acquisito, verificato, estratto e integrato in `main` |
 | Family kit | Beauty v1.1, Professional v1.0 e Home v1.0 presenti |
 | Visibilità | pubblica temporaneamente secondo `TRX-DEC-031` |
-| Validazione knowledge | introdotta dalla patch preparata sulla baseline `de29f4f3…`; esito da registrare nella PR |
+| Validazione knowledge | PowerShell validator `PASSED` dopo il merge `996d6b8` |
 | Evidenza | `VR` per commit, archive e contenuti versionati |
-| Controlled Change Package | formalizzato in `skills/CONTROLLED_CHANGE_PACKAGE.md`; merge della branch documentale ancora richiesto |
+| Controlled Change Package | canonico in `main` da `996d6b8`; `Apply → Validate` è il metodo standard per cambi non banali esterni |
 
 La precedente fase di consolidamento è confluita in `main`. I riferimenti al branch `docs/consolidate-tretnix-state-2026-07-26` e al primo commit `9ff9546` restano nella cronologia Git e nel registro degli artefatti, ma non rappresentano più lo stato operativo corrente.
 
@@ -95,16 +95,20 @@ Servono PR, branch, commit completo, output dei controlli e report hydration per
 | Specifica | `family-kits/beauty-wellness-v1.1/` |
 | Concept | RITO Studio |
 | Primo progetto | RITO Studio START |
-| Stato | `PREPARATION_COMPLETE / IMPLEMENTATION_NOT_STARTED` |
+| Stato | `PARALLEL_PREPARATION_AUTHORIZED / IMPLEMENTATION_GATE_PENDING` |
 | Repository | non creata |
-| Implementazione autorizzata | no |
-| Evidenza | `VR` per la specifica e i gate |
+| Parallelismo START | approvato da `TRX-DEC-033` |
+| Implementazione START | subordinata a conferma abbonamento, workspace, saldo e comando esplicito |
+| BUSINESS / BUSINESS PLUS | non autorizzati |
+| Evidenza | `VR` per specifica e decisione; `HR` per configurazione manuale degli strumenti finché non registrata nel progetto |
 
-Gate mancanti:
+Gate mancanti prima del primo intervento Lovable:
 
 ```text
 LOVABLE_SUBSCRIPTION_CONFIRMED
-RITO_STUDIO_START_AUTHORIZED
+LOVABLE_WORKSPACE_AND_BALANCE_CONFIRMED
+RITO_STUDIO_START_IMPLEMENTATION_COMMAND
+RITO_STUDIO_START_REPOSITORY_READY
 ```
 
 ---

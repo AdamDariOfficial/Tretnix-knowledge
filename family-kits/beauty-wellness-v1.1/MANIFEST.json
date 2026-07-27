@@ -1,13 +1,13 @@
 {
   "package": "Tretnix Beauty & Wellness Prelaunch",
   "version": "1.1",
-  "date": "2026-07-25",
-  "status": "PREPARATION_READY",
+  "date": "2026-07-27",
+  "status": "PARALLEL_PREPARATION_AUTHORIZED",
   "files": [
     {
       "path": "README.md",
-      "size": 2284,
-      "sha256": "b81267e6e96438faa6394ac9a123caf700676a83343ccecf47c11e9cea7ecb1f"
+      "size": 3117,
+      "sha256": "fb191728665059f31814554cca3d72196aa22146ea88b7bd76099964e6062f3f"
     },
     {
       "path": "checklists/BUSINESS_FREEZE_CHECKLIST.md",
@@ -23,6 +23,11 @@
       "path": "checklists/SUBSCRIPTION_ACTIVATION_RUNBOOK.md",
       "size": 2826,
       "sha256": "065795776ed575bf0d33706817339faf0aa4f17017f856696f867a81776cdcb6"
+    },
+    {
+      "path": "compiled/LOVABLE_START_PROJECT_KNOWLEDGE.md",
+      "size": 8183,
+      "sha256": "e7367018810daf3ed6d882674b60dd942eaf7fa1d14f85832b1db35cb9c7df4a"
     },
     {
       "path": "docs/ANIMATIONS.md",
@@ -91,8 +96,8 @@
     },
     {
       "path": "docs/STATUS.md",
-      "size": 2769,
-      "sha256": "dd974066d6570dc534f53e01e081b46d113ca57a1554dc16e0b919877fa07c90"
+      "size": 3181,
+      "sha256": "0fb4662422584d70f29c5abafe9475281fe51f4b71728327bad4ebf8ba915b71"
     },
     {
       "path": "docs/TESTING.md",

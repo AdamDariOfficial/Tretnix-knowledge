@@ -24,193 +24,139 @@ After changes:
 
 1. review the diff;
 2. run available validation commands;
-3. verify the affected behavior in the browser;
-4. report changed files, checks performed, results and remaining risks.
+3. verify affected behavior in the browser;
+4. report changed files, checks, results and remaining risks.
 
-Never claim that typecheck, lint, tests, build or browser checks passed unless they were actually executed.
+Never claim that typecheck, lint, tests, build, browser, deployment or migration checks passed unless they were actually executed.
+
+### Source hierarchy
+
+Before working, inspect the repository root `AGENTS.md`, project documentation and current code.
+
+Use this precedence when instructions conflict:
+
+1. approved decisions;
+2. shared Tretnix standards;
+3. project-specific documentation and `AGENTS.md`;
+4. approved current task;
+5. behavior verified in code and deployment;
+6. previous chat context still requiring formalization.
+
+Do not treat an earlier chat, generated prompt or draft as an approved permanent decision.
 
 ## TypeScript and code quality
 
-- Use TypeScript.
-- Preserve strict type safety where supported.
-- Avoid `any`.
-- Do not suppress errors with unsafe casts.
+- Use TypeScript and preserve strict type safety where supported.
+- Avoid `any`, unsafe casts and error suppression.
 - Validate untrusted external data.
 - Handle `null`, `undefined`, loading, error and empty states explicitly.
-- Keep components focused and reusable.
+- Keep components focused; centralize repeated configuration and business information.
 - Avoid duplicated business logic.
-- Centralize repeated configuration and business information.
-- Do not add dependencies without a concrete need.
-- Do not update unrelated dependencies or lockfiles.
+- Do not add dependencies or update unrelated lockfiles without a concrete need.
 - Do not modify generated files manually unless necessary and documented.
 
 ## Responsive and accessibility
 
-- Build mobile-first.
-- Prevent unintended horizontal overflow.
+- Build mobile-first and prevent unintended horizontal overflow.
 - Verify at least 360px, 390px, 430px, 768px and desktop.
-- Ensure adequate touch targets.
-- Preserve visible keyboard focus.
-- Use semantic headings, landmarks, links, buttons and form labels.
+- Ensure adequate touch targets and visible keyboard focus.
+- Use semantic headings, landmarks, links, buttons and labels.
 - Support keyboard interaction for drawers, dialogs, lightboxes, FAQ and custom controls.
 - Respect `prefers-reduced-motion`.
-
-In editorial sections on mobile, show text before the image.
-
-Exceptions:
-
-- hero sections;
-- galleries;
-- documented visual-first components.
-
-Do not duplicate markup only to change responsive order.
+- In editorial mobile sections, show text before the image. Hero, gallery and documented visual-first components are exceptions.
+- Do not duplicate markup only to change responsive order.
 
 ## Routing and scroll
 
-- New routes open at the top.
-- Route reset is immediate, never smooth.
-- Intentional same-page anchor navigation may use smooth scrolling.
-- Preserve direct URL, refresh, browser back and browser forward behavior.
+- New routes open at the top with an immediate reset, never smooth.
+- Same-page anchors may use controlled smooth scrolling.
+- Preserve direct URL, refresh, browser Back and Forward.
 - For cross-route section links, navigate first and scroll only after the destination is mounted.
-- Do not introduce fragile timing or hard-coded offsets.
-- Do not disable or override browser scroll restoration broadly to hide a routing defect.
+- Do not use fragile timing, unexplained hard-coded offsets or broad scroll-restoration overrides.
 
 ## Navbar
 
-Verify:
-
-- initial state;
-- hide/show behavior;
-- mobile drawer;
-- active route;
-- scroll-spy;
-- cross-route links;
-- focus;
-- Escape handling;
-- body scroll lock;
-- reduced motion.
-
-Avoid flashes, jumps and layout shift.
+Verify initial state, hide/show behavior, mobile drawer, active route, scroll-spy, cross-route links, keyboard focus, Escape, body scroll lock and reduced motion. Avoid flashes, jumps and layout shift.
 
 ## Animation
 
-- Animations must feel refined, restrained and consistent.
-- Structural layout containers normally remain static.
-- Animate semantic editorial elements or small meaningful groups, not entire large sections as one heavy block.
-- Use short, controlled stagger only when it improves reading order.
+- Motion must feel refined, restrained and consistent.
+- Animate semantic editorial elements or small meaningful groups, not large structural containers.
 - Below-the-fold reveals start only when entering the viewport.
+- Use short controlled stagger only when it improves reading order.
 - Avoid flashing already-animated content during route changes.
 - Keep content visible when motion is reduced or unavailable.
-- Hero sections, galleries and approved visual-first components may use a distinct documented treatment.
-- Preserve the approved animation language between related START, BUSINESS and BUSINESS PLUS projects.
-- Technical improvements may change implementation but must preserve the approved perceived behavior and each client’s visual personality rather than copying identical timings.
+- Preserve the approved perceived motion language between related plans without copying another family’s visual identity.
 
 ## Security and Supabase
 
-- Never expose secrets.
-- Never commit `.env` files.
-- Never put service-role keys in client code.
+- Never expose secrets, commit `.env`, or put service-role keys in client code.
 - Client-side role checks are not security controls.
-- Validate authorization on the backend.
-- Review RLS for protected and client-accessible data.
-- Do not weaken RLS merely to remove a frontend error.
+- Validate authorization on the backend and review RLS for protected and client-accessible data.
+- Do not weaken RLS to hide frontend errors.
 - Apply schema changes through versioned migrations.
-- Review `SECURITY DEFINER` functions, `search_path`, parameters and privileges.
-- Review storage bucket visibility and `storage.objects` policies.
-- Do not tighten storage policies in a way that breaks intentionally public media in anonymous or incognito sessions.
+- Review `SECURITY DEFINER`, `search_path`, parameters, privileges, buckets and `storage.objects` policies.
+- Do not break intentionally public media in anonymous or incognito sessions.
 - Do not perform destructive database operations without explicit approval.
 
 ## Testing and completion
 
-Use existing repository commands. When available, run:
+Use only scripts present in the repository. When available, run typecheck, lint, tests and build.
 
-- typecheck;
-- lint;
-- tests;
-- build.
-
-Do not invent missing scripts.
-
-For affected flows verify:
-
-- happy path;
-- invalid input;
-- loading;
-- error;
-- empty state;
-- direct URL;
-- refresh;
-- back and forward;
-- responsive;
-- keyboard;
-- reduced motion;
-- console and network errors.
+For affected flows verify happy path, invalid input, loading, error, empty state, direct URL, refresh, Back/Forward, responsive behavior, keyboard, reduced motion, console errors and network errors.
 
 ## Git and scope
 
-- Keep `main` deployable.
-- Use focused branches and commits for manual development.
-- Do not work on the same files concurrently from Lovable, Codex, Cursor Agent, Claude Code or another editor.
+- Keep `main` deployable and use focused branches and commits.
+- Do not let Lovable and another editor modify overlapping files concurrently.
 - Before handoff, sync to GitHub and provide a branch or commit checkpoint.
-- A technical reviewer starts in read-only mode and does not overwrite Lovable output automatically.
+- A technical reviewer starts read-only and does not overwrite Lovable output automatically.
 - Do not change unrelated code, copy or design.
 - Do not perform deployment, DNS, production database or destructive operations without explicit approval.
 
+## Controlled changes
+
+For non-trivial changes prepared outside the canonical working tree, use:
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\Apply-<TaskName>.ps1
+.\Validate-<TaskName>.ps1
+```
+
+The package verifies repository, remote, branch, commit, working tree, allowlist and hashes; applies only approved files; supports safe idempotent resume; preserves logs and exit codes; checks staged, unstaged and untracked whitespace; and separates automated checks from browser, backend, staging and production gates.
+
+Successful validation does not authorize commit, push, migration or deploy. Manual diff review and explicit approval remain required.
+
+## Lovable authorization boundaries
+
+- Do not consume credits for exploratory or unrelated work.
+- Do not publish, deploy, connect a production domain or modify production infrastructure without explicit authorization.
+- Do not create or apply database migrations without an approved task and execution gate.
+- Do not begin excluded plans or future variants unless Project Knowledge explicitly authorizes them.
+- Preserve repository documentation and root `AGENTS.md`.
+- Stop before editing overlapping files being changed by another writer.
+
 ## Footer attribution
 
-Every Tretnix client project includes a discreet footer attribution:
+Every Tretnix client project includes:
 
 “Progettato e sviluppato da Tretnix”
 
-linked to:
+linked to `https://tretnix.com`.
 
-https://tretnix.com
-
-Only “Tretnix” needs to be linked unless the approved design says otherwise. The link remains discreet but perceivable, opens in a new tab with `target="_blank"` and `rel="noopener noreferrer"`, indicates the new-tab behavior accessibly and preserves visible keyboard focus. A restrained external-link icon such as `ArrowUpRight` is allowed; decorative icons must be hidden from assistive technology.
+Only “Tretnix” normally needs to be linked. The link is discreet but perceivable, preserves visible keyboard focus and opens in a new tab with `target="_blank"` and `rel="noopener noreferrer"` when approved by the project design.
 
 ## Demo indexing
 
-A public demo that does not represent a real business uses `noindex, follow` on every public route, including legal pages and 404. Do not publish fictional `Restaurant`, `LocalBusiness`, commercial `Organization`, address, geo, telephone, opening hours, prices, offers, reviews, ratings, reservations, `FAQPage`, `Menu`, `MenuSection` or `MenuItem` structured data. Generic page markup is allowed only when accurate and route-aware.
-
-## Project start authorization
-
-Do not create a new Lovable project, consume credits, connect or create a remote repository, publish, deploy or begin a higher plan unless the current project task explicitly authorizes that operation.
-
-`PREPARATION_COMPLETE` means that offline preparation is complete. It does not mean implementation is authorized.
-
-For `RITO Studio START`, require both:
-
-1. explicit confirmation that the Lovable subscription is active;
-2. explicit authorization to start `RITO Studio START`.
-
-Until both are present, do not create the project, use credits, create or modify remote repositories, publish or begin BUSINESS. Do not reinterpret the frozen Beauty & Wellness v1.1 specification.
+A public fictional demo uses `noindex, follow` on every public route, including legal pages and 404. Do not publish fictional local-business structured data such as address, geo, telephone, hours, prices, offers, reviews, ratings, reservations, `FAQPage`, `Menu` or similar commercial entities. Generic route-aware page metadata is allowed when accurate.
 
 ## Project-specific knowledge
 
-Workspace knowledge contains only rules shared across projects.
+Workspace Knowledge contains only shared rules.
 
-Project Knowledge must define the specific project’s:
+Project Knowledge defines purpose, target users, plan, routes, architecture, database, visual identity, motion, constraints, relation to other projects and canonical references.
 
-- purpose;
-- target users;
-- plan;
-- routes;
-- architecture;
-- database;
-- visual identity;
-- approved animations;
-- project-specific constraints;
-- relation to other projects;
-- current canonical references.
+When a project-specific rule intentionally differs from a workspace default, follow the more specific documented rule.
 
-When project-specific knowledge intentionally differs from a workspace default, follow the more specific documented project rule.
-
-## Prepared family specifications
-
-Project Knowledge for prepared concepts must be derived from the applicable versioned family kit:
-
-- Beauty & Wellness v1.1 — RITO Studio;
-- Professional Services v1.0 — QUADRA Studio;
-- Home & Local Services v1.0 — NODO Servizi.
-
-Do not mix the visual identity, copy or routes of different families. Do not infer authorization from the presence of a Lovable prompt. The current project gate and explicit user command remain required.
+The presence of a prepared prompt does not authorize execution. For RITO Studio, only START may proceed after its explicit subscription and implementation gates. BUSINESS and BUSINESS PLUS require separate approval.
