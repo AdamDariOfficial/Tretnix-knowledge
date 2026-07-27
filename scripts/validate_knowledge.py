@@ -22,6 +22,8 @@ REQUIRED_PATHS = [
     "CURRENT_STATE.md",
     "SOURCE_ARTIFACT_REGISTER.md",
     "templates/READ_ONLY_AUDIT.md",
+    "templates/CONTROLLED_CHANGE_PACKAGE_MANIFEST.md",
+    "skills/CONTROLLED_CHANGE_PACKAGE.md",
     "compiled/README.md",
 ]
 CANONICAL_METADATA_FILES = [
@@ -43,6 +45,12 @@ LOCAL_LINK_RE = re.compile(r"(?<!!)\[[^\]]*\]\(([^)]+)\)")
 DECISION_RE = re.compile(r"^## TRX-DEC-(\d{3})\b", re.MULTILINE)
 SENSITIVE_SUFFIXES = {".pem", ".key", ".p12", ".pfx"}
 SENSITIVE_NAMES = {".env", ".env.local", ".env.production", ".env.development"}
+TEXT_EXTENSIONS = {
+    ".md", ".json", ".py", ".ps1", ".psm1", ".yml", ".yaml",
+    ".txt", ".toml", ".ini", ".cfg", ".csv", ".ts", ".tsx",
+    ".js", ".jsx", ".css", ".scss", ".html", ".xml",
+}
+TEXT_NAMES = {".gitignore", ".gitattributes", ".editorconfig"}
 
 
 def fail(errors: list[str], message: str) -> None:
@@ -188,6 +196,53 @@ def validate_sensitive_tracked_files(errors: list[str]) -> None:
             fail(errors, f"historical duplicate suffix is tracked outside canonical naming: {relative.as_posix()}")
 
 
+
+def validate_git_whitespace(errors: list[str]) -> None:
+    for arguments, label in (
+        (["git", "-c", "core.whitespace=cr-at-eol", "diff", "--check"], "git diff --check"),
+        (["git", "-c", "core.whitespace=cr-at-eol", "diff", "--cached", "--check"], "git diff --cached --check"),
+    ):
+        try:
+            result = subprocess.run(arguments, cwd=ROOT, capture_output=True, text=True)
+        except OSError as exc:
+            fail(errors, f"{label} unavailable: {exc}")
+            continue
+        if result.returncode != 0:
+            detail = (result.stdout + result.stderr).strip().replace("\n", " | ")
+            fail(errors, f"{label} failed: {detail}")
+
+
+def validate_untracked_text_whitespace(errors: list[str]) -> None:
+    try:
+        result = subprocess.run(
+            ["git", "ls-files", "--others", "--exclude-standard", "-z"],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        fail(errors, f"unable to enumerate untracked files: {exc}")
+        return
+
+    for raw in result.stdout.split(b"\0"):
+        if not raw:
+            continue
+        relative = Path(raw.decode("utf-8"))
+        path = ROOT / relative
+        if not path.is_file():
+            continue
+        if path.suffix.lower() not in TEXT_EXTENSIONS and path.name.lower() not in TEXT_NAMES:
+            continue
+        try:
+            lines = path.read_text(encoding="utf-8").splitlines()
+        except UnicodeDecodeError as exc:
+            fail(errors, f"invalid UTF-8 in untracked text file: {relative} ({exc})")
+            continue
+        for line_number, line in enumerate(lines, start=1):
+            if line.endswith((" ", "\t")):
+                fail(errors, f"trailing whitespace in untracked file: {relative}:{line_number}")
+
+
 def main() -> int:
     errors: list[str] = []
     validate_required_paths(errors)
@@ -197,6 +252,8 @@ def main() -> int:
     validate_decisions(errors)
     validate_family_manifests(errors)
     validate_sensitive_tracked_files(errors)
+    validate_git_whitespace(errors)
+    validate_untracked_text_whitespace(errors)
 
     if errors:
         print("Tretnix knowledge validation: FAILED", file=sys.stderr)

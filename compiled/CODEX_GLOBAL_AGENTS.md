@@ -210,3 +210,8 @@ family-kits/home-local-services-v1.0/
 Record the version and files used. A prompt inside a kit is an approved task template, not permission to run external tools, consume credits, create repositories, push or deploy.
 
 Never use `source-artifacts/**/historical-source-of-truth/` as the current baseline. Current root decisions, standards and project-local documentation take precedence.
+
+
+## Controlled Change Package
+
+When an approved non-trivial patch is prepared outside the canonical checkout, use the repository package defined by `skills/CONTROLLED_CHANGE_PACKAGE.md`: strict `Apply`, separate `Validate`, exact allowlist and hashes, idempotent recovery, complete logs, checks for unstaged, untracked and staged whitespace, and no automatic stage, commit, push, merge, deployment or migration execution.

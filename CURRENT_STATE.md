@@ -1,7 +1,7 @@
 # Tretnix Current State
 
-**Versione:** 1.2
-**Aggiornato:** 26 luglio 2026
+**Versione:** 1.4
+**Aggiornato:** 27 luglio 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
 ---
@@ -29,6 +29,7 @@
 | Visibilità | pubblica temporaneamente secondo `TRX-DEC-031` |
 | Validazione knowledge | introdotta dalla patch preparata sulla baseline `de29f4f3…`; esito da registrare nella PR |
 | Evidenza | `VR` per commit, archive e contenuti versionati |
+| Controlled Change Package | formalizzato in `skills/CONTROLLED_CHANGE_PACKAGE.md`; merge della branch documentale ancora richiesto |
 
 La precedente fase di consolidamento è confluita in `main`. I riferimenti al branch `docs/consolidate-tretnix-state-2026-07-26` e al primo commit `9ff9546` restano nella cronologia Git e nel registro degli artefatti, ma non rappresentano più lo stato operativo corrente.
 
@@ -45,6 +46,8 @@ La precedente fase di consolidamento è confluita in `main`. I riferimenti al br
 
 Interventi ammessi: bug, regressione, sicurezza o requisito approvato.
 
+**Branch locale finale:** `fix/impeccable-final-polish`. Installazione congelata, typecheck, lint e build risultano superati dopo le correzioni browser-QA. Il browser QA conclusivo, commit, push, PR e merge restano pendenti. Evidenza: `HR` finché branch e commit finali non vengono registrati nel repository canonico.
+
 ---
 
 ## 4. Forno Lume BUSINESS
@@ -56,6 +59,8 @@ Interventi ammessi: bug, regressione, sicurezza o requisito approvato.
 | Package D | pendente e separato |
 | Stato complessivo | produzione; non ancora dichiarato completamente congelato |
 | Evidenza | `VR` + `VD` |
+
+**Branch locale finale:** `fix/impeccable-final-polish`. Installazione congelata, typecheck, lint e build risultano superati; il browser QA conclusivo, commit, push, PR e merge restano pendenti. Package D resta separato. Evidenza: `HR` fino alla registrazione del checkpoint finale.
 
 ---
 
@@ -78,6 +83,8 @@ Stato operativo riportato e ancora da riconciliare completamente con le evidenze
 - indicare il modello Codex consigliato prima di ogni incarico.
 
 Servono PR, branch, commit completo, output dei controlli e report hydration per elevare i singoli elementi da `HR` a `VR`.
+
+**Branch locale finale:** `fix/impeccable-final-polish`, derivata dal checkpoint Pass 2 già pubblicato. Installazione congelata, typecheck, lint e build risultano superati dopo le correzioni browser-QA. Restano browser QA conclusivo, commit/push della branch finale e test della migrazione Supabase in staging. Nessuna migrazione è stata applicata. Evidenza: `HR`.
 
 ---
 

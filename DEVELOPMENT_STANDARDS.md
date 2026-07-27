@@ -1,7 +1,7 @@
 # Tretnix Development Standards
 
-**Versione:** 1.6
-**Aggiornato:** 26 luglio 2026
+**Versione:** 1.7
+**Aggiornato:** 27 luglio 2026
 **Ambito:** tutti i progetti Tretnix, salvo eccezioni documentate
 
 Le parole **DEVE**, **NON DEVE**, **DOVREBBE** e **PUÒ** esprimono il livello di obbligatorietà.
@@ -1033,3 +1033,50 @@ Quando un archivio binario duplica contenuti testuali già estratti:
 - la prova di ricostruzione DEVE usare i file versionati, non la chat originale.
 
 Non cancellare la sorgente originale prima di aver verificato integrità, completezza e ricostruibilità.
+
+
+---
+
+## 27. Pacchetti di modifica controllata
+
+Per modifiche non banali preparate fuori dal working tree canonico, usare la procedura definita in [`skills/CONTROLLED_CHANGE_PACKAGE.md`](./skills/CONTROLLED_CHANGE_PACKAGE.md) e approvata da `TRX-DEC-032`.
+
+Il pacchetto DEVE separare:
+
+```text
+Apply
+Validate
+QA manuale/backend
+commit
+push
+pull request
+staging
+merge/deploy
+```
+
+### Apply
+
+Lo script di applicazione DEVE:
+
+- verificare remote, branch, commit e working tree;
+- rifiutare stage o modifiche fuori allowlist;
+- applicare soltanto payload con hash verificati;
+- supportare ripresa idempotente di stati conosciuti;
+- fermarsi senza cleanup distruttivo su uno stato inatteso;
+- non eseguire commit, push, deploy o migrazioni.
+
+### Validate
+
+Lo script di validazione DEVE:
+
+- usare soltanto comandi realmente presenti;
+- registrare output completo ed exit code;
+- produrre una matrice per tutte le repository coinvolte;
+- conservare il diff prima di ripristinare file generati pre-approvati;
+- distinguere lint semantico e formattazione;
+- eseguire il controllo whitespace del diff non staged;
+- eseguire il controllo whitespace del diff staged quando esiste uno stage;
+- controllare separatamente i file testuali untracked, che `git diff --check` non vede;
+- dichiarare esplicitamente browser, backend, staging e produzione non verificati.
+
+Il controllo `Set-ExecutionPolicy -Scope Process Bypass` è ammesso soltanto per la sessione PowerShell corrente e non deve modificare policy persistenti.

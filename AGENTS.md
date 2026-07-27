@@ -35,6 +35,7 @@ Store information according to its nature:
 - historical source snapshot → `source-artifacts/`;
 - temporary task or bug → project issue, roadmap, pull request or audit;
 - tool adapter → `compiled/`, derived from canonical documents;
+- reusable operating procedure → `skills/`;
 - reusable project instructions → `templates/` or an approved `project-kits/` directory.
 
 Do not present proposals, memory, previous chat statements or unverified reports as approved facts.
@@ -68,28 +69,52 @@ While it is public:
 
 Before a future move to private, verify access for every required tool and obtain explicit owner confirmation.
 
-## External patch requirements
+## External patch and controlled package requirements
 
-For a patch prepared outside the canonical working tree:
+For a non-trivial change prepared outside the canonical working tree, prefer the Controlled Change Package defined in `skills/CONTROLLED_CHANGE_PACKAGE.md` and `TRX-DEC-032`.
 
-- tie it to an exact commit and archive checksum;
-- require a clean working tree and a non-`main` branch before application;
-- abort on unexpected source content instead of guessing;
-- validate with `git apply --check` before applying;
-- apply without staging, committing, pushing or merging automatically;
-- test on a second clean extraction of the same archive;
-- review the resulting diff manually;
-- follow `TRX-DEC-022` and the external patch workflow in `DEVELOPMENT_STANDARDS.md`.
+Require:
+
+- an exact source commit or an explicitly closed set of allowed commits;
+- a clean or exactly resumable working-tree state;
+- a non-`main` target branch;
+- a manifest and exact file allowlist;
+- payload SHA-256 verification;
+- separate `Apply` and `Validate` scripts;
+- no automatic stage, commit, push, merge, deploy or migration execution;
+- manual review of status and diff;
+- browser/backend/staging gates reported separately.
+
+A traditional `.patch` remains valid when it is the simplest format. In that case follow `TRX-DEC-022`, tie it to an exact archive, run `git apply --check`, test it on a second pristine extraction and keep later Git checkpoints separate.
 
 ## Validation
 
 Before declaring a knowledge update ready, run:
 
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate_knowledge.ps1
+```
+
+Alternativa cross-platform quando Python è disponibile:
+
 ```text
 python scripts/validate_knowledge.py
+```
+
+Completare sempre con:
+
+```text
 git -c core.whitespace=cr-at-eol diff --check
 git status --short
 ```
+
+Dopo `git add`, prima del commit, eseguire inoltre:
+
+```text
+git -c core.whitespace=cr-at-eol diff --cached --check
+```
+
+Il validatore DEVE controllare anche i file testuali untracked, perché `git diff --check` non li include.
 
 For an external patch, also verify:
 

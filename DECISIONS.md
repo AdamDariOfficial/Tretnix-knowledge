@@ -1,7 +1,7 @@
 # Tretnix Decision Log
 
-**Versione:** 1.7
-**Aggiornato:** 26 luglio 2026
+**Versione:** 1.8
+**Aggiornato:** 27 luglio 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
 
@@ -1109,3 +1109,47 @@ Finché la repository è pubblica è vietato versionare:
 - Prima del cambio di visibilità deve essere eseguito un controllo delle dipendenze di accesso.
 - Una futura scelta di mantenerla pubblica in modo permanente richiede una nuova decisione esplicita.
 - La pubblicità temporanea non riduce i requisiti di branch, review, validazione e protezione dei dati.
+
+
+---
+
+## TRX-DEC-032 — Pacchetti controllati per applicazione e validazione
+
+**Stato:** approvata
+**Data:** 27 luglio 2026
+**Ambito:** repository Tretnix e modifiche multi-repository
+
+### Contesto
+
+Durante il ciclo Impeccable su Tretnix, Forno Lume START e Forno Lume BUSINESS, i pacchetti PowerShell separati `Apply` e `Validate` hanno protetto le baseline, rilevato stati inattesi, consentito riprese sicure e prodotto evidenza completa dei controlli.
+
+### Decisione
+
+Per modifiche non banali preparate fuori dal working tree canonico, Tretnix adotta il **Controlled Change Package**:
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\Apply-<TaskName>.ps1
+.\Validate-<TaskName>.ps1
+```
+
+Lo script `Apply` verifica repository, remote, branch, commit, working tree, allowlist e hash; applica soltanto i file approvati ed è idempotente.
+
+Lo script `Validate` esegue i comandi già definiti dal repository, conserva log ed exit code, gestisce soltanto file generati pre-approvati e distingue i gate automatici dai controlli manuali.
+
+Entrambi gli script non possono eseguire automaticamente stage, commit, push, pull request, merge, deploy o migrazioni database. Browser, backend, staging e produzione restano gate umani separati.
+
+La procedura canonica vive in:
+
+```text
+skills/CONTROLLED_CHANGE_PACKAGE.md
+```
+
+### Conseguenze
+
+- ChatGPT può preparare un pacchetto soltanto per uno scope approvato e una baseline identificabile.
+- Il pacchetto deve includere manifest, hash, allowlist, esclusioni e istruzioni di ripresa.
+- I comandi repository-specifici restano l’autorità per typecheck, lint, test e build.
+- Un formatter globale non viene usato per nascondere errori lint senza approvazione esplicita.
+- Una modifica piccola in un working tree verificato può continuare a usare il normale workflow di branch e diff.
+- Il successo dei controlli automatici non autorizza implicitamente commit, push, migrazione o deploy.
