@@ -1,6 +1,6 @@
 # Tretnix Current State
 
-**Versione:** 1.6
+**Versione:** 1.7
 **Aggiornato:** 10 agosto 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
@@ -72,6 +72,40 @@ Il deploy post-merge della baseline frozen non è stato verificato in questa chi
 Ulteriori modifiche alla baseline BUSINESS congelata richiedono un bug confermato, una regressione confermata, un problema di sicurezza o un requisito di prodotto approvato esplicitamente. Il Package D resta pendente e separato secondo `TRX-DEC-020`; questa chiusura non lo autorizza né lo annulla.
 
 Dopo il merge della presente registrazione Knowledge, Forno Lume BUSINESS PLUS può essere creato o remixato esclusivamente dal parent frozen `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`, non dalla branch di lavoro, dal commit pre-merge `3a8ffe226170adab417c3c78dba287be6d39b96f` o da baseline precedenti. Questo parent gate non modifica lo stato separato e pendente del Package D.
+
+---
+
+## 4.1 Forno Lume BUSINESS PLUS
+
+| Campo | Valore |
+|---|---|
+| Repository | `forno-lume-BUSINESS-PLUS` |
+| Repository remoto | `https://github.com/AdamDariOfficial/forno-lume-BUSINESS-PLUS.git` |
+| Branch principale | `main` |
+| Parent BUSINESS frozen | `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` |
+| Primo commit PLUS | `54751867c9bfe30a34cf5081409317e53ca0ee67` |
+| Merge bootstrap Lovable | `6dd30ec251a2c808de3692fb4e7cf43a4f10e2f6` |
+| Checkpoint bootstrap validato | `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e` |
+| Stato | `BOOTSTRAP_VALIDATED / PRODUCT_SCOPE_PENDING` |
+| Package D BUSINESS | pendente e separato; non assorbito né autorizzato dal progetto PLUS |
+| Evidenza | `VR` per lineage Git, checkpoint, working tree e validation automatizzata; browser QA e deploy non eseguiti |
+
+Il bootstrap è stato creato dal parent frozen BUSINESS richiesto. Il primo commit PLUS `54751867c9bfe30a34cf5081409317e53ca0ee67` ha come parent diretto `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`; il checkpoint corrente `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e` conserva quindi l'ancestry canonica richiesta.
+
+Il delta bootstrap rispetto al frozen BUSINESS è limitato a `package.json`, `bun.lock` e `README.md`. In `package.json`, `@Lovable.dev/vite-tanstack-config` passa da `^2.7.1` a `2.9.1`; il lockfile viene aggiornato di conseguenza e `README.md` viene aggiunto dal remix. Non risultano modifiche ai sorgenti applicativi nel delta bootstrap.
+
+Validation locale registrata il 10 agosto 2026 sul checkpoint `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e`:
+
+- `bun install --frozen-lockfile`: superato;
+- `bun run typecheck`: superato;
+- `bun run lint`: exit `0`, con `0` errori e `8` warning `react-refresh/only-export-components`;
+- `bun run build`: superato per client, SSR e Nitro Cloudflare module;
+- `src/routeTree.gen.ts`: residuo post-build classificato come solo EOL tramite `git diff --quiet --ignore-cr-at-eol`, quindi ripristinato;
+- working tree finale: pulita.
+
+Browser QA e deploy non sono stati eseguiti. Il checkpoint `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e` è quindi un bootstrap tecnico validato, non una baseline prodotto BUSINESS PLUS completata.
+
+La descrizione e il `README.md` ereditati dal remix contengono ancora wording storico START e non costituiscono la specifica attiva BUSINESS PLUS. Il Project Knowledge Lovable è stato configurato come guardrail operativo per identità PLUS, parent frozen, separazione del Package D e gate di implementazione; la specifica prodotto BUSINESS PLUS resta da definire e approvare prima di modifiche funzionali.
 
 ---
 
@@ -162,7 +196,7 @@ RITO_STUDIO_START_REPOSITORY_READY
 6. mantenere CF-6 rinviato finché non esistono asset definitivi;
 7. mantenere Forno Lume START congelato salvo scope esplicitamente approvato;
 8. mantenere Forno Lume BUSINESS congelato sulla baseline `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`;
-9. creare o remixare Forno Lume BUSINESS PLUS soltanto dal parent frozen `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`;
+9. usare Forno Lume BUSINESS PLUS dal checkpoint bootstrap validato `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e` e definire/approvare lo scope prodotto prima di qualsiasi implementazione funzionale;
 10. mantenere il Package D separato e pendente; eseguirlo soltanto con un task esplicitamente autorizzato;
 11. attivare gli abbonamenti soltanto quando deciso;
 12. avviare esclusivamente RITO Studio START dopo entrambi i gate;

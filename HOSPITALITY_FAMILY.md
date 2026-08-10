@@ -1,6 +1,6 @@
 # Tretnix Hospitality Family
 
-**Versione:** 1.1
+**Versione:** 1.2
 **Aggiornato:** 10 agosto 2026
 **Stato:** canonico per la famiglia Forno Lume
 
@@ -17,7 +17,7 @@ Forno Lume START
 ↓
 Forno Lume BUSINESS
 ↓
-futuro Forno Lume BUSINESS PLUS
+Forno Lume BUSINESS PLUS
 ```
 
 Forno Lume START e Forno Lume BUSINESS sono demo pubbliche Tretnix. Non rappresentano un ristorante realmente esistente.
@@ -91,6 +91,24 @@ post-merge deployment verification: not performed
 La baseline BUSINESS corrente è congelata su `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` per gli ambiti approvati e verificati. Ulteriori modifiche a questa baseline richiedono un bug confermato, una regressione confermata, un problema di sicurezza o un requisito di prodotto approvato esplicitamente. Il Package D resta separato e pendente secondo `TRX-DEC-020` e non è autorizzato da questa chiusura.
 
 Forno Lume BUSINESS PLUS può essere creato o remixato soltanto dal parent frozen `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`, non dalla branch finale, dal commit pre-merge `3a8ffe226170adab417c3c78dba287be6d39b96f` o da baseline precedenti.
+
+### Forno Lume BUSINESS PLUS
+
+Bootstrap tecnico verificato:
+
+```text
+frozen BUSINESS parent: 389bd1eec59fe8680cb1d6e685fac77e6c7c0df9
+first PLUS commit: 54751867c9bfe30a34cf5081409317e53ca0ee67
+remix merge commit: 6dd30ec251a2c808de3692fb4e7cf43a4f10e2f6
+validated bootstrap HEAD: bdfcb81b5c7051d20306327009bbe0a5fcf62d1e
+branch: main
+browser QA: not performed
+deployment: not performed
+```
+
+Il primo commit PLUS deriva direttamente dal frozen BUSINESS richiesto e il checkpoint `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e` conserva tale ancestry. Il remix non ha modificato i sorgenti applicativi: il delta rispetto al frozen parent è limitato a `package.json`, `bun.lock` e `README.md`. La variazione di `package.json` fissa `@Lovable.dev/vite-tanstack-config` a `2.9.1`; installazione con lockfile congelato, TypeScript, lint e build sono stati eseguiti sul checkpoint bootstrap.
+
+BUSINESS PLUS non è ancora fonte canonica per nuovi pattern e non è una baseline prodotto completata. Lo scope prodotto resta da definire e approvare. Fino a quel gate, preserva integralmente i pattern canonici START/BUSINESS pertinenti e non assorbe il Package D BUSINESS.
 
 ---
 
@@ -221,22 +239,31 @@ Il lint globale non è registrato come superato: il checkout Windows contiene CR
 
 Package D resta separato e pendente. `TRX-DEC-020` stabilisce che non è autorizzato dal completamento del Package C; la registrazione della baseline frozen del 10 agosto 2026 non ne cambia lo stato. Qualsiasi esecuzione richiede un task esplicitamente autorizzato.
 
-### BUSINESS PLUS — parent gate
+### BUSINESS PLUS — bootstrap verificato e scope pendente
 
-Dopo il merge della registrazione Knowledge della chiusura BUSINESS, è autorizzata la creazione o il remix di Forno Lume BUSINESS PLUS esclusivamente dal parent:
+Il parent gate è stato soddisfatto: il repository BUSINESS PLUS deriva dal frozen BUSINESS `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` e il primo commit PLUS `54751867c9bfe30a34cf5081409317e53ca0ee67` ha quel commit come parent diretto.
+
+Checkpoint bootstrap validato:
 
 ```text
-389bd1eec59fe8680cb1d6e685fac77e6c7c0df9
+bdfcb81b5c7051d20306327009bbe0a5fcf62d1e
 ```
 
-Non usare come parent:
+Verifiche automatizzate eseguite sul checkpoint:
 
-- `feat/forno-lume-gallery-swipe-slider`;
-- `3a8ffe226170adab417c3c78dba287be6d39b96f`;
-- una working tree intermedia;
-- una baseline BUSINESS precedente.
+- installazione Bun con lockfile congelato;
+- TypeScript `tsc --noEmit`;
+- ESLint con exit `0`, `0` errori e `8` warning `react-refresh/only-export-components`;
+- build Vite client e SSR;
+- build Nitro Cloudflare module;
+- classificazione del solo residuo `src/routeTree.gen.ts` come EOL-only e ripristino;
+- working tree finale pulita.
 
-La nuova variante deve preservare identità, palette, tipografia, atmosfera e qualità percepita della famiglia Hospitality, espandendo soltanto lo scope approvato per BUSINESS PLUS.
+Non sono stati eseguiti browser QA o deploy.
+
+La descrizione/README ereditati possono contenere wording START e non definiscono lo scope BUSINESS PLUS. La specifica prodotto PLUS deve essere definita e approvata prima di qualsiasi implementazione funzionale. La nuova variante deve preservare identità, palette, tipografia, atmosfera e qualità percepita della famiglia Hospitality, espandendo soltanto lo scope approvato per BUSINESS PLUS.
+
+Il Package D di BUSINESS resta pendente e separato secondo `TRX-DEC-020`; il bootstrap PLUS non lo autorizza, non lo annulla e non lo assorbe.
 
 ---
 
