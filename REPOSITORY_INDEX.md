@@ -1,7 +1,7 @@
 # Tretnix Repository Index
 
-**Versione:** 1.6
-**Aggiornato:** 26 luglio 2026
+**Versione:** 1.7
+**Aggiornato:** 10 agosto 2026
 **Stato dell’inventario:** completo rispetto ai quattro repository attualmente dichiarati
 
 Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit del codice.
@@ -245,11 +245,13 @@ Questi ambiti devono essere valutati indipendentemente nel repository pertinente
 | Piano | BUSINESS |
 | Repository | `https://github.com/AdamDariOfficial/forno-lume-BUSINESS.git` |
 | Deploy | `https://forno-lume-business.tretnix.com` |
-| Stato | produzione; Package A, B, B2 e C completati; Package D pendente |
+| Stato | baseline corrente approvata e congelata; Package D pendente e separato |
 | Branch principale | `main` |
-| Baseline verificata Package C | `15a8bf4de41bc1657a79f58699859a015ee7820d` |
-| Commit implementazione Package C | `f85e351` |
-| Ultimo ciclo verificato | 25 luglio 2026 — remediation controllata, merge PR #5 e verifica produzione |
+| Baseline storica Package C | `15a8bf4de41bc1657a79f58699859a015ee7820d` |
+| Baseline di chiusura frozen | `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` |
+| Commit implementazione finale | `3a8ffe226170adab417c3c78dba287be6d39b96f` |
+| Pull request finale | `#11` |
+| Ultimo ciclo verificato | 10 agosto 2026 — finalizzazione gallery/lightbox, validation locale, push, merge PR #11; deploy post-merge non verificato |
 
 ### Relazione con altri progetti
 
@@ -259,10 +261,11 @@ Deve preservarne identità e linguaggio di animazione, espandendo struttura e co
 
 ### Ruolo canonico approvato per i pattern chiusi
 
-Sulla baseline verificata del Package C, BUSINESS è fonte tecnica approvata per:
+Sulla baseline di chiusura frozen, BUSINESS è fonte tecnica approvata per i pattern chiusi e verificati:
 
 - architettura multipagina Hospitality;
 - drawer e lightbox accessibili;
+- gallery/lightbox con swipe intenzionale, fallback tramite controlli precedente/successivo e reserved indicator lane;
 - navigazione tra route, direct URL, refresh, Back e Forward;
 - route reset e scroll restoration;
 - ordine editoriale mobile senza duplicazione DOM;
@@ -271,7 +274,7 @@ Sulla baseline verificata del Package C, BUSINESS è fonte tecnica approvata per
 - JSON-LD generico e route-aware;
 - attribuzione Tretnix nel footer.
 
-Rimangono separati e non automaticamente canonici gli ambiti del Package D e qualsiasi funzionalità futura non ancora verificata.
+La baseline BUSINESS corrente è congelata su `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`. Il Package D resta separato e pendente secondo `TRX-DEC-020` e non è autorizzato da questa chiusura. Le funzionalità del successivo BUSINESS PLUS devono derivare dal parent frozen registrato senza alterare lo stato del Package D.
 
 ### Route previste
 
@@ -303,9 +306,11 @@ Rimangono separati e non automaticamente canonici gli ambiti del Package D e qua
 - micro-fix “L'incontro”: completato e unito;
 - Package B2: completato e unito;
 - Package C: completato, unito, costruito e verificato in produzione;
-- Package D: pendente e da gestire separatamente.
+- finalizzazione gallery/lightbox: completata, validata, pubblicata e unita con PR `#11`;
+- Package D: pendente, separato e non autorizzato dal completamento del Package C;
+- baseline BUSINESS frozen: `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`.
 
-La configurazione Cloudflare Pages verificata usa Bun, `bun.lock`, output `dist` e il preset Nitro `cloudflare-pages`. I dettagli sono registrati in `HOSPITALITY_FAMILY.md`.
+La configurazione Cloudflare Pages verificata durante il ciclo precedente usa Bun, `bun.lock`, output `dist` e il preset Nitro `cloudflare-pages`. I dettagli sono registrati in `HOSPITALITY_FAMILY.md`. Il deploy post-merge della baseline frozen non è stato verificato in questa chiusura.
 
 ---
 

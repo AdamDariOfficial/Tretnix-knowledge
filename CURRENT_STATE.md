@@ -1,7 +1,7 @@
 # Tretnix Current State
 
-**Versione:** 1.5
-**Aggiornato:** 27 luglio 2026
+**Versione:** 1.6
+**Aggiornato:** 10 agosto 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
 ---
@@ -54,13 +54,24 @@ Interventi ammessi: bug, regressione, sicurezza o requisito approvato.
 
 | Campo | Valore |
 |---|---|
-| Baseline Package C | `15a8bf4de41bc1657a79f58699859a015ee7820d` |
+| Repository | `forno-lume-BUSINESS` |
+| Baseline storica Package C | `15a8bf4de41bc1657a79f58699859a015ee7820d` |
+| Baseline di chiusura frozen | `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` |
+| Commit implementazione finale | `3a8ffe226170adab417c3c78dba287be6d39b96f` |
+| Pull request finale | `#11` |
+| Branch finale | `feat/forno-lume-gallery-swipe-slider` |
 | Package A, B, B2 e C | completati e uniti |
-| Package D | pendente e separato |
-| Stato complessivo | produzione; non ancora dichiarato completamente congelato |
-| Evidenza | `VR` + `VD` |
+| Package D | pendente, separato e non autorizzato dal completamento del Package C |
+| Stato complessivo | baseline corrente approvata e congelata; Package D resta separato |
+| Evidenza | `VR` per repository, commit, PR e merge; approvazione visuale del proprietario; deploy post-merge non verificato |
 
-**Branch locale finale:** `fix/impeccable-final-polish`. Installazione congelata, typecheck, lint e build risultano superati; il browser QA conclusivo, commit, push, PR e merge restano pendenti. Package D resta separato. Evidenza: `HR` fino alla registrazione del checkpoint finale.
+Chiusura registrata il 10 agosto 2026. Il candidate finale comprende la gallery/lightbox con swipe e reserved indicator lane approvati visivamente. La validation locale registrata prima del push ha confermato installazione con lockfile congelato, TypeScript, ESLint con `0` errori e `8` warning `react-refresh/only-export-components` preesistenti, build Vite client/SSR e build Nitro Cloudflare. Il commit `3a8ffe226170adab417c3c78dba287be6d39b96f` è stato pubblicato sulla branch finale e unito con PR `#11`; il merge commit risultante è `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`.
+
+Il deploy post-merge della baseline frozen non è stato verificato in questa chiusura e non va dichiarato come eseguito.
+
+Ulteriori modifiche alla baseline BUSINESS congelata richiedono un bug confermato, una regressione confermata, un problema di sicurezza o un requisito di prodotto approvato esplicitamente. Il Package D resta pendente e separato secondo `TRX-DEC-020`; questa chiusura non lo autorizza né lo annulla.
+
+Dopo il merge della presente registrazione Knowledge, Forno Lume BUSINESS PLUS può essere creato o remixato esclusivamente dal parent frozen `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`, non dalla branch di lavoro, dal commit pre-merge `3a8ffe226170adab417c3c78dba287be6d39b96f` o da baseline precedenti. Questo parent gate non modifica lo stato separato e pendente del Package D.
 
 ---
 
@@ -150,10 +161,12 @@ RITO_STUDIO_START_REPOSITORY_READY
 5. eseguire CF-2, CF-3, CF-4 e CF-5 nella sola branch `fix/impeccable-homepage-optimization` con una PR finale;
 6. mantenere CF-6 rinviato finché non esistono asset definitivi;
 7. mantenere Forno Lume START congelato salvo scope esplicitamente approvato;
-8. trattare Forno Lume BUSINESS e Package D soltanto dopo la stabilizzazione della baseline precedente;
-9. attivare gli abbonamenti soltanto quando deciso;
-10. avviare esclusivamente RITO Studio START dopo entrambi i gate;
-11. non iniziare RITO Studio BUSINESS prima del freeze START.
+8. mantenere Forno Lume BUSINESS congelato sulla baseline `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`;
+9. creare o remixare Forno Lume BUSINESS PLUS soltanto dal parent frozen `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`;
+10. mantenere il Package D separato e pendente; eseguirlo soltanto con un task esplicitamente autorizzato;
+11. attivare gli abbonamenti soltanto quando deciso;
+12. avviare esclusivamente RITO Studio START dopo entrambi i gate;
+13. non iniziare RITO Studio BUSINESS prima del freeze START.
 
 ---
 

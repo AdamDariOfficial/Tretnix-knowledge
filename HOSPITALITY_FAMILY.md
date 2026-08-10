@@ -1,7 +1,7 @@
 # Tretnix Hospitality Family
 
-**Versione:** 1.0
-**Aggiornato:** 25 luglio 2026
+**Versione:** 1.1
+**Aggiornato:** 10 agosto 2026
 **Stato:** canonico per la famiglia Forno Lume
 
 ---
@@ -52,19 +52,31 @@ d15f639267dfdd57194536154abfa1d0ff3b4542
 
 ### Forno Lume BUSINESS
 
-Baseline verificata dopo il Package C:
+Baseline storica verificata dopo il Package C:
 
 ```text
 main: 15a8bf4de41bc1657a79f58699859a015ee7820d
 implementation commit: f85e351
 pull request: #5
-production: https://forno-lume-business.tretnix.com
+production verified in that cycle: https://forno-lume-business.tretnix.com
+```
+
+Baseline finale di chiusura frozen:
+
+```text
+main: 389bd1eec59fe8680cb1d6e685fac77e6c7c0df9
+implementation commit: 3a8ffe226170adab417c3c78dba287be6d39b96f
+pull request: #11
+final branch: feat/forno-lume-gallery-swipe-slider
+visual approval: gallery swipe/lightbox + reserved indicator lane
+post-merge deployment verification: not performed
 ```
 
 È la fonte tecnica approvata, limitatamente ai pattern chiusi e verificati, per:
 
 - architettura multipagina Hospitality pubblica;
 - drawer e lightbox accessibili;
+- gallery/lightbox con swipe intenzionale, controlli precedente/successivo e reserved indicator lane;
 - focus trap, inertness, Escape, focus iniziale e focus return;
 - body scroll lock e cleanup del lifecycle;
 - route reset immediato e scroll restoration della history;
@@ -76,7 +88,9 @@ production: https://forno-lume-business.tretnix.com
 - JSON-LD non commerciale e route-aware;
 - pattern di attribuzione Tretnix nel footer.
 
-BUSINESS non è ancora congelato come repository completa: il Package D rimane separato e pendente.
+La baseline BUSINESS corrente è congelata su `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` per gli ambiti approvati e verificati. Ulteriori modifiche a questa baseline richiedono un bug confermato, una regressione confermata, un problema di sicurezza o un requisito di prodotto approvato esplicitamente. Il Package D resta separato e pendente secondo `TRX-DEC-020` e non è autorizzato da questa chiusura.
+
+Forno Lume BUSINESS PLUS può essere creato o remixato soltanto dal parent frozen `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`, non dalla branch finale, dal commit pre-merge `3a8ffe226170adab417c3c78dba287be6d39b96f` o da baseline precedenti.
 
 ---
 
@@ -203,9 +217,26 @@ Verifiche registrate:
 
 Il lint globale non è registrato come superato: il checkout Windows contiene CRLF mentre la regola Prettier attuale si aspetta LF, oltre a warning preesistenti. Non normalizzare globalmente line ending o formattazione senza task dedicato.
 
-### Package D — pendente
+### Package D — pendente e separato
 
-Deve essere gestito in una chat e in un task separati. Il completamento del Package C non autorizza modifiche del Package D.
+Package D resta separato e pendente. `TRX-DEC-020` stabilisce che non è autorizzato dal completamento del Package C; la registrazione della baseline frozen del 10 agosto 2026 non ne cambia lo stato. Qualsiasi esecuzione richiede un task esplicitamente autorizzato.
+
+### BUSINESS PLUS — parent gate
+
+Dopo il merge della registrazione Knowledge della chiusura BUSINESS, è autorizzata la creazione o il remix di Forno Lume BUSINESS PLUS esclusivamente dal parent:
+
+```text
+389bd1eec59fe8680cb1d6e685fac77e6c7c0df9
+```
+
+Non usare come parent:
+
+- `feat/forno-lume-gallery-swipe-slider`;
+- `3a8ffe226170adab417c3c78dba287be6d39b96f`;
+- una working tree intermedia;
+- una baseline BUSINESS precedente.
+
+La nuova variante deve preservare identità, palette, tipografia, atmosfera e qualità percepita della famiglia Hospitality, espandendo soltanto lo scope approvato per BUSINESS PLUS.
 
 ---
 
