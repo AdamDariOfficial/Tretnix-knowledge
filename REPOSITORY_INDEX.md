@@ -1,8 +1,8 @@
 # Tretnix Repository Index
 
-**Versione:** 1.7
+**Versione:** 1.8
 **Aggiornato:** 10 agosto 2026
-**Stato dell’inventario:** completo rispetto ai quattro repository attualmente dichiarati
+**Stato dell’inventario:** completo rispetto ai cinque repository attualmente dichiarati
 
 Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit del codice.
 
@@ -315,7 +315,67 @@ La configurazione Cloudflare Pages verificata durante il ciclo precedente usa Bu
 ---
 
 
-## 2.4 Tretnix Knowledge
+## 2.4 Forno Lume BUSINESS PLUS
+
+### Identificazione
+
+| Campo | Valore |
+|---|---|
+| Nome | `forno-lume-BUSINESS-PLUS` |
+| Categoria | sito multipagina Hospitality — bootstrap del piano superiore |
+| Piano | BUSINESS PLUS |
+| Repository | `https://github.com/AdamDariOfficial/forno-lume-BUSINESS-PLUS.git` |
+| Deploy | non eseguito |
+| Stato | bootstrap derivato dal frozen BUSINESS e validato automaticamente; scope prodotto pendente |
+| Branch principale | `main` |
+| Parent BUSINESS frozen | `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` |
+| Primo commit PLUS | `54751867c9bfe30a34cf5081409317e53ca0ee67` |
+| Merge bootstrap | `6dd30ec251a2c808de3692fb4e7cf43a4f10e2f6` |
+| Checkpoint bootstrap validato | `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e` |
+| Ultimo audit | 10 agosto 2026 — lineage, delta remix, frozen install, typecheck, lint, build e cleanup EOL verificati; browser QA/deploy non eseguiti |
+
+### Relazione con altri progetti
+
+Deriva direttamente dalla baseline frozen di Forno Lume BUSINESS `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`. Il primo commit PLUS `54751867c9bfe30a34cf5081409317e53ca0ee67` ha quel frozen SHA come parent diretto.
+
+Non deriva dal commit pre-merge gallery, da una working tree intermedia o da una baseline BUSINESS precedente.
+
+### Stato del bootstrap
+
+Il delta rispetto al frozen BUSINESS è limitato a:
+
+- `package.json`;
+- `bun.lock`;
+- `README.md`.
+
+Non risultano modifiche ai sorgenti applicativi nel remix. `package.json` fissa `@Lovable.dev/vite-tanstack-config` a `2.9.1`; il lockfile riflette il bootstrap Lovable e il README è stato aggiunto dal progetto remixato.
+
+Controlli eseguiti e superati sul checkpoint `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e`:
+
+- `bun install --frozen-lockfile`;
+- `bun run typecheck`;
+- `bun run lint` con `0` errori e `8` warning;
+- `bun run build` con build client, SSR e Nitro Cloudflare module;
+- verifica ancestry verso `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`;
+- classificazione `src/routeTree.gen.ts` come residuo EOL-only e ripristino;
+- working tree finale pulita.
+
+Browser QA e deploy non sono stati eseguiti.
+
+### Ruolo canonico
+
+BUSINESS PLUS non è ancora fonte canonica per nuovi pattern. Il checkpoint `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e` è un bootstrap tecnico validato e costituisce la base operativa iniziale per definire lo scope prodotto PLUS.
+
+Fino all'approvazione dello scope e alla successiva implementazione/verifica:
+
+- preservare i pattern canonici START/BUSINESS pertinenti;
+- non reinterpretare il README/descrizione START ereditati come specifica attiva PLUS;
+- non assorbire o riaprire il Package D BUSINESS;
+- non dichiarare browser QA, deploy o completamento prodotto.
+
+---
+
+## 2.5 Tretnix Knowledge
 
 ### Identificazione
 
@@ -367,7 +427,7 @@ Tretnix.com
 Forno Lume START
 └── baseline canonica visuale e single-page Hospitality START
     └── Forno Lume BUSINESS
-        └── futuro BUSINESS PLUS
+        └── Forno Lume BUSINESS PLUS — bootstrap `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e`
 
 Beauty & Wellness v1.1
 └── RITO Studio START
