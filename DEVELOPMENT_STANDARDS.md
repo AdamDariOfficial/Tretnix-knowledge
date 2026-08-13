@@ -1,6 +1,6 @@
 # Tretnix Development Standards
 
-**Versione:** 1.8
+**Versione:** 1.9
 **Aggiornato:** 13 agosto 2026
 **Ambito:** tutti i progetti Tretnix, salvo eccezioni documentate
 
@@ -248,6 +248,27 @@ Una nuova dipendenza DEVE:
 - essere giustificata nel report o nella PR.
 
 Non aggiornare dipendenze durante un task non correlato.
+
+### Boundary del provider infrastrutturale
+
+Il provider infrastrutturale DEVE essere trattato come una scelta di deployment e integrazione, non come parte del dominio applicativo.
+
+Quando esistono servizi proprietari concreti:
+
+- confinare SDK, binding, tipi e import proprietari negli adapter o nel composition root;
+- mantenere la logica di dominio e gli use case indipendenti dal provider quando questa separazione riduce una dipendenza reale;
+- usare contratti orientati allo scopo, non wrapper generici del provider;
+- preservare semantica di sicurezza, consistenza e failure handling attraverso il boundary;
+- documentare quali parti restano intenzionalmente provider-specifiche.
+
+NON DEVE:
+
+- essere costruito un layer multi-cloud speculativo;
+- essere introdotto un adapter per un provider non utilizzato soltanto per simmetria;
+- essere aggiunto un framework di dependency injection senza un bisogno concreto;
+- essere eseguito un refactor di portabilità durante un debugging attivo se non è necessario alla causa o alla correzione.
+
+Un cambio di provider richiede un task separato con piano dati, sicurezza, cutover, rollback e regression check.
 
 ---
 

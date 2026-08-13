@@ -84,7 +84,15 @@ For public demos that are not real businesses, use `noindex, follow` on every pu
 - Keep one writer and create a Git checkpoint before handoff.
 - Record decisions, status, tasks and source artifacts in their canonical files before a chat is deleted.
 - Report handoff claims as unverified until reconciled with commit, PR or execution evidence.
-- For `RITO Studio START`, do not call Lovable or start BUSINESS without the two approved gates.
+- For RITO Studio, do not infer a higher-plan authorization from START. Historical START gates remain evidence, while current work follows the explicit plan-specific gate and repository documentation.
+
+## Infrastructure provider boundaries
+
+Choose infrastructure by project fit. Cloudflare, Supabase/PostgreSQL and future dedicated or self-hosted infrastructure are implementation providers, not part of the application/domain contract.
+
+Keep concrete provider-specific SDKs, bindings and runtime types near infrastructure adapters or the composition boundary when that separation solves a real dependency. Do not build speculative multi-cloud layers or alternate-provider adapters without a concrete requirement.
+
+RITO Studio BUSINESS PLUS currently uses Cloudflare for its live/staging architecture. This does not make Cloudflare mandatory for Forno Lume or future Tretnix projects.
 
 ## Family kits and historical sources
 

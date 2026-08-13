@@ -111,6 +111,14 @@ For Cursor and Codex:
 - do not edit unrelated files;
 - do not bypass existing validation or security controls.
 
+## Infrastructure provider boundaries
+
+Choose infrastructure by project fit. Cloudflare, Supabase/PostgreSQL and future dedicated or self-hosted infrastructure are implementation providers, not part of the application/domain contract.
+
+Keep concrete provider-specific SDKs, bindings and runtime types near infrastructure adapters or the composition boundary when that separation solves a real dependency. Do not build speculative multi-cloud layers or alternate-provider adapters without a concrete requirement.
+
+RITO Studio BUSINESS PLUS currently uses Cloudflare for its live/staging architecture. This does not make Cloudflare mandatory for Forno Lume or future Tretnix projects.
+
 ## Current portfolio rules
 
 Hospitality and Beauty & Wellness are separate product families. Reuse proven technical and operational patterns, but do not copy visual identity between families.

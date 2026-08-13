@@ -1,7 +1,7 @@
 # Tretnix Master Context
 
-**Versione:** 1.5
-**Aggiornato:** 26 luglio 2026
+**Versione:** 1.6
+**Aggiornato:** 13 agosto 2026
 **Stato:** canonico
 
 ---
@@ -212,20 +212,33 @@ Possibili impieghi:
 
 Non deve essere acquistato o introdotto soltanto per duplicare ciò che Codex e il workflow attuale svolgono adeguatamente.
 
-### Supabase / Lovable Cloud — backend
+### Backend e provider infrastrutturali
 
-Rappresentano:
+Tretnix non adotta un unico provider backend obbligatorio per tutti i progetti. La scelta dipende dal fit reale del prodotto.
 
-- database;
-- autenticazione;
-- autorizzazione;
-- storage;
-- trigger;
-- funzioni;
-- Row Level Security;
-- dati applicativi.
+Provider e stack possibili includono, quando pertinenti:
 
-Nessun agente deve indebolire il backend solo per eliminare un errore visibile nel frontend.
+- Supabase/PostgreSQL per database relazionale, Auth, RLS, storage e realtime gestiti;
+- Cloudflare Workers, D1, Durable Objects e servizi collegati per workload edge/serverless e realtime coordinato;
+- infrastruttura dedicata o self-hosted soltanto quando operatività, controllo o costi la giustificano.
+
+Il provider è infrastruttura interna, non identità pubblica del prodotto. L'architettura preferita separa:
+
+```text
+UI / routes
+↓
+application use cases
+↓
+domain + purpose-specific contracts
+↓
+infrastructure adapters / composition
+↓
+provider
+```
+
+RITO Studio BUSINESS PLUS usa attualmente Cloudflare per il fit del backend live e del realtime senza polling. Questa scelta non obbliga Forno Lume o futuri clienti allo stesso provider.
+
+Non introdurre astrazioni multi-provider speculative. Isolare soltanto dipendenze proprietarie concrete e mantenere equivalenti i confini di sicurezza. Nessun agente deve indebolire autenticazione, autorizzazione, RLS quando presente, CSRF, rate limiting o persistenza solo per eliminare un errore visibile nel frontend.
 
 ---
 
@@ -449,7 +462,7 @@ Il primo verticale operativo è Food & Hospitality.
 
 La mappa corrente comprende inoltre:
 
-- Beauty & Wellness, con specifica `v1.1` completa in `family-kits/beauty-wellness-v1.1/` e primo progetto `RITO Studio START` non implementato;
+- Beauty & Wellness, con specifica `v1.1` completa in `family-kits/beauty-wellness-v1.1/` e lineage reale `RITO Studio START → BUSINESS → BUSINESS PLUS`; BUSINESS PLUS è autorizzato in staging con gate auth/realtime/E2E ancora aperti e produzione non autorizzata;
 - Professional Services, con specifica `v1.0` completa in `family-kits/professional-services-v1.0/` e concept `QUADRA Studio`;
 - Home & Local Services, con specifica `v1.0` completa in `family-kits/home-local-services-v1.0/` e concept `NODO Servizi`.
 

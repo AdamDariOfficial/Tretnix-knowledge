@@ -1,7 +1,7 @@
 # Tretnix Current State
 
-**Versione:** 1.7
-**Aggiornato:** 10 agosto 2026
+**Versione:** 1.8
+**Aggiornato:** 13 agosto 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
 ---
@@ -133,28 +133,25 @@ Servono PR, branch, commit completo, output dei controlli e report hydration per
 
 ---
 
-## 6. Beauty & Wellness
+## 6. Beauty & Wellness / RITO Studio — stato corrente
 
 | Campo | Valore |
 |---|---|
-| Specifica | `family-kits/beauty-wellness-v1.1/` |
-| Concept | RITO Studio |
-| Primo progetto | RITO Studio START |
-| Stato | `PARALLEL_PREPARATION_AUTHORIZED / IMPLEMENTATION_GATE_PENDING` |
-| Repository | non creata |
-| Parallelismo START | approvato da `TRX-DEC-033` |
-| Implementazione START | subordinata a conferma abbonamento, workspace, saldo e comando esplicito |
-| BUSINESS / BUSINESS PLUS | non autorizzati |
-| Evidenza | `VR` per specifica e decisione; `HR` per configurazione manuale degli strumenti finché non registrata nel progetto |
+| Specifica famiglia | `family-kits/beauty-wellness-v1.1/` |
+| START | `AdamDariOfficial/rito-studio-START`, `main` verificato a `34c13cd78255b7ac009533790329cada74ae9d8a` |
+| BUSINESS | `AdamDariOfficial/rito-studio-BUSINESS`, `main` verificato a `b95a63c6127d2bc1dd396d74b2dd25f87b952226` |
+| BUSINESS PLUS | `AdamDariOfficial/rito-studio-BUSINESS-PLUS`, remote `main` verificato a `eba1a2a91fd3a531b4a4667d038b631758d0a664` |
+| Working branch PLUS riportata | `feat/rito-business-plus-complete` con delta controllato ancora non integrato |
+| Backend live PLUS | staging Cloudflare con D1 + Durable Objects + rate limiting + Native RITO AdminAuth |
+| Auth staging | login nativo diretto raggiungibile; rifiuto credenziali non valide nel ramo normale; credenziale corretta ancora rifiutata, sessione non certificata |
+| E2E live | `/consulenza` → D1 → admin realtime/reconnect ancora da chiudere con evidenza diretta |
+| Produzione PLUS | `NOT AUTHORIZED` |
+| Evidenza | `VR` per repository e HEAD remoti; evidenza operatore/staging da formalizzare nel repository PLUS prima della chiusura |
+| Lineage/freeze reconciliation | Il candidate PLUS registra `START_FROZEN_34C13CD` e `BUSINESS_FROZEN_B95A63C`; i documenti locali dei due parent contengono ancora registrazioni precedenti non pienamente allineate. La riconciliazione documentale dei parent resta pendente e non blocca il debugging PLUS già autorizzato. |
 
-Gate mancanti prima del primo intervento Lovable:
+`TRX-DEC-033` descrive il gate storico di avvio START del 27 luglio. Lo stato reale successivo di START, BUSINESS e BUSINESS PLUS lo ha superato; non deve essere usato per ribloccare retroattivamente il lavoro PLUS esplicitamente autorizzato. Il dettaglio operativo resta nei documenti del repository RITO BUSINESS PLUS.
 
-```text
-LOVABLE_SUBSCRIPTION_CONFIRMED
-LOVABLE_WORKSPACE_AND_BALANCE_CONFIRMED
-RITO_STUDIO_START_IMPLEMENTATION_COMMAND
-RITO_STUDIO_START_REPOSITORY_READY
-```
+La scelta Cloudflare è provider-specifica per il fit corrente e segue `TRX-DEC-035`; non costituisce un vincolo per l'intera famiglia Beauty & Wellness.
 
 ---
 
@@ -199,8 +196,9 @@ RITO_STUDIO_START_REPOSITORY_READY
 9. usare Forno Lume BUSINESS PLUS dal checkpoint bootstrap validato `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e` e definire/approvare lo scope prodotto prima di qualsiasi implementazione funzionale;
 10. mantenere il Package D separato e pendente; eseguirlo soltanto con un task esplicitamente autorizzato;
 11. attivare gli abbonamenti soltanto quando deciso;
-12. avviare esclusivamente RITO Studio START dopo entrambi i gate;
-13. non iniziare RITO Studio BUSINESS prima del freeze START.
+12. mantenere RITO Studio START e BUSINESS sulle rispettive baseline verificate salvo task approvati;
+13. proseguire RITO Studio BUSINESS PLUS soltanto nel perimetro autorizzato per chiudere Native AdminAuth, `/consulenza` live e realtime E2E; produzione non autorizzata;
+14. eseguire il boundary hardening del provider soltanto dopo una baseline PLUS funzionante, come gate separato.
 
 ---
 
