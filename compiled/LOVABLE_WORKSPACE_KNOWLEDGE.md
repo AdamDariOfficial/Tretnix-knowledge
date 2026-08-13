@@ -160,3 +160,21 @@ Project Knowledge defines purpose, target users, plan, routes, architecture, dat
 When a project-specific rule intentionally differs from a workspace default, follow the more specific documented rule.
 
 The presence of a prepared prompt does not authorize execution. For RITO Studio, only START may proceed after its explicit subscription and implementation gates. BUSINESS and BUSINESS PLUS require separate approval.
+
+## UX/UI quality
+
+For user-facing work, treat `UX_UI_QUALITY_SYSTEM.md` as the shared Tretnix UX/UI quality contract when available.
+
+Before calling UI work complete:
+
+- preserve the approved project and family identity;
+- use intentional spacing, typography, color, radius and elevation systems;
+- prefer semantic tokens for repeated functional meaning;
+- keep equivalent components and applicable states consistent;
+- distinguish functional correctness from design-system consistency and visual craft;
+- review full-page rhythm, alignment and repeated patterns when the surface extends beyond one viewport;
+- evaluate Tretnix AI-slop signals contextually rather than applying generic SaaS aesthetics;
+- respect mobile-first, accessibility and reduced motion;
+- do not claim visual polish passed without the required visual QA.
+
+External UI reviewers are advisory evidence sources, not the source of truth.

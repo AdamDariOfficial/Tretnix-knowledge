@@ -1,7 +1,7 @@
 # Tretnix Decision Log
 
-**Versione:** 1.9
-**Aggiornato:** 27 luglio 2026
+**Versione:** 1.10
+**Aggiornato:** 13 agosto 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
 
@@ -1199,3 +1199,47 @@ Il lavoro deve usare repository, branch, chat e writer separati. Nessun agente p
 - L'abbonamento può essere attivato quando il proprietario decide di iniziare il mese operativo.
 - Il gate operativo viene registrato in `family-kits/beauty-wellness-v1.1/docs/STATUS.md`.
 - BUSINESS e BUSINESS PLUS non devono essere creati o sviluppati in questa fase.
+
+---
+
+## TRX-DEC-034 — UX/UI Quality System come standard trasversale
+
+**Stato:** approvata
+**Data:** 13 agosto 2026
+**Ambito:** tutti i progetti Tretnix
+
+### Contesto
+
+I cicli di polish precedenti hanno dimostrato che correttezza tecnica, responsive e accessibilità non garantiscono da soli spacing coerente, gerarchia visuale, consistenza dei componenti o assenza di AI slop.
+
+In particolare, un reviewer esterno può non rilevare difetti percettivi reali se tali difetti non sono descritti da un contratto Tretnix sufficientemente preciso e verificabile.
+
+### Decisione
+
+Adottare [`UX_UI_QUALITY_SYSTEM.md`](./UX_UI_QUALITY_SYSTEM.md) come standard condiviso per:
+
+- foundations e disciplina del design system;
+- visual consistency e precisione;
+- spacing, typography, alignment, token e component states;
+- interaction, feedback e overlay hierarchy;
+- pattern specializzati applicabili;
+- segnali contestuali di AI slop;
+- visual QA e full-page traversal;
+- distinzione tra correttezza, consistenza e craft.
+
+Il sistema distingue `MUST`, `SHOULD`, `CONDITIONAL`, `SIGNAL` e `REFERENCE_ONLY`.
+
+La qualità condivisa NON autorizza l'appiattimento dell'identità cliente. Palette, font, art direction, composizione, fotografia, densità e personalità restano specifiche quando intenzionali.
+
+Impeccable, UX Engine o altri reviewer esterni possono produrre evidenza e finding, ma non sostituiscono lo standard Tretnix né il gate visuale.
+
+### Conseguenze
+
+- I nuovi progetti non banali definiscono un Project Design System Contract, anche come sezione di documentazione già esistente.
+- I repository esistenti passano prima da audit read-only secondo `TRX-DEC-009`.
+- Le baseline congelate non vengono riaperte automaticamente.
+- Il polish visuale viene distinto dal solo functional/browser QA.
+- Spacing e valori visuali ripetuti devono essere valutabili rispetto a scale e token intenzionali.
+- Gli adapter degli strumenti ricevono una sintesi, non una copia integrale del documento.
+- Non creare 63 documenti separati per i pattern: il registro resta consolidato nel documento canonico.
+- Una skill UX/UI dedicata verrà valutata solo dopo pilot reali su superfici `Persuade` e `Operate`.

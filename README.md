@@ -2,8 +2,8 @@
 
 Fonte canonica per identità, decisioni, standard tecnici, repository, procedure operative e adattatori degli strumenti Tretnix.
 
-**Versione:** 1.8
-**Aggiornato:** 27 luglio 2026
+**Versione:** 1.9
+**Aggiornato:** 13 agosto 2026
 **Stato:** operativo
 **Visibilità corrente:** repository GitHub pubblica durante il completamento dell’audit e del consolidamento Tretnix
 **Visibilità successiva:** passaggio a privata soltanto dopo completamento del ciclo, verifica delle dipendenze di accesso e nuova conferma esplicita del proprietario (`TRX-DEC-031`)
@@ -44,6 +44,7 @@ tretnix-knowledge/
 ├── AGENTS.md
 ├── TRETNIX_MASTER_CONTEXT.md
 ├── DEVELOPMENT_STANDARDS.md
+├── UX_UI_QUALITY_SYSTEM.md
 ├── DECISIONS.md
 ├── REPOSITORY_INDEX.md
 ├── HOSPITALITY_FAMILY.md
@@ -121,6 +122,7 @@ tretnix-knowledge/
 |---|---|---|
 | [`TRETNIX_MASTER_CONTEXT.md`](./TRETNIX_MASTER_CONTEXT.md) | Contesto aziendale e operativo complessivo | Descrittiva |
 | [`DEVELOPMENT_STANDARDS.md`](./DEVELOPMENT_STANDARDS.md) | Regole tecniche trasversali | Normativa |
+| [`UX_UI_QUALITY_SYSTEM.md`](./UX_UI_QUALITY_SYSTEM.md) | Standard UX/UI, consistenza visuale, anti-AI-slop e Visual QA | Normativa |
 | [`DECISIONS.md`](./DECISIONS.md) | Decisioni approvate e motivazioni | Normativa |
 | [`REPOSITORY_INDEX.md`](./REPOSITORY_INDEX.md) | Inventario e ruolo dei progetti | Descrittiva |
 | [`HOSPITALITY_FAMILY.md`](./HOSPITALITY_FAMILY.md) | Contratto, policy e baseline verificate della famiglia Hospitality | Normativa e descrittiva |

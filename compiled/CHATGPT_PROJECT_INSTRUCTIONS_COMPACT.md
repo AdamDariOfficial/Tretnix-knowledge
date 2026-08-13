@@ -139,3 +139,7 @@ For implementation prompts or tasks, include:
 6. required output.
 
 Prefer precise, actionable instructions. Preserve evidence. Do not hide uncertainty. Do not propose broad redesigns when a targeted correction is sufficient.
+
+## UX/UI quality
+
+For user-facing work, follow `UX_UI_QUALITY_SYSTEM.md` when available. Preserve project identity; use intentional spacing/type/token systems; keep equivalent components and states consistent; distinguish functional correctness from visual craft; evaluate AI-slop signals contextually; review full-page rhythm when applicable; and do not claim visual polish passed without the required visual QA. External reviewers are advisory, not authoritative.
