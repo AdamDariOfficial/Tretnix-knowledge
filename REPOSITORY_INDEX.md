@@ -1,8 +1,8 @@
 # Tretnix Repository Index
 
-**Versione:** 1.8
-**Aggiornato:** 10 agosto 2026
-**Stato dell’inventario:** completo rispetto ai cinque repository attualmente dichiarati
+**Versione:** 1.9
+**Aggiornato:** 13 agosto 2026
+**Stato dell’inventario:** completo rispetto agli otto repository attualmente dichiarati
 
 Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit del codice.
 
@@ -375,7 +375,79 @@ Fino all'approvazione dello scope e alla successiva implementazione/verifica:
 
 ---
 
-## 2.5 Tretnix Knowledge
+## 2.5 RITO Studio START
+
+### Identificazione
+
+| Campo | Valore |
+|---|---|
+| Nome | `rito-studio-START` |
+| Categoria | sito Beauty & Wellness START |
+| Piano | START |
+| Repository | `https://github.com/AdamDariOfficial/rito-studio-START.git` |
+| Deploy | non riconciliato in questa revisione Knowledge |
+| Stato | implementato; `main` verificato; freeze `34c13cd…` riportato dal candidate PLUS, con status locale START ancora da riallineare |
+| Branch principale | `main` |
+| Commit verificato | `34c13cd78255b7ac009533790329cada74ae9d8a` |
+| Ultima verifica repository | 13 agosto 2026 |
+
+### Ruolo nel lineage
+
+Fonte di riferimento Beauty & Wellness START per il lineage corrente. Il candidate PLUS registra `34c13cd…` come parent frozen, ma `docs/STATUS.md` del repository START conserva ancora una registrazione precedente non allineata; non promuovere questo stato a fonte canonica trasversale definitiva finché la riconciliazione locale non è chiusa.
+
+---
+
+## 2.6 RITO Studio BUSINESS
+
+### Identificazione
+
+| Campo | Valore |
+|---|---|
+| Nome | `rito-studio-BUSINESS` |
+| Categoria | sito multipagina Beauty & Wellness |
+| Piano | BUSINESS |
+| Repository | `https://github.com/AdamDariOfficial/rito-studio-BUSINESS.git` |
+| Deploy | non riconciliato in questa revisione Knowledge |
+| Stato | implementato; `main` verificato; freeze `b95a63c…` riportato dal candidate PLUS, con documentazione parent da riallineare |
+| Branch principale | `main` |
+| Commit verificato | `b95a63c6127d2bc1dd396d74b2dd25f87b952226` |
+| Ultima verifica repository | 13 agosto 2026 |
+
+### Ruolo nel lineage
+
+Fonte di riferimento Beauty & Wellness BUSINESS e parent del candidate BUSINESS PLUS. Il candidate PLUS registra `b95a63c…` come frozen; la documentazione BUSINESS contiene ancora evidenza precedente che non dichiara quel freeze nello stesso pass. Preservare le differenze visuali intenzionali rispetto ad Hospitality e chiudere la riconciliazione parent prima di promuovere lo stato a canonico trasversale definitivo.
+
+---
+
+## 2.7 RITO Studio BUSINESS PLUS
+
+### Identificazione
+
+| Campo | Valore |
+|---|---|
+| Nome | `rito-studio-BUSINESS-PLUS` |
+| Categoria | sito + consultation workflow + mini-admin Beauty & Wellness |
+| Piano | BUSINESS PLUS |
+| Repository | `https://github.com/AdamDariOfficial/rito-studio-BUSINESS-PLUS.git` |
+| Produzione | non autorizzata |
+| Staging | backend live Cloudflare attivo; chiusura E2E pendente |
+| Branch principale remota | `main` |
+| Commit remoto verificato | `eba1a2a91fd3a531b4a4667d038b631758d0a664` |
+| Working branch riportata | `feat/rito-business-plus-complete` con delta controllato non ancora integrato |
+| Stato auth | Native RITO AdminAuth in debugging: ramo di rifiuto normale verificato, login valido/sessione non ancora certificati |
+| Ultima riconciliazione | 13 agosto 2026 |
+
+### Architettura corrente
+
+Il candidate live usa Cloudflare Workers, D1, Durable Objects/Hibernation WebSocket, rate limiting e secrets. D1 è la fonte persistente; il realtime è una notifica separata e non deve determinare retroattivamente il fallimento di una scrittura già committata.
+
+Cloudflare è un provider infrastrutturale scelto per il fit di questo progetto, non un requisito del dominio Beauty & Wellness. Prima del freeze finale, dopo la chiusura funzionale, è previsto un gate separato di provider-boundary hardening secondo `TRX-DEC-035`.
+
+BUSINESS PLUS non è ancora fonte canonica trasversale per Native AdminAuth o realtime finché login/session/logout, WebSocket authorization e `/consulenza` → D1 → realtime/reconnect non sono chiusi con evidenza.
+
+---
+
+## 2.8 Tretnix Knowledge
 
 ### Identificazione
 
@@ -388,11 +460,11 @@ Fino all'approvazione dello scope e alla successiva implementazione/verifica:
 | Deploy | non applicabile |
 | Stato | operativo |
 | Branch principale | `main` |
-| Commit canonico verificato | `de29f4f3bde0b4f91266505fd73d128f74d11e3f` |
-| Snapshot usato per la patch esterna | `Tretnix-knowledge-de29f4f3.zip` |
-| SHA-256 snapshot | `3cf34a6f145a1834d211f65917950dc92e940f259d7585f16342d1bb00730032` |
+| Baseline `main` verificata prima di questa riconciliazione | `693216537eb1b88b563cabbf5fd140fa58572ce9` |
+| Snapshot storico usato per la patch di governance del 26 luglio | `Tretnix-knowledge-de29f4f3.zip` |
+| SHA-256 snapshot storico | `3cf34a6f145a1834d211f65917950dc92e940f259d7585f16342d1bb00730032` |
 | Commit della patch di governance | da registrare dopo merge |
-| Ultima revisione | 26 luglio 2026 — baseline post-ingestione e preparazione governance/validazione |
+| Ultima revisione | 13 agosto 2026 — riconciliazione provider/RITO preparata sulla baseline `693216537eb1b88b563cabbf5fd140fa58572ce9`; nuovo commit canonico da registrare soltanto dopo review e merge |
 
 ### Ruolo canonico
 
@@ -430,9 +502,9 @@ Forno Lume START
         └── Forno Lume BUSINESS PLUS — bootstrap `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e`
 
 Beauty & Wellness v1.1
-└── RITO Studio START
-    └── pianificato, non implementato e privo di repository
-        └── RITO Studio BUSINESS dopo freeze START
+└── RITO Studio START — `34c13cd78255b7ac009533790329cada74ae9d8a`
+    └── RITO Studio BUSINESS — `b95a63c6127d2bc1dd396d74b2dd25f87b952226`
+        └── RITO Studio BUSINESS PLUS — remote `main` `eba1a2a91fd3a531b4a4667d038b631758d0a664`, live staging/E2E in progress
 
 Professional Services v1.0
 └── QUADRA Studio START
@@ -459,6 +531,9 @@ Home & Local Services v1.0
 | Motion e reveal editoriali Hospitality | `forno-lume-START` | canonico per il comportamento percepito |
 | Navbar Hospitality | `forno-lume-START` | canonico per il comportamento percepito |
 | Responsive Hospitality | `forno-lume-START` | canonico |
+| Qualità visuale Beauty & Wellness START | `rito-studio-START` | candidato di riferimento; riconciliazione parent status pendente |
+| Architettura multipagina Beauty & Wellness | `rito-studio-BUSINESS` | candidato di riferimento; riconciliazione parent status pendente |
+| Native AdminAuth + realtime BUSINESS PLUS | `rito-studio-BUSINESS-PLUS` | candidate in staging; non canonico finché E2E/security gate restano aperti |
 | Architettura multipagina Hospitality | `forno-lume-BUSINESS` | canonico per i pattern verificati fino al Package C |
 | Routing, history e scroll multipagina | `forno-lume-BUSINESS` | canonico per il pattern verificato |
 | Drawer e lightbox accessibili | `forno-lume-BUSINESS` | canonico per il pattern verificato |
@@ -478,19 +553,7 @@ Home & Local Services v1.0
 
 Questa sezione registra nomi e gate senza descrivere risorse remote inesistenti.
 
-## 5.1 RITO Studio
-
-| Campo | START | BUSINESS |
-|---|---|---|
-| Verticale | Beauty & Wellness | Beauty & Wellness |
-| Repository previsto | `rito-studio-START` | `rito-studio-BUSINESS` |
-| Stato | `PREPARATION_COMPLETE / IMPLEMENTATION_NOT_STARTED` | bloccato fino al freeze START |
-| Repository reale | non creata | non creata |
-| Specifica | `family-kits/beauty-wellness-v1.1/` | stessa famiglia, contratto START → BUSINESS |
-
-Gate START: abbonamento Lovable confermato e autorizzazione esplicita a `RITO Studio START`, oltre al runbook operativo.
-
-## 5.2 QUADRA Studio
+## 5.1 QUADRA Studio
 
 | Campo | START | BUSINESS |
 |---|---|---|
@@ -500,7 +563,7 @@ Gate START: abbonamento Lovable confermato e autorizzazione esplicita a `RITO St
 | Repository reale | non creata | non creata |
 | Specifica | `family-kits/professional-services-v1.0/` | stessa famiglia, contratto START → BUSINESS |
 
-## 5.3 NODO Servizi
+## 5.2 NODO Servizi
 
 | Campo | START | BUSINESS |
 |---|---|---|
@@ -516,16 +579,14 @@ Per tutti i progetti: nessun URL, branch, commit, deploy, test o verifica viene 
 
 # 6. Ordine operativo aggiornato
 
-1. applicare, validare e unire la patch Tretnix Knowledge preparata sulla baseline `de29f4f3…`;
-2. sincronizzare `main`, registrare il nuovo commit canonico ed eseguire la prova di ricostruzione senza chat;
-3. riconciliare CF-1 con PR, merge commit e verifiche nel repository `tretnix`;
-4. investigare `data-tsd-source` in sola lettura;
-5. eseguire CF-2, CF-3, CF-4 e CF-5 nella sola branch `fix/impeccable-homepage-optimization`, con un writer e una PR finale;
-6. mantenere CF-6 rinviato finché non esistono asset definitivi;
-7. mantenere `forno-lume-START` congelato salvo scope approvato e trattare BUSINESS/Package D soltanto dopo la stabilizzazione precedente;
-8. avviare esclusivamente `RITO Studio START` dopo entrambi i gate;
-9. non iniziare RITO Studio BUSINESS prima del freeze START;
-10. aggiornare il registro dei pattern canonici soltanto quando nuovi pattern vengono verificati.
+1. mantenere le baseline frozen già chiuse e non riaprire scope senza requisito approvato;
+2. proseguire RITO Studio BUSINESS PLUS sul perimetro autorizzato, chiudendo prima il bug Native AdminAuth e poi l'E2E `/consulenza` → D1 → realtime/reconnect;
+3. mantenere produzione RITO BUSINESS PLUS non autorizzata fino ai gate espliciti;
+4. dopo una baseline RITO PLUS funzionante, eseguire un gate separato di `Infrastructure Provider Boundary Hardening` senza cambiare comportamento;
+5. riconciliare nei documenti progetto e Knowledge soltanto evidenze realmente ottenute;
+6. mantenere Forno Lume START e BUSINESS congelati e Forno Lume BUSINESS PLUS nel proprio lifecycle separato;
+7. scegliere il provider infrastrutturale dei nuovi progetti per fit, senza imporre Cloudflare, Supabase o self-hosting come default universale;
+8. aggiornare il registro dei pattern canonici soltanto quando nuovi pattern vengono verificati.
 
 Le vulnerabilità critiche o alte rilevate devono essere segnalate immediatamente e prioritarizzate.
 

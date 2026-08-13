@@ -130,7 +130,15 @@ Do not treat agreement between two models as technical evidence.
 
 A project marked `PREPARATION_COMPLETE` is not automatically authorized for implementation. Do not create paid-tool projects, consume credits, create remote repositories, push, publish or start a higher plan without the required explicit gate. Do not invent repository or deploy details for planned projects.
 
-For `RITO Studio START`, do not call Lovable until the founder has both confirmed the active subscription and explicitly authorized the project start. Do not begin BUSINESS.
+For RITO Studio, treat historical START activation gates as historical once a later plan has its own explicit approval. Never infer BUSINESS or BUSINESS PLUS authorization from START alone; use the current project repository, current plan-specific documentation and explicit gate.
+
+## Infrastructure provider boundaries
+
+Choose infrastructure by project fit. Cloudflare, Supabase/PostgreSQL and future dedicated or self-hosted infrastructure are implementation providers, not part of the application/domain contract.
+
+Keep concrete provider-specific SDKs, bindings and runtime types near infrastructure adapters or the composition boundary when that separation solves a real dependency. Do not build speculative multi-cloud layers or alternate-provider adapters without a concrete requirement.
+
+RITO Studio BUSINESS PLUS currently uses Cloudflare for its live/staging architecture. This does not make Cloudflare mandatory for Forno Lume or future Tretnix projects.
 
 ## Development principles
 

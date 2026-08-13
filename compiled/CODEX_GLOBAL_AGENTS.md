@@ -90,9 +90,17 @@ Before modifying files, verify that the task provides:
 
 Do not create paid-tool projects, consume credits, create remote repositories, push, publish, deploy or begin a higher plan unless explicitly authorized by the current task.
 
-If the task concerns `RITO Studio START`, require both Lovable gates recorded in the approved task. Do not begin BUSINESS.
+For RITO Studio, historical START activation gates do not block a later plan that has its own explicit approval. Never infer BUSINESS or BUSINESS PLUS authorization from START; verify the current plan-specific repository documentation and gate before editing.
 
 The model recommendation is recorded by ChatGPT before assignment. It does not expand Codex permissions or scope.
+
+## Infrastructure provider boundaries
+
+Choose infrastructure by project fit. Cloudflare, Supabase/PostgreSQL and future dedicated or self-hosted infrastructure are implementation providers, not part of the application/domain contract.
+
+Keep concrete provider-specific SDKs, bindings and runtime types near infrastructure adapters or the composition boundary when that separation solves a real dependency. Do not build speculative multi-cloud layers or alternate-provider adapters without a concrete requirement.
+
+RITO Studio BUSINESS PLUS currently uses Cloudflare for its live/staging architecture. This does not make Cloudflare mandatory for Forno Lume or future Tretnix projects.
 
 ## Scope control
 

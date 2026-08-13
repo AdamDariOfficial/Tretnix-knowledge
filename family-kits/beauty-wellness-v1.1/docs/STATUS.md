@@ -1,11 +1,31 @@
 # RITO Studio — Status
 
-**Data:** 27 luglio 2026
+**Data:** 13 agosto 2026
 **Famiglia:** Beauty & Wellness
 **Versione specifica:** 1.1
-**Stato complessivo:** preparazione parallela START autorizzata; implementazione in attesa dei gate di attivazione
+**Stato complessivo:** lineage RITO START/BUSINESS implementato; BUSINESS PLUS autorizzato in staging; auth/realtime/E2E e riconciliazione documentale parent ancora aperti; produzione PLUS non autorizzata
 
-## Gate corrente
+## Riconciliazione corrente — 13 agosto 2026
+
+```text
+RITO_START_REPOSITORY_REAL
+RITO_BUSINESS_REPOSITORY_REAL
+RITO_BUSINESS_PLUS_REPOSITORY_REAL
+BUSINESS_PLUS_AUTHORIZED
+BUSINESS_PLUS_STAGING_ACTIVE
+NATIVE_ADMIN_AUTH_DEBUGGING
+CONSULTATION_LIVE_E2E_PENDING
+PRODUCTION_PLUS_NOT_AUTHORIZED
+PARENT_STATUS_RECONCILIATION_PENDING
+```
+
+Il candidate BUSINESS PLUS registra i parent `34c13cd78255b7ac009533790329cada74ae9d8a` e `b95a63c6127d2bc1dd396d74b2dd25f87b952226` come freeze del lineage corrente. I documenti locali START/BUSINESS contengono ancora registrazioni precedenti non completamente allineate; questo gap deve essere corretto nei parent con task separati e non viene nascosto dalla Knowledge.
+
+Lo stato dettagliato del lavoro PLUS vive nel repository `rito-studio-BUSINESS-PLUS`; questo file resta un indice della famiglia.
+
+## Snapshot storico del gate START — 27 luglio 2026
+
+Le sezioni storiche sottostanti descrivono il gate di avvio originario e vengono preservate come evidenza. Non rappresentano il gate operativo corrente e non annullano le autorizzazioni successive di BUSINESS o BUSINESS PLUS.
 
 ```text
 PARALLEL_PREPARATION_AUTHORIZED

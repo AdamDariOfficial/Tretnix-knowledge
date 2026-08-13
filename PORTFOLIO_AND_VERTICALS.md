@@ -1,7 +1,7 @@
 # Tretnix Portfolio and Verticals
 
-**Versione:** 1.1
-**Aggiornato:** 26 luglio 2026
+**Versione:** 1.2
+**Aggiornato:** 13 agosto 2026
 **Stato:** canonico per portfolio, lifecycle e gate; le specifiche complete sono nei documenti e family kit dedicati
 
 ---
@@ -53,7 +53,7 @@ Regole:
 | Verticale | Concept | Specifica | Progetti | Stato |
 |---|---|---|---|---|
 | Food & Hospitality | Forno Lume | `HOSPITALITY_FAMILY.md` | START; BUSINESS | START congelato; BUSINESS verificato fino al Package C; Package D separato |
-| Beauty & Wellness | RITO Studio | `family-kits/beauty-wellness-v1.1/` | START; BUSINESS | preparazione completa; implementazione non iniziata |
+| Beauty & Wellness | RITO Studio | `family-kits/beauty-wellness-v1.1/` | START; BUSINESS; BUSINESS PLUS | START e BUSINESS implementati; BUSINESS PLUS autorizzato in staging, auth/realtime/E2E pendenti; produzione non autorizzata |
 | Professional Services | QUADRA Studio | `family-kits/professional-services-v1.0/` | START; BUSINESS | preparazione completa; implementazione non iniziata |
 | Home & Local Services | NODO Servizi | `family-kits/home-local-services-v1.0/` | START; BUSINESS | preparazione completa; implementazione non iniziata |
 
@@ -86,21 +86,31 @@ HOSPITALITY_FAMILY.md
 | Concept | `RITO Studio` |
 | Descriptor | `Beauty & Care Atelier` |
 | Tagline | `La bellezza, nel suo ritmo.` |
-| START previsto | `rito-studio-START` |
-| BUSINESS previsto | `rito-studio-BUSINESS` |
-| Primo deliverable | RITO Studio START |
+| START reale | `rito-studio-START` · `main@34c13cd78255b7ac009533790329cada74ae9d8a` |
+| BUSINESS reale | `rito-studio-BUSINESS` · `main@b95a63c6127d2bc1dd396d74b2dd25f87b952226` |
+| BUSINESS PLUS reale | `rito-studio-BUSINESS-PLUS` · remote `main@eba1a2a91fd3a531b4a4667d038b631758d0a664` + working candidate su `feat/rito-business-plus-complete` |
+| Stato PLUS | staging Cloudflare; Native RITO AdminAuth in debugging; `/consulenza` → D1 → realtime/reconnect non ancora certificato; produzione non autorizzata |
 
-Evoluzione:
+Lineage corrente:
 
 ```text
-sito → prenotazioni → clienti → pacchetti/fidelity → gestionale
+RITO Studio START
+→ RITO Studio BUSINESS
+→ RITO Studio BUSINESS PLUS
 ```
+
+Il candidate PLUS registra `START_FROZEN_34C13CD` e `BUSINESS_FROZEN_B95A63C`. I documenti locali dei due parent non sono ancora completamente allineati a queste dichiarazioni più recenti; la riconciliazione documentale parent deve essere chiusa prima di trattare tali freeze come stato canonico trasversale definitivo.
+
+L'evoluzione futura verso prenotazioni, clienti, pacchetti/fidelity o gestionale resta separata e richiede scope e gate propri; non è implicata dal consultation inbox del BUSINESS PLUS corrente.
 
 Fonti:
 
 ```text
 BEAUTY_WELLNESS_FAMILY.md
 family-kits/beauty-wellness-v1.1/
+CURRENT_STATE.md
+REPOSITORY_INDEX.md
+repository RITO del piano interessato
 ```
 
 ---
@@ -253,4 +263,4 @@ Una famiglia è indipendente dalle chat quando:
 - task residui trasferiti fuori dalle chat;
 - una nuova sessione ricostruisce correttamente il lavoro dai file.
 
-Beauty, Professional e Home soddisfano il criterio documentale dopo il merge di questa integrazione. L'implementazione resta non autorizzata finché i rispettivi gate non vengono soddisfatti.
+Beauty, Professional e Home soddisfano il criterio documentale della rispettiva specifica. Per Beauty & Wellness i gate iniziali sono stati superati dal lineage RITO reale e lo stato corrente è quello dei repository e di `CURRENT_STATE.md`; per Professional Services e Home & Local Services l'implementazione resta non autorizzata finché i rispettivi gate non vengono soddisfatti.

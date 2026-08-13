@@ -1,6 +1,6 @@
 # Tretnix Decision Log
 
-**Versione:** 1.10
+**Versione:** 1.11
 **Aggiornato:** 13 agosto 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
@@ -1243,3 +1243,40 @@ Impeccable, UX Engine o altri reviewer esterni possono produrre evidenza e findi
 - Gli adapter degli strumenti ricevono una sintesi, non una copia integrale del documento.
 - Non creare 63 documenti separati per i pattern: il registro resta consolidato nel documento canonico.
 - Una skill UX/UI dedicata verrà valutata solo dopo pilot reali su superfici `Persuade` e `Operate`.
+
+---
+
+## TRX-DEC-035 — Provider infrastrutturale per fit e boundary anti-lock-in
+
+**Stato:** approvata
+**Data:** 12 agosto 2026
+**Ambito:** tutti i backend e le infrastrutture Tretnix
+
+### Contesto
+
+RITO Studio BUSINESS PLUS usa attualmente Cloudflare Workers, D1, Durable Objects, Hibernation WebSocket, secrets e rate limiting per un backend condiviso con realtime senza polling. La scelta risponde al fit del progetto corrente e non deve trasformarsi in una dipendenza concettuale obbligatoria per tutti i prodotti Tretnix.
+
+### Decisione
+
+Tretnix seleziona il provider infrastrutturale per fit del singolo progetto, considerando requisiti funzionali, sicurezza, operatività, costi, capacità, portabilità e competenze disponibili.
+
+Cloudflare è il provider infrastrutturale corrente di RITO Studio BUSINESS PLUS, ma non è parte del contratto applicativo o di dominio e non diventa automaticamente lo standard obbligatorio per Forno Lume o per futuri clienti.
+
+Le dipendenze proprietarie devono essere confinate ai boundary infrastrutturali o di composizione. La logica applicativa e di dominio deve dipendere, quando esiste un bisogno concreto, da contratti orientati allo scopo come repository, realtime publisher, rate limiter o altri port equivalenti, non direttamente da tipi o binding proprietari del provider.
+
+### Regole
+
+- `cloudflare:workers`, `D1Database`, Durable Objects, binding di rate limit e primitive analoghe devono restare vicini agli adapter o al composition root.
+- Non creare adapter multi-provider, dependency injection framework o astrazioni speculative senza un secondo provider reale o un requisito concreto.
+- Non riscrivere un backend stabile soltanto per ottenere portabilità teorica.
+- Una migrazione di provider è un task separato, con export/migrazione dati, equivalenza di sicurezza, osservabilità, rollback e regression test espliciti.
+- Non mescolare un refactor anti-lock-in con il debugging di un bug attivo, salvo che il boundary sia causa necessaria del difetto.
+- La sostituzione del provider non deve indebolire autenticazione, autorizzazione, protezione CSRF, rate limiting, persistenza, audit o semantica di successo degli use case.
+- Self-hosting, server dedicati o colocation possono essere valutati in futuro quando esiste una motivazione operativa o economica concreta; non sono il default implicito della produzione cliente.
+
+### Conseguenze
+
+- RITO Studio BUSINESS PLUS continua sullo stack Cloudflare corrente fino alla chiusura dei gate auth/realtime/E2E autorizzati.
+- Prima del freeze finale di RITO BUSINESS PLUS deve essere eseguito un piccolo gate di `Infrastructure Provider Boundary Hardening`, dopo aver ottenuto una baseline funzionante, senza redesign o cambio di comportamento.
+- I nuovi progetti riusano pattern tecnici verificati soltanto quando pertinenti; la scelta infrastrutturale e l'identità visuale restano decisioni separate.
+- La portabilità viene ottenuta soprattutto mantenendo puliti i confini applicazione/infrastruttura, non costruendo anticipatamente implementazioni per provider non utilizzati.

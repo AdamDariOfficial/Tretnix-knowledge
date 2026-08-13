@@ -1,7 +1,7 @@
 # Tretnix Beauty & Wellness Family
 
-**Versione:** 1.1
-**Aggiornato:** 26 luglio 2026
+**Versione:** 1.2
+**Aggiornato:** 13 agosto 2026
 **Stato:** canonico per governance e indice; specifica completa acquisita in `family-kits/beauty-wellness-v1.1/`
 
 ---
@@ -23,7 +23,7 @@ Non duplicare o ricostruire da memoria i dettagli presenti nel family kit. In ca
 
 ---
 
-## 2. Baseline approvata
+## 2. Baseline approvata e lineage corrente
 
 | Campo | Valore |
 |---|---|
@@ -31,14 +31,13 @@ Non duplicare o ricostruire da memoria i dettagli presenti nel family kit. In ca
 | Concept portfolio | `RITO Studio` |
 | Descriptor | `Beauty & Care Atelier` |
 | Tagline | `La bellezza, nel suo ritmo.` |
-| Versione | `1.1` |
-| Data approvazione | 25 luglio 2026 |
-| Stato preparazione | `PREPARATION_COMPLETE` |
-| Stato implementazione | `IMPLEMENTATION_NOT_STARTED` |
-| Primo progetto | `RITO Studio START` |
-| Repository previsto START | `rito-studio-START` |
-| Repository previsto BUSINESS | `rito-studio-BUSINESS` |
-| Repository realmente creati | nessuno al momento della baseline |
+| Specifica famiglia | `v1.1`, approvata 25 luglio 2026 |
+| RITO START | repository reale; `main` verificato a `34c13cd78255b7ac009533790329cada74ae9d8a` |
+| RITO BUSINESS | repository reale; `main` verificato a `b95a63c6127d2bc1dd396d74b2dd25f87b952226` |
+| RITO BUSINESS PLUS | repository reale; remote `main` verificato a `eba1a2a91fd3a531b4a4667d038b631758d0a664`; sviluppo/live staging successivi ancora da integrare |
+| Stato famiglia | START e BUSINESS implementati; BUSINESS PLUS esplicitamente autorizzato e in chiusura tecnica/staging; freeze del lineage riportato dal candidate PLUS, con allineamento documentale dei parent ancora pendente |
+
+La specifica Beauty & Wellness v1.1 continua a governare identità, design e principi della famiglia. Il dettaglio dello stato di ciascun progetto vive nel relativo repository e in `CURRENT_STATE.md`; non ricostruirlo da questa baseline storica.
 
 Naming e dominio del concept non risultano verificati per l'uso con un cliente reale.
 
@@ -221,16 +220,30 @@ La demo deve dichiarare il proprio stato e non trasmettere dati. Il copy approva
 
 ---
 
-## 9. Gate operativo
+## 9. Lifecycle operativo corrente
 
-Prima di qualsiasi chiamata a Lovable devono essere presenti entrambi:
+Il gate Lovable originario per avviare RITO Studio START è storico ed è stato soddisfatto/superato dal lineage reale successivo. Non deve essere interpretato come blocco corrente di START, BUSINESS o del BUSINESS PLUS separatamente autorizzato.
+
+Per il lavoro corrente:
+
+- preservare la specifica Beauty & Wellness v1.1 e le baseline verificate;
+- usare i documenti del repository RITO BUSINESS PLUS per scope, sicurezza, live backend e gate di staging;
+- trattare le dichiarazioni di freeze dei parent come evidenza da riallineare nei rispettivi repository prima di promuoverle a stato canonico trasversale definitivo;
+- non estendere automaticamente lo scope PLUS a CRM, pagamenti, agenda o altre funzionalità non approvate;
+- non autorizzare produzione per inferenza;
+- mantenere Cloudflare come provider del candidate corrente senza trasformarlo in dipendenza di dominio o standard obbligatorio della famiglia;
+- completare debugging ed E2E prima del successivo boundary-hardening architetturale.
+
+### Gate storico START — soddisfatto e preservato come evidenza
+
+Il gate originario richiedeva, prima della prima chiamata a Lovable:
 
 ```text
 LOVABLE_SUBSCRIPTION_CONFIRMED
 RITO_STUDIO_START_AUTHORIZED
 ```
 
-Inoltre, prima dell'effettiva build devono essere completati i controlli del runbook:
+Il runbook richiedeva inoltre:
 
 - piano e rinnovo registrati;
 - workspace corretto;
@@ -243,7 +256,7 @@ Inoltre, prima dell'effettiva build devono essere completati i controlli del run
 - prompt START revisionato;
 - backend, auth, database e upload confermati fuori scope.
 
-Finché i due gate espliciti mancano, è vietato:
+Finché quei gate mancavano, era vietato:
 
 - creare il progetto Lovable;
 - consumare crediti;
@@ -252,12 +265,14 @@ Finché i due gate espliciti mancano, è vietato:
 - iniziare BUSINESS;
 - reinterpretare la specifica.
 
-Runbook e checklist:
+Runbook e checklist storici:
 
 ```text
 family-kits/beauty-wellness-v1.1/checklists/SUBSCRIPTION_ACTIVATION_RUNBOOK.md
 operations/development-launch-2026-07-25/SUBSCRIPTION_AND_FIRST_BUILD_CHECKLIST.md
 ```
+
+Queste condizioni restano evidenza del processo di avvio e non vengono cancellate dalla progressione successiva del prodotto. Lo stato corrente è quello registrato in `CURRENT_STATE.md` e nei repository RITO.
 
 ---
 

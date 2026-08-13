@@ -88,7 +88,15 @@ Verify initial state, hide/show behavior, mobile drawer, active route, scroll-sp
 - Keep content visible when motion is reduced or unavailable.
 - Preserve the approved perceived motion language between related plans without copying another family’s visual identity.
 
-## Security and Supabase
+## Security and backend providers
+
+Choose the backend/provider by project fit. Cloudflare, Supabase/PostgreSQL and future dedicated or self-hosted infrastructure are internal implementation choices, not product identity.
+
+Keep concrete provider-specific bindings and SDKs at infrastructure/composition boundaries when the project architecture requires it. Do not create speculative multi-provider layers or switch providers without an approved task.
+
+RITO Studio BUSINESS PLUS currently uses Cloudflare for its live/staging architecture. This does not establish Cloudflare as the default for other Tretnix projects.
+
+When Supabase is used:
 
 - Never expose secrets, commit `.env`, or put service-role keys in client code.
 - Client-side role checks are not security controls.
@@ -159,7 +167,7 @@ Project Knowledge defines purpose, target users, plan, routes, architecture, dat
 
 When a project-specific rule intentionally differs from a workspace default, follow the more specific documented rule.
 
-The presence of a prepared prompt does not authorize execution. For RITO Studio, only START may proceed after its explicit subscription and implementation gates. BUSINESS and BUSINESS PLUS require separate approval.
+The presence of a prepared prompt does not authorize execution. RITO START, BUSINESS and BUSINESS PLUS use separate plan-specific gates; historical START activation text does not block a later plan that has been explicitly authorized.
 
 ## UX/UI quality
 
