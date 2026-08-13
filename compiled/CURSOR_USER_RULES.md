@@ -96,3 +96,21 @@ Treat `source-artifacts/**/historical-source-of-truth/` as read-only provenance.
 ## Controlled Change Package
 
 Per modifiche non banali preparate fuori dal checkout verificato, preferisci il pacchetto `Apply` + `Validate`. Controlla SHA, branch, allowlist, hash, diff non staged, file testuali untracked e, dopo lo stage esplicito, `git diff --cached --check`; mantieni commit, push, PR, deploy e migrazioni come passaggi umani separati.
+
+## UX/UI quality
+
+For user-facing work, treat `UX_UI_QUALITY_SYSTEM.md` as the shared Tretnix UX/UI quality contract when available.
+
+Before calling UI work complete:
+
+- preserve the approved project and family identity;
+- use intentional spacing, typography, color, radius and elevation systems;
+- prefer semantic tokens for repeated functional meaning;
+- keep equivalent components and applicable states consistent;
+- distinguish functional correctness from design-system consistency and visual craft;
+- review full-page rhythm, alignment and repeated patterns when the surface extends beyond one viewport;
+- evaluate Tretnix AI-slop signals contextually rather than applying generic SaaS aesthetics;
+- respect mobile-first, accessibility and reduced motion;
+- do not claim visual polish passed without the required visual QA.
+
+External UI reviewers are advisory evidence sources, not the source of truth.

@@ -1,7 +1,7 @@
 # Tretnix Development Standards
 
-**Versione:** 1.7
-**Aggiornato:** 27 luglio 2026
+**Versione:** 1.8
+**Aggiornato:** 13 agosto 2026
 **Ambito:** tutti i progetti Tretnix, salvo eccezioni documentate
 
 Le parole **DEVE**, **NON DEVE**, **DOVREBBE** e **PUÒ** esprimono il livello di obbligatorietà.
@@ -1080,3 +1080,25 @@ Lo script di validazione DEVE:
 - dichiarare esplicitamente browser, backend, staging e produzione non verificati.
 
 Il controllo `Set-ExecutionPolicy -Scope Process Bypass` è ammesso soltanto per la sessione PowerShell corrente e non deve modificare policy persistenti.
+
+---
+
+## 28. Qualità UX/UI e craft visuale
+
+Le superfici utente DEVONO rispettare [`UX_UI_QUALITY_SYSTEM.md`](./UX_UI_QUALITY_SYSTEM.md) quando applicabile.
+
+La correttezza tecnica non è sufficiente per dichiarare completato il polish visuale. Per una superficie destinata a baseline, consegna o freeze distinguere:
+
+```text
+UI correctness
+design-system consistency
+visual craft
+```
+
+Spacing, typography, component states, alignment, token discipline, visual hierarchy e segnali di AI slop devono essere valutati secondo il sistema UX/UI condiviso.
+
+Una review visuale significativa DEVE considerare l'intera superficie o una traversal equivalente quando il primo viewport non è sufficiente.
+
+Le regole condivise NON DEVONO appiattire palette, font, art direction, composizione, fotografia, densità o personalità del cliente.
+
+Impeccable o altri reviewer esterni sono fonti di evidenza opzionali e non sostituiscono i controlli Tretnix richiesti.

@@ -1,7 +1,7 @@
 # Tretnix Source Artifact Register
 
-**Versione:** 1.3
-**Aggiornato:** 27 luglio 2026
+**Versione:** 1.4
+**Aggiornato:** 13 agosto 2026
 **Stato:** operativo; development pack del 25 luglio acquisito ed estratto
 
 ---
@@ -261,3 +261,24 @@ Per ogni nuovo pacchetto:
 9. aggiornare documenti canonici e adattatori;
 10. validare link, checksum e diff;
 11. unire tramite pull request.
+
+---
+
+## 11. Riferimenti UX/UI esterni acquisiti
+
+### Designmotion — Design System Blueprint e pattern library
+
+| Campo | Valore |
+|---|---|
+| Data di acquisizione/analisi | 13 agosto 2026 |
+| Artefatto ricevuto | `design-system-blueprint.pdf` |
+| Nome logico | `Designmotion Design System Blueprint` |
+| Pagine | `11` |
+| SHA-256 osservato | `9da396915dccfb6588dc391fc99055571170d2024c4f377479703879ad654df5` |
+| Pattern pubblici analizzati | `63` |
+| Contenuto importato | principi derivati e classificazione Tretnix, non copia del materiale esterno |
+| Destinazione canonica derivata | `UX_UI_QUALITY_SYSTEM.md` |
+| Autorità | riferimento esterno; non fonte canonica autonoma |
+| PDF binario | non versionato da questo package; conservare una copia offline se serve provenienza futura |
+
+Il Blueprint e i pattern sono stati usati come input di confronto. Le regole Tretnix risultanti sono state adattate alle decisioni esistenti, in particolare alla preservazione dell'identità cliente e alla selezione canonica pattern-per-pattern.
