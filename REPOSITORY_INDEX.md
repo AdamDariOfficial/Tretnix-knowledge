@@ -1,7 +1,7 @@
 # Tretnix Repository Index
 
-**Versione:** 1.9
-**Aggiornato:** 13 agosto 2026
+**Versione:** 2.0
+**Aggiornato:** 28 agosto 2026
 **Stato dell’inventario:** completo rispetto agli otto repository attualmente dichiarati
 
 Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit del codice.
@@ -132,16 +132,17 @@ Questi aspetti richiedono audit.
 | Piano | START |
 | Repository | `https://github.com/AdamDariOfficial/forno-lume-START.git` |
 | Deploy | `https://forno-lume.tretnix.com` |
-| Stato | chiuso, verificato e congelato |
+| Stato | chiuso e congelato sulla baseline finale |
 | Branch principale | `main` |
-| Baseline di chiusura | `d15f639267dfdd57194536154abfa1d0ff3b4542` |
-| Ultimo audit | 18 luglio 2026 — ciclo completo di audit, remediation e chiusura tecnica |
+| Baseline tecnica storica | `d15f639267dfdd57194536154abfa1d0ff3b4542` |
+| Baseline sorgente frozen corrente | `a817903923c1bbfe177d8b59e70a4aa1137b7ab1` |
+| Commit final polish | `0a104d7525644fca5f594d7092b574b8f3997f79` |
+| Pull request finale | `#14` |
+| Ultimo ciclo | 28 agosto 2026 — final polish, validation locale riportata, browser QA approvato dal proprietario, merge PR #14; deploy post-merge della nuova baseline non verificato |
 
 ### Relazione con altri progetti
 
-È il progetto originale della famiglia Forno Lume.
-
-Forno Lume BUSINESS deriva da questo progetto.
+È il progetto originale della famiglia Forno Lume e la fonte visuale/percepita START. Forno Lume BUSINESS deriva storicamente da questo progetto e riceve i miglioramenti START soltanto quando applicabili al proprio contratto multipagina.
 
 ### Ruolo canonico approvato
 
@@ -150,11 +151,14 @@ Baseline canonica per:
 - qualità visuale Hospitality;
 - qualità di tipografia e palette Hospitality;
 - struttura premium single-page START;
-- qualità responsive;
+- qualità responsive e transizioni tablet/desktop;
 - comportamento percepito della navbar;
-- sobrietà delle interazioni;
-- linguaggio del movimento;
-- reveal editoriali sotto la fold.
+- sobrietà delle interazioni e hover;
+- linguaggio del movimento e reduced motion;
+- reveal editoriali sotto la fold;
+- trattamento consent-gated della mappa e review surface opzionale con dati reali in produzione.
+
+Gli esatti breakpoint o dettagli di implementazione restano project-specific e non devono essere copiati in BUSINESS senza verificare densità, routing e composizione.
 
 ### Identità nota
 
@@ -164,45 +168,16 @@ Baseline canonica per:
 - stile caldo, elegante e artigianale;
 - non deve essere trasformato in un design SaaS generico.
 
-I valori tecnici esatti devono essere verificati nel codice e documentati nel futuro design system del progetto.
+### Chiusura corrente
 
-### Chiusura verificata
+- baseline sorgente frozen `a817903923c1bbfe177d8b59e70a4aa1137b7ab1`;
+- PR finale `#14` unita su `main`;
+- commit implementazione `0a104d7525644fca5f594d7092b574b8f3997f79`;
+- validation locale riportata: typecheck, lint con `0` errori e `6` warning Fast Refresh preesistenti, build client/SSR/Nitro, `git diff --check` e whitespace con exit `0`;
+- browser QA finale approvato dal proprietario prima del merge;
+- deploy post-merge della baseline `a817903...`: non verificato in questa riconciliazione.
 
-- completato;
-- rimediato;
-- tecnicamente chiuso sulla baseline `d15f639267dfdd57194536154abfa1d0ff3b4542`;
-- verificato in produzione dal proprietario del progetto;
-- documentato;
-- congelato.
-
-Ulteriori modifiche sorgente richiedono:
-
-- un bug confermato;
-- una regressione confermata;
-- un problema di sicurezza;
-- un requisito di prodotto approvato esplicitamente.
-
-La presenza di backlog non autorizza pulizia opzionale.
-
-### Verifiche registrate
-
-Eseguite e superate durante la chiusura tecnica:
-
-- `bun run typecheck`;
-- `bun run build`;
-- build di produzione client;
-- build di produzione SSR;
-- build di produzione Nitro/Cloudflare;
-- `git diff --check`;
-- ESLint con la regola Prettier disabilitata: zero errori;
-- verifica browser in produzione completata con successo dal proprietario del progetto.
-
-Limitazioni note:
-
-- il lint completo fallisce perché il checkout Windows usa CRLF mentre Prettier richiede LF;
-- rimangono sei warning preesistenti `react-refresh/only-export-components` nei file scaffold shadcn;
-- i warning non sono stati introdotti dalla remediation;
-- non dichiarare il lint completo come superato.
+Ulteriori modifiche sorgente richiedono bug, regressione, sicurezza o requisito di prodotto approvato esplicitamente.
 
 ### Backlog START non bloccante
 
@@ -216,21 +191,9 @@ Registrato senza autorizzare implementazione:
 - revisione del provider React Query inutilizzato;
 - pulizia dei warning tecnici soltanto con controlli di regressione appropriati.
 
-Questi elementi non bloccano il lavoro su Forno Lume BUSINESS.
-
 ### Ambiti non canonici
 
-START non è automaticamente canonico per:
-
-- architettura di routing multipagina;
-- gallerie e lightbox;
-- funzionalità BUSINESS o BUSINESS PLUS;
-- sistemi amministrativi;
-- autenticazione e autorizzazione;
-- architettura backend;
-- database e storage.
-
-Questi ambiti devono essere valutati indipendentemente nel repository pertinente.
+START non è automaticamente canonico per routing multipagina, gallery/lightbox BUSINESS, sistemi amministrativi, autenticazione/autorizzazione, backend, database o storage. Questi ambiti restano governati dal repository pertinente.
 
 ---
 
@@ -245,7 +208,7 @@ Questi ambiti devono essere valutati indipendentemente nel repository pertinente
 | Piano | BUSINESS |
 | Repository | `https://github.com/AdamDariOfficial/forno-lume-BUSINESS.git` |
 | Deploy | `https://forno-lume-business.tretnix.com` |
-| Stato | baseline corrente approvata e congelata; Package D pendente e separato |
+| Stato | baseline `389bd1...` congelata come riferimento pre-polish; task final-polish parity/adaptation approvato il 28 agosto 2026; Package D pendente e separato |
 | Branch principale | `main` |
 | Baseline storica Package C | `15a8bf4de41bc1657a79f58699859a015ee7820d` |
 | Baseline di chiusura frozen | `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` |
@@ -274,7 +237,7 @@ Sulla baseline di chiusura frozen, BUSINESS è fonte tecnica approvata per i pat
 - JSON-LD generico e route-aware;
 - attribuzione Tretnix nel footer.
 
-La baseline BUSINESS corrente è congelata su `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`. Il Package D resta separato e pendente secondo `TRX-DEC-020` e non è autorizzato da questa chiusura. Le funzionalità del successivo BUSINESS PLUS devono derivare dal parent frozen registrato senza alterare lo stato del Package D.
+La baseline `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` resta il riferimento BUSINESS frozen pre-polish. Il 28 agosto 2026 è stato autorizzato un task separato per adattare a BUSINESS i miglioramenti finali dello START che risultano pertinenti dopo ispezione del codice e browser QA. Il task non autorizza il Package D e non modifica retroattivamente il lineage del repository BUSINESS PLUS già creato dal parent `389bd1...`. Una nuova baseline BUSINESS potrà sostituire `389bd1...` soltanto dopo implementazione controllata, validation, approvazione visuale, PR e merge.
 
 ### Route previste
 
@@ -496,7 +459,7 @@ BUSINESS PLUS non è ancora fonte canonica trasversale per Native AdminAuth o re
 Tretnix.com
 └── sito istituzionale e sistema amministrativo interno
 
-Forno Lume START
+Forno Lume START — frozen `a817903923c1bbfe177d8b59e70a4aa1137b7ab1`
 └── baseline canonica visuale e single-page Hospitality START
     └── Forno Lume BUSINESS
         └── Forno Lume BUSINESS PLUS — bootstrap `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e`
@@ -579,14 +542,13 @@ Per tutti i progetti: nessun URL, branch, commit, deploy, test o verifica viene 
 
 # 6. Ordine operativo aggiornato
 
-1. mantenere le baseline frozen già chiuse e non riaprire scope senza requisito approvato;
-2. proseguire RITO Studio BUSINESS PLUS sul perimetro autorizzato, chiudendo prima il bug Native AdminAuth e poi l'E2E `/consulenza` → D1 → realtime/reconnect;
-3. mantenere produzione RITO BUSINESS PLUS non autorizzata fino ai gate espliciti;
-4. dopo una baseline RITO PLUS funzionante, eseguire un gate separato di `Infrastructure Provider Boundary Hardening` senza cambiare comportamento;
-5. riconciliare nei documenti progetto e Knowledge soltanto evidenze realmente ottenute;
-6. mantenere Forno Lume START e BUSINESS congelati e Forno Lume BUSINESS PLUS nel proprio lifecycle separato;
-7. scegliere il provider infrastrutturale dei nuovi progetti per fit, senza imporre Cloudflare, Supabase o self-hosting come default universale;
-8. aggiornare il registro dei pattern canonici soltanto quando nuovi pattern vengono verificati.
+1. mantenere Forno Lume START congelato sulla baseline `a817903923c1bbfe177d8b59e70a4aa1137b7ab1`;
+2. eseguire il task approvato di parity/adaptation del final polish START su Forno Lume BUSINESS, partendo da `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` e preservando i pattern multipagina già verificati;
+3. mantenere Package D BUSINESS separato e non autorizzato dal task di polish;
+4. non modificare il lineage esistente di Forno Lume BUSINESS PLUS senza gate separato;
+5. proseguire RITO Studio BUSINESS PLUS e Tretnix.com soltanto nei rispettivi perimetri autorizzati;
+6. riconciliare nei documenti progetto e Knowledge soltanto evidenze realmente ottenute;
+7. aggiornare il registro dei pattern canonici quando il nuovo BUSINESS candidate è validato e unito.
 
 Le vulnerabilità critiche o alte rilevate devono essere segnalate immediatamente e prioritarizzate.
 
