@@ -1,7 +1,7 @@
 # Tretnix Hospitality Family
 
-**Versione:** 1.2
-**Aggiornato:** 10 agosto 2026
+**Versione:** 1.3
+**Aggiornato:** 28 agosto 2026
 **Stato:** canonico per la famiglia Forno Lume
 
 ---
@@ -30,10 +30,20 @@ La fonte canonica viene scelta per singolo pattern, non per repository intera.
 
 ### Forno Lume START
 
-Baseline sorgente di chiusura:
+Baseline tecnica storica:
 
 ```text
 d15f639267dfdd57194536154abfa1d0ff3b4542
+```
+
+Baseline sorgente frozen corrente:
+
+```text
+a817903923c1bbfe177d8b59e70a4aa1137b7ab1
+implementation commit: 0a104d7525644fca5f594d7092b574b8f3997f79
+pull request: #14
+finalized: 28 August 2026
+post-merge deployment verification: not verified
 ```
 
 È la fonte canonica approvata per:
@@ -48,7 +58,13 @@ d15f639267dfdd57194536154abfa1d0ff3b4542
 - comportamento percepito di drawer e FAQ;
 - sobrietà delle interazioni;
 - Reveal, hover e linguaggio del movimento;
-- qualità mobile.
+- qualità mobile;
+- comportamento responsive finalizzato tra telefono, tablet e desktop;
+- map consent e proporzioni responsive;
+- review surface opzionale: dati autentici in produzione, fixture fittizie soltanto in development;
+- densità navbar e breakpoint scelti in base al contenuto reale della singola variante.
+
+Il ciclo finale START del 27–28 agosto è il riferimento percepito più recente. I breakpoint esatti, la struttura single-page e le CTA specifiche non sono automaticamente obbligatori per BUSINESS: devono essere adattati alla sua architettura multipagina e verificati visivamente.
 
 ### Forno Lume BUSINESS
 
@@ -88,9 +104,9 @@ post-merge deployment verification: not performed
 - JSON-LD non commerciale e route-aware;
 - pattern di attribuzione Tretnix nel footer.
 
-La baseline BUSINESS corrente è congelata su `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` per gli ambiti approvati e verificati. Ulteriori modifiche a questa baseline richiedono un bug confermato, una regressione confermata, un problema di sicurezza o un requisito di prodotto approvato esplicitamente. Il Package D resta separato e pendente secondo `TRX-DEC-020` e non è autorizzato da questa chiusura.
+La baseline BUSINESS `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` resta il riferimento frozen pre-polish per gli ambiti approvati e verificati. Il 28 agosto 2026 il proprietario ha approvato un nuovo task di prodotto per portare in BUSINESS i miglioramenti finali dello START quando applicabili. Il task deve preservare routing, history, drawer/lightbox, gallery e differenze multipagina intenzionali; non autorizza una copia meccanica del DOM o dei breakpoint START. Il Package D resta separato e pendente secondo `TRX-DEC-020` e non è autorizzato da questo task.
 
-Forno Lume BUSINESS PLUS può essere creato o remixato soltanto dal parent frozen `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`, non dalla branch finale, dal commit pre-merge `3a8ffe226170adab417c3c78dba287be6d39b96f` o da baseline precedenti.
+Il repository Forno Lume BUSINESS PLUS già esistente conserva il lineage verificato dal parent `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`. Il nuovo task di polish BUSINESS non riscrive né invalida retroattivamente quel lineage; un eventuale riallineamento futuro di PLUS richiede una decisione e un gate separati.
 
 ### Forno Lume BUSINESS PLUS
 
@@ -156,6 +172,8 @@ Forno Lume START definisce il comportamento percepito. Forno Lume BUSINESS può 
 - `prefers-reduced-motion` mantiene tutti i contenuti visibili e funzionali.
 - Hover e focus non devono interferire con il transform dei Reveal.
 - Drawer, lightbox e altri dialog devono preservare focus, Escape, inertness, scroll lock e focus return.
+- Le superfici pubbliche di recensioni o rating non devono presentare dati fittizi come recensioni reali o come dati Google autentici. Fixture fittizie sono consentite soltanto in preview development non pubblicata come dato reale.
+- I breakpoint responsive sono scelti in base alla composizione e alla densità effettiva: un breakpoint corretto per START non viene copiato automaticamente in BUSINESS.
 
 ---
 
@@ -235,9 +253,15 @@ Verifiche registrate:
 
 Il lint globale non è registrato come superato: il checkout Windows contiene CRLF mentre la regola Prettier attuale si aspetta LF, oltre a warning preesistenti. Non normalizzare globalmente line ending o formattazione senza task dedicato.
 
+### Final polish parity/adaptation — autorizzato, non ancora implementato
+
+Il 28 agosto 2026 è stato autorizzato un task separato per valutare e portare in BUSINESS i miglioramenti finali dello START. Il punto di partenza resta `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`. Prima di modificare il codice occorre distinguere pattern trasferibili da differenze intenzionali BUSINESS; dopo l'implementazione servono validation repository-defined, browser QA responsive/accessibilità, diff review, approvazione visuale e nuovo freeze.
+
+Il task include come candidati: hero/responsive polish, tablet stacking e map proportions, review authenticity/preview policy, interaction cursor/hover e rhythm. Non implica automaticamente il breakpoint navbar START, la sua stessa-page menu cue o la struttura single-page.
+
 ### Package D — pendente e separato
 
-Package D resta separato e pendente. `TRX-DEC-020` stabilisce che non è autorizzato dal completamento del Package C; la registrazione della baseline frozen del 10 agosto 2026 non ne cambia lo stato. Qualsiasi esecuzione richiede un task esplicitamente autorizzato.
+Package D resta separato e pendente. `TRX-DEC-020` stabilisce che non è autorizzato dal completamento del Package C né dal task di final polish parity/adaptation. Qualsiasi esecuzione richiede un task esplicitamente autorizzato.
 
 ### BUSINESS PLUS — bootstrap verificato e scope pendente
 
@@ -424,7 +448,7 @@ Regole operative:
 
 ## 8. Riapertura e modifiche future
 
-- START rimane chiuso e congelato salvo bug, regressione, sicurezza o requisito approvato.
-- BUSINESS può essere modificato soltanto nel perimetro del Package D o di un nuovo task esplicito.
+- START rimane chiuso e congelato sulla baseline `a817903923c1bbfe177d8b59e70a4aa1137b7ab1` salvo bug, regressione, sicurezza o requisito approvato.
+- BUSINESS è riaperto esclusivamente per il task approvato di final polish parity/adaptation; `389bd1...` resta il riferimento frozen pre-polish fino a un nuovo merge approvato. Package D resta un perimetro separato.
 - I pattern già approvati non devono essere indeboliti o reinterpretati.
 - Ogni nuova modifica deve dichiarare controlli automatici e browser realmente eseguiti.

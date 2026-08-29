@@ -1,7 +1,7 @@
 # Tretnix Current State
 
-**Versione:** 1.8
-**Aggiornato:** 13 agosto 2026
+**Versione:** 1.9
+**Aggiornato:** 28 agosto 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
 ---
@@ -22,12 +22,12 @@
 | Campo | Valore |
 |---|---|
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
-| `main` verificato | `996d6b8` — merge PR #8, Controlled Change Package formalizzato |
+| Baseline `main` verificata per questa riconciliazione | `d8c024ea57285371ce29c3e853b2f760390dc461` |
 | Snapshot canonico ricevuto | `Tretnix-knowledge-de29f4f3.zip` |
 | Development pack | acquisito, verificato, estratto e integrato in `main` |
 | Family kit | Beauty v1.1, Professional v1.0 e Home v1.0 presenti |
 | Visibilità | pubblica temporaneamente secondo `TRX-DEC-031` |
-| Validazione knowledge | PowerShell validator `PASSED` dopo il merge `996d6b8` |
+| Validazione knowledge | `scripts/validate_knowledge.py` e CI `Knowledge validation`; rieseguire sul candidate della presente riconciliazione |
 | Evidenza | `VR` per commit, archive e contenuti versionati |
 | Controlled Change Package | canonico in `main` da `996d6b8`; `Apply → Validate` è il metodo standard per cambi non banali esterni |
 
@@ -40,13 +40,18 @@ La precedente fase di consolidamento è confluita in `main`. I riferimenti al br
 | Campo | Valore |
 |---|---|
 | Repository | `forno-lume-START` |
-| Baseline di chiusura | `d15f639267dfdd57194536154abfa1d0ff3b4542` |
-| Stato | completato, verificato, documentato e congelato |
-| Evidenza | `VR` + `VD` |
+| Baseline tecnica storica | `d15f639267dfdd57194536154abfa1d0ff3b4542` |
+| Baseline sorgente frozen corrente | `a817903923c1bbfe177d8b59e70a4aa1137b7ab1` |
+| Commit implementazione final polish | `0a104d7525644fca5f594d7092b574b8f3997f79` |
+| Pull request finale | `#14` |
+| Stato | completato, finalizzato e congelato |
+| Evidenza | `VR` per commit, PR e merge; `HR` per validation locale e browser QA riportati dal proprietario; deploy post-merge della baseline `a817903...` non verificato |
 
-Interventi ammessi: bug, regressione, sicurezza o requisito approvato.
+La baseline `a817903923c1bbfe177d8b59e70a4aa1137b7ab1` sostituisce `d15f639...` come riferimento sorgente frozen corrente. `d15f639...` resta la baseline storica della chiusura tecnica del 18 luglio 2026.
 
-**Branch locale finale:** `fix/impeccable-final-polish`. Installazione congelata, typecheck, lint e build risultano superati dopo le correzioni browser-QA. Il browser QA conclusivo, commit, push, PR e merge restano pendenti. Evidenza: `HR` finché branch e commit finali non vengono registrati nel repository canonico.
+Il ciclo finale del 27–28 agosto ha consolidato remediation UX, responsive/tablet layout, map consent e proporzioni, interazioni/hover, review surface opzionale con fixture solo development e densità navbar. L'ultimo validator riportato dal proprietario ha registrato typecheck, lint con `0` errori e `6` warning Fast Refresh preesistenti, build client/SSR/Nitro, diff check e whitespace con exit code `0`; il browser QA finale è stato approvato dal proprietario prima del merge della PR `#14`. Non è disponibile evidenza di una verifica del deploy post-merge della nuova baseline.
+
+Interventi ammessi: bug, regressione, sicurezza o requisito approvato esplicitamente.
 
 ---
 
@@ -62,12 +67,14 @@ Interventi ammessi: bug, regressione, sicurezza o requisito approvato.
 | Branch finale | `feat/forno-lume-gallery-swipe-slider` |
 | Package A, B, B2 e C | completati e uniti |
 | Package D | pendente, separato e non autorizzato dal completamento del Package C |
-| Stato complessivo | baseline corrente approvata e congelata; Package D resta separato |
+| Stato complessivo | baseline `389bd1...` resta il riferimento frozen pre-polish; il 28 agosto 2026 è stato approvato un task separato di parity/adaptation del final polish START; Package D resta separato |
 | Evidenza | `VR` per repository, commit, PR e merge; approvazione visuale del proprietario; deploy post-merge non verificato |
 
 Chiusura registrata il 10 agosto 2026. Il candidate finale comprende la gallery/lightbox con swipe e reserved indicator lane approvati visivamente. La validation locale registrata prima del push ha confermato installazione con lockfile congelato, TypeScript, ESLint con `0` errori e `8` warning `react-refresh/only-export-components` preesistenti, build Vite client/SSR e build Nitro Cloudflare. Il commit `3a8ffe226170adab417c3c78dba287be6d39b96f` è stato pubblicato sulla branch finale e unito con PR `#11`; il merge commit risultante è `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`.
 
 Il deploy post-merge della baseline frozen non è stato verificato in questa chiusura e non va dichiarato come eseguito.
+
+Il 28 agosto 2026 il proprietario ha approvato un nuovo requisito di prodotto: portare in BUSINESS i miglioramenti finali dello START quando applicabili, adattandoli alla struttura multipagina e preservando i pattern tecnici BUSINESS già verificati. Questa autorizzazione non implica una copia meccanica dei breakpoint o dei componenti START e non autorizza il Package D. `389bd1...` resta la baseline frozen di riferimento finché il nuovo candidate non viene implementato, validato, approvato visivamente e unito.
 
 Ulteriori modifiche alla baseline BUSINESS congelata richiedono un bug confermato, una regressione confermata, un problema di sicurezza o un requisito di prodotto approvato esplicitamente. Il Package D resta pendente e separato secondo `TRX-DEC-020`; questa chiusura non lo autorizza né lo annulla.
 
@@ -185,20 +192,13 @@ La scelta Cloudflare è provider-specifica per il fit corrente e segue `TRX-DEC-
 
 ## 9. Ordine operativo
 
-1. applicare, validare, revisionare e unire la patch di governance preparata sulla baseline `de29f4f3…`;
-2. sincronizzare `main` ed eseguire la prova di ricostruzione senza chat;
-3. riconciliare CF-1 nel repository `tretnix` con PR, merge commit e controlli;
-4. investigare `data-tsd-source` in sola lettura;
-5. eseguire CF-2, CF-3, CF-4 e CF-5 nella sola branch `fix/impeccable-homepage-optimization` con una PR finale;
-6. mantenere CF-6 rinviato finché non esistono asset definitivi;
-7. mantenere Forno Lume START congelato salvo scope esplicitamente approvato;
-8. mantenere Forno Lume BUSINESS congelato sulla baseline `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`;
-9. usare Forno Lume BUSINESS PLUS dal checkpoint bootstrap validato `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e` e definire/approvare lo scope prodotto prima di qualsiasi implementazione funzionale;
-10. mantenere il Package D separato e pendente; eseguirlo soltanto con un task esplicitamente autorizzato;
-11. attivare gli abbonamenti soltanto quando deciso;
-12. mantenere RITO Studio START e BUSINESS sulle rispettive baseline verificate salvo task approvati;
-13. proseguire RITO Studio BUSINESS PLUS soltanto nel perimetro autorizzato per chiudere Native AdminAuth, `/consulenza` live e realtime E2E; produzione non autorizzata;
-14. eseguire il boundary hardening del provider soltanto dopo una baseline PLUS funzionante, come gate separato.
+1. mantenere Forno Lume START congelato sulla baseline `a817903923c1bbfe177d8b59e70a4aa1137b7ab1`;
+2. applicare a Forno Lume BUSINESS il task approvato di parity/adaptation del final polish START partendo dalla baseline `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`, preservando routing, gallery/lightbox e differenze multipagina intenzionali;
+3. validare il candidate BUSINESS con script repository-defined, browser QA responsive/accessibilità e review manuale prima di commit, push, PR e nuovo freeze;
+4. mantenere il Package D BUSINESS separato e pendente: il task di final polish non lo autorizza né lo assorbe;
+5. non modificare retroattivamente il lineage già esistente di Forno Lume BUSINESS PLUS, che continua a derivare dal parent `389bd1...`; eventuale riallineamento futuro richiede un gate separato;
+6. proseguire Tretnix.com e RITO Studio soltanto nei rispettivi perimetri già autorizzati e con evidenza propria;
+7. aggiornare questa Knowledge dopo il nuovo merge BUSINESS con SHA, PR, validation e gate realmente completati.
 
 ---
 
