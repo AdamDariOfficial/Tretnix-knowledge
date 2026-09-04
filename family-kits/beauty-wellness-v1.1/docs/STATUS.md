@@ -1,5 +1,21 @@
 # RITO Studio — Status
 
+## Reconciliation - 31 August 2026
+
+```text
+RITO_START_FINAL_FREEZE_SHA=f05d8683548623f55ca9d5cf0f051690b039dd27
+RITO_START_TAG=family-start-v1.0
+RITO_BUSINESS_EXISTING_MAIN=b95a63c6127d2bc1dd396d74b2dd25f87b952226
+RITO_BUSINESS_FINAL_START_SYNC_AUTHORIZED
+RITO_BUSINESS_PLUS_UNCHANGED
+```
+
+The user explicitly authorized the final START freeze and continuation of BUSINESS on 31 August
+2026. BUSINESS is reconciled from the existing repository; it is not recreated from a generic
+template. Existing BUSINESS-specific approved decisions remain authoritative where they
+intentionally differ from START. Remote publication, PR/merge and deploy remain separate gates.
+
+
 **Data:** 13 agosto 2026
 **Famiglia:** Beauty & Wellness
 **Versione specifica:** 1.1

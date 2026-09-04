@@ -91,13 +91,13 @@
     },
     {
       "path": "docs/START_BUSINESS_CONTRACT.md",
-      "size": 2977,
-      "sha256": "8a77f8825b717701131073e40998c44089169c4fbfe2aadf8ba2f3474ed38d61"
+      "size": 3581,
+      "sha256": "d470b9f5e28bc467c13bf470e2e0d45cdd8fe26d569299c7cf99644bbd0f1d7a"
     },
     {
       "path": "docs/STATUS.md",
-      "size": 4372,
-      "sha256": "8d8922badb8b69cad7ade06afcdafa314a58bda42d9da8d2143ab3a62c14749c"
+      "size": 5161,
+      "sha256": "d019d514a13d4aef9f5cfe2a0a8e7cbcf2d7484a02280e4fdd36864a3285f720"
     },
     {
       "path": "docs/TESTING.md",

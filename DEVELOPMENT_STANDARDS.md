@@ -1,7 +1,7 @@
 # Tretnix Development Standards
 
-**Versione:** 1.9
-**Aggiornato:** 13 agosto 2026
+**Versione:** 1.10
+**Aggiornato:** 31 agosto 2026
 **Ambito:** tutti i progetti Tretnix, salvo eccezioni documentate
 
 Le parole **DEVE**, **NON DEVE**, **DOVREBBE** e **PUÒ** esprimono il livello di obbligatorietà.
@@ -858,6 +858,30 @@ L’implementazione deve:
 - preservare il layout del footer.
 
 È approvata un’icona esterna sobria, come `ArrowUpRight`; se decorativa, deve essere nascosta alle tecnologie assistive.
+### Footer legale compatto
+
+Per i siti pubblici, salvo eccezione progettuale documentata, la fascia inferiore del footer
+DOVREBBE raggruppare nello stesso livello visuale:
+
+```text
+copyright · Privacy · Cookie · attribuzione Tretnix
+```
+
+Su desktop gli elementi possono condividere una riga. Su mobile DEVONO poter andare a capo senza
+ridurre leggibilità, contrasto, touch target o focus. Non creare una colonna `Legale` separata se
+non aggiunge valore informativo reale.
+
+### Trust strip e announcement bar
+
+Una trust strip statica e generica NON DEVE essere aggiunta come riempitivo standard dopo la hero.
+Claim di fiducia DEVONO essere autentici, verificabili e collocati nel contesto editoriale più
+appropriato.
+
+Una announcement/promo bar è un componente funzionale distinto. PUÒ essere introdotta per avvisi,
+promozioni, chiusure o novità reali quando lo scope lo richiede; deve essere configurabile,
+responsive e accessibile. Non è un sostituto automatico della trust strip e non appartiene allo
+START per default.
+
 
 ---
 

@@ -130,3 +130,11 @@ Ogni modifica condivisa va riportata anche nello START quando appropriato, trami
 - Le nuove route non indeboliscono il ritmo dello START.
 - Nessuna correzione tecnica altera senza motivo l'identità percepita.
 - Le divergenze sono documentate e approvate.
+
+## RITO lineage reconciliation - 31 August 2026
+
+For RITO Studio, the final START freeze used for subsequent BUSINESS parity work is
+`f05d8683548623f55ca9d5cf0f051690b039dd27`, identified locally by `family-start-v1.0`. The existing BUSINESS
+repository is reconciled against this freeze rather than recreated. Approved BUSINESS-specific
+divergences remain valid when they add multipage depth without changing family identity.
+BUSINESS PLUS is outside this reconciliation.

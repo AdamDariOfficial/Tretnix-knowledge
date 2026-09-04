@@ -1,7 +1,7 @@
 # Tretnix Decision Log
 
-**Versione:** 1.11
-**Aggiornato:** 13 agosto 2026
+**Versione:** 1.12
+**Aggiornato:** 31 agosto 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
 
@@ -1280,3 +1280,70 @@ Le dipendenze proprietarie devono essere confinate ai boundary infrastrutturali 
 - Prima del freeze finale di RITO BUSINESS PLUS deve essere eseguito un piccolo gate di `Infrastructure Provider Boundary Hardening`, dopo aver ottenuto una baseline funzionante, senza redesign o cambio di comportamento.
 - I nuovi progetti riusano pattern tecnici verificati soltanto quando pertinenti; la scelta infrastrutturale e l'identità visuale restano decisioni separate.
 - La portabilità viene ottenuta soprattutto mantenendo puliti i confini applicazione/infrastruttura, non costruendo anticipatamente implementazioni per provider non utilizzati.
+---
+
+## TRX-DEC-036 — Footer legale compatto come pattern condiviso
+
+**Stato:** approvata
+**Data:** 31 agosto 2026
+**Ambito:** siti pubblici Tretnix attuali e futuri, salvo eccezione progettuale documentata
+
+### Decisione
+
+Il footer dei siti pubblici usa come pattern condiviso una fascia legale inferiore compatta che
+raggruppa, nello stesso livello visuale:
+
+- copyright del brand;
+- link `Privacy`;
+- link `Cookie`;
+- attribuzione `Progettato e sviluppato da Tretnix`.
+
+Privacy e Cookie non richiedono una colonna `Legale` o `Info` separata quando possono essere
+presentati in modo leggibile nella fascia inferiore. Su desktop gli elementi possono vivere sulla
+stessa riga; su viewport stretti il layout può andare a capo senza comprimere target, focus o
+leggibilità.
+
+### Vincoli
+
+- preservare identità, palette, tipografia e gerarchia del singolo progetto;
+- preservare il testo e il comportamento dell'attribuzione definiti da `TRX-DEC-006`;
+- mantenere link legali accessibili da tastiera e semanticamente riconoscibili;
+- non ridurre touch target o contrasto per ottenere una singola riga forzata;
+- una colonna legale separata resta ammessa soltanto quando esiste un motivo informativo o di
+  progetto concreto e documentato.
+
+### Applicazione
+
+La decisione definisce il pattern da usare nei nuovi interventi. Una baseline frozen non viene
+riaperta automaticamente: l'adeguamento richiede un task autorizzato o una modifica già in corso.
+
+---
+
+## TRX-DEC-037 — Trust strip statiche non sono un pattern START predefinito
+
+**Stato:** approvata
+**Data:** 31 agosto 2026
+**Ambito:** siti START e superfici persuasive Tretnix
+
+### Decisione
+
+Le trust strip statiche e generiche subito dopo la hero non sono un componente START predefinito.
+Non introdurre automaticamente fasce con claim sintetici, pallini, badge o micro-benefit quando
+non aggiungono informazione concreta e verificabile.
+
+Prove di fiducia reali devono essere integrate nel punto editoriale appropriato e basate su dati
+autentici, per esempio recensioni reali, credenziali verificate, informazioni operative o contenuti
+specifici del cliente.
+
+Una announcement/promo bar è un componente funzionale distinto: può essere prevista quando serve
+comunicare promozioni, chiusure, novità o avvisi reali e configurabili. Non costituisce un sostituto
+automatico della trust strip e non viene aggiunta allo START senza uno scope esplicito; può essere
+valutata come add-on o capacità di piani superiori quando pertinente.
+
+### Conseguenze
+
+- nessuna trust strip generica soltanto per riempire lo spazio tra hero e contenuto;
+- nessun claim inventato per creare prova sociale;
+- la rimozione di una trust strip non richiede l'introduzione di un nuovo blocco equivalente;
+- announcement e promo devono avere utilità reale, stato configurabile e comportamento responsive
+  e accessibile.
