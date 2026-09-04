@@ -1,7 +1,7 @@
 # Tretnix Hospitality Family
 
-**Versione:** 1.3
-**Aggiornato:** 28 agosto 2026
+**Versione:** 1.4
+**Aggiornato:** 4 settembre 2026
 **Stato:** canonico per la famiglia Forno Lume
 
 ---
@@ -77,7 +77,7 @@ pull request: #5
 production verified in that cycle: https://forno-lume-business.tretnix.com
 ```
 
-Baseline finale di chiusura frozen:
+Baseline frozen storica pre-polish:
 
 ```text
 main: 389bd1eec59fe8680cb1d6e685fac77e6c7c0df9
@@ -85,6 +85,18 @@ implementation commit: 3a8ffe226170adab417c3c78dba287be6d39b96f
 pull request: #11
 final branch: feat/forno-lume-gallery-swipe-slider
 visual approval: gallery swipe/lightbox + reserved indicator lane
+post-merge deployment verification: not performed
+```
+
+Baseline frozen corrente dopo il final polish:
+
+```text
+main: 9bc33cd5737af7763fe9c61ddc52eb7a606fafea
+implementation commit: a77ea376686c0a87f37e91d5f06670e773683700
+pull request: #12
+working branch: fix/start-final-polish-parity (deleted after merge)
+automated validation: Controlled Change Package v2.4.3 reported passed
+owner browser QA: approved
 post-merge deployment verification: not performed
 ```
 
@@ -97,16 +109,21 @@ post-merge deployment verification: not performed
 - body scroll lock e cleanup del lifecycle;
 - route reset immediato e scroll restoration della history;
 - direct URL, refresh, Back e Forward;
+- navigazione intenzionale smooth tra categorie del menu con reduced-motion e history/hash preservati;
 - ordine editoriale mobile senza duplicazione DOM;
+- responsive Hospitality BUSINESS adattato alla densità multipagina;
+- CTA/contact choice e hover coerenti con l'identità Hospitality;
 - fallback runtime router-wide;
 - pagina 404 con metadata e status HTTP corretti;
 - policy demo `noindex, follow`;
 - JSON-LD non commerciale e route-aware;
 - pattern di attribuzione Tretnix nel footer.
 
-La baseline BUSINESS `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` resta il riferimento frozen pre-polish per gli ambiti approvati e verificati. Il 28 agosto 2026 il proprietario ha approvato un nuovo task di prodotto per portare in BUSINESS i miglioramenti finali dello START quando applicabili. Il task deve preservare routing, history, drawer/lightbox, gallery e differenze multipagina intenzionali; non autorizza una copia meccanica del DOM o dei breakpoint START. Il Package D resta separato e pendente secondo `TRX-DEC-020` e non è autorizzato da questo task.
+La baseline BUSINESS `9bc33cd5737af7763fe9c61ddc52eb7a606fafea` è il riferimento frozen corrente. La baseline `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` resta il riferimento frozen storico pre-polish.
 
-Il repository Forno Lume BUSINESS PLUS già esistente conserva il lineage verificato dal parent `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`. Il nuovo task di polish BUSINESS non riscrive né invalida retroattivamente quel lineage; un eventuale riallineamento futuro di PLUS richiede una decisione e un gate separati.
+Il final polish parity/adaptation autorizzato il 28 agosto 2026 è stato implementato, validato localmente, approvato visivamente dal proprietario e unito con PR `#12` il 4 settembre 2026. Il Package D resta separato e pendente secondo `TRX-DEC-020` e non è autorizzato da questa chiusura.
+
+Il repository Forno Lume BUSINESS PLUS già esistente conserva il lineage verificato dal parent storico `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`. Il nuovo freeze BUSINESS non riscrive né invalida retroattivamente quel lineage; un eventuale riallineamento futuro di PLUS richiede una decisione e un gate separati.
 
 ### Forno Lume BUSINESS PLUS
 
@@ -253,11 +270,33 @@ Verifiche registrate:
 
 Il lint globale non è registrato come superato: il checkout Windows contiene CRLF mentre la regola Prettier attuale si aspetta LF, oltre a warning preesistenti. Non normalizzare globalmente line ending o formattazione senza task dedicato.
 
-### Final polish parity/adaptation — autorizzato, non ancora implementato
+### Final polish parity/adaptation — completato, validato, approvato e unito
 
-Il 28 agosto 2026 è stato autorizzato un task separato per valutare e portare in BUSINESS i miglioramenti finali dello START. Il punto di partenza resta `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`. Prima di modificare il codice occorre distinguere pattern trasferibili da differenze intenzionali BUSINESS; dopo l'implementazione servono validation repository-defined, browser QA responsive/accessibilità, diff review, approvazione visuale e nuovo freeze.
+Il task approvato il 28 agosto 2026 è stato completato partendo dalla baseline frozen pre-polish `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`.
 
-Il task include come candidati: hero/responsive polish, tablet stacking e map proportions, review authenticity/preview policy, interaction cursor/hover e rhythm. Non implica automaticamente il breakpoint navbar START, la sua stessa-page menu cue o la struttura single-page.
+Il ciclo ha adattato a BUSINESS i miglioramenti START pertinenti senza trasformare la variante multipagina in una copia meccanica dello START. Il risultato conserva routing, history, drawer/lightbox, gallery e differenze multipagina intenzionali.
+
+Chiusura registrata:
+
+```text
+implementation commit: a77ea376686c0a87f37e91d5f06670e773683700
+pull request: #12
+merge commit / frozen main: 9bc33cd5737af7763fe9c61ddc52eb7a606fafea
+merged: 4 September 2026
+```
+
+Validation locale riportata dal proprietario per il Controlled Change Package v2.4.3:
+
+- 6/6 fixture recovery/idempotency superate;
+- TypeScript superato;
+- ESLint exit `0`, con `0` errori e `8` warning `react-refresh/only-export-components` preesistenti;
+- build Vite client e SSR superata;
+- build Nitro Cloudflare module superata;
+- UX invariants superati;
+- diff, staged state, untracked whitespace e final payload state superati;
+- browser QA finale approvato dal proprietario su responsive, menu smooth-scroll, CTA/contatti, gallery/lightbox e layout finale.
+
+Il deploy post-merge della nuova baseline non è stato verificato. La baseline è quindi frozen come sorgente approvata; non viene dichiarato un nuovo gate di produzione.
 
 ### Package D — pendente e separato
 
@@ -449,6 +488,8 @@ Regole operative:
 ## 8. Riapertura e modifiche future
 
 - START rimane chiuso e congelato sulla baseline `a817903923c1bbfe177d8b59e70a4aa1137b7ab1` salvo bug, regressione, sicurezza o requisito approvato.
-- BUSINESS è riaperto esclusivamente per il task approvato di final polish parity/adaptation; `389bd1...` resta il riferimento frozen pre-polish fino a un nuovo merge approvato. Package D resta un perimetro separato.
+- BUSINESS rimane chiuso e congelato sulla baseline `9bc33cd5737af7763fe9c61ddc52eb7a606fafea`; `389bd1...` resta la baseline frozen storica pre-polish.
+- Il Package D BUSINESS resta un perimetro separato e pendente e richiede autorizzazione esplicita.
+- BUSINESS PLUS conserva il lineage storico già verificato da `389bd1...`; un eventuale riallineamento alla baseline BUSINESS corrente richiede un gate separato.
 - I pattern già approvati non devono essere indeboliti o reinterpretati.
 - Ogni nuova modifica deve dichiarare controlli automatici e browser realmente eseguiti.
