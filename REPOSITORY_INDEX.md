@@ -1,7 +1,7 @@
 # Tretnix Repository Index
 
-**Versione:** 2.0
-**Aggiornato:** 28 agosto 2026
+**Versione:** 2.1
+**Aggiornato:** 4 settembre 2026
 **Stato dell’inventario:** completo rispetto agli otto repository attualmente dichiarati
 
 Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit del codice.
@@ -208,36 +208,40 @@ START non è automaticamente canonico per routing multipagina, gallery/lightbox 
 | Piano | BUSINESS |
 | Repository | `https://github.com/AdamDariOfficial/forno-lume-BUSINESS.git` |
 | Deploy | `https://forno-lume-business.tretnix.com` |
-| Stato | baseline `389bd1...` congelata come riferimento pre-polish; task final-polish parity/adaptation approvato il 28 agosto 2026; Package D pendente e separato |
+| Stato | completato, finalizzato e congelato sulla baseline corrente; Package D pendente e separato |
 | Branch principale | `main` |
 | Baseline storica Package C | `15a8bf4de41bc1657a79f58699859a015ee7820d` |
-| Baseline di chiusura frozen | `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` |
-| Commit implementazione finale | `3a8ffe226170adab417c3c78dba287be6d39b96f` |
-| Pull request finale | `#11` |
-| Ultimo ciclo verificato | 10 agosto 2026 — finalizzazione gallery/lightbox, validation locale, push, merge PR #11; deploy post-merge non verificato |
+| Baseline frozen pre-polish | `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` |
+| Baseline frozen corrente | `9bc33cd5737af7763fe9c61ddc52eb7a606fafea` |
+| Commit implementazione final polish | `a77ea376686c0a87f37e91d5f06670e773683700` |
+| Pull request final polish | `#12` |
+| Ultimo ciclo verificato | 4 settembre 2026 — final polish parity/adaptation, CCP v2.4.3 riportato verde, browser QA approvato, merge PR #12; deploy post-merge non verificato |
 
 ### Relazione con altri progetti
 
 Deriva da Forno Lume START.
 
-Deve preservarne identità e linguaggio di animazione, espandendo struttura e contenuti.
+Preserva identità e linguaggio di animazione Hospitality, espandendo struttura, contenuti e routing multipagina. Il repository BUSINESS PLUS già esistente conserva il lineage storico dalla baseline `389bd1...`; il nuovo freeze BUSINESS non lo riallinea automaticamente.
 
 ### Ruolo canonico approvato per i pattern chiusi
 
-Sulla baseline di chiusura frozen, BUSINESS è fonte tecnica approvata per i pattern chiusi e verificati:
+Sulla baseline frozen corrente, BUSINESS è fonte tecnica approvata per i pattern chiusi e verificati:
 
 - architettura multipagina Hospitality;
 - drawer e lightbox accessibili;
 - gallery/lightbox con swipe intenzionale, fallback tramite controlli precedente/successivo e reserved indicator lane;
 - navigazione tra route, direct URL, refresh, Back e Forward;
 - route reset e scroll restoration;
+- smooth navigation intenzionale delle categorie menu con reduced-motion e hash/history preservati;
 - ordine editoriale mobile senza duplicazione DOM;
+- responsive multipagina Hospitality;
+- CTA/contact choice e hover verificati nel final polish;
 - fallback runtime e pagina 404;
 - policy demo `noindex, follow`;
 - JSON-LD generico e route-aware;
 - attribuzione Tretnix nel footer.
 
-La baseline `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` resta il riferimento BUSINESS frozen pre-polish. Il 28 agosto 2026 è stato autorizzato un task separato per adattare a BUSINESS i miglioramenti finali dello START che risultano pertinenti dopo ispezione del codice e browser QA. Il task non autorizza il Package D e non modifica retroattivamente il lineage del repository BUSINESS PLUS già creato dal parent `389bd1...`. Una nuova baseline BUSINESS potrà sostituire `389bd1...` soltanto dopo implementazione controllata, validation, approvazione visuale, PR e merge.
+La baseline `9bc33cd5737af7763fe9c61ddc52eb7a606fafea` sostituisce `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` come riferimento sorgente frozen corrente. `389bd1...` resta la baseline frozen storica pre-polish.
 
 ### Route previste
 
@@ -260,7 +264,7 @@ La baseline `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` resta il riferimento BUSI
 - atmosfera;
 - immagini;
 - composizione approvata;
-- linguaggio di animazione dello START.
+- linguaggio di animazione dello START adattato alla variante BUSINESS.
 
 ### Stato verificato dei package
 
@@ -268,12 +272,13 @@ La baseline `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` resta il riferimento BUSI
 - Package B: completato e unito;
 - micro-fix “L'incontro”: completato e unito;
 - Package B2: completato e unito;
-- Package C: completato, unito, costruito e verificato in produzione;
-- finalizzazione gallery/lightbox: completata, validata, pubblicata e unita con PR `#11`;
-- Package D: pendente, separato e non autorizzato dal completamento del Package C;
-- baseline BUSINESS frozen: `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`.
+- Package C: completato, unito, costruito e verificato in produzione nel relativo ciclo;
+- finalizzazione gallery/lightbox: completata e unita con PR `#11`;
+- final polish parity/adaptation: completato, validato, approvato e unito con PR `#12`;
+- Package D: pendente, separato e non autorizzato dal final polish;
+- baseline BUSINESS frozen corrente: `9bc33cd5737af7763fe9c61ddc52eb7a606fafea`.
 
-La configurazione Cloudflare Pages verificata durante il ciclo precedente usa Bun, `bun.lock`, output `dist` e il preset Nitro `cloudflare-pages`. I dettagli sono registrati in `HOSPITALITY_FAMILY.md`. Il deploy post-merge della baseline frozen non è stato verificato in questa chiusura.
+La configurazione Cloudflare Pages verificata durante il ciclo precedente usa Bun, `bun.lock`, output `dist` e il preset Nitro `cloudflare-pages`. I dettagli sono registrati in `HOSPITALITY_FAMILY.md`. Il deploy post-merge della nuova baseline frozen non è stato verificato.
 
 ---
 
@@ -423,11 +428,11 @@ BUSINESS PLUS non è ancora fonte canonica trasversale per Native AdminAuth o re
 | Deploy | non applicabile |
 | Stato | operativo |
 | Branch principale | `main` |
-| Baseline `main` verificata prima di questa riconciliazione | `693216537eb1b88b563cabbf5fd140fa58572ce9` |
+| Baseline `main` verificata prima di questa riconciliazione | `f288304016c245746ba9e7290241d0248acccab4` |
 | Snapshot storico usato per la patch di governance del 26 luglio | `Tretnix-knowledge-de29f4f3.zip` |
 | SHA-256 snapshot storico | `3cf34a6f145a1834d211f65917950dc92e940f259d7585f16342d1bb00730032` |
 | Commit della patch di governance | da registrare dopo merge |
-| Ultima revisione | 13 agosto 2026 — riconciliazione provider/RITO preparata sulla baseline `693216537eb1b88b563cabbf5fd140fa58572ce9`; nuovo commit canonico da registrare soltanto dopo review e merge |
+| Ultima revisione | 4 settembre 2026 — riconciliazione freeze Forno Lume BUSINESS preparata sulla baseline Knowledge `f288304016c245746ba9e7290241d0248acccab4`; nuovo commit canonico da registrare soltanto dopo review e merge |
 
 ### Ruolo canonico
 
@@ -461,8 +466,8 @@ Tretnix.com
 
 Forno Lume START — frozen `a817903923c1bbfe177d8b59e70a4aa1137b7ab1`
 └── baseline canonica visuale e single-page Hospitality START
-    └── Forno Lume BUSINESS
-        └── Forno Lume BUSINESS PLUS — bootstrap `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e`
+    └── Forno Lume BUSINESS — frozen `9bc33cd5737af7763fe9c61ddc52eb7a606fafea`
+        └── Forno Lume BUSINESS PLUS — bootstrap `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e`, lineage storico da `389bd1...`
 
 Beauty & Wellness v1.1
 └── RITO Studio START — `34c13cd78255b7ac009533790329cada74ae9d8a`
@@ -497,7 +502,7 @@ Home & Local Services v1.0
 | Qualità visuale Beauty & Wellness START | `rito-studio-START` | candidato di riferimento; riconciliazione parent status pendente |
 | Architettura multipagina Beauty & Wellness | `rito-studio-BUSINESS` | candidato di riferimento; riconciliazione parent status pendente |
 | Native AdminAuth + realtime BUSINESS PLUS | `rito-studio-BUSINESS-PLUS` | candidate in staging; non canonico finché E2E/security gate restano aperti |
-| Architettura multipagina Hospitality | `forno-lume-BUSINESS` | canonico per i pattern verificati fino al Package C |
+| Architettura multipagina Hospitality | `forno-lume-BUSINESS` | canonico sulla baseline frozen corrente |
 | Routing, history e scroll multipagina | `forno-lume-BUSINESS` | canonico per il pattern verificato |
 | Drawer e lightbox accessibili | `forno-lume-BUSINESS` | canonico per il pattern verificato |
 | Error fallback, 404, demo SEO e JSON-LD | `forno-lume-BUSINESS` | canonico per il pattern verificato |
@@ -543,12 +548,12 @@ Per tutti i progetti: nessun URL, branch, commit, deploy, test o verifica viene 
 # 6. Ordine operativo aggiornato
 
 1. mantenere Forno Lume START congelato sulla baseline `a817903923c1bbfe177d8b59e70a4aa1137b7ab1`;
-2. eseguire il task approvato di parity/adaptation del final polish START su Forno Lume BUSINESS, partendo da `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` e preservando i pattern multipagina già verificati;
-3. mantenere Package D BUSINESS separato e non autorizzato dal task di polish;
+2. mantenere Forno Lume BUSINESS congelato sulla baseline `9bc33cd5737af7763fe9c61ddc52eb7a606fafea`;
+3. mantenere Package D BUSINESS separato e non autorizzato dal final polish;
 4. non modificare il lineage esistente di Forno Lume BUSINESS PLUS senza gate separato;
 5. proseguire RITO Studio BUSINESS PLUS e Tretnix.com soltanto nei rispettivi perimetri autorizzati;
 6. riconciliare nei documenti progetto e Knowledge soltanto evidenze realmente ottenute;
-7. aggiornare il registro dei pattern canonici quando il nuovo BUSINESS candidate è validato e unito.
+7. aggiornare il registro dei pattern canonici quando cambiano baseline o gate verificati.
 
 Le vulnerabilità critiche o alte rilevate devono essere segnalate immediatamente e prioritarizzate.
 

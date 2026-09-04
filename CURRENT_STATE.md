@@ -1,7 +1,7 @@
 # Tretnix Current State
 
-**Versione:** 1.9
-**Aggiornato:** 28 agosto 2026
+**Versione:** 1.10
+**Aggiornato:** 4 settembre 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
 ---
@@ -22,7 +22,7 @@
 | Campo | Valore |
 |---|---|
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
-| Baseline `main` verificata per questa riconciliazione | `d8c024ea57285371ce29c3e853b2f760390dc461` |
+| Baseline `main` verificata per questa riconciliazione | `f288304016c245746ba9e7290241d0248acccab4` |
 | Snapshot canonico ricevuto | `Tretnix-knowledge-de29f4f3.zip` |
 | Development pack | acquisito, verificato, estratto e integrato in `main` |
 | Family kit | Beauty v1.1, Professional v1.0 e Home v1.0 presenti |
@@ -61,24 +61,28 @@ Interventi ammessi: bug, regressione, sicurezza o requisito approvato esplicitam
 |---|---|
 | Repository | `forno-lume-BUSINESS` |
 | Baseline storica Package C | `15a8bf4de41bc1657a79f58699859a015ee7820d` |
-| Baseline di chiusura frozen | `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` |
-| Commit implementazione finale | `3a8ffe226170adab417c3c78dba287be6d39b96f` |
-| Pull request finale | `#11` |
-| Branch finale | `feat/forno-lume-gallery-swipe-slider` |
+| Baseline frozen pre-polish | `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` |
+| Baseline frozen corrente | `9bc33cd5737af7763fe9c61ddc52eb7a606fafea` |
+| Commit implementazione final polish | `a77ea376686c0a87f37e91d5f06670e773683700` |
+| Pull request final polish | `#12` |
+| Branch di lavoro final polish | `fix/start-final-polish-parity`, eliminata dopo il merge |
 | Package A, B, B2 e C | completati e uniti |
-| Package D | pendente, separato e non autorizzato dal completamento del Package C |
-| Stato complessivo | baseline `389bd1...` resta il riferimento frozen pre-polish; il 28 agosto 2026 è stato approvato un task separato di parity/adaptation del final polish START; Package D resta separato |
-| Evidenza | `VR` per repository, commit, PR e merge; approvazione visuale del proprietario; deploy post-merge non verificato |
+| Final polish parity/adaptation | completato, validato, approvato visivamente e unito |
+| Package D | pendente, separato e non autorizzato dal final polish |
+| Stato complessivo | completato, finalizzato e congelato sulla baseline `9bc33cd5737af7763fe9c61ddc52eb7a606fafea` |
+| Evidenza | `VR` per commit, PR e merge; `HR` per validation locale v2.4.3 e browser QA riportati dal proprietario; deploy post-merge non verificato |
 
-Chiusura registrata il 10 agosto 2026. Il candidate finale comprende la gallery/lightbox con swipe e reserved indicator lane approvati visivamente. La validation locale registrata prima del push ha confermato installazione con lockfile congelato, TypeScript, ESLint con `0` errori e `8` warning `react-refresh/only-export-components` preesistenti, build Vite client/SSR e build Nitro Cloudflare. Il commit `3a8ffe226170adab417c3c78dba287be6d39b96f` è stato pubblicato sulla branch finale e unito con PR `#11`; il merge commit risultante è `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`.
+Il ciclo final-polish parity/adaptation si è chiuso il 4 settembre 2026. Il commit applicativo `a77ea376686c0a87f37e91d5f06670e773683700` è stato unito in `main` con PR `#12`; il merge commit `9bc33cd5737af7763fe9c61ddc52eb7a606fafea` è la nuova baseline BUSINESS frozen corrente.
 
-Il deploy post-merge della baseline frozen non è stato verificato in questa chiusura e non va dichiarato come eseguito.
+La validation locale riportata per il Controlled Change Package v2.4.3 ha registrato 6/6 fixture di recovery/idempotenza superate, TypeScript, ESLint con `0` errori e `8` warning `react-refresh/only-export-components` preesistenti, build client/SSR/Nitro, invarianti UX, diff/whitespace e stato payload finale con exit code `0`. Il browser QA finale responsive/interattivo è stato approvato dal proprietario prima del merge. Queste evidenze restano `HR` perché derivano da output locale e approvazione del proprietario, non da un gate CI o deploy verificato direttamente in questa riconciliazione.
 
-Il 28 agosto 2026 il proprietario ha approvato un nuovo requisito di prodotto: portare in BUSINESS i miglioramenti finali dello START quando applicabili, adattandoli alla struttura multipagina e preservando i pattern tecnici BUSINESS già verificati. Questa autorizzazione non implica una copia meccanica dei breakpoint o dei componenti START e non autorizza il Package D. `389bd1...` resta la baseline frozen di riferimento finché il nuovo candidate non viene implementato, validato, approvato visivamente e unito.
+La baseline `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` resta la baseline frozen storica pre-polish e non è più il riferimento sorgente corrente di BUSINESS.
 
-Ulteriori modifiche alla baseline BUSINESS congelata richiedono un bug confermato, una regressione confermata, un problema di sicurezza o un requisito di prodotto approvato esplicitamente. Il Package D resta pendente e separato secondo `TRX-DEC-020`; questa chiusura non lo autorizza né lo annulla.
+Il deploy post-merge della baseline `9bc33cd...` non è stato verificato e non va dichiarato come eseguito.
 
-Dopo il merge della presente registrazione Knowledge, Forno Lume BUSINESS PLUS può essere creato o remixato esclusivamente dal parent frozen `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`, non dalla branch di lavoro, dal commit pre-merge `3a8ffe226170adab417c3c78dba287be6d39b96f` o da baseline precedenti. Questo parent gate non modifica lo stato separato e pendente del Package D.
+Ulteriori modifiche alla baseline BUSINESS congelata richiedono un bug confermato, una regressione confermata, un problema di sicurezza o un requisito di prodotto approvato esplicitamente. Il Package D resta pendente e separato secondo `TRX-DEC-020`; il final polish non lo autorizza, non lo annulla e non lo assorbe.
+
+Forno Lume BUSINESS PLUS conserva il lineage già verificato dal parent storico `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`. Il nuovo freeze BUSINESS `9bc33cd...` non riscrive retroattivamente quel lineage; un eventuale riallineamento di PLUS richiede un gate separato.
 
 ---
 
@@ -193,12 +197,11 @@ La scelta Cloudflare è provider-specifica per il fit corrente e segue `TRX-DEC-
 ## 9. Ordine operativo
 
 1. mantenere Forno Lume START congelato sulla baseline `a817903923c1bbfe177d8b59e70a4aa1137b7ab1`;
-2. applicare a Forno Lume BUSINESS il task approvato di parity/adaptation del final polish START partendo dalla baseline `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`, preservando routing, gallery/lightbox e differenze multipagina intenzionali;
-3. validare il candidate BUSINESS con script repository-defined, browser QA responsive/accessibilità e review manuale prima di commit, push, PR e nuovo freeze;
-4. mantenere il Package D BUSINESS separato e pendente: il task di final polish non lo autorizza né lo assorbe;
-5. non modificare retroattivamente il lineage già esistente di Forno Lume BUSINESS PLUS, che continua a derivare dal parent `389bd1...`; eventuale riallineamento futuro richiede un gate separato;
-6. proseguire Tretnix.com e RITO Studio soltanto nei rispettivi perimetri già autorizzati e con evidenza propria;
-7. aggiornare questa Knowledge dopo il nuovo merge BUSINESS con SHA, PR, validation e gate realmente completati.
+2. mantenere Forno Lume BUSINESS congelato sulla baseline corrente `9bc33cd5737af7763fe9c61ddc52eb7a606fafea`; riaprirlo soltanto per bug, regressione, sicurezza o requisito approvato;
+3. mantenere il Package D BUSINESS separato e pendente: il final polish completato non lo autorizza né lo assorbe;
+4. non modificare retroattivamente il lineage già esistente di Forno Lume BUSINESS PLUS, che continua a derivare dal parent storico `389bd1...`; eventuale riallineamento futuro richiede un gate separato;
+5. proseguire Tretnix.com e RITO Studio soltanto nei rispettivi perimetri già autorizzati e con evidenza propria;
+6. aggiornare questa Knowledge quando cambiano baseline, gate, PR, validation o stato di deploy verificato.
 
 ---
 
