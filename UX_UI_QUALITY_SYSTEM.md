@@ -1,7 +1,7 @@
 # Tretnix UX/UI Quality System
 
-**Versione:** 1.0
-**Aggiornato:** 13 agosto 2026
+**Versione:** 1.1
+**Aggiornato:** 5 settembre 2026
 **Stato:** canonico quando applicato insieme a `TRX-DEC-034` e revisionato sul branch dedicato
 **Ambito:** tutti i progetti Tretnix, salvo eccezioni documentate
 **Obiettivo principale:** impedire che una UI tecnicamente corretta venga considerata completata quando presenta incoerenze visuali, spacing casuale, gerarchia debole, componenti incompleti o segnali di AI slop.
@@ -583,6 +583,20 @@ Usare bordi per risolvere indiscriminatamente una gerarchia debole.
 - card dentro card;
 - border + shadow + background su ogni superficie;
 - separator duplicato da spazio già sufficiente.
+
+### Divider reveal autonomy
+
+Quando un separator editoriale viene animato all'ingresso:
+
+- il divider è un target motion autonomo;
+- il suo reveal usa soltanto opacità come default;
+- non eredita translate/scale/clip dal contenuto adiacente;
+- il refactor non può alterare neppure di un pixel il layout risultante;
+- border geometry, spacing, grid e flow devono rimanere equivalenti prima e dopo la modifica;
+- in reduced motion il divider è immediatamente visibile.
+
+Un border con funzione di boundary, state o affordance non viene classificato automaticamente come
+divider animato.
 
 ---
 
@@ -1267,6 +1281,7 @@ La curva concreta può essere brand-specific.
 - `prefers-reduced-motion`;
 - contenuto utilizzabile senza animazione;
 - reveal sotto fold quando entra realmente in viewport;
+- divider editoriali rivelati come target autonomi con opacity-only e geometria invariata;
 - no smooth reset di route;
 - no animation-induced hidden content;
 - no whole-section heavy reveal come default;

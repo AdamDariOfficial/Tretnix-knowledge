@@ -145,6 +145,12 @@ Successful validation does not authorize commit, push, migration or deploy. Manu
 - Preserve repository documentation and root `AGENTS.md`.
 - Stop before editing overlapping files being changed by another writer.
 
+## Shared divider and legal-pair rules
+
+- Editorial dividers/hairlines that reveal are independent motion targets and use opacity-only by default.
+- Refactoring a divider must preserve existing spacing, layout, dimensions, grid/flow and box model exactly.
+- In compact legal footers, `Privacy` and `Cookie` are a non-breaking pair: they may wrap together but never onto separate lines.
+
 ## Footer attribution
 
 Every Tretnix client project includes:

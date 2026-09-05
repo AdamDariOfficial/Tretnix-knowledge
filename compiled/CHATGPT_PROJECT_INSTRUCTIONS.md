@@ -150,6 +150,7 @@ RITO Studio BUSINESS PLUS currently uses Cloudflare for its live/staging archite
 - Intentional same-page anchor navigation may use smooth scrolling.
 - Cross-route section links navigate first and reach the section after the destination is mounted.
 - Below-the-fold reveals start when entering the viewport.
+- Editorial dividers/hairlines that reveal must be independent motion targets, use opacity-only by default, and preserve the existing spacing/layout/box model exactly.
 - Structural layout containers normally remain static; animate semantic editorial elements or small meaningful groups.
 - Do not animate entire large sections as one heavy block; use short stagger only when it improves reading order.
 - Respect reduced motion.
@@ -173,6 +174,8 @@ linked to:
 https://tretnix.com
 
 Only “Tretnix” needs to be linked unless the approved design says otherwise. The link remains discreet but perceivable, opens in a new tab with `target="_blank"` and `rel="noopener noreferrer"`, indicates the new-tab behavior accessibly and preserves visible keyboard focus. A restrained external-link icon is allowed; decorative icons are hidden from assistive technology.
+
+In the compact legal footer, `Privacy` and `Cookie` are an indivisible wrapping pair: they may move together to a new line, but they must never split onto separate lines.
 
 ## Public demo indexing
 

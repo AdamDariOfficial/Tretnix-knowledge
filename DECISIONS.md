@@ -1,7 +1,7 @@
 # Tretnix Decision Log
 
-**Versione:** 1.12
-**Aggiornato:** 31 agosto 2026
+**Versione:** 1.13
+**Aggiornato:** 5 settembre 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
 
@@ -1347,3 +1347,91 @@ valutata come add-on o capacità di piani superiori quando pertinente.
 - la rimozione di una trust strip non richiede l'introduzione di un nuovo blocco equivalente;
 - announcement e promo devono avere utilità reale, stato configurabile e comportamento responsive
   e accessibile.
+
+---
+
+## TRX-DEC-038 — Divider editoriali con reveal autonomo e layout invariato
+
+**Stato:** approvata
+**Data:** 5 settembre 2026
+**Ambito:** interfacce Tretnix attuali e future quando un divider o hairline partecipa a un reveal
+
+### Decisione
+
+Un divider editoriale che appare durante l'ingresso nel viewport deve essere trattato come elemento
+motion autonomo rispetto al contenuto adiacente.
+
+Il reveal predefinito del divider è esclusivamente di opacità:
+
+```text
+opacity: 0 → 1
+```
+
+Non applicare al divider `translate`, `scale`, `clip-path`, draw animation o altri movimenti
+geometrici salvo eccezione progettuale documentata.
+
+### Vincolo di layout
+
+Separare il reveal del divider NON DEVE modificare neppure indirettamente:
+
+- margin;
+- padding;
+- gap;
+- width o height;
+- grid/flex placement;
+- flow;
+- box model;
+- allineamento;
+- dimensioni percepite prima o dopo il reveal.
+
+Quando il divider corrente è un `border-*` che contribuisce al box model, l'implementazione deve
+preservare esattamente quella geometria, per esempio mantenendo un bordo equivalente trasparente e
+sovrapponendo la linea visuale tramite pseudo-elemento/elemento autonomo, oppure usando una tecnica
+equivalente che non produca layout shift.
+
+Il divider deve avere un proprio lifecycle di reveal e non diventare visibile soltanto perché il
+contenitore o il contenuto vicino viene rivelato.
+
+### Limiti
+
+Questa regola riguarda i separator editoriali/hairline. Non trasforma automaticamente in reveal:
+
+- bordi di immagini;
+- bordi di mappe;
+- focus ring;
+- boundary di controlli;
+- state border;
+- affordance;
+- bordi strutturali necessari a una superficie.
+
+In `prefers-reduced-motion: reduce`, il divider deve risultare immediatamente visibile senza
+animazione.
+
+Le baseline frozen non vengono riaperte automaticamente. La regola si applica nei nuovi progetti e
+nei task autorizzati che toccano superfici esistenti.
+
+---
+
+## TRX-DEC-039 — Privacy e Cookie come coppia legale non separabile
+
+**Stato:** approvata
+**Data:** 5 settembre 2026
+**Ambito:** footer dei siti pubblici Tretnix
+
+### Decisione
+
+`Privacy` e `Cookie` formano una coppia visuale non separabile nel footer legale.
+
+I due link:
+
+- devono rimanere sulla stessa riga tra loro;
+- possono spostarsi insieme su una nuova riga quando lo spazio non è sufficiente;
+- non devono mai essere spezzati su righe diverse;
+- restano due link semanticamente e accessibilmente distinti.
+
+La fascia legale complessiva può continuare a fare wrapping secondo `TRX-DEC-036`. Questa decisione
+integra `TRX-DEC-036`: non impone che copyright, coppia Privacy/Cookie e attribuzione Tretnix
+rimangano tutti sulla stessa riga.
+
+L'implementazione deve preservare touch target, focus, contrasto, ordine logico e identità visuale
+del progetto.
