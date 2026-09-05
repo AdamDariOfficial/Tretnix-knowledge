@@ -1,7 +1,7 @@
 # Tretnix Current State
 
-**Versione:** 1.10
-**Aggiornato:** 4 settembre 2026
+**Versione:** 1.11
+**Aggiornato:** 5 settembre 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
 ---
@@ -149,7 +149,7 @@ Servono PR, branch, commit completo, output dei controlli e report hydration per
 | Campo | Valore |
 |---|---|
 | Specifica famiglia | `family-kits/beauty-wellness-v1.1/` |
-| START | `AdamDariOfficial/rito-studio-START`, `main` verificato a `34c13cd78255b7ac009533790329cada74ae9d8a` |
+| START | `AdamDariOfficial/rito-studio-START`, `main` verificato a `96e73492313e37689a1785b1e2762fff7611e828`; PR `#12` method/footer/FAQ polish unita; nessun nuovo freeze/tag creato da questo task |
 | BUSINESS | `AdamDariOfficial/rito-studio-BUSINESS`, `main` verificato a `b95a63c6127d2bc1dd396d74b2dd25f87b952226` |
 | BUSINESS PLUS | `AdamDariOfficial/rito-studio-BUSINESS-PLUS`, remote `main` verificato a `eba1a2a91fd3a531b4a4667d038b631758d0a664` |
 | Working branch PLUS riportata | `feat/rito-business-plus-complete` con delta controllato ancora non integrato |
@@ -158,7 +158,18 @@ Servono PR, branch, commit completo, output dei controlli e report hydration per
 | E2E live | `/consulenza` → D1 → admin realtime/reconnect ancora da chiudere con evidenza diretta |
 | Produzione PLUS | `NOT AUTHORIZED` |
 | Evidenza | `VR` per repository e HEAD remoti; evidenza operatore/staging da formalizzare nel repository PLUS prima della chiusura |
-| Lineage/freeze reconciliation | Il candidate PLUS registra `START_FROZEN_34C13CD` e `BUSINESS_FROZEN_B95A63C`; i documenti locali dei due parent contengono ancora registrazioni precedenti non pienamente allineate. La riconciliazione documentale dei parent resta pendente e non blocca il debugging PLUS già autorizzato. |
+| Lineage/freeze reconciliation | Il `main` corrente START è `96e734...`. BUSINESS/PLUS conservano i parent storici registrati (`START_FROZEN_34C13CD`, `BUSINESS_FROZEN_B95A63C`) e non vengono riallineati retroattivamente da questo avanzamento START. |
+
+Il polish START del 5 settembre 2026 ha integrato con PR `#12` il commit applicativo
+`d235346ae19e9aa33f7306070a439a13a7a4507b`; il merge commit
+`96e73492313e37689a1785b1e2762fff7611e828` è la nuova implementation baseline corrente di START.
+Il task non ha creato un nuovo freeze né un nuovo tag. Gli output locali riportati dal proprietario
+registrano lint con `0` errori e `6` warning Fast Refresh preesistenti, build client/SSR/Nitro e
+browser QA del polish; queste evidenze restano `HR`.
+
+L'avanzamento di START non riscrive retroattivamente il lineage già esistente di BUSINESS e
+BUSINESS PLUS: i parent storici già registrati dai discendenti restano evidenza del loro lineage
+finché un gate separato non autorizza un riallineamento.
 
 `TRX-DEC-033` descrive il gate storico di avvio START del 27 luglio. Lo stato reale successivo di START, BUSINESS e BUSINESS PLUS lo ha superato; non deve essere usato per ribloccare retroattivamente il lavoro PLUS esplicitamente autorizzato. Il dettaglio operativo resta nei documenti del repository RITO BUSINESS PLUS.
 

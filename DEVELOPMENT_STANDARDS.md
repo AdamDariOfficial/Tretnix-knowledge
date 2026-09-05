@@ -1,7 +1,7 @@
 # Tretnix Development Standards
 
-**Versione:** 1.10
-**Aggiornato:** 31 agosto 2026
+**Versione:** 1.11
+**Aggiornato:** 5 settembre 2026
 **Ambito:** tutti i progetti Tretnix, salvo eccezioni documentate
 
 Le parole **DEVE**, **NON DEVE**, **DOVREBBE** e **PUÒ** esprimono il livello di obbligatorietà.
@@ -501,6 +501,21 @@ Evitare:
 - elementi invisibili senza fallback;
 - observer duplicati non gestiti.
 
+### Divider editoriali
+
+Quando un divider/hairline editoriale partecipa al reveal:
+
+- DEVE avere un reveal autonomo rispetto al contenuto vicino;
+- il reveal predefinito DEVE usare soltanto `opacity`;
+- NON DEVE usare `translate`, `scale`, `clip-path` o draw animation salvo eccezione documentata;
+- NON DEVE cambiare spacing, dimensioni, flow, grid, allineamento o box model;
+- se il divider nasce da un bordo che contribuisce alla geometria, preservare esattamente quella
+  geometria e animare una rappresentazione visuale sovrapposta/equivalente;
+- in reduced motion DEVE essere immediatamente visibile.
+
+Bordi funzionali o strutturali come focus, state, control boundary, image frame o map boundary non
+sono automaticamente divider editoriali e non devono ricevere questo trattamento senza motivo.
+
 ### Route
 
 Il reset di route non deve essere smooth.
@@ -867,9 +882,10 @@ DOVREBBE raggruppare nello stesso livello visuale:
 copyright · Privacy · Cookie · attribuzione Tretnix
 ```
 
-Su desktop gli elementi possono condividere una riga. Su mobile DEVONO poter andare a capo senza
-ridurre leggibilità, contrasto, touch target o focus. Non creare una colonna `Legale` separata se
-non aggiunge valore informativo reale.
+Su desktop gli elementi possono condividere una riga. Su mobile la fascia DEVE poter andare a capo
+senza ridurre leggibilità, contrasto, touch target o focus. `Privacy` e `Cookie` DEVONO però restare
+nello stesso gruppo non separabile: possono spostarsi insieme su una nuova riga, ma non finire su
+righe diverse. Non creare una colonna `Legale` separata se non aggiunge valore informativo reale.
 
 ### Trust strip e announcement bar
 

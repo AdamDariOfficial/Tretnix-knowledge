@@ -1,7 +1,7 @@
 # Tretnix Repository Index
 
-**Versione:** 2.1
-**Aggiornato:** 4 settembre 2026
+**Versione:** 2.2
+**Aggiornato:** 5 settembre 2026
 **Stato dell’inventario:** completo rispetto agli otto repository attualmente dichiarati
 
 Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit del codice.
@@ -354,14 +354,16 @@ Fino all'approvazione dello scope e alla successiva implementazione/verifica:
 | Piano | START |
 | Repository | `https://github.com/AdamDariOfficial/rito-studio-START.git` |
 | Deploy | non riconciliato in questa revisione Knowledge |
-| Stato | implementato; `main` verificato; freeze `34c13cd…` riportato dal candidate PLUS, con status locale START ancora da riallineare |
+| Stato | implementato e in evoluzione controllata; `main` verificato dopo il polish method/footer/FAQ; nessun nuovo freeze/tag creato dal task del 5 settembre |
 | Branch principale | `main` |
-| Commit verificato | `34c13cd78255b7ac009533790329cada74ae9d8a` |
-| Ultima verifica repository | 13 agosto 2026 |
+| Commit verificato | `96e73492313e37689a1785b1e2762fff7611e828` |
+| Commit applicativo polish | `d235346ae19e9aa33f7306070a439a13a7a4507b` |
+| Pull request polish | `#12` |
+| Ultima verifica repository | 5 settembre 2026 |
 
 ### Ruolo nel lineage
 
-Fonte di riferimento Beauty & Wellness START per il lineage corrente. Il candidate PLUS registra `34c13cd…` come parent frozen, ma `docs/STATUS.md` del repository START conserva ancora una registrazione precedente non allineata; non promuovere questo stato a fonte canonica trasversale definitiva finché la riconciliazione locale non è chiusa.
+Implementation truth corrente di RITO Studio START per i nuovi interventi autorizzati. L'avanzamento di START a `96e734...` non riscrive retroattivamente il lineage già esistente di BUSINESS e BUSINESS PLUS: il parent storico `34c13cd...` registrato dai discendenti rimane evidenza del loro lineage finché un gate separato non autorizza un riallineamento.
 
 ---
 
@@ -470,7 +472,7 @@ Forno Lume START — frozen `a817903923c1bbfe177d8b59e70a4aa1137b7ab1`
         └── Forno Lume BUSINESS PLUS — bootstrap `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e`, lineage storico da `389bd1...`
 
 Beauty & Wellness v1.1
-└── RITO Studio START — `34c13cd78255b7ac009533790329cada74ae9d8a`
+└── RITO Studio START — current `main` `96e73492313e37689a1785b1e2762fff7611e828`; historical BUSINESS parent `34c13cd…`
     └── RITO Studio BUSINESS — `b95a63c6127d2bc1dd396d74b2dd25f87b952226`
         └── RITO Studio BUSINESS PLUS — remote `main` `eba1a2a91fd3a531b4a4667d038b631758d0a664`, live staging/E2E in progress
 
@@ -499,7 +501,7 @@ Home & Local Services v1.0
 | Motion e reveal editoriali Hospitality | `forno-lume-START` | canonico per il comportamento percepito |
 | Navbar Hospitality | `forno-lume-START` | canonico per il comportamento percepito |
 | Responsive Hospitality | `forno-lume-START` | canonico |
-| Qualità visuale Beauty & Wellness START | `rito-studio-START` | candidato di riferimento; riconciliazione parent status pendente |
+| Qualità visuale Beauty & Wellness START | `rito-studio-START` | candidato di riferimento; current `main` verificato a `96e734...`; lineage storico dei piani superiori separato |
 | Architettura multipagina Beauty & Wellness | `rito-studio-BUSINESS` | candidato di riferimento; riconciliazione parent status pendente |
 | Native AdminAuth + realtime BUSINESS PLUS | `rito-studio-BUSINESS-PLUS` | candidate in staging; non canonico finché E2E/security gate restano aperti |
 | Architettura multipagina Hospitality | `forno-lume-BUSINESS` | canonico sulla baseline frozen corrente |

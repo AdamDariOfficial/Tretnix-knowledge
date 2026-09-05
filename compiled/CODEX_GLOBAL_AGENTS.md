@@ -143,6 +143,7 @@ Record every check as:
 
 When relevant, consider:
 
+- exact layout preservation when refactoring editorial dividers;
 - typecheck;
 - lint;
 - tests;
@@ -200,6 +201,8 @@ https://tretnix.com
 ```
 
 Only “Tretnix” needs to be linked unless the approved design says otherwise. The link must remain discreet but perceivable, open in a new tab with `target="_blank"` and `rel="noopener noreferrer"`, indicate the new-tab behavior accessibly and preserve visible keyboard focus. A restrained external-link icon is allowed; decorative icons must be hidden from assistive technology.
+
+Editorial dividers/hairlines that participate in reveal must be independent opacity-only targets with zero spacing/layout/box-model change. In compact legal footers, `Privacy` and `Cookie` form a non-breaking pair that may wrap together but never split across lines.
 
 ## Public demo indexing
 

@@ -60,7 +60,7 @@ When a task involves routing, navigation or UI, consider:
 
 New routes open at the top immediately, while intentional same-page anchors may scroll smoothly. Cross-route section links navigate first and reach the section after mount. Do not disable browser scroll restoration broadly to hide routing defects.
 
-Keep structural layout containers static by default. Animate semantic editorial elements or small meaningful groups, use short stagger only when it improves reading order, and keep content visible with reduced motion. Hero sections, galleries and approved visual-first components may use a distinct documented treatment that preserves the client’s personality.
+Keep structural layout containers static by default. Animate semantic editorial elements or small meaningful groups, use short stagger only when it improves reading order, and keep content visible with reduced motion. Editorial dividers/hairlines that reveal are independent opacity-only targets and must preserve the existing spacing, geometry and box model exactly. Hero sections, galleries and approved visual-first components may use a distinct documented treatment that preserves the client’s personality.
 
 Agent coordination:
 
@@ -72,7 +72,7 @@ Agent coordination:
 
 Public-facing software is designed and developed by Tretnix. Do not add public references that attribute client software to ChatGPT, Lovable, Cursor, Codex, Claude Code or other AI tools.
 
-Client footers include the exact visible attribution “Progettato e sviluppato da Tretnix” linked to `https://tretnix.com`. Only “Tretnix” needs to be linked unless the approved design says otherwise. The discreet but perceivable link opens in a new tab with `target="_blank"` and `rel="noopener noreferrer"`, communicates that behavior accessibly and preserves visible keyboard focus. Decorative external-link icons are hidden from assistive technology.
+Client footers include the exact visible attribution “Progettato e sviluppato da Tretnix” linked to `https://tretnix.com`. Only “Tretnix” needs to be linked unless the approved design says otherwise. The discreet but perceivable link opens in a new tab with `target="_blank"` and `rel="noopener noreferrer"`, communicates that behavior accessibly and preserves visible keyboard focus. Decorative external-link icons are hidden from assistive technology. In compact legal footers, keep `Privacy` and `Cookie` in one non-breaking visual group; the pair may wrap together but must never split across lines.
 
 For public demos that are not real businesses, use `noindex, follow` on every public route and do not publish fictional commercial structured data. Allow only accurate generic `WebSite`, `WebPage`, `AboutPage`, `CollectionPage` and `ContactPage` markup, rendered deterministically and without route duplication.
 
