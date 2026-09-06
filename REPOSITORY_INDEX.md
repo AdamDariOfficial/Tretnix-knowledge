@@ -1,7 +1,7 @@
 # Tretnix Repository Index
 
-**Versione:** 2.2
-**Aggiornato:** 5 settembre 2026
+**Versione:** 2.3
+**Aggiornato:** 6 settembre 2026
 **Stato dell’inventario:** completo rispetto agli otto repository attualmente dichiarati
 
 Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit del codice.
@@ -353,17 +353,26 @@ Fino all'approvazione dello scope e alla successiva implementazione/verifica:
 | Categoria | sito Beauty & Wellness START |
 | Piano | START |
 | Repository | `https://github.com/AdamDariOfficial/rito-studio-START.git` |
-| Deploy | non riconciliato in questa revisione Knowledge |
-| Stato | implementato e in evoluzione controllata; `main` verificato dopo il polish method/footer/FAQ; nessun nuovo freeze/tag creato dal task del 5 settembre |
+| Deploy | non riconciliato dopo il freeze finale; nessuna verifica production-origin post-PR `#13` dichiarata |
+| Stato | chiuso e congelato sulla baseline finale |
 | Branch principale | `main` |
-| Commit verificato | `96e73492313e37689a1785b1e2762fff7611e828` |
-| Commit applicativo polish | `d235346ae19e9aa33f7306070a439a13a7a4507b` |
-| Pull request polish | `#12` |
-| Ultima verifica repository | 5 settembre 2026 |
+| Baseline applicativa pre-closure | `523958b51e0d952c963380e6d384365b286953ca` |
+| Baseline frozen canonica | `74ee03c4d39a974872f94f53d14ec2873815ccf7` |
+| Tag annotato remoto | `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7` |
+| Commit candidate final interaction polish | `2774df1054b149d9c88f02f8301cfd7883d2d200` |
+| Pull request final interaction polish | `#13` |
+| Pull request documentation closure | `#14` |
+| Ultima verifica repository | 6 settembre 2026 |
 
 ### Ruolo nel lineage
 
-Implementation truth corrente di RITO Studio START per i nuovi interventi autorizzati. L'avanzamento di START a `96e734...` non riscrive retroattivamente il lineage già esistente di BUSINESS e BUSINESS PLUS: il parent storico `34c13cd...` registrato dai discendenti rimane evidenza del loro lineage finché un gate separato non autorizza un riallineamento.
+È la baseline canonica Beauty & Wellness START per i nuovi confronti di famiglia. Il freeze
+autorevole è il tag annotato remoto `family-start-v1.0`, che dereferenzia esattamente a
+`74ee03c4d39a974872f94f53d14ec2873815ccf7`.
+
+I parent START storici già registrati nei repository BUSINESS e BUSINESS PLUS restano evidenza
+del lineage precedente e non vengono riscritti retroattivamente. Per i nuovi pass BUSINESS,
+invece, il confronto di parità deve usare il nuovo tag frozen.
 
 ---
 
@@ -378,14 +387,25 @@ Implementation truth corrente di RITO Studio START per i nuovi interventi autori
 | Piano | BUSINESS |
 | Repository | `https://github.com/AdamDariOfficial/rito-studio-BUSINESS.git` |
 | Deploy | non riconciliato in questa revisione Knowledge |
-| Stato | implementato; `main` verificato; freeze `b95a63c…` riportato dal candidate PLUS, con documentazione parent da riallineare |
+| Stato | implementato; repository esistente autorizzato alla riconciliazione contro il nuovo START frozen |
 | Branch principale | `main` |
-| Commit verificato | `b95a63c6127d2bc1dd396d74b2dd25f87b952226` |
-| Ultima verifica repository | 13 agosto 2026 |
+| Baseline storica registrata prima del public-parity pass | `b95a63c6127d2bc1dd396d74b2dd25f87b952226` |
+| Commit `main` remoto verificato corrente | `b6a82f918370f730681e9e0c0572a7a653d2dfeb` |
+| Ultima pull request verificata | `#8` — `feat(rito-business): save public parity progress` |
+| Ultima verifica repository | 6 settembre 2026 |
 
 ### Ruolo nel lineage
 
-Fonte di riferimento Beauty & Wellness BUSINESS e parent del candidate BUSINESS PLUS. Il candidate PLUS registra `b95a63c…` come frozen; la documentazione BUSINESS contiene ancora evidenza precedente che non dichiara quel freeze nello stesso pass. Preservare le differenze visuali intenzionali rispetto ad Hospitality e chiudere la riconciliazione parent prima di promuovere lo stato a canonico trasversale definitivo.
+È il repository BUSINESS operativo esistente e non deve essere ricreato. Il prossimo pass deve
+confrontare `main@b6a82f918370f730681e9e0c0572a7a653d2dfeb` con
+`rito-studio-START@family-start-v1.0`, distinguendo invarianti ereditate, differenze BUSINESS
+intenzionali, regressioni e nuovi requisiti.
+
+Restano intenzionali finché una decisione successiva non le modifica: architettura multipagina,
+dettaglio trattamento query-driven, assenza delle route `/team` e `/prenota`, booking tramite
+WhatsApp + telefono e contatto tramite email + telefono. La documentazione BUSINESS contiene
+ancora riferimenti storici a precedenti baseline START/BUSINESS: vanno riconciliati prima di
+ulteriori interventi di parità, senza riscrivere il lineage storico di BUSINESS PLUS.
 
 ---
 
@@ -430,11 +450,11 @@ BUSINESS PLUS non è ancora fonte canonica trasversale per Native AdminAuth o re
 | Deploy | non applicabile |
 | Stato | operativo |
 | Branch principale | `main` |
-| Baseline `main` verificata prima di questa riconciliazione | `f288304016c245746ba9e7290241d0248acccab4` |
+| Baseline `main` di partenza verificata per questa riconciliazione | `319393c5a241b359fa2fee3a9adf55f9af8dc3ad` |
 | Snapshot storico usato per la patch di governance del 26 luglio | `Tretnix-knowledge-de29f4f3.zip` |
 | SHA-256 snapshot storico | `3cf34a6f145a1834d211f65917950dc92e940f259d7585f16342d1bb00730032` |
 | Commit della patch di governance | da registrare dopo merge |
-| Ultima revisione | 4 settembre 2026 — riconciliazione freeze Forno Lume BUSINESS preparata sulla baseline Knowledge `f288304016c245746ba9e7290241d0248acccab4`; nuovo commit canonico da registrare soltanto dopo review e merge |
+| Ultima revisione | 6 settembre 2026 — riconciliazione RITO START final freeze e BUSINESS current baseline preparata sulla baseline Knowledge `319393c5a241b359fa2fee3a9adf55f9af8dc3ad`; nuovo commit canonico da registrare soltanto dopo review e merge |
 
 ### Ruolo canonico
 
@@ -472,9 +492,9 @@ Forno Lume START — frozen `a817903923c1bbfe177d8b59e70a4aa1137b7ab1`
         └── Forno Lume BUSINESS PLUS — bootstrap `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e`, lineage storico da `389bd1...`
 
 Beauty & Wellness v1.1
-└── RITO Studio START — current `main` `96e73492313e37689a1785b1e2762fff7611e828`; historical BUSINESS parent `34c13cd…`
-    └── RITO Studio BUSINESS — `b95a63c6127d2bc1dd396d74b2dd25f87b952226`
-        └── RITO Studio BUSINESS PLUS — remote `main` `eba1a2a91fd3a531b4a4667d038b631758d0a664`, live staging/E2E in progress
+└── RITO Studio START — frozen `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7`
+    └── RITO Studio BUSINESS — current remote `main` `b6a82f918370f730681e9e0c0572a7a653d2dfeb`; reconciliation against frozen START authorized
+        └── RITO Studio BUSINESS PLUS — remote `main` `eba1a2a91fd3a531b4a4667d038b631758d0a664`, historical parent lineage preserved; live staging/E2E state unchanged by this gate
 
 Professional Services v1.0
 └── QUADRA Studio START
@@ -501,8 +521,8 @@ Home & Local Services v1.0
 | Motion e reveal editoriali Hospitality | `forno-lume-START` | canonico per il comportamento percepito |
 | Navbar Hospitality | `forno-lume-START` | canonico per il comportamento percepito |
 | Responsive Hospitality | `forno-lume-START` | canonico |
-| Qualità visuale Beauty & Wellness START | `rito-studio-START` | candidato di riferimento; current `main` verificato a `96e734...`; lineage storico dei piani superiori separato |
-| Architettura multipagina Beauty & Wellness | `rito-studio-BUSINESS` | candidato di riferimento; riconciliazione parent status pendente |
+| Qualità visuale Beauty & Wellness START | `rito-studio-START` | canonico sulla baseline frozen `family-start-v1.0` → `74ee03c...`; lineage storico dei piani superiori preservato |
+| Architettura multipagina Beauty & Wellness | `rito-studio-BUSINESS` | candidato di riferimento su `main@b6a82f...`; riconciliazione contro il nuovo START frozen autorizzata |
 | Native AdminAuth + realtime BUSINESS PLUS | `rito-studio-BUSINESS-PLUS` | candidate in staging; non canonico finché E2E/security gate restano aperti |
 | Architettura multipagina Hospitality | `forno-lume-BUSINESS` | canonico sulla baseline frozen corrente |
 | Routing, history e scroll multipagina | `forno-lume-BUSINESS` | canonico per il pattern verificato |
@@ -553,9 +573,12 @@ Per tutti i progetti: nessun URL, branch, commit, deploy, test o verifica viene 
 2. mantenere Forno Lume BUSINESS congelato sulla baseline `9bc33cd5737af7763fe9c61ddc52eb7a606fafea`;
 3. mantenere Package D BUSINESS separato e non autorizzato dal final polish;
 4. non modificare il lineage esistente di Forno Lume BUSINESS PLUS senza gate separato;
-5. proseguire RITO Studio BUSINESS PLUS e Tretnix.com soltanto nei rispettivi perimetri autorizzati;
-6. riconciliare nei documenti progetto e Knowledge soltanto evidenze realmente ottenute;
-7. aggiornare il registro dei pattern canonici quando cambiano baseline o gate verificati.
+5. mantenere RITO Studio START congelato sul tag `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7`;
+6. riconciliare RITO Studio BUSINESS `main@b6a82f918370f730681e9e0c0572a7a653d2dfeb` contro il nuovo START frozen prima di ulteriori pass di parità;
+7. non modificare RITO Studio BUSINESS PLUS per effetto di questa riconciliazione e preservarne il lineage storico;
+8. proseguire Tretnix.com soltanto nel perimetro già autorizzato;
+9. riconciliare nei documenti progetto e Knowledge soltanto evidenze realmente ottenute;
+10. aggiornare il registro dei pattern canonici quando cambiano baseline o gate verificati.
 
 Le vulnerabilità critiche o alte rilevate devono essere segnalate immediatamente e prioritarizzate.
 

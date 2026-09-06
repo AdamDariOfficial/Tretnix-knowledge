@@ -1,7 +1,7 @@
 # Tretnix Current State
 
-**Versione:** 1.11
-**Aggiornato:** 5 settembre 2026
+**Versione:** 1.12
+**Aggiornato:** 6 settembre 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
 ---
@@ -22,7 +22,7 @@
 | Campo | Valore |
 |---|---|
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
-| Baseline `main` verificata per questa riconciliazione | `f288304016c245746ba9e7290241d0248acccab4` |
+| Baseline `main` di partenza verificata per questa riconciliazione | `319393c5a241b359fa2fee3a9adf55f9af8dc3ad` |
 | Snapshot canonico ricevuto | `Tretnix-knowledge-de29f4f3.zip` |
 | Development pack | acquisito, verificato, estratto e integrato in `main` |
 | Family kit | Beauty v1.1, Professional v1.0 e Home v1.0 presenti |
@@ -149,31 +149,41 @@ Servono PR, branch, commit completo, output dei controlli e report hydration per
 | Campo | Valore |
 |---|---|
 | Specifica famiglia | `family-kits/beauty-wellness-v1.1/` |
-| START | `AdamDariOfficial/rito-studio-START`, `main` verificato a `96e73492313e37689a1785b1e2762fff7611e828`; PR `#12` method/footer/FAQ polish unita; nessun nuovo freeze/tag creato da questo task |
-| BUSINESS | `AdamDariOfficial/rito-studio-BUSINESS`, `main` verificato a `b95a63c6127d2bc1dd396d74b2dd25f87b952226` |
+| START | `AdamDariOfficial/rito-studio-START`, congelato sul tag annotato remoto `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7`; `main` verificato sullo stesso commit |
+| START closure | PR `#13` final interaction polish unita; PR `#14` final freeze documentation closure unita; tag remoto verificato il 6 settembre 2026 |
+| BUSINESS | `AdamDariOfficial/rito-studio-BUSINESS`, `main` remoto verificato a `b6a82f918370f730681e9e0c0572a7a653d2dfeb`; repository esistente da riconciliare contro il nuovo freeze START |
 | BUSINESS PLUS | `AdamDariOfficial/rito-studio-BUSINESS-PLUS`, remote `main` verificato a `eba1a2a91fd3a531b4a4667d038b631758d0a664` |
 | Working branch PLUS riportata | `feat/rito-business-plus-complete` con delta controllato ancora non integrato |
 | Backend live PLUS | staging Cloudflare con D1 + Durable Objects + rate limiting + Native RITO AdminAuth |
 | Auth staging | login nativo diretto raggiungibile; rifiuto credenziali non valide nel ramo normale; credenziale corretta ancora rifiutata, sessione non certificata |
 | E2E live | `/consulenza` → D1 → admin realtime/reconnect ancora da chiudere con evidenza diretta |
 | Produzione PLUS | `NOT AUTHORIZED` |
-| Evidenza | `VR` per repository e HEAD remoti; evidenza operatore/staging da formalizzare nel repository PLUS prima della chiusura |
-| Lineage/freeze reconciliation | Il `main` corrente START è `96e734...`. BUSINESS/PLUS conservano i parent storici registrati (`START_FROZEN_34C13CD`, `BUSINESS_FROZEN_B95A63C`) e non vengono riallineati retroattivamente da questo avanzamento START. |
+| Evidenza | `VR` per freeze commit/tag START e HEAD remoti START/BUSINESS; `HR` per lint/build/browser QA finali riportati dal proprietario; stato operatore/staging PLUS da formalizzare nel repository PLUS prima della chiusura |
+| Lineage/freeze reconciliation | Il nuovo START canonico è `family-start-v1.0` → `74ee03c...`. BUSINESS deve riconciliare il repository esistente contro questo freeze senza ricrearlo. I parent storici già registrati da BUSINESS e BUSINESS PLUS restano evidenza del lineage storico e non vengono riscritti retroattivamente da questo gate. |
 
-Il polish START del 5 settembre 2026 ha integrato con PR `#12` il commit applicativo
-`d235346ae19e9aa33f7306070a439a13a7a4507b`; il merge commit
-`96e73492313e37689a1785b1e2762fff7611e828` è la nuova implementation baseline corrente di START.
-Il task non ha creato un nuovo freeze né un nuovo tag. Gli output locali riportati dal proprietario
-registrano lint con `0` errori e `6` warning Fast Refresh preesistenti, build client/SSR/Nitro e
-browser QA del polish; queste evidenze restano `HR`.
+Il ciclo finale START si è chiuso tra il 5 e il 6 settembre 2026. La PR `#13` ha integrato il
+candidate `2774df1054b149d9c88f02f8301cfd7883d2d200` e portato la baseline applicativa a
+`523958b51e0d952c963380e6d384365b286953ca`. La PR documentale `#14` ha prodotto il merge
+`74ee03c4d39a974872f94f53d14ec2873815ccf7`, poi identificato e pubblicato tramite tag annotato
+`family-start-v1.0`. Il tag remoto dereferenzia esattamente allo stesso commit.
 
-L'avanzamento di START non riscrive retroattivamente il lineage già esistente di BUSINESS e
-BUSINESS PLUS: i parent storici già registrati dai discendenti restano evidenza del loro lineage
-finché un gate separato non autorizza un riallineamento.
+Gli output finali riportati dal proprietario registrano `git diff --check`, lint con `0` errori e
+`6` warning Fast Refresh ereditati, build client/SSR/Nitro e browser QA finale approvato. Queste
+evidenze di esecuzione restano `HR`; commit, PR, merge e tag sono `VR`. Non è registrata una
+verifica production-origin successiva alla PR `#13`.
 
-`TRX-DEC-033` descrive il gate storico di avvio START del 27 luglio. Lo stato reale successivo di START, BUSINESS e BUSINESS PLUS lo ha superato; non deve essere usato per ribloccare retroattivamente il lavoro PLUS esplicitamente autorizzato. Il dettaglio operativo resta nei documenti del repository RITO BUSINESS PLUS.
+Il `main` remoto corrente di RITO Studio BUSINESS è
+`b6a82f918370f730681e9e0c0572a7a653d2dfeb`, successivo alla baseline `b95a63c...` ancora
+presente in parte della documentazione storica. Il prossimo gate BUSINESS è una riconciliazione
+read-only contro il nuovo START frozen, separando invarianti ereditate, differenze BUSINESS
+intenzionali, regressioni e nuovi requisiti. Il repository BUSINESS non deve essere ricreato.
 
-La scelta Cloudflare è provider-specifica per il fit corrente e segue `TRX-DEC-035`; non costituisce un vincolo per l'intera famiglia Beauty & Wellness.
+`TRX-DEC-033` resta un gate storico di avvio. `TRX-DEC-038` e `TRX-DEC-039` governano i pattern
+condivisi finali relativi ai divider editoriali e alla coppia legale `Privacy` + `Cookie`. Questo
+aggiornamento non autorizza modifiche a RITO Studio BUSINESS PLUS.
+
+La scelta Cloudflare resta provider-specifica per il fit del candidate PLUS e segue
+`TRX-DEC-035`; non costituisce un vincolo per l'intera famiglia Beauty & Wellness.
 
 ---
 
@@ -211,8 +221,11 @@ La scelta Cloudflare è provider-specifica per il fit corrente e segue `TRX-DEC-
 2. mantenere Forno Lume BUSINESS congelato sulla baseline corrente `9bc33cd5737af7763fe9c61ddc52eb7a606fafea`; riaprirlo soltanto per bug, regressione, sicurezza o requisito approvato;
 3. mantenere il Package D BUSINESS separato e pendente: il final polish completato non lo autorizza né lo assorbe;
 4. non modificare retroattivamente il lineage già esistente di Forno Lume BUSINESS PLUS, che continua a derivare dal parent storico `389bd1...`; eventuale riallineamento futuro richiede un gate separato;
-5. proseguire Tretnix.com e RITO Studio soltanto nei rispettivi perimetri già autorizzati e con evidenza propria;
-6. aggiornare questa Knowledge quando cambiano baseline, gate, PR, validation o stato di deploy verificato.
+5. mantenere RITO Studio START congelato sul tag remoto verificato `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7`;
+6. riconciliare RITO Studio BUSINESS `main@b6a82f918370f730681e9e0c0572a7a653d2dfeb` contro il nuovo START frozen, preservando le differenze BUSINESS intenzionali e senza ricreare il repository;
+7. non riallineare o modificare RITO Studio BUSINESS PLUS per effetto di questo gate;
+8. proseguire Tretnix.com soltanto nel perimetro già autorizzato e con evidenza propria;
+9. aggiornare questa Knowledge quando cambiano baseline, gate, PR, validation o stato di deploy verificato.
 
 ---
 
