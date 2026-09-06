@@ -1,7 +1,7 @@
 # Tretnix Master Context
 
-**Versione:** 1.6
-**Aggiornato:** 13 agosto 2026
+**Versione:** 1.7
+**Aggiornato:** 6 settembre 2026
 **Stato:** canonico
 
 ---
@@ -462,7 +462,7 @@ Il primo verticale operativo è Food & Hospitality.
 
 La mappa corrente comprende inoltre:
 
-- Beauty & Wellness, con specifica `v1.1` completa in `family-kits/beauty-wellness-v1.1/` e lineage reale `RITO Studio START → BUSINESS → BUSINESS PLUS`; BUSINESS PLUS è autorizzato in staging con gate auth/realtime/E2E ancora aperti e produzione non autorizzata;
+- Beauty & Wellness, con specifica `v1.1` completa in `family-kits/beauty-wellness-v1.1/` e lineage reale `RITO Studio START → BUSINESS → BUSINESS PLUS`; START è frozen su `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7`, BUSINESS corrente è `main@b6a82f918370f730681e9e0c0572a7a653d2dfeb` e deve essere riconciliato contro tale freeze; lo stato BUSINESS PLUS resta governato dai propri gate;
 - Professional Services, con specifica `v1.0` completa in `family-kits/professional-services-v1.0/` e concept `QUADRA Studio`;
 - Home & Local Services, con specifica `v1.0` completa in `family-kits/home-local-services-v1.0/` e concept `NODO Servizi`.
 
@@ -596,22 +596,41 @@ I dettagli del contratto e delle policy sono in `HOSPITALITY_FAMILY.md`.
 Ruolo:
 
 - primo progetto Beauty & Wellness;
-- piano START;
-- progetto preparato offline ma non ancora implementato.
+- baseline canonica START per identità, composizione, comportamento condiviso e nuovi confronti START → BUSINESS;
+- piano START chiuso e congelato.
 
-Stato corrente:
+Stato verificato:
 
 ```text
-PREPARATION_COMPLETE
-IMPLEMENTATION_NOT_STARTED
+FROZEN
+tag: family-start-v1.0
+commit: 74ee03c4d39a974872f94f53d14ec2873815ccf7
 ```
 
-Prima di qualsiasi chiamata a Lovable sono obbligatori entrambi i gate:
+Il tag annotato remoto `family-start-v1.0` dereferenzia esattamente al merge della closure finale.
+La baseline applicativa precedente alla closure è
+`523958b51e0d952c963380e6d384365b286953ca`. Non è registrata una nuova verifica
+production-origin successiva al final interaction polish.
 
-1. conferma dell’abbonamento Lovable attivo;
-2. autorizzazione esplicita all’avvio di `RITO Studio START`.
+### RITO Studio BUSINESS
 
-Prima dei gate non creare progetti, non consumare crediti, non creare repository remote, non pubblicare e non iniziare BUSINESS. La governance è in `BEAUTY_WELLNESS_FAMILY.md`; la specifica completa è in `family-kits/beauty-wellness-v1.1/`.
+Ruolo:
+
+- evoluzione multipagina Beauty & Wellness dello START;
+- repository operativo esistente, non da ricreare;
+- fonte project-specific per catalogo e dettaglio trattamento query-driven, gallery/lightbox e routing multipagina RITO.
+
+Stato corrente verificato:
+
+```text
+main: b6a82f918370f730681e9e0c0572a7a653d2dfeb
+reconciliation source: rito-studio-START@family-start-v1.0
+```
+
+La riconciliazione deve preservare le differenze BUSINESS intenzionali, incluse l'assenza delle
+route `/team` e `/prenota`, il dettaglio trattamento query-driven, booking tramite WhatsApp +
+telefono e contatto tramite email + telefono. Backend, database, auth, pagamenti e modifiche
+BUSINESS PLUS richiedono gate separati.
 
 ---
 
@@ -829,7 +848,7 @@ Stato: documentazione acquisita; verifica finale in corso.
 
 - development pack del 25 luglio acquisito, verificato ed estratto;
 - Beauty v1.1, Professional v1.0 e Home v1.0 versionati come family kit;
-- `RITO Studio START` resta fermo fino ai due gate;
+- `RITO Studio START` è congelato su `family-start-v1.0`; il prossimo pass Beauty è la riconciliazione controllata del repository RITO Studio BUSINESS esistente contro tale baseline;
 - eseguire la prova di ricostruzione senza chat dopo il merge;
 - conservare offline lo ZIP originale;
 - usare `CURRENT_STATE.md` per lo stato trasversale e le issue per i task.
@@ -854,7 +873,7 @@ La priorità attuale è:
 7. proseguire i finding Tretnix.com uno per branch;
 8. mantenere Forno Lume START chiuso e congelato;
 9. preservare i pattern BUSINESS approvati e trattare Package D separatamente;
-10. mantenere `RITO Studio START` in `IMPLEMENTATION_NOT_STARTED` finché non risultano entrambi i gate.
+10. mantenere RITO Studio START congelato su `family-start-v1.0` e riconciliare RITO Studio BUSINESS `main@b6a82f918370f730681e9e0c0572a7a653d2dfeb` contro tale baseline prima di ulteriori pass di parità, senza coinvolgere BUSINESS PLUS.
 
 ---
 

@@ -1,7 +1,7 @@
 # Tretnix Beauty & Wellness Family
 
-**Versione:** 1.2
-**Aggiornato:** 13 agosto 2026
+**Versione:** 1.3
+**Aggiornato:** 6 settembre 2026
 **Stato:** canonico per governance e indice; specifica completa acquisita in `family-kits/beauty-wellness-v1.1/`
 
 ---
@@ -32,10 +32,10 @@ Non duplicare o ricostruire da memoria i dettagli presenti nel family kit. In ca
 | Descriptor | `Beauty & Care Atelier` |
 | Tagline | `La bellezza, nel suo ritmo.` |
 | Specifica famiglia | `v1.1`, approvata 25 luglio 2026 |
-| RITO START | repository reale; `main` verificato a `34c13cd78255b7ac009533790329cada74ae9d8a` |
-| RITO BUSINESS | repository reale; `main` verificato a `b95a63c6127d2bc1dd396d74b2dd25f87b952226` |
-| RITO BUSINESS PLUS | repository reale; remote `main` verificato a `eba1a2a91fd3a531b4a4667d038b631758d0a664`; sviluppo/live staging successivi ancora da integrare |
-| Stato famiglia | START e BUSINESS implementati; BUSINESS PLUS esplicitamente autorizzato e in chiusura tecnica/staging; freeze del lineage riportato dal candidate PLUS, con allineamento documentale dei parent ancora pendente |
+| RITO START | repository reale; congelato sul tag annotato remoto `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7` |
+| RITO BUSINESS | repository reale; `main` remoto verificato a `b6a82f918370f730681e9e0c0572a7a653d2dfeb`; riconciliazione contro il nuovo START frozen autorizzata |
+| RITO BUSINESS PLUS | repository reale; remote `main` verificato a `eba1a2a91fd3a531b4a4667d038b631758d0a664`; stato e lineage non modificati da questo gate |
+| Stato famiglia | START congelato formalmente; BUSINESS implementato e da riconciliare sul nuovo freeze senza ricreazione; BUSINESS PLUS resta governato dai propri gate e dal proprio lineage storico |
 
 La specifica Beauty & Wellness v1.1 continua a governare identità, design e principi della famiglia. Il dettaglio dello stato di ciascun progetto vive nel relativo repository e in `CURRENT_STATE.md`; non ricostruirlo da questa baseline storica.
 
@@ -173,6 +173,12 @@ demo
 
 BUSINESS non include di default agenda live, pagamenti, account, pacchetti, fidelity o gestionale.
 
+Nel repository RITO Studio BUSINESS corrente, decisioni project-specific successive alla specifica
+generica hanno consolidato un dettaglio trattamento query-driven dentro `/trattamenti`, hanno
+rimosso `/team` e `/prenota` dalla base attiva e hanno definito `booking = WhatsApp + telefono` e
+`contact = email + telefono`. Queste differenze sono intenzionali e vanno preservate durante la
+riconciliazione con lo START frozen, salvo nuova decisione approvata.
+
 Le route e il contratto di eredità sono in:
 
 ```text
@@ -228,7 +234,7 @@ Per il lavoro corrente:
 
 - preservare la specifica Beauty & Wellness v1.1 e le baseline verificate;
 - usare i documenti del repository RITO BUSINESS PLUS per scope, sicurezza, live backend e gate di staging;
-- trattare le dichiarazioni di freeze dei parent come evidenza da riallineare nei rispettivi repository prima di promuoverle a stato canonico trasversale definitivo;
+- usare `rito-studio-START@family-start-v1.0` come baseline START frozen canonica per i nuovi confronti; riconciliare il repository BUSINESS esistente contro tale baseline senza riscrivere i parent storici già registrati dai discendenti;
 - non estendere automaticamente lo scope PLUS a CRM, pagamenti, agenda o altre funzionalità non approvate;
 - non autorizzare produzione per inferenza;
 - mantenere Cloudflare come provider del candidate corrente senza trasformarlo in dipendenza di dominio o standard obbligatorio della famiglia;
@@ -291,7 +297,7 @@ specifica Beauty v1.1
 → verifiche disponibili
 → browser QA
 → freeze START
-→ SHA + tag beauty-start-v1.0
+→ SHA + tag family-start-v1.0
 → BUSINESS derivato dallo START
 ```
 
