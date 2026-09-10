@@ -107,7 +107,11 @@ Hours:
 - domenica–lunedì chiuso
 ```
 
-Do not invent reviews, ratings, awards, medical claims, guarantees, staff credentials or real addresses.
+Synthetic reviews may be visible only in a Tretnix portfolio demo when explicitly modeled as demo
+fixtures: use neutral wording, no real-person or platform attribution, no fake profile/review URLs,
+and no commercial review structured data. Replace them with authentic reviews or disable them for
+a real client. Do not invent ratings as commercial claims, awards, medical claims, guarantees,
+staff credentials or real addresses.
 
 Voice: calm, precise, concrete, sensory and contemporary. Use short sentences, realistic benefits and process details. Avoid exaggerated luxury, “best version of you”, guaranteed results, therapeutic claims and generic spa clichés.
 

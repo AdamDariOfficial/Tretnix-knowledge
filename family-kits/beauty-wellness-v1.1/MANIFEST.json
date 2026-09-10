@@ -26,8 +26,8 @@
     },
     {
       "path": "compiled/LOVABLE_START_PROJECT_KNOWLEDGE.md",
-      "size": 8183,
-      "sha256": "e7367018810daf3ed6d882674b60dd942eaf7fa1d14f85832b1db35cb9c7df4a"
+      "size": 8506,
+      "sha256": "c30e582108ae61698b0cf83ee329e9f40b0dcb0f13a064b1283a24caa1d80b61"
     },
     {
       "path": "docs/ANIMATIONS.md",
@@ -56,18 +56,18 @@
     },
     {
       "path": "docs/CONTENT.md",
-      "size": 8541,
-      "sha256": "f2708f04bf357e1d3f445dec8af7beb2f821f37101e8685390b39a5686260d75"
+      "size": 8888,
+      "sha256": "fe29d0d0e008e1618d7934496602939445abfc859d1b04e7dca41ceebc63ad25"
     },
     {
       "path": "docs/DECISIONS.md",
-      "size": 3705,
-      "sha256": "fe4a5181f77c3844d72ad8e7912f847f3ed6f5b5c13656b9721b65dae1fda647"
+      "size": 4015,
+      "sha256": "c4df2bbdab22352fa06e23fb3bf1d008208040b1af29ef7a935b1e33d49778e8"
     },
     {
       "path": "docs/DESIGN.md",
-      "size": 7597,
-      "sha256": "4472a1cf3fda02a154a85d72c5ba1f5908d690d272222d078dadbaec0252dd24"
+      "size": 7731,
+      "sha256": "cfbdde6fdd8dcd0e4819e59b2b62de23f8a6edf1266c5eb1eb8abb0238bb5a0b"
     },
     {
       "path": "docs/PRELAUNCH_READINESS_REVIEW.md",
@@ -76,8 +76,8 @@
     },
     {
       "path": "docs/PRODUCT.md",
-      "size": 8599,
-      "sha256": "91f24435ea84696950be282dbca0b099d39192ea4f44d0092397bba0c92d82ea"
+      "size": 8874,
+      "sha256": "01d86a3b41609f5a77b8a5d55111c29d5e71b00c04072c17a5a26a3979c92182"
     },
     {
       "path": "docs/REPOSITORY_BOOTSTRAP.md",
@@ -86,8 +86,8 @@
     },
     {
       "path": "docs/ROUTES.md",
-      "size": 5505,
-      "sha256": "99ef4ca2cc534e5b2a2f30e3c8d8f17be4a7c70a8f72a10ca38e7b0e65462ab9"
+      "size": 5736,
+      "sha256": "9f34fb2b5ad57201b223e5f4e418749939a2f383481989e0a9643293d3bdf24b"
     },
     {
       "path": "docs/START_BUSINESS_CONTRACT.md",
@@ -101,8 +101,8 @@
     },
     {
       "path": "docs/TESTING.md",
-      "size": 5144,
-      "sha256": "208efe854d7da4eb0acea8dbb941a513a613945319fed79c6534ab73a527a762"
+      "size": 5556,
+      "sha256": "3eef1ccf0e2fd5e03eb276b8df6e4f099df1fcb090beb3995202387e04f09e23"
     },
     {
       "path": "docs/VERTICAL_ADAPTERS.md",

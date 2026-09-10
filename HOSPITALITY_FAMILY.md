@@ -1,7 +1,7 @@
 # Tretnix Hospitality Family
 
-**Versione:** 1.4
-**Aggiornato:** 4 settembre 2026
+**Versione:** 1.5
+**Aggiornato:** 9 settembre 2026
 **Stato:** canonico per la famiglia Forno Lume
 
 ---
@@ -61,7 +61,8 @@ post-merge deployment verification: not verified
 - qualità mobile;
 - comportamento responsive finalizzato tra telefono, tablet e desktop;
 - map consent e proporzioni responsive;
-- review surface opzionale: dati autentici in produzione, fixture fittizie soltanto in development;
+- review surface configurabile: fixture sintetiche pubbliche nelle portfolio demo secondo
+  `TRX-DEC-040`, dati autentici nei siti cliente reali;
 - densità navbar e breakpoint scelti in base al contenuto reale della singola variante.
 
 Il ciclo finale START del 27–28 agosto è il riferimento percepito più recente. I breakpoint esatti, la struttura single-page e le CTA specifiche non sono automaticamente obbligatori per BUSINESS: devono essere adattati alla sua architettura multipagina e verificati visivamente.
@@ -189,7 +190,9 @@ Forno Lume START definisce il comportamento percepito. Forno Lume BUSINESS può 
 - `prefers-reduced-motion` mantiene tutti i contenuti visibili e funzionali.
 - Hover e focus non devono interferire con il transform dei Reveal.
 - Drawer, lightbox e altri dialog devono preservare focus, Escape, inertness, scroll lock e focus return.
-- Le superfici pubbliche di recensioni o rating non devono presentare dati fittizi come recensioni reali o come dati Google autentici. Fixture fittizie sono consentite soltanto in preview development non pubblicata come dato reale.
+- Le portfolio demo possono mostrare recensioni sintetiche secondo `TRX-DEC-040` quando il modello
+  distingue esplicitamente modalità `demo` e `authentic`; non devono presentarle come recensioni
+  reali o Google, né collegarle a falsi profili o URL di recensione.
 - I breakpoint responsive sono scelti in base alla composizione e alla densità effettiva: un breakpoint corretto per START non viene copiato automaticamente in BUSINESS.
 
 ---
@@ -333,6 +336,12 @@ Il Package D di BUSINESS resta pendente e separato secondo `TRX-DEC-020`; il boo
 ## 5. Policy demo e indicizzazione
 
 Le demo Hospitality devono essere pubblicamente consultabili ma non devono essere presentate ai motori di ricerca come attività locali reali.
+
+Le recensioni sintetiche possono essere visibili nell'interfaccia delle portfolio demo secondo
+`TRX-DEC-040`. Devono usare wording neutro, fixture create per la demo e una modalità typed distinta
+dalle recensioni autentiche. Non possono essere attribuite a piattaforme terze né collegate a
+profili o recensioni falsi. Quando il contesto non rende evidente la natura del progetto, usare una
+indicazione discreta equivalente a `Contenuti dimostrativi`.
 
 ### Robots
 

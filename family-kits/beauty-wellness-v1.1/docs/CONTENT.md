@@ -539,7 +539,11 @@ Questa è una demo Tretnix. Nessun dato è stato inviato.
 - Usare `.example` per email e dominio.
 - Non usare indirizzi reali.
 - Non integrare mappe verso luoghi reali.
-- Non mostrare recensioni inventate.
+- Le portfolio demo possono mostrare recensioni sintetiche create come fixture secondo
+  `TRX-DEC-040`; usare wording neutro, modalità typed `demo`, nessuna falsa attribuzione a persone
+  o piattaforme reali e nessun falso URL di profilo o recensione.
+- Nei siti cliente reali mostrare soltanto recensioni autentiche verificabili; sostituire o
+  disabilitare sempre le fixture demo.
 - Non mostrare contatori clienti.
 - Non mostrare certificazioni non possedute.
 - Segnalare nel footer che il concept è dimostrativo.

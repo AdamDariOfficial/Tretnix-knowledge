@@ -1,7 +1,7 @@
 # Tretnix Decision Log
 
-**Versione:** 1.13
-**Aggiornato:** 5 settembre 2026
+**Versione:** 1.14
+**Aggiornato:** 9 settembre 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
 
@@ -1335,6 +1335,11 @@ Prove di fiducia reali devono essere integrate nel punto editoriale appropriato 
 autentici, per esempio recensioni reali, credenziali verificate, informazioni operative o contenuti
 specifici del cliente.
 
+L'eccezione controllata definita da `TRX-DEC-040` consente recensioni sintetiche nelle portfolio
+demo Tretnix quando sono esplicitamente modellate come fixture dimostrative, non attribuite a
+piattaforme o persone reali e non presentate come prova sociale autentica. L'eccezione non rende
+le trust strip generiche un pattern START predefinito e non si applica ai siti cliente reali.
+
 Una announcement/promo bar è un componente funzionale distinto: può essere prevista quando serve
 comunicare promozioni, chiusure, novità o avvisi reali e configurabili. Non costituisce un sostituto
 automatico della trust strip e non viene aggiunta allo START senza uno scope esplicito; può essere
@@ -1435,3 +1440,43 @@ rimangano tutti sulla stessa riga.
 
 L'implementazione deve preservare touch target, focus, contrasto, ordine logico e identità visuale
 del progetto.
+
+---
+
+## TRX-DEC-040 — Recensioni sintetiche nelle portfolio demo pubbliche Tretnix
+
+**Stato:** approvata
+**Data:** 9 settembre 2026
+**Ambito:** portfolio demo pubbliche Tretnix che non rappresentano attività cliente reali
+
+### Decisione
+
+Le recensioni sintetiche possono essere visibili nelle portfolio demo Tretnix quando servono a
+rappresentare correttamente design e funzionamento del prodotto e rispettano tutte le condizioni
+seguenti:
+
+- il progetto è una portfolio demo Tretnix e non rappresenta un'attività cliente reale;
+- i contenuti sono creati espressamente come fixture dimostrative e non copiano recensioni reali;
+- le recensioni non sono attribuite falsamente a persone reali identificabili, Google, Trustpilot
+  o altre piattaforme;
+- non esistono falsi URL di profili, recensioni o Google Maps associati alle fixture;
+- l'interfaccia non presenta le fixture come testimonianze autentiche dell'attività demo e, quando
+  il contesto non è sufficiente, indica discretamente la natura dimostrativa;
+- il modello dati distingue esplicitamente recensioni demo sintetiche e recensioni cliente
+  autentiche;
+- nella conversione a cliente reale le fixture vengono sostituite con recensioni autentiche oppure
+  disabilitate;
+- le fixture non generano claim commerciali nei dati strutturati.
+
+### Vincolo sui dati strutturati
+
+Questa decisione non modifica `TRX-DEC-021`: una demo non deve pubblicare `review`, `rating`,
+`aggregateRating` o review claim di `LocalBusiness` nel JSON-LD. Restano ammessi soltanto i tipi
+non commerciali accurati già autorizzati, per esempio `WebSite`, `WebPage`, `AboutPage`,
+`CollectionPage`, `ContactPage` e `BreadcrumbList`. Tutte le route demo continuano a usare
+`noindex, follow`.
+
+### Limiti
+
+L'eccezione non autorizza awards, certificazioni, risultati, credenziali, metriche operative o
+claim medici inventati. Non autorizza falsa prova sociale nei siti cliente reali.

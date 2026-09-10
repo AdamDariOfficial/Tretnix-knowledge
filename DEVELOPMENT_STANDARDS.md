@@ -1,7 +1,7 @@
 # Tretnix Development Standards
 
-**Versione:** 1.11
-**Aggiornato:** 5 settembre 2026
+**Versione:** 1.12
+**Aggiornato:** 9 settembre 2026
 **Ambito:** tutti i progetti Tretnix, salvo eccezioni documentate
 
 Le parole **DEVE**, **NON DEVE**, **DOVREBBE** e **PUÒ** esprimono il livello di obbligatorietà.
@@ -846,6 +846,13 @@ Una demo pubblicamente consultabile che non rappresenta un’attività reale DEV
 - attivare entità commerciali soltanto dopo l’inserimento di dati reali, verificati e approvati.
 
 La presenza di contenuti commerciali visibili in una demo non autorizza automaticamente la loro pubblicazione come dati strutturati.
+
+Le portfolio demo possono mostrare recensioni sintetiche come fixture pubbliche esclusivamente
+secondo `TRX-DEC-040`. Il modello dati DEVE distinguere la modalità `demo` dalla modalità
+`authentic`; l'interfaccia non deve attribuire le fixture a Google o altre piattaforme e non deve
+includere falsi URL di profilo o recensione. La conversione a cliente reale DEVE sostituire tali
+fixture con recensioni autentiche o disabilitarle. La superficie visuale non autorizza mai
+`review`, `rating` o `aggregateRating` nel JSON-LD della demo.
 
 ---
 
