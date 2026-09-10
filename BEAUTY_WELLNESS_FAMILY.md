@@ -1,7 +1,7 @@
 # Tretnix Beauty & Wellness Family
 
-**Versione:** 1.3
-**Aggiornato:** 6 settembre 2026
+**Versione:** 1.4
+**Aggiornato:** 9 settembre 2026
 **Stato:** canonico per governance e indice; specifica completa acquisita in `family-kits/beauty-wellness-v1.1/`
 
 ---
@@ -214,7 +214,8 @@ family-kits/beauty-wellness-v1.1/docs/ANIMATIONS.md
 
 Sono vietati:
 
-- recensioni inventate;
+- recensioni inventate presentate come autentiche o attribuite falsamente a persone o piattaforme
+  reali; le fixture sintetiche delle portfolio demo sono ammesse soltanto secondo `TRX-DEC-040`;
 - metriche o risultati inventati;
 - certificazioni non verificate;
 - attività reali fittizie;

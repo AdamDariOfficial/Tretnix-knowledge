@@ -319,7 +319,8 @@ Una volta approvato lo START del cliente, il BUSINESS deve ereditarne esattament
 - layout SaaS con pricing cards;
 - card con icona, titolo e testo ripetute;
 - statistiche inventate;
-- recensioni finte;
+- recensioni sintetiche presentate come autentiche o attribuite a piattaforme reali; le fixture
+  controllate delle portfolio demo seguono `TRX-DEC-040`;
 - sezioni tutte centrate;
 - troppi testi in maiuscolo;
 - cursore custom;

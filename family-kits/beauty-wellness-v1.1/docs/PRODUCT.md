@@ -271,7 +271,8 @@ La famiglia mantiene il sistema tecnico, ma il cliente reale riceve un adattamen
 ## 8. Principi commerciali
 
 - Nessuna promessa di “più prenotazioni garantite”.
-- Nessuna recensione, metrica o certificazione inventata.
+- Nessuna recensione sintetica presentata come autentica e nessuna metrica o certificazione
+  inventata. Le fixture recensione nelle portfolio demo seguono `TRX-DEC-040`.
 - Nessun prezzo fisso del template esposto nel concept.
 - Nessun riferimento pubblico agli strumenti interni.
 - Tretnix è presentata come designer e sviluppatore.
@@ -301,7 +302,9 @@ Le metriche vanno raccolte soltanto con configurazione privacy e consenso approp
 - Le categorie di trattamento sono leggibili senza aprire card ripetitive.
 - Tutti i dati modificabili vivono in configurazioni o strutture dati centrali.
 - La demo non invia dati reali.
-- Il sito non contiene recensioni o indicatori inventati.
+- Le eventuali recensioni sintetiche sono fixture dimostrative typed, visibili senza falsa
+  attribuzione o falsi URL e mai serializzate come structured data commerciale; ogni altro
+  indicatore inventato resta vietato.
 - Il concept appare beauty/wellness senza sembrare un template SaaS o Hospitality riciclato.
 - L'esperienza mobile è completa a 360 px.
 

@@ -301,7 +301,10 @@ Ogni route BUSINESS deve definire:
 - indexability;
 - structured data quando appropriato.
 
-Non aggiungere `aggregateRating` senza recensioni reali e verificabili.
+Non aggiungere `review`, `rating` o `aggregateRating` per recensioni sintetiche. Le portfolio demo
+possono mostrare fixture nell'interfaccia secondo `TRX-DEC-040`, con modalità typed `demo`, wording
+neutro, nessuna falsa attribuzione e nessun falso URL; i dati strutturati commerciali restano
+vietati.
 
 ## 9. Acceptance criteria routing
 

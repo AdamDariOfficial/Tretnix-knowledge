@@ -46,7 +46,11 @@
 
 ## BW-DEC-009 — Nessun contenuto inventato
 
-**Decisione:** vietare recensioni, metriche, certificazioni, risultati e attività reali inventate.
+**Decisione:** vietare recensioni presentate come autentiche, metriche, certificazioni, risultati,
+claim medici o commerciali e attività reali inventate. Le recensioni sintetiche sono ammesse nelle
+portfolio demo Tretnix soltanto come fixture esplicitamente modellate in modalità `demo`, secondo
+`TRX-DEC-040`, senza falsa attribuzione a persone o piattaforme reali, falsi URL o structured data
+commerciali.
 
 ## BW-DEC-010 — Demo senza invio dati
 
