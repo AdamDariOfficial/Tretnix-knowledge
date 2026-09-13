@@ -12,6 +12,12 @@ Questo documento è un indice di navigazione non autoritativo. GitHub e i docume
 - [Current State](CURRENT_STATE.md) — snapshot operativo trasversale e livelli di evidenza.
 - [Repository Index](REPOSITORY_INDEX.md) — inventario dei repository e relazioni.
 - [Portfolio and Verticals](PORTFOLIO_AND_VERTICALS.md) — verticali, lifecycle e gate.
+- [Case Study Standard](CASE_STUDY_STANDARD.md) — tipi di pubblicazione, integrità, schema e mapping Tretnix.com.
+
+## Portfolio case studies
+
+- [Forno Lume](case-studies/FORNO_LUME.md) — concept Food & Hospitality, START + BUSINESS.
+- [RITO Studio](case-studies/RITO_STUDIO.md) — concept Beauty & Wellness, START + BUSINESS.
 
 ## Product families
 

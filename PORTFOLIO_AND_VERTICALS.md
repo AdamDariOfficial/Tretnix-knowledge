@@ -1,7 +1,7 @@
 # Tretnix Portfolio and Verticals
 
-**Versione:** 1.2
-**Aggiornato:** 13 agosto 2026
+**Versione:** 1.3
+**Aggiornato:** 11 settembre 2026
 **Stato:** canonico per portfolio, lifecycle e gate; le specifiche complete sono nei documenti e family kit dedicati
 
 ---
@@ -52,24 +52,26 @@ Regole:
 
 | Verticale | Concept | Specifica | Progetti | Stato |
 |---|---|---|---|---|
-| Food & Hospitality | Forno Lume | `HOSPITALITY_FAMILY.md` | START; BUSINESS | START congelato; BUSINESS verificato fino al Package C; Package D separato |
-| Beauty & Wellness | RITO Studio | `family-kits/beauty-wellness-v1.1/` | START; BUSINESS; BUSINESS PLUS | START e BUSINESS implementati; BUSINESS PLUS autorizzato in staging, auth/realtime/E2E pendenti; produzione non autorizzata |
+| Food & Hospitality | Forno Lume | `HOSPITALITY_FAMILY.md`; `case-studies/FORNO_LUME.md` | START; BUSINESS | START `2ed19ef...` e BUSINESS `ccea04c...` rilasciati/frozen e riconciliati il 10 settembre; Package D separato |
+| Beauty & Wellness | RITO Studio | `family-kits/beauty-wellness-v1.1/`; `case-studies/RITO_STUDIO.md` | START; BUSINESS; BUSINESS PLUS | START `2ab4dc4...` e BUSINESS `3f0ff4d...` rilasciati/frozen e riconciliati il 10 settembre; BUSINESS PLUS separato con gate propri |
 | Professional Services | QUADRA Studio | `family-kits/professional-services-v1.0/` | START; BUSINESS | preparazione completa; implementazione non iniziata |
 | Home & Local Services | NODO Servizi | `family-kits/home-local-services-v1.0/` | START; BUSINESS | preparazione completa; implementazione non iniziata |
 
 Le specifiche dei tre nuovi verticali sono approvate come baseline di preparazione. Non autorizzano automaticamente Lovable, repository remote, backend, deploy o raccolta dati.
+
+I dossier canonici Forno Lume e RITO Studio sono pronti come fonti per una futura integrazione Tretnix.com, che richiede un task separato e una baseline Tretnix.com pulita e approvata.
 
 ---
 
 ## 4. Food & Hospitality
 
 ```text
-Forno Lume START
-└── RELEASED + FROZEN
-    └── Forno Lume BUSINESS
-        └── RELEASED fino al Package C
-            └── Package D separato e pendente
+Forno Lume START — RELEASED + FROZEN `2ed19ef...`
+└── Forno Lume BUSINESS — RELEASED + FROZEN `ccea04c...`
+    └── Package D separato e pendente
 ```
+
+La riconciliazione del 10 settembre ha deploy Cloudflare post-merge registrato come SUCCESS per entrambi i parent. Il dossier canonico [`case-studies/FORNO_LUME.md`](case-studies/FORNO_LUME.md) rappresenta START + BUSINESS come un solo `portfolio_concept`; non include BUSINESS PLUS e non autorizza l'integrazione Tretnix.com.
 
 Fonte:
 
@@ -86,8 +88,9 @@ HOSPITALITY_FAMILY.md
 | Concept | `RITO Studio` |
 | Descriptor | `Beauty & Care Atelier` |
 | Tagline | `La bellezza, nel suo ritmo.` |
-| START reale | `rito-studio-START` · `main@34c13cd78255b7ac009533790329cada74ae9d8a` |
-| BUSINESS reale | `rito-studio-BUSINESS` · `main@b95a63c6127d2bc1dd396d74b2dd25f87b952226` |
+| START reale | `rito-studio-START` · `main@2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6` · PR `#17` |
+| BUSINESS reale | `rito-studio-BUSINESS` · `main@3f0ff4d3ed8e675725d8d640c305ab61d47217d7` · PR `#10` |
+| Stato parent | START e BUSINESS rilasciati/frozen; deploy Cloudflare post-merge SUCCESS e reduced-motion owner PASS |
 | BUSINESS PLUS reale | `rito-studio-BUSINESS-PLUS` · remote `main@eba1a2a91fd3a531b4a4667d038b631758d0a664` + working candidate su `feat/rito-business-plus-complete` |
 | Stato PLUS | staging Cloudflare; Native RITO AdminAuth in debugging; `/consulenza` → D1 → realtime/reconnect non ancora certificato; produzione non autorizzata |
 
@@ -99,7 +102,9 @@ RITO Studio START
 → RITO Studio BUSINESS PLUS
 ```
 
-Il candidate PLUS registra `START_FROZEN_34C13CD` e `BUSINESS_FROZEN_B95A63C`. I documenti locali dei due parent non sono ancora completamente allineati a queste dichiarazioni più recenti; la riconciliazione documentale parent deve essere chiusa prima di trattare tali freeze come stato canonico trasversale definitivo.
+I riferimenti START/BUSINESS conservati dal candidate PLUS restano lineage storico e non vengono riscritti dalle baseline parent del 10 settembre. Lo stato PLUS non è incluso nella chiusura dei due parent.
+
+Il dossier canonico [`case-studies/RITO_STUDIO.md`](case-studies/RITO_STUDIO.md) rappresenta esclusivamente START + BUSINESS come un solo `portfolio_concept`. La sua esistenza non autorizza modifiche o pubblicazione su Tretnix.com.
 
 L'evoluzione futura verso prenotazioni, clienti, pacchetti/fidelity o gestionale resta separata e richiede scope e gate propri; non è implicata dal consultation inbox del BUSINESS PLUS corrente.
 
