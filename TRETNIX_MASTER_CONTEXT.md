@@ -1,7 +1,7 @@
 # Tretnix Master Context
 
-**Versione:** 1.7
-**Aggiornato:** 6 settembre 2026
+**Versione:** 1.8
+**Aggiornato:** 11 settembre 2026
 **Stato:** canonico
 
 ---
@@ -462,7 +462,7 @@ Il primo verticale operativo è Food & Hospitality.
 
 La mappa corrente comprende inoltre:
 
-- Beauty & Wellness, con specifica `v1.1` completa in `family-kits/beauty-wellness-v1.1/` e lineage reale `RITO Studio START → BUSINESS → BUSINESS PLUS`; START è frozen su `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7`, BUSINESS corrente è `main@b6a82f918370f730681e9e0c0572a7a653d2dfeb` e deve essere riconciliato contro tale freeze; lo stato BUSINESS PLUS resta governato dai propri gate;
+- Beauty & Wellness, con specifica `v1.1` completa in `family-kits/beauty-wellness-v1.1/` e lineage reale `RITO Studio START → BUSINESS → BUSINESS PLUS`; START è frozen su `main@2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6`, BUSINESS è frozen e riconciliato su `main@3f0ff4d3ed8e675725d8d640c305ab61d47217d7`, mentre il tag START precedente e lo stato BUSINESS PLUS restano governati come lineage/gate separati;
 - Professional Services, con specifica `v1.0` completa in `family-kits/professional-services-v1.0/` e concept `QUADRA Studio`;
 - Home & Local Services, con specifica `v1.0` completa in `family-kits/home-local-services-v1.0/` e concept `NODO Servizi`.
 
@@ -529,12 +529,13 @@ Ruolo:
 - riferimento canonico per qualità responsive e comportamento percepito della navbar;
 - riferimento canonico per sobrietà delle interazioni, linguaggio del movimento e reveal editoriali sotto la fold.
 
-Stato verificato:
+Stato verificato corrente:
 
 - completato;
 - rimediato;
-- tecnicamente chiuso sulla baseline sorgente `d15f639267dfdd57194536154abfa1d0ff3b4542`;
-- verificato in produzione dal proprietario del progetto;
+- tecnicamente chiuso e riconciliato sulla baseline sorgente `2ed19ef9a4a886616bccd5aad2054c3027fec680`;
+- deploy Cloudflare post-merge della baseline corrente registrato come SUCCESS;
+- verifica owner di `prefers-reduced-motion` registrata come PASS;
 - documentato;
 - congelato.
 
@@ -557,14 +558,15 @@ Ruolo:
 - espansione della famiglia Hospitality;
 - riferimento tecnico approvato per i pattern multipagina verificati fino al Package C.
 
-Stato verificato:
+Stato verificato corrente:
 
 - Package A, B, micro-fix “L'incontro”, B2 e C completati e uniti;
-- baseline Package C su `main`: `15a8bf4de41bc1657a79f58699859a015ee7820d`;
+- baseline sorgente corrente su `main`: `ccea04cb0bb50e2624fe505bf7d3f25890b7d456`;
 - build Cloudflare Pages completata tramite Bun e lockfile;
 - deploy di produzione verificato dal proprietario il 25 luglio 2026;
+- deploy Cloudflare post-merge del 10 settembre: SUCCESS;
 - Package D ancora pendente e separato;
-- non ancora congelato come repository completa.
+- repository parent congelato sulla baseline corrente.
 
 Route previste:
 
@@ -599,18 +601,20 @@ Ruolo:
 - baseline canonica START per identità, composizione, comportamento condiviso e nuovi confronti START → BUSINESS;
 - piano START chiuso e congelato.
 
-Stato verificato:
+Stato verificato corrente:
 
 ```text
 FROZEN
-tag: family-start-v1.0
-commit: 74ee03c4d39a974872f94f53d14ec2873815ccf7
+main: 2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6
+validated ancestor: 8fe09095eafb6be8083ddc8b8b7d79f2a21db483
+PR: #17
+post-merge Cloudflare: SUCCESS
+owner reduced-motion verification: PASS
 ```
 
-Il tag annotato remoto `family-start-v1.0` dereferenzia esattamente al merge della closure finale.
-La baseline applicativa precedente alla closure è
-`523958b51e0d952c963380e6d384365b286953ca`. Non è registrata una nuova verifica
-production-origin successiva al final interaction polish.
+Il tag annotato remoto `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7`
+resta evidenza storica del freeze precedente. La baseline del 10 settembre ha deploy Cloudflare
+post-merge SUCCESS e verifica owner `prefers-reduced-motion` PASS.
 
 ### RITO Studio BUSINESS
 
@@ -623,11 +627,14 @@ Ruolo:
 Stato corrente verificato:
 
 ```text
-main: b6a82f918370f730681e9e0c0572a7a653d2dfeb
-reconciliation source: rito-studio-START@family-start-v1.0
+main: 3f0ff4d3ed8e675725d8d640c305ab61d47217d7
+validated ancestor: ccb50d7b7c6ffbeba96d33b02615a0f428018116
+PR: #10
+post-merge Cloudflare: SUCCESS
+owner reduced-motion verification: PASS
 ```
 
-La riconciliazione deve preservare le differenze BUSINESS intenzionali, incluse l'assenza delle
+La riconciliazione del 10 settembre preserva le differenze BUSINESS intenzionali, incluse l'assenza delle
 route `/team` e `/prenota`, il dettaglio trattamento query-driven, booking tramite WhatsApp +
 telefono e contatto tramite email + telefono. Backend, database, auth, pagamenti e modifiche
 BUSINESS PLUS richiedono gate separati.
@@ -848,7 +855,7 @@ Stato: documentazione acquisita; verifica finale in corso.
 
 - development pack del 25 luglio acquisito, verificato ed estratto;
 - Beauty v1.1, Professional v1.0 e Home v1.0 versionati come family kit;
-- `RITO Studio START` è congelato su `family-start-v1.0`; il prossimo pass Beauty è la riconciliazione controllata del repository RITO Studio BUSINESS esistente contro tale baseline;
+- `RITO Studio START` e `RITO Studio BUSINESS` sono congelati e riconciliati sulle baseline del 10 settembre; BUSINESS PLUS resta separato;
 - eseguire la prova di ricostruzione senza chat dopo il merge;
 - conservare offline lo ZIP originale;
 - usare `CURRENT_STATE.md` per lo stato trasversale e le issue per i task.
@@ -873,7 +880,7 @@ La priorità attuale è:
 7. proseguire i finding Tretnix.com uno per branch;
 8. mantenere Forno Lume START chiuso e congelato;
 9. preservare i pattern BUSINESS approvati e trattare Package D separatamente;
-10. mantenere RITO Studio START congelato su `family-start-v1.0` e riconciliare RITO Studio BUSINESS `main@b6a82f918370f730681e9e0c0572a7a653d2dfeb` contro tale baseline prima di ulteriori pass di parità, senza coinvolgere BUSINESS PLUS.
+10. mantenere RITO Studio START `main@2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6` e BUSINESS `main@3f0ff4d3ed8e675725d8d640c305ab61d47217d7` congelati, senza coinvolgere BUSINESS PLUS.
 
 ---
 

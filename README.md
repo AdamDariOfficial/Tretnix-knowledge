@@ -2,8 +2,8 @@
 
 Fonte canonica per identità, decisioni, standard tecnici, repository, procedure operative e adattatori degli strumenti Tretnix.
 
-**Versione:** 1.9
-**Aggiornato:** 13 agosto 2026
+**Versione:** 1.10
+**Aggiornato:** 11 settembre 2026
 **Stato:** operativo
 **Visibilità corrente:** repository GitHub pubblica durante il completamento dell’audit e del consolidamento Tretnix
 **Visibilità successiva:** passaggio a privata soltanto dopo completamento del ciclo, verifica delle dipendenze di accesso e nuova conferma esplicita del proprietario (`TRX-DEC-031`)
@@ -52,6 +52,7 @@ tretnix-knowledge/
 ├── PROFESSIONAL_SERVICES_FAMILY.md
 ├── HOME_LOCAL_SERVICES_FAMILY.md
 ├── PORTFOLIO_AND_VERTICALS.md
+├── CASE_STUDY_STANDARD.md
 ├── CURRENT_STATE.md
 ├── CHAT_RETENTION_AND_HANDOFF.md
 ├── SOURCE_ARTIFACT_REGISTER.md
@@ -74,6 +75,9 @@ tretnix-knowledge/
 │   ├── beauty-wellness-v1.1/
 │   ├── professional-services-v1.0/
 │   └── home-local-services-v1.0/
+├── case-studies/
+│   ├── FORNO_LUME.md
+│   └── RITO_STUDIO.md
 │
 ├── operations/
 │   └── development-launch-2026-07-25/
@@ -130,6 +134,7 @@ tretnix-knowledge/
 | [`PROFESSIONAL_SERVICES_FAMILY.md`](./PROFESSIONAL_SERVICES_FAMILY.md) | Indice e governance Professional Services | Normativa e descrittiva |
 | [`HOME_LOCAL_SERVICES_FAMILY.md`](./HOME_LOCAL_SERVICES_FAMILY.md) | Indice e governance Home & Local Services | Normativa e descrittiva |
 | [`PORTFOLIO_AND_VERTICALS.md`](./PORTFOLIO_AND_VERTICALS.md) | Mappa dei verticali, lifecycle e gate di avvio | Normativa e descrittiva |
+| [`CASE_STUDY_STANDARD.md`](./CASE_STUDY_STANDARD.md) | Standard per portfolio concept e client case study | Normativa e descrittiva |
 | [`CURRENT_STATE.md`](./CURRENT_STATE.md) | Snapshot operativo trasversale con livelli di evidenza | Operativa e temporale |
 | [`CHAT_RETENTION_AND_HANDOFF.md`](./CHAT_RETENTION_AND_HANDOFF.md) | Gate per handoff e cancellazione sicura delle chat | Normativa e operativa |
 | [`SOURCE_ARTIFACT_REGISTER.md`](./SOURCE_ARTIFACT_REGISTER.md) | Registro di artefatti, checksum, ingestione e fonti residue | Operativa |
@@ -465,6 +470,7 @@ Prima di aggiungere una nuova informazione, chiedere:
 | Verticale, lifecycle e progetto pianificato | `PORTFOLIO_AND_VERTICALS.md` |
 | Governance sintetica della famiglia | documento `*_FAMILY.md` |
 | Specifica completa della famiglia | `family-kits/` |
+| Dossier portfolio o case study cliente | `case-studies/`, secondo `CASE_STUDY_STANDARD.md` |
 | Handoff e runbook di lancio | `operations/` |
 | Stato trasversale sintetico | `CURRENT_STATE.md` |
 | Allegato o pacchetto sorgente | `SOURCE_ARTIFACT_REGISTER.md` |

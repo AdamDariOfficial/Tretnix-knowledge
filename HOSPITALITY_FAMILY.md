@@ -1,7 +1,7 @@
 # Tretnix Hospitality Family
 
-**Versione:** 1.5
-**Aggiornato:** 9 settembre 2026
+**Versione:** 1.6
+**Aggiornato:** 11 settembre 2026
 **Stato:** canonico per la famiglia Forno Lume
 
 ---
@@ -36,14 +36,25 @@ Baseline tecnica storica:
 d15f639267dfdd57194536154abfa1d0ff3b4542
 ```
 
-Baseline sorgente frozen corrente:
+Baseline sorgente corrente riconciliata:
+
+```text
+main: 2ed19ef9a4a886616bccd5aad2054c3027fec680
+validated implementation ancestor: 0730a759c6f8bb71f7ad3a3fb810ee8540e18556
+pull request: #17
+merged: 10 September 2026
+post-merge Cloudflare: SUCCESS
+owner reduced-motion verification: PASS
+```
+
+Baseline frozen storica final polish:
 
 ```text
 a817903923c1bbfe177d8b59e70a4aa1137b7ab1
 implementation commit: 0a104d7525644fca5f594d7092b574b8f3997f79
 pull request: #14
 finalized: 28 August 2026
-post-merge deployment verification: not verified
+post-merge deployment verification in that historical cycle: not verified
 ```
 
 È la fonte canonica approvata per:
@@ -65,7 +76,7 @@ post-merge deployment verification: not verified
   `TRX-DEC-040`, dati autentici nei siti cliente reali;
 - densità navbar e breakpoint scelti in base al contenuto reale della singola variante.
 
-Il ciclo finale START del 27–28 agosto è il riferimento percepito più recente. I breakpoint esatti, la struttura single-page e le CTA specifiche non sono automaticamente obbligatori per BUSINESS: devono essere adattati alla sua architettura multipagina e verificati visivamente.
+La baseline del 10 settembre è il riferimento sorgente corrente e conserva il ruolo percepito dello START. Il ciclo finale del 27–28 agosto resta evidenza storica. I breakpoint esatti, la struttura single-page e le CTA specifiche non sono automaticamente obbligatori per BUSINESS: devono essere adattati alla sua architettura multipagina e verificati visivamente.
 
 ### Forno Lume BUSINESS
 
@@ -89,7 +100,7 @@ visual approval: gallery swipe/lightbox + reserved indicator lane
 post-merge deployment verification: not performed
 ```
 
-Baseline frozen corrente dopo il final polish:
+Baseline frozen storica dopo il final polish:
 
 ```text
 main: 9bc33cd5737af7763fe9c61ddc52eb7a606fafea
@@ -98,7 +109,18 @@ pull request: #12
 working branch: fix/start-final-polish-parity (deleted after merge)
 automated validation: Controlled Change Package v2.4.3 reported passed
 owner browser QA: approved
-post-merge deployment verification: not performed
+post-merge deployment verification in that historical cycle: not performed
+```
+
+Baseline sorgente corrente riconciliata:
+
+```text
+main: ccea04cb0bb50e2624fe505bf7d3f25890b7d456
+validated implementation ancestor: fb72a1459cbc6bc5292f1e74f47295f2396fdc0a
+pull request: #14
+merged: 10 September 2026
+post-merge Cloudflare: SUCCESS
+owner reduced-motion verification: PASS
 ```
 
 È la fonte tecnica approvata, limitatamente ai pattern chiusi e verificati, per:
@@ -120,9 +142,9 @@ post-merge deployment verification: not performed
 - JSON-LD non commerciale e route-aware;
 - pattern di attribuzione Tretnix nel footer.
 
-La baseline BUSINESS `9bc33cd5737af7763fe9c61ddc52eb7a606fafea` è il riferimento frozen corrente. La baseline `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` resta il riferimento frozen storico pre-polish.
+La baseline BUSINESS `ccea04cb0bb50e2624fe505bf7d3f25890b7d456` è il riferimento sorgente frozen corrente. `9bc33cd5737af7763fe9c61ddc52eb7a606fafea` resta il freeze storico final-polish e `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` il freeze storico pre-polish.
 
-Il final polish parity/adaptation autorizzato il 28 agosto 2026 è stato implementato, validato localmente, approvato visivamente dal proprietario e unito con PR `#12` il 4 settembre 2026. Il Package D resta separato e pendente secondo `TRX-DEC-020` e non è autorizzato da questa chiusura.
+Il final polish parity/adaptation autorizzato il 28 agosto 2026 è stato implementato, validato localmente, approvato visivamente dal proprietario e unito con PR `#12` il 4 settembre 2026. La successiva riconciliazione cross-family è stata unita con PR `#14` il 10 settembre e distribuita con esito Cloudflare SUCCESS. Il Package D resta separato e pendente secondo `TRX-DEC-020` e non è autorizzato da queste chiusure.
 
 Il repository Forno Lume BUSINESS PLUS già esistente conserva il lineage verificato dal parent storico `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`. Il nuovo freeze BUSINESS non riscrive né invalida retroattivamente quel lineage; un eventuale riallineamento futuro di PLUS richiede una decisione e un gate separati.
 
@@ -299,7 +321,7 @@ Validation locale riportata dal proprietario per il Controlled Change Package v2
 - diff, staged state, untracked whitespace e final payload state superati;
 - browser QA finale approvato dal proprietario su responsive, menu smooth-scroll, CTA/contatti, gallery/lightbox e layout finale.
 
-Il deploy post-merge della nuova baseline non è stato verificato. La baseline è quindi frozen come sorgente approvata; non viene dichiarato un nuovo gate di produzione.
+Questa evidenza resta storica per la baseline `9bc33cd...`. La baseline successiva `ccea04c...` ha un deploy Cloudflare post-merge registrato come SUCCESS.
 
 ### Package D — pendente e separato
 
@@ -496,8 +518,8 @@ Regole operative:
 
 ## 8. Riapertura e modifiche future
 
-- START rimane chiuso e congelato sulla baseline `a817903923c1bbfe177d8b59e70a4aa1137b7ab1` salvo bug, regressione, sicurezza o requisito approvato.
-- BUSINESS rimane chiuso e congelato sulla baseline `9bc33cd5737af7763fe9c61ddc52eb7a606fafea`; `389bd1...` resta la baseline frozen storica pre-polish.
+- START rimane chiuso e congelato sulla baseline `2ed19ef9a4a886616bccd5aad2054c3027fec680` salvo bug, regressione, sicurezza o requisito approvato; `a817903...` resta il freeze storico final-polish.
+- BUSINESS rimane chiuso e congelato sulla baseline `ccea04cb0bb50e2624fe505bf7d3f25890b7d456`; `9bc33cd...` e `389bd1...` restano baseline frozen storiche.
 - Il Package D BUSINESS resta un perimetro separato e pendente e richiede autorizzazione esplicita.
 - BUSINESS PLUS conserva il lineage storico già verificato da `389bd1...`; un eventuale riallineamento alla baseline BUSINESS corrente richiede un gate separato.
 - I pattern già approvati non devono essere indeboliti o reinterpretati.

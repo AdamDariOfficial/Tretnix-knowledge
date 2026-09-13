@@ -1,7 +1,7 @@
 # Tretnix Current State
 
-**Versione:** 1.12
-**Aggiornato:** 6 settembre 2026
+**Versione:** 1.13
+**Aggiornato:** 11 settembre 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
 ---
@@ -22,16 +22,16 @@
 | Campo | Valore |
 |---|---|
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
-| Baseline `main` di partenza verificata per questa riconciliazione | `319393c5a241b359fa2fee3a9adf55f9af8dc3ad` |
+| Baseline `main` verificata prima del dossier portfolio | `c693dcc25979a93afab3c8cfcdb43f943baee187` |
 | Snapshot canonico ricevuto | `Tretnix-knowledge-de29f4f3.zip` |
 | Development pack | acquisito, verificato, estratto e integrato in `main` |
 | Family kit | Beauty v1.1, Professional v1.0 e Home v1.0 presenti |
 | Visibilità | pubblica temporaneamente secondo `TRX-DEC-031` |
-| Validazione knowledge | `scripts/validate_knowledge.py` e CI `Knowledge validation`; rieseguire sul candidate della presente riconciliazione |
+| Validazione knowledge | PASS registrato dopo il merge del 10 settembre; rieseguire sul candidate portfolio corrente |
 | Evidenza | `VR` per commit, archive e contenuti versionati |
 | Controlled Change Package | canonico in `main` da `996d6b8`; `Apply → Validate` è il metodo standard per cambi non banali esterni |
 
-La precedente fase di consolidamento è confluita in `main`. I riferimenti al branch `docs/consolidate-tretnix-state-2026-07-26` e al primo commit `9ff9546` restano nella cronologia Git e nel registro degli artefatti, ma non rappresentano più lo stato operativo corrente.
+La riconciliazione cross-family è confluita in `main@c693dcc25979a93afab3c8cfcdb43f943baee187`. Le baseline Knowledge precedenti e i relativi branch restano nella cronologia Git e nel registro degli artefatti, ma non rappresentano lo stato operativo corrente.
 
 ---
 
@@ -41,15 +41,16 @@ La precedente fase di consolidamento è confluita in `main`. I riferimenti al br
 |---|---|
 | Repository | `forno-lume-START` |
 | Baseline tecnica storica | `d15f639267dfdd57194536154abfa1d0ff3b4542` |
-| Baseline sorgente frozen corrente | `a817903923c1bbfe177d8b59e70a4aa1137b7ab1` |
-| Commit implementazione final polish | `0a104d7525644fca5f594d7092b574b8f3997f79` |
-| Pull request finale | `#14` |
-| Stato | completato, finalizzato e congelato |
-| Evidenza | `VR` per commit, PR e merge; `HR` per validation locale e browser QA riportati dal proprietario; deploy post-merge della baseline `a817903...` non verificato |
+| Main / baseline sorgente corrente | `2ed19ef9a4a886616bccd5aad2054c3027fec680` |
+| Ancestor implementazione validato | `0730a759c6f8bb71f7ad3a3fb810ee8540e18556` |
+| Pull request cross-family | `#17` |
+| Baseline frozen storica final polish | `a817903923c1bbfe177d8b59e70a4aa1137b7ab1` |
+| Stato | rilasciato, riconciliato e congelato sulla baseline del 10 settembre |
+| Evidenza | `VR` per commit, ancestry, PR e merge; `VD` per deploy Cloudflare SUCCESS sul merge SHA; verifica owner `prefers-reduced-motion` PASS |
 
-La baseline `a817903923c1bbfe177d8b59e70a4aa1137b7ab1` sostituisce `d15f639...` come riferimento sorgente frozen corrente. `d15f639...` resta la baseline storica della chiusura tecnica del 18 luglio 2026.
+La baseline `2ed19ef9a4a886616bccd5aad2054c3027fec680` sostituisce `a817903...` come riferimento sorgente corrente. `a817903...` resta il freeze storico final polish e `d15f639...` resta la baseline storica della chiusura tecnica del 18 luglio 2026.
 
-Il ciclo finale del 27–28 agosto ha consolidato remediation UX, responsive/tablet layout, map consent e proporzioni, interazioni/hover, review surface opzionale con fixture solo development e densità navbar. L'ultimo validator riportato dal proprietario ha registrato typecheck, lint con `0` errori e `6` warning Fast Refresh preesistenti, build client/SSR/Nitro, diff check e whitespace con exit code `0`; il browser QA finale è stato approvato dal proprietario prima del merge della PR `#14`. Non è disponibile evidenza di una verifica del deploy post-merge della nuova baseline.
+Il ciclo del 27–28 agosto resta evidenza storica. La riconciliazione cross-family del 10 settembre ha consolidato i pattern qualità/gallery sull'ancestor `0730a759...` e li ha uniti con PR `#17`. Il deploy Cloudflare sul merge SHA è registrato come SUCCESS e la verifica owner di `prefers-reduced-motion` come PASS.
 
 Interventi ammessi: bug, regressione, sicurezza o requisito approvato esplicitamente.
 
@@ -62,27 +63,28 @@ Interventi ammessi: bug, regressione, sicurezza o requisito approvato esplicitam
 | Repository | `forno-lume-BUSINESS` |
 | Baseline storica Package C | `15a8bf4de41bc1657a79f58699859a015ee7820d` |
 | Baseline frozen pre-polish | `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` |
-| Baseline frozen corrente | `9bc33cd5737af7763fe9c61ddc52eb7a606fafea` |
-| Commit implementazione final polish | `a77ea376686c0a87f37e91d5f06670e773683700` |
-| Pull request final polish | `#12` |
+| Main / baseline sorgente corrente | `ccea04cb0bb50e2624fe505bf7d3f25890b7d456` |
+| Ancestor implementazione validato | `fb72a1459cbc6bc5292f1e74f47295f2396fdc0a` |
+| Pull request cross-family | `#14` |
+| Baseline frozen storica final polish | `9bc33cd5737af7763fe9c61ddc52eb7a606fafea` |
+| Commit implementazione storico final polish | `a77ea376686c0a87f37e91d5f06670e773683700` |
+| Pull request storica final polish | `#12` |
 | Branch di lavoro final polish | `fix/start-final-polish-parity`, eliminata dopo il merge |
 | Package A, B, B2 e C | completati e uniti |
 | Final polish parity/adaptation | completato, validato, approvato visivamente e unito |
 | Package D | pendente, separato e non autorizzato dal final polish |
-| Stato complessivo | completato, finalizzato e congelato sulla baseline `9bc33cd5737af7763fe9c61ddc52eb7a606fafea` |
-| Evidenza | `VR` per commit, PR e merge; `HR` per validation locale v2.4.3 e browser QA riportati dal proprietario; deploy post-merge non verificato |
+| Stato complessivo | rilasciato, riconciliato e congelato sulla baseline del 10 settembre; Package D separato |
+| Evidenza | `VR` per commit, ancestry, PR e merge; `VD` per deploy Cloudflare SUCCESS sul merge SHA; verifica owner `prefers-reduced-motion` PASS |
 
-Il ciclo final-polish parity/adaptation si è chiuso il 4 settembre 2026. Il commit applicativo `a77ea376686c0a87f37e91d5f06670e773683700` è stato unito in `main` con PR `#12`; il merge commit `9bc33cd5737af7763fe9c61ddc52eb7a606fafea` è la nuova baseline BUSINESS frozen corrente.
+Il ciclo final-polish parity/adaptation del 4 settembre resta evidenza storica. La riconciliazione cross-family è stata implementata su `fb72a1459cbc6bc5292f1e74f47295f2396fdc0a` e unita in `main` con PR `#14`; `ccea04cb0bb50e2624fe505bf7d3f25890b7d456` è la baseline sorgente BUSINESS corrente.
 
 La validation locale riportata per il Controlled Change Package v2.4.3 ha registrato 6/6 fixture di recovery/idempotenza superate, TypeScript, ESLint con `0` errori e `8` warning `react-refresh/only-export-components` preesistenti, build client/SSR/Nitro, invarianti UX, diff/whitespace e stato payload finale con exit code `0`. Il browser QA finale responsive/interattivo è stato approvato dal proprietario prima del merge. Queste evidenze restano `HR` perché derivano da output locale e approvazione del proprietario, non da un gate CI o deploy verificato direttamente in questa riconciliazione.
 
-La baseline `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` resta la baseline frozen storica pre-polish e non è più il riferimento sorgente corrente di BUSINESS.
+Le baseline `389bd1...` e `9bc33cd...` restano rispettivamente freeze storici pre-polish e final-polish. Il deploy Cloudflare della baseline corrente `ccea04c...` è registrato come SUCCESS.
 
-Il deploy post-merge della baseline `9bc33cd...` non è stato verificato e non va dichiarato come eseguito.
+Ulteriori modifiche alla baseline BUSINESS congelata richiedono un bug confermato, una regressione confermata, un problema di sicurezza o un requisito di prodotto approvato esplicitamente. Il Package D resta pendente e separato secondo `TRX-DEC-020`; né il final polish né la riconciliazione del 10 settembre lo autorizzano, annullano o assorbono.
 
-Ulteriori modifiche alla baseline BUSINESS congelata richiedono un bug confermato, una regressione confermata, un problema di sicurezza o un requisito di prodotto approvato esplicitamente. Il Package D resta pendente e separato secondo `TRX-DEC-020`; il final polish non lo autorizza, non lo annulla e non lo assorbe.
-
-Forno Lume BUSINESS PLUS conserva il lineage già verificato dal parent storico `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`. Il nuovo freeze BUSINESS `9bc33cd...` non riscrive retroattivamente quel lineage; un eventuale riallineamento di PLUS richiede un gate separato.
+Forno Lume BUSINESS PLUS conserva il lineage già verificato dal parent storico `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`. Le baseline BUSINESS successive non riscrivono retroattivamente quel lineage; un eventuale riallineamento di PLUS richiede un gate separato.
 
 ---
 
@@ -149,34 +151,32 @@ Servono PR, branch, commit completo, output dei controlli e report hydration per
 | Campo | Valore |
 |---|---|
 | Specifica famiglia | `family-kits/beauty-wellness-v1.1/` |
-| START | `AdamDariOfficial/rito-studio-START`, congelato sul tag annotato remoto `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7`; `main` verificato sullo stesso commit |
-| START closure | PR `#13` final interaction polish unita; PR `#14` final freeze documentation closure unita; tag remoto verificato il 6 settembre 2026 |
-| BUSINESS | `AdamDariOfficial/rito-studio-BUSINESS`, `main` remoto verificato a `b6a82f918370f730681e9e0c0572a7a653d2dfeb`; repository esistente da riconciliare contro il nuovo freeze START |
+| START | `AdamDariOfficial/rito-studio-START`, `main@2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6`, ancestor validato `8fe09095eafb6be8083ddc8b8b7d79f2a21db483`, PR `#17` |
+| START historical lineage | tag annotato `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7` preservato come evidenza storica |
+| BUSINESS | `AdamDariOfficial/rito-studio-BUSINESS`, `main@3f0ff4d3ed8e675725d8d640c305ab61d47217d7`, ancestor validato `ccb50d7b7c6ffbeba96d33b02615a0f428018116`, PR `#10` |
 | BUSINESS PLUS | `AdamDariOfficial/rito-studio-BUSINESS-PLUS`, remote `main` verificato a `eba1a2a91fd3a531b4a4667d038b631758d0a664` |
 | Working branch PLUS riportata | `feat/rito-business-plus-complete` con delta controllato ancora non integrato |
 | Backend live PLUS | staging Cloudflare con D1 + Durable Objects + rate limiting + Native RITO AdminAuth |
 | Auth staging | login nativo diretto raggiungibile; rifiuto credenziali non valide nel ramo normale; credenziale corretta ancora rifiutata, sessione non certificata |
 | E2E live | `/consulenza` → D1 → admin realtime/reconnect ancora da chiudere con evidenza diretta |
 | Produzione PLUS | `NOT AUTHORIZED` |
-| Evidenza | `VR` per freeze commit/tag START e HEAD remoti START/BUSINESS; `HR` per lint/build/browser QA finali riportati dal proprietario; stato operatore/staging PLUS da formalizzare nel repository PLUS prima della chiusura |
-| Lineage/freeze reconciliation | Il nuovo START canonico è `family-start-v1.0` → `74ee03c...`. BUSINESS deve riconciliare il repository esistente contro questo freeze senza ricrearlo. I parent storici già registrati da BUSINESS e BUSINESS PLUS restano evidenza del lineage storico e non vengono riscritti retroattivamente da questo gate. |
+| Deploy parent | Cloudflare SUCCESS sui merge SHA START e BUSINESS; verifica owner `prefers-reduced-motion` PASS |
+| Evidenza | `VR` per commit, ancestry, PR e merge dei parent; `VD` per deploy Cloudflare post-merge; provenienza asset upstream/licenze/copyright/model release RITO ancora sconosciuta o non verificata |
+| Lineage/freeze reconciliation | START e BUSINESS sono riconciliati e frozen sulle baseline del 10 settembre. I parent e tag storici già registrati restano evidenza del lineage e non vengono riscritti retroattivamente. |
 
-Il ciclo finale START si è chiuso tra il 5 e il 6 settembre 2026. La PR `#13` ha integrato il
-candidate `2774df1054b149d9c88f02f8301cfd7883d2d200` e portato la baseline applicativa a
-`523958b51e0d952c963380e6d384365b286953ca`. La PR documentale `#14` ha prodotto il merge
-`74ee03c4d39a974872f94f53d14ec2873815ccf7`, poi identificato e pubblicato tramite tag annotato
-`family-start-v1.0`. Il tag remoto dereferenzia esattamente allo stesso commit.
+Il ciclo del 5–6 settembre e il tag `family-start-v1.0` restano evidenza storica. Il pass cross-family
+del 10 settembre è stato unito in START con PR `#17` e in BUSINESS con PR `#10`, producendo le
+baseline correnti indicate nella tabella.
 
-Gli output finali riportati dal proprietario registrano `git diff --check`, lint con `0` errori e
-`6` warning Fast Refresh ereditati, build client/SSR/Nitro e browser QA finale approvato. Queste
-evidenze di esecuzione restano `HR`; commit, PR, merge e tag sono `VR`. Non è registrata una
-verifica production-origin successiva alla PR `#13`.
+Gli output del ciclo precedente riportati dal proprietario registrano `git diff --check`, lint con
+`0` errori e `6` warning Fast Refresh ereditati, build client/SSR/Nitro e browser QA finale
+approvato; restano evidenza storica `HR`. Per il ciclo cross-family corrente, commit, ancestry, PR
+e merge sono `VR`; deploy Cloudflare sui merge SHA e verifica owner reduced-motion sono registrati
+come superati.
 
-Il `main` remoto corrente di RITO Studio BUSINESS è
-`b6a82f918370f730681e9e0c0572a7a653d2dfeb`, successivo alla baseline `b95a63c...` ancora
-presente in parte della documentazione storica. Il prossimo gate BUSINESS è una riconciliazione
-read-only contro il nuovo START frozen, separando invarianti ereditate, differenze BUSINESS
-intenzionali, regressioni e nuovi requisiti. Il repository BUSINESS non deve essere ricreato.
+RITO Studio BUSINESS è ora riconciliato sulla baseline `3f0ff4d3...`. Restano intenzionali il
+dettaglio trattamento query-driven, l'assenza delle route `/team` e `/prenota`, booking tramite
+WhatsApp + telefono e contatto tramite email + telefono. Il repository non deve essere ricreato.
 
 `TRX-DEC-033` resta un gate storico di avvio. `TRX-DEC-038` e `TRX-DEC-039` governano i pattern
 condivisi finali relativi ai divider editoriali e alla coppia legale `Privacy` + `Cookie`. Questo
@@ -217,12 +217,12 @@ La scelta Cloudflare resta provider-specifica per il fit del candidate PLUS e se
 
 ## 9. Ordine operativo
 
-1. mantenere Forno Lume START congelato sulla baseline `a817903923c1bbfe177d8b59e70a4aa1137b7ab1`;
-2. mantenere Forno Lume BUSINESS congelato sulla baseline corrente `9bc33cd5737af7763fe9c61ddc52eb7a606fafea`; riaprirlo soltanto per bug, regressione, sicurezza o requisito approvato;
+1. mantenere Forno Lume START congelato sulla baseline `2ed19ef9a4a886616bccd5aad2054c3027fec680`;
+2. mantenere Forno Lume BUSINESS congelato sulla baseline `ccea04cb0bb50e2624fe505bf7d3f25890b7d456`; riaprirlo soltanto per bug, regressione, sicurezza o requisito approvato;
 3. mantenere il Package D BUSINESS separato e pendente: il final polish completato non lo autorizza né lo assorbe;
 4. non modificare retroattivamente il lineage già esistente di Forno Lume BUSINESS PLUS, che continua a derivare dal parent storico `389bd1...`; eventuale riallineamento futuro richiede un gate separato;
-5. mantenere RITO Studio START congelato sul tag remoto verificato `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7`;
-6. riconciliare RITO Studio BUSINESS `main@b6a82f918370f730681e9e0c0572a7a653d2dfeb` contro il nuovo START frozen, preservando le differenze BUSINESS intenzionali e senza ricreare il repository;
+5. mantenere RITO Studio START congelato sulla baseline `2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6`, preservando `family-start-v1.0` come lineage storico;
+6. mantenere RITO Studio BUSINESS congelato sulla baseline riconciliata `3f0ff4d3ed8e675725d8d640c305ab61d47217d7`, preservando le differenze BUSINESS intenzionali;
 7. non riallineare o modificare RITO Studio BUSINESS PLUS per effetto di questo gate;
 8. proseguire Tretnix.com soltanto nel perimetro già autorizzato e con evidenza propria;
 9. aggiornare questa Knowledge quando cambiano baseline, gate, PR, validation o stato di deploy verificato.

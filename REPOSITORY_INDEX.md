@@ -1,7 +1,7 @@
 # Tretnix Repository Index
 
-**Versione:** 2.3
-**Aggiornato:** 6 settembre 2026
+**Versione:** 2.4
+**Aggiornato:** 11 settembre 2026
 **Stato dell’inventario:** completo rispetto agli otto repository attualmente dichiarati
 
 Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit del codice.
@@ -135,10 +135,11 @@ Questi aspetti richiedono audit.
 | Stato | chiuso e congelato sulla baseline finale |
 | Branch principale | `main` |
 | Baseline tecnica storica | `d15f639267dfdd57194536154abfa1d0ff3b4542` |
-| Baseline sorgente frozen corrente | `a817903923c1bbfe177d8b59e70a4aa1137b7ab1` |
-| Commit final polish | `0a104d7525644fca5f594d7092b574b8f3997f79` |
-| Pull request finale | `#14` |
-| Ultimo ciclo | 28 agosto 2026 — final polish, validation locale riportata, browser QA approvato dal proprietario, merge PR #14; deploy post-merge della nuova baseline non verificato |
+| Main / baseline sorgente corrente | `2ed19ef9a4a886616bccd5aad2054c3027fec680` |
+| Ancestor implementazione validato | `0730a759c6f8bb71f7ad3a3fb810ee8540e18556` |
+| Pull request cross-family | `#17` |
+| Baseline frozen storica final polish | `a817903923c1bbfe177d8b59e70a4aa1137b7ab1` |
+| Ultimo ciclo | 10 settembre 2026 — quality/gallery reconciliation unita; Cloudflare post-merge SUCCESS; reduced-motion owner PASS |
 
 ### Relazione con altri progetti
 
@@ -170,12 +171,12 @@ Gli esatti breakpoint o dettagli di implementazione restano project-specific e n
 
 ### Chiusura corrente
 
-- baseline sorgente frozen `a817903923c1bbfe177d8b59e70a4aa1137b7ab1`;
-- PR finale `#14` unita su `main`;
-- commit implementazione `0a104d7525644fca5f594d7092b574b8f3997f79`;
+- baseline sorgente corrente `2ed19ef9a4a886616bccd5aad2054c3027fec680`;
+- PR cross-family `#17` unita su `main` dall'ancestor `0730a759c6f8bb71f7ad3a3fb810ee8540e18556`;
+- baseline `a817903...`, PR `#14` e commit `0a104d...` preservati come evidenza storica final-polish;
 - validation locale riportata: typecheck, lint con `0` errori e `6` warning Fast Refresh preesistenti, build client/SSR/Nitro, `git diff --check` e whitespace con exit `0`;
 - browser QA finale approvato dal proprietario prima del merge;
-- deploy post-merge della baseline `a817903...`: non verificato in questa riconciliazione.
+- deploy Cloudflare post-merge della baseline `2ed19ef...`: SUCCESS; `prefers-reduced-motion` owner verification: PASS.
 
 Ulteriori modifiche sorgente richiedono bug, regressione, sicurezza o requisito di prodotto approvato esplicitamente.
 
@@ -212,10 +213,11 @@ START non è automaticamente canonico per routing multipagina, gallery/lightbox 
 | Branch principale | `main` |
 | Baseline storica Package C | `15a8bf4de41bc1657a79f58699859a015ee7820d` |
 | Baseline frozen pre-polish | `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` |
-| Baseline frozen corrente | `9bc33cd5737af7763fe9c61ddc52eb7a606fafea` |
-| Commit implementazione final polish | `a77ea376686c0a87f37e91d5f06670e773683700` |
-| Pull request final polish | `#12` |
-| Ultimo ciclo verificato | 4 settembre 2026 — final polish parity/adaptation, CCP v2.4.3 riportato verde, browser QA approvato, merge PR #12; deploy post-merge non verificato |
+| Main / baseline sorgente corrente | `ccea04cb0bb50e2624fe505bf7d3f25890b7d456` |
+| Ancestor implementazione validato | `fb72a1459cbc6bc5292f1e74f47295f2396fdc0a` |
+| Pull request cross-family | `#14` |
+| Baseline frozen storica final polish | `9bc33cd5737af7763fe9c61ddc52eb7a606fafea` |
+| Ultimo ciclo verificato | 10 settembre 2026 — quality/gallery reconciliation unita; Cloudflare post-merge SUCCESS; reduced-motion owner PASS |
 
 ### Relazione con altri progetti
 
@@ -241,7 +243,7 @@ Sulla baseline frozen corrente, BUSINESS è fonte tecnica approvata per i patter
 - JSON-LD generico e route-aware;
 - attribuzione Tretnix nel footer.
 
-La baseline `9bc33cd5737af7763fe9c61ddc52eb7a606fafea` sostituisce `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` come riferimento sorgente frozen corrente. `389bd1...` resta la baseline frozen storica pre-polish.
+La baseline `ccea04cb0bb50e2624fe505bf7d3f25890b7d456` è il riferimento sorgente frozen corrente. `9bc33cd...` resta il freeze storico final-polish e `389bd1...` il freeze storico pre-polish.
 
 ### Route previste
 
@@ -276,9 +278,9 @@ La baseline `9bc33cd5737af7763fe9c61ddc52eb7a606fafea` sostituisce `389bd1eec59f
 - finalizzazione gallery/lightbox: completata e unita con PR `#11`;
 - final polish parity/adaptation: completato, validato, approvato e unito con PR `#12`;
 - Package D: pendente, separato e non autorizzato dal final polish;
-- baseline BUSINESS frozen corrente: `9bc33cd5737af7763fe9c61ddc52eb7a606fafea`.
+- baseline BUSINESS frozen corrente: `ccea04cb0bb50e2624fe505bf7d3f25890b7d456`.
 
-La configurazione Cloudflare Pages verificata durante il ciclo precedente usa Bun, `bun.lock`, output `dist` e il preset Nitro `cloudflare-pages`. I dettagli sono registrati in `HOSPITALITY_FAMILY.md`. Il deploy post-merge della nuova baseline frozen non è stato verificato.
+La configurazione Cloudflare Pages verificata durante il ciclo precedente usa Bun, `bun.lock`, output `dist` e il preset Nitro `cloudflare-pages`. I dettagli sono registrati in `HOSPITALITY_FAMILY.md`. Per la baseline corrente `ccea04cb0bb50e2624fe505bf7d3f25890b7d456`, il deploy post-merge risulta `SUCCESS` nell'evidenza approvata del task.
 
 ---
 
@@ -353,26 +355,30 @@ Fino all'approvazione dello scope e alla successiva implementazione/verifica:
 | Categoria | sito Beauty & Wellness START |
 | Piano | START |
 | Repository | `https://github.com/AdamDariOfficial/rito-studio-START.git` |
-| Deploy | non riconciliato dopo il freeze finale; nessuna verifica production-origin post-PR `#13` dichiarata |
-| Stato | chiuso e congelato sulla baseline finale |
+| Deploy | Cloudflare SUCCESS sul merge SHA del 10 settembre 2026 |
+| Stato | rilasciato, riconciliato e congelato sulla baseline corrente |
 | Branch principale | `main` |
 | Baseline applicativa pre-closure | `523958b51e0d952c963380e6d384365b286953ca` |
-| Baseline frozen canonica | `74ee03c4d39a974872f94f53d14ec2873815ccf7` |
-| Tag annotato remoto | `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7` |
+| Main / baseline sorgente corrente | `2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6` |
+| Ancestor implementazione validato | `8fe09095eafb6be8083ddc8b8b7d79f2a21db483` |
+| Pull request cross-family | `#17` |
+| Tag annotato storico | `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7` |
 | Commit candidate final interaction polish | `2774df1054b149d9c88f02f8301cfd7883d2d200` |
 | Pull request final interaction polish | `#13` |
 | Pull request documentation closure | `#14` |
-| Ultima verifica repository | 6 settembre 2026 |
+| Ultima verifica repository | 10 settembre 2026; reduced-motion owner PASS |
 
 ### Ruolo nel lineage
 
-È la baseline canonica Beauty & Wellness START per i nuovi confronti di famiglia. Il freeze
-autorevole è il tag annotato remoto `family-start-v1.0`, che dereferenzia esattamente a
-`74ee03c4d39a974872f94f53d14ec2873815ccf7`.
+È la baseline canonica Beauty & Wellness START corrente sulla main del 10 settembre. Il tag
+annotato remoto `family-start-v1.0`, che dereferenzia a `74ee03c4d39a974872f94f53d14ec2873815ccf7`,
+resta evidenza storica immutabile del lineage.
 
 I parent START storici già registrati nei repository BUSINESS e BUSINESS PLUS restano evidenza
-del lineage precedente e non vengono riscritti retroattivamente. Per i nuovi pass BUSINESS,
-invece, il confronto di parità deve usare il nuovo tag frozen.
+del lineage precedente e non vengono riscritti retroattivamente. La riconciliazione BUSINESS
+del 10 settembre 2026 ha usato il tag START frozen previsto dal relativo task; i confronti futuri
+devono partire dalla baseline corrente approvata, salvo un task storico che identifichi esplicitamente
+un diverso checkpoint.
 
 ---
 
@@ -386,26 +392,25 @@ invece, il confronto di parità deve usare il nuovo tag frozen.
 | Categoria | sito multipagina Beauty & Wellness |
 | Piano | BUSINESS |
 | Repository | `https://github.com/AdamDariOfficial/rito-studio-BUSINESS.git` |
-| Deploy | non riconciliato in questa revisione Knowledge |
-| Stato | implementato; repository esistente autorizzato alla riconciliazione contro il nuovo START frozen |
+| Deploy | Cloudflare SUCCESS sul merge SHA del 10 settembre 2026 |
+| Stato | rilasciato, riconciliato e congelato sulla baseline corrente |
 | Branch principale | `main` |
 | Baseline storica registrata prima del public-parity pass | `b95a63c6127d2bc1dd396d74b2dd25f87b952226` |
-| Commit `main` remoto verificato corrente | `b6a82f918370f730681e9e0c0572a7a653d2dfeb` |
-| Ultima pull request verificata | `#8` — `feat(rito-business): save public parity progress` |
-| Ultima verifica repository | 6 settembre 2026 |
+| Commit `main` remoto verificato corrente | `3f0ff4d3ed8e675725d8d640c305ab61d47217d7` |
+| Ancestor implementazione validato | `ccb50d7b7c6ffbeba96d33b02615a0f428018116` |
+| Ultima pull request verificata | `#10` — cross-family quality reconciliation |
+| Ultima verifica repository | 10 settembre 2026; reduced-motion owner PASS |
 
 ### Ruolo nel lineage
 
-È il repository BUSINESS operativo esistente e non deve essere ricreato. Il prossimo pass deve
-confrontare `main@b6a82f918370f730681e9e0c0572a7a653d2dfeb` con
-`rito-studio-START@family-start-v1.0`, distinguendo invarianti ereditate, differenze BUSINESS
-intenzionali, regressioni e nuovi requisiti.
+È il repository BUSINESS operativo esistente e non deve essere ricreato. La riconciliazione
+contro lo START frozen è stata completata e unita in `main@3f0ff4d3ed8e675725d8d640c305ab61d47217d7`.
 
 Restano intenzionali finché una decisione successiva non le modifica: architettura multipagina,
 dettaglio trattamento query-driven, assenza delle route `/team` e `/prenota`, booking tramite
 WhatsApp + telefono e contatto tramite email + telefono. La documentazione BUSINESS contiene
-ancora riferimenti storici a precedenti baseline START/BUSINESS: vanno riconciliati prima di
-ulteriori interventi di parità, senza riscrivere il lineage storico di BUSINESS PLUS.
+riferimenti storici a precedenti baseline START/BUSINESS: restano lineage e non devono essere
+reinterpretati come baseline correnti né riscritti nel lineage storico di BUSINESS PLUS.
 
 ---
 
@@ -450,11 +455,11 @@ BUSINESS PLUS non è ancora fonte canonica trasversale per Native AdminAuth o re
 | Deploy | non applicabile |
 | Stato | operativo |
 | Branch principale | `main` |
-| Baseline `main` di partenza verificata per questa riconciliazione | `319393c5a241b359fa2fee3a9adf55f9af8dc3ad` |
+| Baseline `main` verificata | `c693dcc25979a93afab3c8cfcdb43f943baee187` |
 | Snapshot storico usato per la patch di governance del 26 luglio | `Tretnix-knowledge-de29f4f3.zip` |
 | SHA-256 snapshot storico | `3cf34a6f145a1834d211f65917950dc92e940f259d7585f16342d1bb00730032` |
 | Commit della patch di governance | da registrare dopo merge |
-| Ultima revisione | 6 settembre 2026 — riconciliazione RITO START final freeze e BUSINESS current baseline preparata sulla baseline Knowledge `319393c5a241b359fa2fee3a9adf55f9af8dc3ad`; nuovo commit canonico da registrare soltanto dopo review e merge |
+| Ultima revisione | 11 settembre 2026 — candidate portfolio preparato da `main@c693dcc25979a93afab3c8cfcdb43f943baee187` |
 
 ### Ruolo canonico
 
@@ -486,14 +491,14 @@ BUSINESS PLUS non è ancora fonte canonica trasversale per Native AdminAuth o re
 Tretnix.com
 └── sito istituzionale e sistema amministrativo interno
 
-Forno Lume START — frozen `a817903923c1bbfe177d8b59e70a4aa1137b7ab1`
+Forno Lume START — frozen `2ed19ef9a4a886616bccd5aad2054c3027fec680`
 └── baseline canonica visuale e single-page Hospitality START
-    └── Forno Lume BUSINESS — frozen `9bc33cd5737af7763fe9c61ddc52eb7a606fafea`
+    └── Forno Lume BUSINESS — frozen `ccea04cb0bb50e2624fe505bf7d3f25890b7d456`
         └── Forno Lume BUSINESS PLUS — bootstrap `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e`, lineage storico da `389bd1...`
 
 Beauty & Wellness v1.1
-└── RITO Studio START — frozen `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7`
-    └── RITO Studio BUSINESS — current remote `main` `b6a82f918370f730681e9e0c0572a7a653d2dfeb`; reconciliation against frozen START authorized
+└── RITO Studio START — frozen `2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6`; historical tag `family-start-v1.0` preserved
+    └── RITO Studio BUSINESS — frozen `3f0ff4d3ed8e675725d8d640c305ab61d47217d7`
         └── RITO Studio BUSINESS PLUS — remote `main` `eba1a2a91fd3a531b4a4667d038b631758d0a664`, historical parent lineage preserved; live staging/E2E state unchanged by this gate
 
 Professional Services v1.0
@@ -521,8 +526,8 @@ Home & Local Services v1.0
 | Motion e reveal editoriali Hospitality | `forno-lume-START` | canonico per il comportamento percepito |
 | Navbar Hospitality | `forno-lume-START` | canonico per il comportamento percepito |
 | Responsive Hospitality | `forno-lume-START` | canonico |
-| Qualità visuale Beauty & Wellness START | `rito-studio-START` | canonico sulla baseline frozen `family-start-v1.0` → `74ee03c...`; lineage storico dei piani superiori preservato |
-| Architettura multipagina Beauty & Wellness | `rito-studio-BUSINESS` | candidato di riferimento su `main@b6a82f...`; riconciliazione contro il nuovo START frozen autorizzata |
+| Qualità visuale Beauty & Wellness START | `rito-studio-START` | canonico sulla baseline `2ab4dc4...`; tag storico e lineage preservati |
+| Architettura multipagina Beauty & Wellness | `rito-studio-BUSINESS` | riferimento riconciliato su `main@3f0ff4d...` |
 | Native AdminAuth + realtime BUSINESS PLUS | `rito-studio-BUSINESS-PLUS` | candidate in staging; non canonico finché E2E/security gate restano aperti |
 | Architettura multipagina Hospitality | `forno-lume-BUSINESS` | canonico sulla baseline frozen corrente |
 | Routing, history e scroll multipagina | `forno-lume-BUSINESS` | canonico per il pattern verificato |
@@ -569,12 +574,12 @@ Per tutti i progetti: nessun URL, branch, commit, deploy, test o verifica viene 
 
 # 6. Ordine operativo aggiornato
 
-1. mantenere Forno Lume START congelato sulla baseline `a817903923c1bbfe177d8b59e70a4aa1137b7ab1`;
-2. mantenere Forno Lume BUSINESS congelato sulla baseline `9bc33cd5737af7763fe9c61ddc52eb7a606fafea`;
+1. mantenere Forno Lume START congelato sulla baseline `2ed19ef9a4a886616bccd5aad2054c3027fec680`;
+2. mantenere Forno Lume BUSINESS congelato sulla baseline `ccea04cb0bb50e2624fe505bf7d3f25890b7d456`;
 3. mantenere Package D BUSINESS separato e non autorizzato dal final polish;
 4. non modificare il lineage esistente di Forno Lume BUSINESS PLUS senza gate separato;
-5. mantenere RITO Studio START congelato sul tag `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7`;
-6. riconciliare RITO Studio BUSINESS `main@b6a82f918370f730681e9e0c0572a7a653d2dfeb` contro il nuovo START frozen prima di ulteriori pass di parità;
+5. mantenere RITO Studio START congelato sulla baseline `2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6`, preservando il tag storico `family-start-v1.0`;
+6. mantenere RITO Studio BUSINESS congelato sulla baseline `3f0ff4d3ed8e675725d8d640c305ab61d47217d7`;
 7. non modificare RITO Studio BUSINESS PLUS per effetto di questa riconciliazione e preservarne il lineage storico;
 8. proseguire Tretnix.com soltanto nel perimetro già autorizzato;
 9. riconciliare nei documenti progetto e Knowledge soltanto evidenze realmente ottenute;
