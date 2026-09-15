@@ -1,7 +1,7 @@
 # Tretnix Decision Log
 
-**Versione:** 1.14
-**Aggiornato:** 9 settembre 2026
+**Versione:** 1.15
+**Aggiornato:** 14 settembre 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
 
@@ -1480,3 +1480,55 @@ non commerciali accurati già autorizzati, per esempio `WebSite`, `WebPage`, `Ab
 
 L'eccezione non autorizza awards, certificazioni, risultati, credenziali, metriche operative o
 claim medici inventati. Non autorizza falsa prova sociale nei siti cliente reali.
+
+---
+
+## TRX-DEC-041 — Toolchain operativo ChatGPT + Codex e Development OS v1
+
+**Stato:** approvata
+**Data:** 14 settembre 2026
+**Ambito:** sistema operativo di sviluppo Tretnix e repository adottati progressivamente
+**Sostituisce:** la composizione operativa corrente di `TRX-DEC-011`, `TRX-DEC-012` e `TRX-DEC-015`; decisioni e gate project-specific storici restano provenance
+
+### Contesto
+
+Codex è ormai il writer operativo e Git il checkpoint verificabile. La ricostruzione manuale di contesto, stato, validazioni ed evidence produce un costo ripetuto riducibile deterministicamente senza automatizzare l'autorità.
+
+### Decisione
+
+La toolchain operativa corrente è:
+
+```text
+ChatGPT = strategia, architettura, specifiche, coordinamento e review
+Codex   = writer operativo principale, implementazione e validazione
+GitHub  = fonte versionata e checkpoint verificabile
+Cursor  = editor o superficie manuale opzionale, non dipendenza
+Lovable = strumento storico/provenance, non workflow attivo
+```
+
+Tretnix adotta Development OS v1 come livello deterministico locale composto da manifest e task descriptor, preflight, context resolver con source allowlist, cache content-addressed, repository fingerprint exact-state, validation planner/cache ed evidence JSON con report derivato.
+
+Il tooling usa Node ESM senza dipendenze runtime aggiuntive e può scrivere soltanto output derivati sotto `.tretnix/`. Cache ed evidence non prevalgono su Git, decisioni o fonti canoniche. Il Context Resolver resta sperimentale fino a un pilot reale approvato; Tretnix.com è un gate separato e non viene modificato da questa decisione.
+
+### Garanzie
+
+- nessun validator viene eseguito tramite shell implicita;
+- path e output restano confinati alle root autorizzate;
+- secret, `.env`, credenziali e path sensibili non entrano nel context pack o nella cache;
+- ogni classe supportata richiede capability minime; configurazioni incomplete falliscono chiuse;
+- il piano effettivo unisce tutte le classi osservate sui path e i controlli aggiuntivi del descriptor, senza downgrade;
+- soltanto controlli locali deterministici sul fingerprint identico sono riusabili;
+- browser, backend live, staging, production e gate umani restano `UNVERIFIED` finché non verificati direttamente;
+- stage, commit, push, PR, merge, deploy, publish, migration, DNS, provisioning, secret mutation e production write non sono autorizzati.
+
+Il fingerprint include i byte reali dei tracked file non sensibili, anche quando Git normalizza LF/CRLF. Prima della lettura valuta path nominale, realpath e ogni componente della catena: path sensibili o aliasati tramite symlink/junction/reparse point usano soltanto metadata/sentinel, senza byte o hash di contenuto, interrompono entrambi i diff di contenuto e rendono lo stato non cache-eligible. Ogni artifact cache consumato è confinato autonomamente e verificato come regular-file. `.tretnix/` e le directory runtime critiche devono essere directory reali nel namespace canonico: anche una junction interna al repository blocca letture cache, scritture e cleanup senza cancellare sorgenti. La grammar argv è chiusa e i package script ammessi vengono eseguiti come argv interno verificato, senza shell o lifecycle hook.
+
+Raw stdout/stderr dei validator non vengono persistiti in cache o evidence: possono contenere credenziali e nessuna blacklist può garantirne la sicurezza. Restano digest dell'output, exit code e metadata. Le fonti allowlisted devono comunque rispettare la policy sui secret e restano soggette a review. L'evidence precedente è ripresentabile soltanto sul medesimo repository/branch/HEAD/fingerprint e manifest/task; altrimenti il comando fallisce con `STALE_EVIDENCE` e preserva l'evidence storica. Questa precisazione implementativa non modifica la conservazione controllata dei log prevista separatamente dal CCP.
+
+### Conseguenze
+
+- gli adapter attivi vengono sincronizzati su ChatGPT + Codex;
+- gli adapter Lovable e Cursor restano soltanto come provenance o compatibilità opzionale chiaramente classificata;
+- la storia dei repository creati o sincronizzati con Lovable non viene riscritta;
+- Development OS può alimentare l'evidence di un Controlled Change Package, ma non sostituisce `Apply`, `Validate`, review e gate separati di `TRX-DEC-032`;
+- adozione su altri repository, CI, pilot e promozione generale richiedono checkpoint separati.

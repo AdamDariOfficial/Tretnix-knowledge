@@ -2,20 +2,24 @@
 
 ## Purpose
 
-Codex is the primary repository agent for controlled implementation and validation. Cursor remains the IDE and human control surface. GitHub remains the official source.
+Codex is the primary repository agent for controlled implementation and validation. Any editor, including Cursor, is an optional manual surface. GitHub remains the official source and checkpoint.
 
 ## Supported Tretnix entry points
 
 Preferred initial setup:
 
-1. install the Codex IDE extension in Cursor;
+1. open Codex through the app, terminal or an optional compatible editor;
 2. sign in with the approved ChatGPT account;
 3. install `compiled/CODEX_GLOBAL_AGENTS.md` as `~/.codex/AGENTS.md`;
-4. open a repository that already contains a root `AGENTS.md`;
+4. open a repository that already contains a root `AGENTS.md` and, when adopted, `tretnix.project.json`;
 5. verify instruction loading in read-only mode;
 6. begin with local work on a dedicated branch.
 
 Codex app or Codex Cloud may be used later for isolated or longer tasks.
+
+When a project manifest exists, begin with `doctor` and `preflight`; generate task context and validation evidence only after identity checks pass. `.tretnix/` remains derived and gitignored.
+
+`doctor` checks actual schema/runtime conformance and templates. Development OS unions observed/requested risk classes, confines individual cache artifacts and hashes real non-sensitive tracked bytes. Exact-state reads inspect nominal paths, realpaths and component chains; sensitive or aliased inputs use metadata/null hashes, stop content diffs and disable caching. Runtime .tretnix directories must be real canonical directories; internal junctions block cache reads, writes and cleanup. Raw validator output is transient only; stale repository/task evidence requires new validation and never replaces historical artifacts. Manual/live verification remains separate.
 
 ## Initial verification prompt
 

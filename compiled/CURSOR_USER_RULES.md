@@ -1,5 +1,7 @@
 # Cursor User Rules — Tretnix
 
+**Stato:** adapter opzionale/manuale; Cursor non è una dipendenza del workflow Tretnix.
+
 Explain findings and plans in Italian.
 
 Use English for:

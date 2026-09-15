@@ -60,6 +60,14 @@ function Get-RelativeDisplayPath([string]$Path) {
     return $FullPath.Replace("\", "/")
 }
 
+function Test-IsRepositorySourcePath([string]$Path) {
+    $FullPath = [System.IO.Path]::GetFullPath($Path)
+    $GitPrefix = (Join-Path $script:Root ".git").TrimEnd("\") + "\"
+    $RuntimePrefix = (Join-Path $script:Root ".tretnix").TrimEnd("\") + "\"
+    return -not $FullPath.StartsWith($GitPrefix, [System.StringComparison]::OrdinalIgnoreCase) -and
+        -not $FullPath.StartsWith($RuntimePrefix, [System.StringComparison]::OrdinalIgnoreCase)
+}
+
 function Get-LfNormalizedBytes([string]$Path) {
     $Bytes = [System.IO.File]::ReadAllBytes($Path)
     $Normalized = New-Object System.Collections.Generic.List[byte]
@@ -155,7 +163,8 @@ foreach ($Relative in $RequiredPaths) {
     }
 }
 
-$MarkdownFiles = @(Get-ChildItem -LiteralPath $Root -Recurse -File -Filter "*.md" -ErrorAction Stop)
+$MarkdownFiles = @(Get-ChildItem -LiteralPath $Root -Recurse -File -Filter "*.md" -ErrorAction Stop |
+    Where-Object { Test-IsRepositorySourcePath $_.FullName })
 foreach ($File in $MarkdownFiles) {
     try {
         [void](Read-Utf8Strict $File.FullName)
@@ -226,7 +235,8 @@ foreach ($File in $MarkdownFiles) {
     }
 }
 
-$JsonFiles = @(Get-ChildItem -LiteralPath $Root -Recurse -File -Filter "*.json" -ErrorAction Stop)
+$JsonFiles = @(Get-ChildItem -LiteralPath $Root -Recurse -File -Filter "*.json" -ErrorAction Stop |
+    Where-Object { Test-IsRepositorySourcePath $_.FullName })
 foreach ($File in $JsonFiles) {
     try {
         $JsonText = Read-Utf8Strict $File.FullName
@@ -340,7 +350,7 @@ if ($GitExitCode -eq 0) {
 }
 else {
     $TrackedFiles = @(Get-ChildItem -LiteralPath $Root -Recurse -File -Force |
-        Where-Object { $_.FullName -notlike "*\.git\*" } |
+        Where-Object { Test-IsRepositorySourcePath $_.FullName } |
         ForEach-Object { Get-RelativeDisplayPath $_.FullName })
 }
 
@@ -349,7 +359,8 @@ foreach ($Relative in $TrackedFiles) {
     $NormalizedRelative = $Relative.Replace("/", "\")
     $Name = [System.IO.Path]::GetFileName($NormalizedRelative).ToLowerInvariant()
     $Extension = [System.IO.Path]::GetExtension($NormalizedRelative).ToLowerInvariant()
-    if ($Name -eq ".env" -or $Name.StartsWith(".env.") -or $SensitiveSuffixes -contains $Extension) {
+    $PublicEnvironmentTemplate = @(".env.example", ".env.sample", ".env.template") -contains $Name
+    if ($Name -eq ".env" -or ($Name.StartsWith(".env.") -and -not $PublicEnvironmentTemplate) -or $SensitiveSuffixes -contains $Extension) {
         Add-ValidationError "sensitive file is tracked: $($Relative.Replace('\', '/'))"
     }
     if ($Name.Contains("(2)")) {

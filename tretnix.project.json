@@ -1,0 +1,236 @@
+{
+  "$schema": "schemas/tretnix-project.schema.json",
+  "schema_version": 1,
+  "project": {
+    "id": "tretnix-knowledge",
+    "family": "tretnix",
+    "plan": "internal",
+    "repository": "AdamDariOfficial/Tretnix-knowledge",
+    "default_branch": "main",
+    "allowed_branch_prefixes": ["audit/", "chore/", "codex/", "docs/", "feature/", "fix/", "refactor/"]
+  },
+  "sources": {
+    "agents": ["AGENTS.md"],
+    "status": ["CURRENT_STATE.md"],
+    "local_decisions": ["DECISIONS.md"],
+    "knowledge_tags": ["automation", "knowledge", "release", "security", "tooling", "workflow"]
+  },
+  "context": {
+    "knowledge_root": ".",
+    "compact_adapters": [
+      {
+        "base": "knowledge",
+        "path": "compiled/CHATGPT_PROJECT_INSTRUCTIONS_COMPACT.md",
+        "reason": "Layer A compact strategy and review instructions"
+      },
+      {
+        "base": "knowledge",
+        "path": "compiled/CODEX_GLOBAL_AGENTS.md",
+        "reason": "Layer A repository writer instructions"
+      }
+    ],
+    "source_allowlists": {
+      "repo": [
+        "AGENTS.md",
+        "CURRENT_STATE.md",
+        "DECISIONS.md",
+        "DEVELOPMENT_OS.md",
+        "DEVELOPMENT_STANDARDS.md",
+        "README.md",
+        "REPOSITORY_INDEX.md",
+        "SOURCE_ARTIFACT_REGISTER.md",
+        "TRETNIX_MASTER_CONTEXT.md",
+        "compiled/**",
+        "schemas/**",
+        "skills/**",
+        "templates/**",
+        "tools/tretnix/**"
+      ],
+      "knowledge": [
+        "AGENTS.md",
+        "CURRENT_STATE.md",
+        "DECISIONS.md",
+        "DEVELOPMENT_OS.md",
+        "DEVELOPMENT_STANDARDS.md",
+        "README.md",
+        "REPOSITORY_INDEX.md",
+        "SOURCE_ARTIFACT_REGISTER.md",
+        "TRETNIX_MASTER_CONTEXT.md",
+        "compiled/**",
+        "schemas/**",
+        "skills/**",
+        "templates/**",
+        "tools/tretnix/**"
+      ]
+    },
+    "tag_sources": {
+      "automation": [
+        {
+          "base": "knowledge",
+          "path": "DEVELOPMENT_OS.md",
+          "sections": ["## 2. Architettura v1", "## 8. Confini di automazione"],
+          "reason": "Deterministic automation contract"
+        }
+      ],
+      "docs_only": [],
+      "knowledge": [
+        {
+          "base": "knowledge",
+          "path": "DEVELOPMENT_STANDARDS.md",
+          "sections": ["## 29. Tretnix Development OS"],
+          "reason": "Canonical Knowledge operating rules"
+        }
+      ],
+      "release": [
+        {
+          "base": "knowledge",
+          "path": "skills/RELEASE_FREEZE.md",
+          "reason": "Release and freeze procedure"
+        }
+      ],
+      "security": [
+        {
+          "base": "knowledge",
+          "path": "DEVELOPMENT_STANDARDS.md",
+          "sections": ["## 14. Sicurezza generale", "## 29. Tretnix Development OS"],
+          "reason": "Security and cache-safety rules"
+        },
+        {
+          "base": "knowledge",
+          "path": "skills/SECURITY_RETEST.md",
+          "reason": "Security retest procedure"
+        }
+      ],
+      "tooling": [
+        {
+          "base": "knowledge",
+          "path": "tools/tretnix/README.md",
+          "reason": "Development OS CLI contract"
+        }
+      ],
+      "workflow": [
+        {
+          "base": "knowledge",
+          "path": "DECISIONS.md",
+          "sections": ["## TRX-DEC-041 — Toolchain operativo ChatGPT + Codex e Development OS v1"],
+          "reason": "Approved active toolchain decision"
+        },
+        {
+          "base": "knowledge",
+          "path": "skills/TASK_ADMISSION.md",
+          "reason": "Task admission procedure"
+        }
+      ]
+    }
+  },
+  "commands": {
+    "install": null,
+    "typecheck": null,
+    "lint": null,
+    "test": "node --test tools/tretnix/tests/tretnix.test.mjs",
+    "build": null,
+    "knowledge_validate": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate_knowledge.ps1"
+  },
+  "validation": {
+    "lockfiles": [],
+    "generated_paths": [],
+    "sensitive_path_prefixes": ["private/", "secrets/"],
+    "security_sensitive_prefixes": ["schemas/", "scripts/", "tools/tretnix/", "tretnix.project.json"],
+    "docs_only_prefixes": [
+      "AGENTS.md",
+      "BEAUTY_WELLNESS_FAMILY.md",
+      "CASE_STUDY_STANDARD.md",
+      "CHAT_RETENTION_AND_HANDOFF.md",
+      "CURRENT_STATE.md",
+      "DECISIONS.md",
+      "DEVELOPMENT_OS.md",
+      "DEVELOPMENT_STANDARDS.md",
+      "HOME_LOCAL_SERVICES_FAMILY.md",
+      "HOSPITALITY_FAMILY.md",
+      "OBSIDIAN_HOME.md",
+      "PORTFOLIO_AND_VERTICALS.md",
+      "PROFESSIONAL_SERVICES_FAMILY.md",
+      "README.md",
+      "REPOSITORY_INDEX.md",
+      "SOURCE_ARTIFACT_REGISTER.md",
+      "TRETNIX_MASTER_CONTEXT.md",
+      "UX_UI_QUALITY_SYSTEM.md",
+      "audits/",
+      "case-studies/",
+      "compiled/",
+      "family-kits/",
+      "operations/",
+      "skills/",
+      "source-artifacts/",
+      "templates/"
+    ],
+    "frontend_prefixes": [],
+    "backend_prefixes": [],
+    "release_or_infra_prefixes": [".github/workflows/", ".gitattributes", ".gitignore"],
+    "supported_task_classes": ["docs_only", "security_or_data", "release_or_infra"],
+    "required_capabilities": {
+      "docs_only": ["static", "whitespace"],
+      "security_or_data": ["static", "test", "security", "whitespace"],
+      "release_or_infra": ["static", "test", "config", "whitespace"]
+    },
+    "allowed_executables": [],
+    "validators": [
+      {
+        "id": "development-os-tests",
+        "command": "node --test tools/tretnix/tests/tretnix.test.mjs",
+        "runtime": "node",
+        "task_classes": ["all"],
+        "capabilities": ["test", "security"],
+        "deterministic": true,
+        "cacheable": true,
+        "contract_version": "1.1.0",
+        "timeout_ms": 120000
+      },
+      {
+        "id": "knowledge-validator",
+        "command": {
+          "win32": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate_knowledge.ps1",
+          "default": "python scripts/validate_knowledge.py"
+        },
+        "task_classes": ["all"],
+        "capabilities": ["static", "config"],
+        "deterministic": true,
+        "cacheable": true,
+        "contract_version": "1.1.0",
+        "timeout_ms": 120000
+      },
+      {
+        "id": "git-diff-check",
+        "command": "git -c core.whitespace=cr-at-eol diff --check",
+        "runtime": "git",
+        "task_classes": ["all"],
+        "capabilities": ["whitespace"],
+        "deterministic": true,
+        "cacheable": true,
+        "contract_version": "1.1.0",
+        "timeout_ms": 30000
+      }
+    ]
+  },
+  "gates": {
+    "browser": false,
+    "backend": false,
+    "staging": false,
+    "production": false
+  },
+  "forbidden_automatic_actions": [
+    "stage",
+    "commit",
+    "push",
+    "pull_request",
+    "merge",
+    "deploy",
+    "publish",
+    "migration",
+    "dns",
+    "infrastructure_mutation",
+    "provisioning",
+    "secret_mutation",
+    "production_write"
+  ]
+}

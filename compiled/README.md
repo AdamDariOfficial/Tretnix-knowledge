@@ -20,10 +20,14 @@ Quando cambia una decisione o uno standard:
 
 - `CHATGPT_PROJECT_INSTRUCTIONS.md`: versione completa delle istruzioni del progetto ChatGPT Tretnix.
 - `CHATGPT_PROJECT_INSTRUCTIONS_COMPACT.md`: adattatore entro il limite di 8.000 caratteri del campo Project Instructions.
-- `LOVABLE_WORKSPACE_KNOWLEDGE.md`: regole globali del workspace Lovable.
-- `CURSOR_USER_RULES.md`: preferenze globali per Cursor Agent.
+- `LOVABLE_WORKSPACE_KNOWLEDGE.md`: adapter storico, conservato per provenance; non workflow attivo.
+- `CURSOR_USER_RULES.md`: preferenze opzionali per chi usa Cursor come superficie manuale.
 - `CODEX_GLOBAL_AGENTS.md`: istruzioni globali da installare in `~/.codex/AGENTS.md`.
 - `CODEX_SETUP.md`: procedura di configurazione e verifica di Codex.
+
+Gli adapter attivi sono ChatGPT e Codex secondo `TRX-DEC-041`. Development OS v1 compila contesto ed evidence a partire dalle fonti canoniche; non rende autonomi gli adapter.
+
+Gli adapter attivi riportano le garanzie della remediation Gate B: decisioni locali nel Layer A, unione conservativa dei controlli, fingerprint dei byte tracked, containment senza alias dei singoli child cache e del namespace runtime, metadata/sentinel senza letture per input exact-state sensibili o aliasati, raw output non persistito e rifiuto dell'evidence stale. Lovable/Cursor restano classificati rispettivamente come storico/opzionale e non vengono promossi a workflow attivo.
 
 Il contesto specifico dei singoli progetti non deve essere inserito indiscriminatamente negli adattatori globali. I gate trasversali restano globali; specifiche complete restano nei `family-kits/`; stato dettagliato e task restano nei file del progetto. Dopo il merge di una modifica canonica, sincronizzare manualmente le copie presenti nelle impostazioni degli strumenti.
 

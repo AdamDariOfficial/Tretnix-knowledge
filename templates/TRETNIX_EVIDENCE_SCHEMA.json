@@ -1,0 +1,90 @@
+{
+  "$schema": "../schemas/tretnix-evidence.schema.json",
+  "schema_version": 1,
+  "run_id": "2026-09-14T00-00-00-000Z-example",
+  "started_at": "2026-09-14T00:00:00.000Z",
+  "ended_at": "2026-09-14T00:00:01.000Z",
+  "repository": "owner/example-project",
+  "branch": "feature/example",
+  "head": "0000000000000000000000000000000000000000",
+  "fingerprint": "0000000000000000000000000000000000000000000000000000000000000000",
+  "fingerprint_contract_version": "1.2.1",
+  "task_class": "docs_only",
+  "preflight": {
+    "ok": true,
+    "issues": []
+  },
+  "context": null,
+  "working_tree": {
+    "staged": [],
+    "unstaged": [],
+    "untracked": [],
+    "sensitive": []
+  },
+  "sources": [],
+  "validation_plan": {
+    "supported": true,
+    "required_capabilities": [
+      "static",
+      "whitespace"
+    ],
+    "provided_capabilities": [
+      "static",
+      "whitespace"
+    ],
+    "missing_capabilities": [],
+    "selected": [],
+    "not_executed": [],
+    "effective_classes": [
+      "docs_only"
+    ]
+  },
+  "commands": [],
+  "cache": {
+    "context": "NOT_RUN",
+    "hits": [],
+    "misses": [],
+    "rejections": []
+  },
+  "validation": [],
+  "automatic_gates": [
+    {
+      "id": "preflight",
+      "status": "PASS"
+    },
+    {
+      "id": "validation_plan",
+      "status": "PASS"
+    }
+  ],
+  "manual_gates": [
+    {
+      "id": "browser",
+      "required": false,
+      "status": "NOT_REQUIRED"
+    },
+    {
+      "id": "backend",
+      "required": false,
+      "status": "NOT_REQUIRED"
+    },
+    {
+      "id": "staging",
+      "required": false,
+      "status": "NOT_REQUIRED"
+    },
+    {
+      "id": "production",
+      "required": false,
+      "status": "NOT_REQUIRED"
+    }
+  ],
+  "forbidden_actions_observed": [],
+  "result": "PASS",
+  "state_identity": {
+    "manifest_path": "tretnix.project.json",
+    "manifest_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "task_path": null,
+    "task_sha256": null
+  }
+}

@@ -106,10 +106,10 @@ Require exact repository/branch/SHA checks, a file allowlist, payload hashes, id
 Use these roles:
 
 - ChatGPT: strategy, requirements, specifications, coordination and quality control;
-- Lovable: rapid visual and full-stack construction;
 - GitHub: official source, branches, checkpoints and pull requests;
-- Cursor: IDE, terminal, diff review and human control surface;
-- Codex: repository analysis, controlled implementation and available validation;
+- Codex: primary repository writer, controlled implementation and validation;
+- Cursor: optional editor/manual surface, not a workflow dependency;
+- Lovable: historical/provenance tool, not part of the active workflow;
 - Claude Code: optional independent reviewer or specialist.
 
 Before every Codex assignment, recommend a currently available model and explain the choice based on complexity, risk and cost. Do not hard-code a permanent model preference.
@@ -119,7 +119,7 @@ For agent-assisted implementation:
 1. verify the project state and every required start gate;
 2. prepare a complete approved task;
 3. start from a clean branch;
-4. allow only one writer on the same files at a time;
+4. allow only one writer on the same working tree at a time;
 5. require a Git checkpoint before handoff;
 6. make the first reviewer read-only;
 7. classify findings by evidence;
@@ -127,6 +127,10 @@ For agent-assisted implementation:
 9. rerun relevant checks after corrections.
 
 Do not treat agreement between two models as technical evidence.
+
+When a repository adopts Tretnix Development OS v1, use its manifest, preflight, deterministic context pack, exact-state validation and evidence. Cache never authorizes remote actions or converts browser/backend/staging/production gates into PASS. Reject sensitive or out-of-allowlist context sources and fail closed on incomplete validation capability.
+
+Declared local decisions enter Layer A with canonical authority preserved. Effective requirements union all observed path classes and additional requested checks, never downgrade risk. Fingerprints include actual non-sensitive tracked bytes even when Git normalizes EOL. Inspect nominal path, realpath and every component before exact-state reads; sensitive or aliased inputs use metadata/null hashes, stop content diffs and disable cache eligibility. Confine each cache child before reading. Runtime directories under .tretnix must be real canonical directories; internal junctions also block cache reads, writes and cleanup. Raw validator stdout/stderr must not be persisted in Development OS cache/evidence; CCP controlled logs remain separate. Stale repository/task evidence must fail with non-zero status, preserve historical artifacts and require new validation. Closed argv grammars reject inline/preload/loader/import flags and bypass package lifecycle hooks.
 
 A project marked `PREPARATION_COMPLETE` is not automatically authorized for implementation. Do not create paid-tool projects, consume credits, create remote repositories, push, publish or start a higher plan without the required explicit gate. Do not invent repository or deploy details for planned projects.
 

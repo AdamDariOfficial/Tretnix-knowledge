@@ -1,7 +1,7 @@
 # Tretnix Repository Index
 
-**Versione:** 2.4
-**Aggiornato:** 11 settembre 2026
+**Versione:** 2.5
+**Aggiornato:** 14 settembre 2026
 **Stato dell’inventario:** completo rispetto agli otto repository attualmente dichiarati
 
 Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit del codice.
@@ -453,13 +453,13 @@ BUSINESS PLUS non è ancora fonte canonica trasversale per Native AdminAuth o re
 | Piano | INTERNO |
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
 | Deploy | non applicabile |
-| Stato | operativo |
+| Stato | operativo; Development OS v1 candidate in review |
 | Branch principale | `main` |
-| Baseline `main` verificata | `c693dcc25979a93afab3c8cfcdb43f943baee187` |
+| Baseline `main` verificata | `94c5cb7818faaad0f82e14279d03ce76bf19d971` |
 | Snapshot storico usato per la patch di governance del 26 luglio | `Tretnix-knowledge-de29f4f3.zip` |
 | SHA-256 snapshot storico | `3cf34a6f145a1834d211f65917950dc92e940f259d7585f16342d1bb00730032` |
 | Commit della patch di governance | da registrare dopo merge |
-| Ultima revisione | 11 settembre 2026 — candidate portfolio preparato da `main@c693dcc25979a93afab3c8cfcdb43f943baee187` |
+| Ultima revisione | 14 settembre 2026 — Development OS v1 candidate su `codex/development-os-v1` da `main@94c5cb7818faaad0f82e14279d03ce76bf19d971` |
 
 ### Ruolo canonico
 
@@ -468,7 +468,9 @@ BUSINESS PLUS non è ancora fonte canonica trasversale per Native AdminAuth o re
 - standard condivisi;
 - indice dei repository;
 - template e procedure;
-- adattatori per ChatGPT, Lovable, Cursor e Codex;
+- adattatori attivi per ChatGPT e Codex, con Cursor opzionale e Lovable preservato come provenance storica;
+- manifest, schema, CLI, cache ed evidence del Development OS v1;
+- skill operative Task Admission, Read-Only Review, Release Freeze e Security Retest;
 - kit di configurazione dei progetti;
 - family kit completi Beauty, Professional e Home;
 - manifest, handoff e provenienza degli artefatti sorgente.
@@ -541,6 +543,7 @@ Home & Local Services v1.0
 | Git workflow | `tretnix-knowledge` | standard condiviso |
 | Agent handoff | `tretnix-knowledge` | standard condiviso |
 | Codex workflow | `tretnix-knowledge` | approvato, pilota su START |
+| Development OS v1 | `tretnix-knowledge` | candidate implementato; full diff/owner gate prima del merge e pilot separato |
 
 ---
 

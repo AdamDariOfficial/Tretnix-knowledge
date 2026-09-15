@@ -44,7 +44,7 @@ CANONICAL_METADATA_FILES = [
 LOCAL_LINK_RE = re.compile(r"(?<!!)\[[^\]]*\]\(([^)]+)\)")
 DECISION_RE = re.compile(r"^## TRX-DEC-(\d{3})\b", re.MULTILINE)
 SENSITIVE_SUFFIXES = {".pem", ".key", ".p12", ".pfx"}
-SENSITIVE_NAMES = {".env", ".env.local", ".env.production", ".env.development"}
+PUBLIC_ENVIRONMENT_TEMPLATES = {".env.example", ".env.sample", ".env.template"}
 TEXT_EXTENSIONS = {
     ".md", ".json", ".py", ".ps1", ".psm1", ".yml", ".yaml",
     ".txt", ".toml", ".ini", ".cfg", ".csv", ".ts", ".tsx",
@@ -66,6 +66,14 @@ def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def repository_source_files(pattern: str):
+    """Yield source files while excluding Git internals and derived Development OS runtime."""
+    for path in ROOT.rglob(pattern):
+        relative = path.relative_to(ROOT)
+        if path.is_file() and relative.parts[0] not in {".git", ".tretnix"}:
+            yield path
+
+
 def tracked_files() -> list[Path]:
     try:
         result = subprocess.run(
@@ -75,7 +83,7 @@ def tracked_files() -> list[Path]:
             capture_output=True,
         )
     except (OSError, subprocess.CalledProcessError):
-        return [path.relative_to(ROOT) for path in ROOT.rglob("*") if path.is_file()]
+        return [path.relative_to(ROOT) for path in repository_source_files("*")]
     return [Path(item.decode("utf-8")) for item in result.stdout.split(b"\0") if item]
 
 
@@ -86,7 +94,7 @@ def validate_required_paths(errors: list[str]) -> None:
 
 
 def validate_utf8_and_metadata(errors: list[str]) -> None:
-    for path in ROOT.rglob("*.md"):
+    for path in repository_source_files("*.md"):
         try:
             path.read_text(encoding="utf-8")
         except UnicodeDecodeError as exc:
@@ -104,7 +112,7 @@ def validate_utf8_and_metadata(errors: list[str]) -> None:
 
 
 def validate_local_links(errors: list[str]) -> None:
-    for path in ROOT.rglob("*.md"):
+    for path in repository_source_files("*.md"):
         text = path.read_text(encoding="utf-8")
         for match in LOCAL_LINK_RE.finditer(text):
             raw_target = match.group(1).strip()
@@ -126,7 +134,7 @@ def validate_local_links(errors: list[str]) -> None:
 
 
 def validate_json(errors: list[str]) -> None:
-    for path in ROOT.rglob("*.json"):
+    for path in repository_source_files("*.json"):
         try:
             json.loads(path.read_text(encoding="utf-8"))
         except (UnicodeDecodeError, json.JSONDecodeError) as exc:
@@ -190,7 +198,8 @@ def validate_family_manifests(errors: list[str]) -> None:
 def validate_sensitive_tracked_files(errors: list[str]) -> None:
     for relative in tracked_files():
         name = relative.name.lower()
-        if name in SENSITIVE_NAMES or relative.suffix.lower() in SENSITIVE_SUFFIXES:
+        sensitive_environment = name == ".env" or (name.startswith(".env.") and name not in PUBLIC_ENVIRONMENT_TEMPLATES)
+        if sensitive_environment or relative.suffix.lower() in SENSITIVE_SUFFIXES:
             fail(errors, f"sensitive file is tracked: {relative.as_posix()}")
         if "(2)" in relative.name:
             fail(errors, f"historical duplicate suffix is tracked outside canonical naming: {relative.as_posix()}")
@@ -261,8 +270,8 @@ def main() -> int:
             print(f"- {error}", file=sys.stderr)
         return 1
 
-    markdown_count = sum(1 for _ in ROOT.rglob("*.md"))
-    json_count = sum(1 for _ in ROOT.rglob("*.json"))
+    markdown_count = sum(1 for _ in repository_source_files("*.md"))
+    json_count = sum(1 for _ in repository_source_files("*.json"))
     print("Tretnix knowledge validation: PASSED")
     print(f"Markdown files checked: {markdown_count}")
     print(f"JSON files checked: {json_count}")

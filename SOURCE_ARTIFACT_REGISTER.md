@@ -1,8 +1,8 @@
 # Tretnix Source Artifact Register
 
-**Versione:** 1.4
-**Aggiornato:** 13 agosto 2026
-**Stato:** operativo; development pack del 25 luglio acquisito ed estratto
+**Versione:** 1.5
+**Aggiornato:** 14 settembre 2026
+**Stato:** operativo; Development OS v1 acquisito e formalizzato nel candidate corrente
 
 ---
 
@@ -54,6 +54,20 @@ La patch di governance associata deve essere applicata esclusivamente a un worki
 | Contenuti importati | skill, manifest template e decisione formalizzata |
 | Destinazioni canoniche | `skills/CONTROLLED_CHANGE_PACKAGE.md`, `templates/CONTROLLED_CHANGE_PACKAGE_MANIFEST.md`, `TRX-DEC-032` |
 | ZIP binario | conservazione offline; non necessario nel repository dopo l’estrazione |
+
+### Tretnix Development OS v1 master specification
+
+| Campo | Valore |
+|---|---|
+| Nome ricevuto | `TRETNIX_DEVELOPMENT_OS_V1_MASTER_SPEC.md` |
+| Data contenuto | 14 settembre 2026 |
+| SHA-256 | `34a2d1dea3f892535e77bf8dce4a5adb5a9c7976a3217d9ee1ec073c579a61bb` |
+| Origine verificata | allegato owner conservato localmente fuori repository |
+| Baseline di implementazione | `Tretnix-knowledge@94c5cb7818faaad0f82e14279d03ce76bf19d971` |
+| Candidate | `codex/development-os-v1` |
+| Contenuti formalizzati | `TRX-DEC-041`, `DEVELOPMENT_STANDARDS.md` sezione 29, `DEVELOPMENT_OS.md`, schema/template, CLI, test e skill operative |
+| Copia sorgente nel repository | non duplicata: checksum e destinazioni versionate conservano provenance; l'originale resta offline fino al gate owner/merge |
+| Stato | acquisito e confrontato integralmente; candidate non canonico fino a review e merge |
 
 
 ---

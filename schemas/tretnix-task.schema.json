@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tretnix.com/schemas/tretnix-task.schema.json",
+  "title": "Tretnix Task Descriptor",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task_version",
+    "title",
+    "repository",
+    "objective",
+    "tags",
+    "risk",
+    "writer",
+    "allowed_scope",
+    "forbidden",
+    "required_outputs",
+    "task_class",
+    "working_tree"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "task_version": {
+      "const": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "repository": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "tags": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      }
+    },
+    "task_class": {
+      "enum": [
+        "docs_only",
+        "frontend",
+        "backend",
+        "security_or_data",
+        "release_or_infra"
+      ]
+    },
+    "risk": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "writer": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "allowed_scope": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      }
+    },
+    "forbidden": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      }
+    },
+    "required_outputs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      }
+    },
+    "required_sources": {
+      "type": "array",
+      "items": {
+        "$ref": "tretnix-project.schema.json#/$defs/contextSource"
+      }
+    },
+    "expected_branch": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "working_tree": {
+      "enum": [
+        "clean_required",
+        "dirty_allowed"
+      ]
+    }
+  }
+}

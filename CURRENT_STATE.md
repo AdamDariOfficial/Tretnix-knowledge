@@ -1,7 +1,7 @@
 # Tretnix Current State
 
-**Versione:** 1.13
-**Aggiornato:** 11 settembre 2026
+**Versione:** 1.14
+**Aggiornato:** 14 settembre 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
 ---
@@ -22,16 +22,19 @@
 | Campo | Valore |
 |---|---|
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
-| Baseline `main` verificata prima del dossier portfolio | `c693dcc25979a93afab3c8cfcdb43f943baee187` |
+| Baseline `main` verificata | `94c5cb7818faaad0f82e14279d03ce76bf19d971` |
 | Snapshot canonico ricevuto | `Tretnix-knowledge-de29f4f3.zip` |
 | Development pack | acquisito, verificato, estratto e integrato in `main` |
 | Family kit | Beauty v1.1, Professional v1.0 e Home v1.0 presenti |
 | Visibilità | pubblica temporaneamente secondo `TRX-DEC-031` |
-| Validazione knowledge | PASS registrato dopo il merge del 10 settembre; rieseguire sul candidate portfolio corrente |
+| Validazione knowledge | PASS registrato dopo il merge del 10 settembre; rieseguire sul candidate Development OS v1 corrente |
 | Evidenza | `VR` per commit, archive e contenuti versionati |
 | Controlled Change Package | canonico in `main` da `996d6b8`; `Apply → Validate` è il metodo standard per cambi non banali esterni |
+| Development OS v1 | candidate su `codex/development-os-v1`; baseline `94c5cb7818faaad0f82e14279d03ce76bf19d971`; full diff/owner gate richiesto prima di commit o merge |
 
-La riconciliazione cross-family è confluita in `main@c693dcc25979a93afab3c8cfcdb43f943baee187`. Le baseline Knowledge precedenti e i relativi branch restano nella cronologia Git e nel registro degli artefatti, ma non rappresentano lo stato operativo corrente.
+Development OS v1 introduce manifest, context resolver/cache, fingerprint, validation planner/cache, evidence e quattro procedure operative. Gli output `.tretnix/` sono locali e ignorati. Il candidate non è canonico finché non supera review owner e merge autorizzato; nessun pilot Tretnix.com è incluso.
+
+La riconciliazione cross-family è confluita storicamente in `main@c693dcc25979a93afab3c8cfcdb43f943baee187`; le baseline precedenti restano nella cronologia Git e nel registro degli artefatti.
 
 ---
 
@@ -217,14 +220,14 @@ La scelta Cloudflare resta provider-specifica per il fit del candidate PLUS e se
 
 ## 9. Ordine operativo
 
-1. mantenere Forno Lume START congelato sulla baseline `2ed19ef9a4a886616bccd5aad2054c3027fec680`;
-2. mantenere Forno Lume BUSINESS congelato sulla baseline `ccea04cb0bb50e2624fe505bf7d3f25890b7d456`; riaprirlo soltanto per bug, regressione, sicurezza o requisito approvato;
-3. mantenere il Package D BUSINESS separato e pendente: il final polish completato non lo autorizza né lo assorbe;
-4. non modificare retroattivamente il lineage già esistente di Forno Lume BUSINESS PLUS, che continua a derivare dal parent storico `389bd1...`; eventuale riallineamento futuro richiede un gate separato;
-5. mantenere RITO Studio START congelato sulla baseline `2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6`, preservando `family-start-v1.0` come lineage storico;
-6. mantenere RITO Studio BUSINESS congelato sulla baseline riconciliata `3f0ff4d3ed8e675725d8d640c305ab61d47217d7`, preservando le differenze BUSINESS intenzionali;
-7. non riallineare o modificare RITO Studio BUSINESS PLUS per effetto di questo gate;
-8. proseguire Tretnix.com soltanto nel perimetro già autorizzato e con evidenza propria;
+1. revisionare il candidate Development OS v1 e mantenere commit, push, merge e pilot come gate separati;
+2. mantenere Tretnix.com nel workstream e working tree separati;
+3. mantenere Forno Lume START congelato sulla baseline `2ed19ef9a4a886616bccd5aad2054c3027fec680`;
+4. mantenere Forno Lume BUSINESS congelato sulla baseline `ccea04cb0bb50e2624fe505bf7d3f25890b7d456`; riaprirlo soltanto per bug, regressione, sicurezza o requisito approvato;
+5. mantenere il Package D BUSINESS separato e pendente: il final polish completato non lo autorizza né lo assorbe;
+6. non modificare retroattivamente il lineage di Forno Lume BUSINESS PLUS;
+7. mantenere RITO Studio START e BUSINESS congelati sulle baseline registrate, preservando le differenze intenzionali;
+8. non riallineare o modificare RITO Studio BUSINESS PLUS per effetto di questo gate;
 9. aggiornare questa Knowledge quando cambiano baseline, gate, PR, validation o stato di deploy verificato.
 
 ---
