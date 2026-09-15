@@ -1,8 +1,8 @@
 # Tretnix Source Artifact Register
 
-**Versione:** 1.5
-**Aggiornato:** 14 settembre 2026
-**Stato:** operativo; Development OS v1 acquisito e formalizzato nel candidate corrente
+**Versione:** 1.6
+**Aggiornato:** 15 settembre 2026
+**Stato:** operativo; Development OS v1 acquisito, formalizzato e merged nella Knowledge
 
 ---
 
@@ -63,11 +63,12 @@ La patch di governance associata deve essere applicata esclusivamente a un worki
 | Data contenuto | 14 settembre 2026 |
 | SHA-256 | `34a2d1dea3f892535e77bf8dce4a5adb5a9c7976a3217d9ee1ec073c579a61bb` |
 | Origine verificata | allegato owner conservato localmente fuori repository |
-| Baseline di implementazione | `Tretnix-knowledge@94c5cb7818faaad0f82e14279d03ce76bf19d971` |
-| Candidate | `codex/development-os-v1` |
+| Baseline storica di implementazione | `Tretnix-knowledge@94c5cb7818faaad0f82e14279d03ce76bf19d971` |
+| Branch storico di implementazione | `codex/development-os-v1`, eliminato locale e remoto dopo merge |
+| Integrazione canonica | PR `#22` merged il 15 settembre 2026; source `0e5a9f03e1cd2774af4d40aeb441157bbda65446`; merge `main@5f9a7a1d669cea8b0165832017e81f24a94480f5` (`VR`, Git e API GitHub) |
 | Contenuti formalizzati | `TRX-DEC-041`, `DEVELOPMENT_STANDARDS.md` sezione 29, `DEVELOPMENT_OS.md`, schema/template, CLI, test e skill operative |
-| Copia sorgente nel repository | non duplicata: checksum e destinazioni versionate conservano provenance; l'originale resta offline fino al gate owner/merge |
-| Stato | acquisito e confrontato integralmente; candidate non canonico fino a review e merge |
+| Copia sorgente nel repository | non duplicata: checksum e destinazioni versionate conservano provenance; conservare l'originale offline per audit, senza dichiararne una nuova verifica in questo closeout |
+| Stato | acquisito e confrontato integralmente; destinazioni formalizzate ora canoniche e merged nella Knowledge; rollout applicativo pending fino al pilot approvato |
 
 
 ---

@@ -1,7 +1,7 @@
 # Tretnix Master Context
 
-**Versione:** 1.9
-**Aggiornato:** 14 settembre 2026
+**Versione:** 1.10
+**Aggiornato:** 15 settembre 2026
 **Stato:** canonico
 
 ---
@@ -816,8 +816,8 @@ Stato: documentazione acquisita; verifica finale in corso.
 
 La priorità attuale è:
 
-1. completare e revisionare Development OS v1 nella Knowledge senza commit o pilot automatico;
-2. sottoporre il candidate al gate owner/full diff review;
+1. mantenere Development OS v1 merged, canonico e operativo nella Knowledge, con Git e autorità owner superiori a cache ed evidence;
+2. mantenere il rollout applicativo sperimentale e pending fino a un pilot controllato con checkpoint stabile e autorizzazione esplicita; il dogfood Knowledge non costituisce pilot applicativo;
 3. mantenere Tretnix.com nel workstream separato e non usarlo come pilot prima del checkpoint dedicato;
 4. proseguire la riconciliazione e i finding Tretnix.com soltanto nel relativo repository;
 5. mantenere Forno Lume START e BUSINESS chiusi e congelati, con Package D separato;

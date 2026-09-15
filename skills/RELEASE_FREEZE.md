@@ -1,8 +1,8 @@
 # Release Freeze
 
-**Stato:** candidate riutilizzabile; canonica dopo review e merge
-**Versione:** 1.0
-**Aggiornato:** 14 settembre 2026
+**Stato:** procedura canonica nella Knowledge, merged con Development OS v1; adozione applicativa soggetta ai gate del progetto
+**Versione:** 1.1
+**Aggiornato:** 15 settembre 2026
 **Ambito:** candidate, release, baseline e freeze Tretnix
 
 ---

@@ -1,8 +1,8 @@
 # Tretnix Development OS
 
-**Versione:** 1.1
+**Versione:** 1.2
 **Aggiornato:** 15 settembre 2026
-**Stato:** implementazione v1 candidate; tooling sperimentale fino al pilot approvato
+**Stato:** v1 merged e canonica nella Knowledge; tooling operativo sulla Knowledge, rollout applicativo sperimentale fino al pilot approvato
 
 ---
 
@@ -145,9 +145,9 @@ I validator vengono selezionati da una allowlist del manifest e non passano da `
 
 ## 9. Adozione e gate
 
-La v1 viene implementata e validata prima in `Tretnix-knowledge`. Il prossimo gate è la full diff review dell'owner. Commit, push, pull request e merge richiedono autorizzazioni separate.
+La v1 è stata implementata, validata e unita in `Tretnix-knowledge` con PR `#22`: source commit `0e5a9f03e1cd2774af4d40aeb441157bbda65446`, merge `main@5f9a7a1d669cea8b0165832017e81f24a94480f5`. Manifest, procedure e tooling sono canonici nella Knowledge e utilizzabili su questo repository. Le ulteriori modifiche mantengono review e autorizzazioni separate per commit, push, PR e merge.
 
-Il resolver resta tooling sperimentale fino a un pilot reale. Tretnix.com è escluso dalla fase corrente: il suo manifest e il pilot saranno un task separato soltanto dopo il checkpoint stabile del workstream già attivo.
+Il rollout del resolver e del tooling sui repository applicativi resta sperimentale fino a un pilot reale approvato. Il prossimo gate è un pilot controllato su un repository applicativo con checkpoint stabile e autorizzazione esplicita; nessun repository applicativo è automaticamente migrato o adottato. Il dogfood della Knowledge verifica l'uso locale e le cache, non completa questo gate. Tretnix.com resta nel workstream separato ed è escluso dal closeout; un eventuale manifest o pilot richiede un task dedicato successivo al suo checkpoint stabile.
 
 Le metriche locali disponibili sono numero e dimensione delle fonti, righe/byte del context pack, hit/miss, validator eseguiti o riusati, durata e errori. Non viene inviata telemetria.
 
