@@ -1,7 +1,7 @@
 # Tretnix Development Standards
 
-**Versione:** 1.12
-**Aggiornato:** 9 settembre 2026
+**Versione:** 1.13
+**Aggiornato:** 14 settembre 2026
 **Ambito:** tutti i progetti Tretnix, salvo eccezioni documentate
 
 Le parole **DEVE**, **NON DEVE**, **DOVREBBE** e **PUÒ** esprimono il livello di obbligatorietà.
@@ -180,20 +180,20 @@ Può essere omesso per una correzione minima eseguita direttamente in un working
 
 La verifica di applicabilità della patch NON sostituisce typecheck, lint, test, build, browser check, security review o deployment check richiesti dal progetto.
 
-### Agenti, Lovable e branch principale
+### Agenti, tool storici e branch principale
 
-La sincronizzazione GitHub di Lovable deve essere verificata prima di applicare protezioni che potrebbero interromperla.
+Il workflow operativo corrente usa ChatGPT per strategia e review e Codex come writer principale. Cursor è una superficie manuale opzionale; Lovable resta provenance storica e non è una dipendenza operativa corrente.
 
 Regole obbligatorie:
 
 - un solo agente o ambiente scrive sugli stessi file alla volta;
-- Lovable, Codex, Cursor Agent e Claude Code non devono modificare contemporaneamente lo stesso working tree;
+- Codex, un editor manuale e qualsiasi reviewer non devono modificare contemporaneamente lo stesso working tree;
 - ogni handoff deve partire da un branch, commit o diff identificabile;
 - il revisore deve iniziare in sola lettura;
 - i finding del revisore non vengono applicati automaticamente;
 - non lavorare direttamente su `main`;
-- non riscrivere la cronologia pubblicata di un progetto collegato a Lovable;
-- non usare force push, rebase, amend o squash su commit già sincronizzati quando può compromettere la history Lovable.
+- non riscrivere la cronologia pubblicata di un progetto storicamente collegato a Lovable;
+- non usare force push, rebase, amend o squash su commit già sincronizzati quando può compromettere la provenance storica.
 
 ---
 
@@ -1170,3 +1170,61 @@ Una review visuale significativa DEVE considerare l'intera superficie o una trav
 Le regole condivise NON DEVONO appiattire palette, font, art direction, composizione, fotografia, densità o personalità del cliente.
 
 Impeccable o altri reviewer esterni sono fonti di evidenza opzionali e non sostituiscono i controlli Tretnix richiesti.
+
+---
+
+## 29. Tretnix Development OS
+
+Development OS v1 applica `TRX-DEC-041` con tooling locale Node ESM dependency-free. Il manifest `tretnix.project.json` indica identità, fonti ammesse, mapping dei tag, classi supportate, capability minime, validator e gate; non autorizza azioni esterne.
+
+### Preflight e context
+
+I comandi dipendenti dall'identità del progetto DEVONO verificare root Git, remote atteso, branch policy, manifest e stato richiesto prima di proseguire. Il task descriptor DEVE riferirsi allo stesso progetto e, quando dichiarato, al branch atteso.
+
+Il Context Resolver DEVE:
+
+- usare soltanto source relative presenti nella allowlist del manifest;
+- confinare source, manifest, task e output alla root autorizzata anche attraverso symlink;
+- rifiutare `.env`, credenziali, chiavi, certificati e prefix esplicitamente sensibili prima di leggerne il contenuto;
+- produrre estratti deterministici con path, hash, heading, motivo e commit Knowledge applicabile;
+- includere le decisioni locali dichiarate in `sources.local_decisions` nel Layer A, preservando la precedenza canonica;
+- fallire con errore esplicito su tag, file o heading mancanti.
+
+### Fingerprint e cache
+
+Context cache e validation cache DEVONO essere derivate, hash-based, ricostruibili e conservate soltanto sotto `.tretnix/cache/`. `.tretnix/` DEVE essere gitignored.
+
+Il repository fingerprint distingue `staged`, `unstaged` e `untracked`, include manifest e lockfile dichiarati, esclude runtime e non legge il contenuto dei path sensibili. Un path sensibile rende la cache non eleggibile. Cache corrotta, incompleta, vecchia o non equivalente DEVE essere rifiutata e ricostruita o rieseguita.
+
+Il fingerprint DEVE includere i byte reali dei tracked file non sensibili rilevanti anche quando Git normalizza LF/CRLF. Prima di leggere tracked, untracked, lockfile o altri input exact-state DEVE valutare path nominale, realpath e ogni componente della catena con metadata/path-only operations. Un target reale sensibile DEVE essere classificato sensibile; un path sensibile o aliasato tramite symlink/junction/reparse point NON DEVE essere letto o hashato, usa soltanto metadata/sentinel, interrompe entrambi i diff binari e rende lo stato non cache-eligible. Ogni artifact cache consumato DEVE essere confinato autonomamente (lessicale e realpath), privo di alias e verificato come regular-file prima della lettura. Un alias o escape DEVE fallire chiuso, senza ricostruzione sul path pericoloso.
+
+`.tretnix/` e le directory critiche cache/runtime/evidence DEVONO essere directory reali nel namespace canonico previsto, oppure essere create direttamente se assenti. Symlink/junction/reparse point verso altre directory, anche interne al repository, DEVONO bloccare letture cache, scritture e cleanup con errore esplicito. `cache clear` PUÒ eliminare soltanto `.tretnix/cache/` dopo questa verifica e DEVE preservare sorgenti, evidence e runtime promossi.
+
+### Validation planner ed esecuzione
+
+Ogni classe supportata DEVE dichiarare capability minime appropriate. Il planner verifica che validator selezionati le coprano; capability mancanti, classe non supportata, comando indisponibile, timeout o preflight fallito producono `FAIL`, non un PASS parziale.
+
+Il piano DEVE usare l'unione delle capability di tutte le classi osservate sui path e dei controlli aggiuntivi richiesti dal descriptor. Il descriptor NON PUÒ ridurre i controlli; un diff misto security + release/infra DEVE mantenere entrambe le capability. Classi effettive e piano selezionato DEVONO partecipare a cache key ed evidence.
+
+I validator:
+
+- sono una allowlist esplicita del manifest;
+- vengono avviati senza `shell:true`;
+- usano argomenti tokenizzati, timeout deterministico e script locali confinati;
+- non possono usare inline PowerShell, `cmd`, `bash` o wrapper annidati per aggirare la policy;
+- DEVONO rispettare grammar argv chiuse per runtime, senza flag arbitrari, eval concatenati, module/preload/loader/import injection; gli eventuali package script sono risolti all'argv interno verificato, senza lifecycle hook o shell;
+- possono riusare un PASS soltanto se comando, runtime, contratto e fingerprint sono identici.
+
+Security/data e release/infra DEVONO includere capability conservative. Browser, backend live, staging, production, DNS, secret state, migrazioni remote e verifiche umane non sono cacheable.
+
+### Evidence e autorità
+
+Ogni validation significativa registra timestamp, preflight, fonti context e hash, fingerprint, piano, validator eseguiti o non eseguiti, cache hit/miss/rejection, exit code, gate automatici e tutti i gate manuali/live. Un gate non verificato resta esplicitamente `UNVERIFIED`.
+
+I gate manuali/live non richiesti sono `NOT_REQUIRED`, mai prove di verifica. Raw stdout/stderr dei validator NON DEVONO essere persistiti in cache/evidence: restano transitori e vengono conservati soltanto digest, exit code, durata e metadata non sensibili. I log controllati del CCP sono una procedura separata, non un'eccezione alla policy della cache Development OS.
+
+`evidence.json` è validato prima della scrittura e genera il report umano. Schema pubblicati, template e runtime DEVONO condividere il contratto strutturale e le invarianti Tretnix dichiarate; `doctor` DEVE controllare l'effettiva corrispondenza dei contratti, non soltanto il parsing JSON. Prima di rigenerare evidence precedente DEVONO coincidere repository/remote, branch, HEAD, fingerprint e identità manifest/task correnti; un mismatch produce `STALE_EVIDENCE`, exit non-zero e richiesta di nuova validation, senza sovrascrivere JSON/report storici. Latest pointer, cache e report restano confinati a `.tretnix/`. Evidence e report non autorizzano stage, commit, push, PR, merge, deploy, publish, migration, DNS, provisioning, secret mutation o production write.
+
+### Controlled Change Package
+
+Development OS prepara preflight, fingerprint, context ed evidence riutilizzabili da un Controlled Change Package. Non sostituisce manifest/allowlist/hash del payload, separazione `Apply → Validate`, diff review o gate manuali definiti da `TRX-DEC-032` e [`skills/CONTROLLED_CHANGE_PACKAGE.md`](./skills/CONTROLLED_CHANGE_PACKAGE.md).

@@ -1,5 +1,7 @@
 # Tretnix Workspace Knowledge
 
+**Stato:** adapter storico/provenance; non usare come workflow operativo corrente senza una nuova autorizzazione esplicita.
+
 ## Company identity
 
 Tretnix is a boutique software studio creating websites, web applications, management systems, dashboards, CRM systems, automations and custom software.

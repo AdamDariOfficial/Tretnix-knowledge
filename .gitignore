@@ -20,3 +20,6 @@ Thumbs.db
 *.tmp
 *.bak
 ~$*
+
+# Tretnix Development OS derived runtime, cache and evidence
+.tretnix/

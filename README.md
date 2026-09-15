@@ -2,8 +2,8 @@
 
 Fonte canonica per identità, decisioni, standard tecnici, repository, procedure operative e adattatori degli strumenti Tretnix.
 
-**Versione:** 1.10
-**Aggiornato:** 11 settembre 2026
+**Versione:** 1.11
+**Aggiornato:** 14 settembre 2026
 **Stato:** operativo
 **Visibilità corrente:** repository GitHub pubblica durante il completamento dell’audit e del consolidamento Tretnix
 **Visibilità successiva:** passaggio a privata soltanto dopo completamento del ciclo, verifica delle dipendenze di accesso e nuova conferma esplicita del proprietario (`TRX-DEC-031`)
@@ -12,7 +12,7 @@ Fonte canonica per identità, decisioni, standard tecnici, repository, procedure
 
 ## 1. Scopo
 
-`tretnix-knowledge` impedisce che ChatGPT, Lovable, Cursor, Codex, Claude Code o altri strumenti mantengano versioni contraddittorie di Tretnix.
+`tretnix-knowledge` impedisce che il workflow attivo ChatGPT + Codex, le superfici opzionali o gli strumenti storici mantengano versioni contraddittorie di Tretnix.
 
 La repository conserva ciò che deve rimanere stabile e verificabile:
 
@@ -56,6 +56,8 @@ tretnix-knowledge/
 ├── CURRENT_STATE.md
 ├── CHAT_RETENTION_AND_HANDOFF.md
 ├── SOURCE_ARTIFACT_REGISTER.md
+├── DEVELOPMENT_OS.md
+├── tretnix.project.json
 ├── .gitignore
 │
 ├── .github/
@@ -65,6 +67,16 @@ tretnix-knowledge/
 ├── scripts/
 │   ├── validate_knowledge.py
 │   └── validate_knowledge.ps1
+│
+├── schemas/
+│   ├── tretnix-project.schema.json
+│   ├── tretnix-task.schema.json
+│   └── tretnix-evidence.schema.json
+│
+├── tools/
+│   └── tretnix/
+│       ├── tretnix.mjs
+│       └── tests/
 │
 ├── audits/
 │   ├── KNOWLEDGE_CONSOLIDATION_2026-07-26.md
@@ -94,13 +106,20 @@ tretnix-knowledge/
 │   └── CODEX_SETUP.md
 │
 ├── skills/
-│   └── CONTROLLED_CHANGE_PACKAGE.md
+│   ├── CONTROLLED_CHANGE_PACKAGE.md
+│   ├── TASK_ADMISSION.md
+│   ├── READ_ONLY_REVIEW.md
+│   ├── RELEASE_FREEZE.md
+│   └── SECURITY_RETEST.md
 │
 ├── templates/
 │   ├── READ_ONLY_AUDIT.md
 │   ├── CONTROLLED_IMPLEMENTATION_TASK.md
 │   ├── CONTROLLED_CHANGE_PACKAGE_MANIFEST.md
 │   ├── READ_ONLY_DIFF_REVIEW.md
+│   ├── TRETNIX_PROJECT_MANIFEST.json
+│   ├── TRETNIX_TASK_DESCRIPTOR.json
+│   ├── TRETNIX_EVIDENCE_SCHEMA.json
 │   └── project-foundation/
 │       ├── AGENTS.md
 │       ├── .cursorignore
@@ -323,19 +342,11 @@ compiled/CHATGPT_PROJECT_INSTRUCTIONS.md
 
 ### Lovable
 
-Usare:
-
-```text
-compiled/LOVABLE_WORKSPACE_KNOWLEDGE.md
-```
-
-come base della Workspace Knowledge.
-
-La Project Knowledge di ogni progetto deve contenere soltanto contesto e vincoli specifici.
+`compiled/LOVABLE_WORKSPACE_KNOWLEDGE.md` resta un adapter storico per provenance dei progetti precedenti. Non appartiene al workflow operativo corrente e non autorizza riattivazione, consumo crediti o pubblicazione.
 
 ### Cursor
 
-Usare:
+L'uso è opzionale. Quando Cursor viene scelto come editor manuale, usare:
 
 ```text
 compiled/CURSOR_USER_RULES.md
@@ -343,7 +354,7 @@ compiled/CURSOR_USER_RULES.md
 
 nelle User Rules globali.
 
-Cursor resta l'IDE e il punto di controllo umano: editor, terminale, diff, Git e verifiche locali.
+Cursor non è una dipendenza del processo; può offrire editor, terminale, diff e Git. Il gate umano non dipende dall'IDE.
 
 Per il progetto pilota usare:
 
@@ -370,6 +381,10 @@ compiled/CODEX_SETUP.md
 ```
 
 Il file globale va installato come `~/.codex/AGENTS.md`. Ogni repository mantiene inoltre il proprio `AGENTS.md`, che ha il contesto specifico del progetto.
+
+### Development OS
+
+[`DEVELOPMENT_OS.md`](./DEVELOPMENT_OS.md) definisce manifest, context resolution, fingerprint, validation cache ed evidence. Il CLI è in `tools/tretnix/` e scrive soltanto output locali ignorati sotto `.tretnix/`. L'adozione in un progetto richiede manifest e gate propri; Tretnix.com non viene modificato o pilotato automaticamente.
 
 ### Claude Code
 
@@ -489,17 +504,17 @@ Prima di aggiungere una nuova informazione, chiedere:
 La pipeline di base diventa:
 
 ```text
-ChatGPT + GitHub + Cursor + Codex
+ChatGPT + Codex + GitHub
 ```
 
-Lovable rientra nel flusso per costruzione e iterazione visuale quando disponibile. Claude Code rimane opzionale.
+Cursor resta editor/superficie manuale opzionale. Lovable resta storico/provenance; altri reviewer sono opzionali e intervengono soltanto dopo un checkpoint.
 
 Ordine operativo:
 
 1. ChatGPT prepara una specifica approvabile;
 2. GitHub registra branch, task e checkpoint;
-3. Cursor rimane l'ambiente di controllo umano;
-4. Codex esegue l'analisi o l'implementazione circoscritta;
+3. Codex esegue l'analisi o l'implementazione circoscritta nel working tree verificato;
+4. l'owner controlla stato, diff ed evidence nella superficie scelta;
 5. il diff viene revisionato prima di ulteriori modifiche;
 6. un revisore parte in sola lettura;
 7. i finding vengono approvati, rifiutati o rinviati;
@@ -518,7 +533,7 @@ Regole operative:
 - nessun agente lavora direttamente su `main`;
 - nessun accesso di produzione viene concesso se non necessario;
 - Codex Cloud è opzionale e deve usare branch o commit identificabili;
-- Lovable, Codex, Cursor Agent e Claude Code non modificano contemporaneamente gli stessi file.
+- nessun editor, agente o reviewer modifica contemporaneamente gli stessi file del writer.
 
 ---
 

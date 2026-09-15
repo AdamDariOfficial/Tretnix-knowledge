@@ -1,7 +1,7 @@
 # Tretnix Master Context
 
-**Versione:** 1.8
-**Aggiornato:** 11 settembre 2026
+**Versione:** 1.9
+**Aggiornato:** 14 settembre 2026
 **Stato:** canonico
 
 ---
@@ -91,14 +91,7 @@ Il risultato desiderato è una pipeline nella quale:
 
 ## 3. Metodo di lavoro del fondatore
 
-Il fondatore di Tretnix ha esperienza di sviluppo tradizionale e attualmente utilizza soprattutto:
-
-- Lovable;
-- GitHub;
-- specifiche dettagliate;
-- controllo visuale;
-- test manuali;
-- debugging iterativo assistito.
+Il fondatore di Tretnix ha esperienza di sviluppo tradizionale e attualmente usa soprattutto ChatGPT per strategia e review, Codex per il lavoro sul repository, GitHub come checkpoint versionato, specifiche dettagliate, controllo visuale, test manuali e debugging iterativo assistito.
 
 L’obiettivo non è tornare necessariamente a scrivere manualmente ogni riga, ma aumentare il controllo tecnico:
 
@@ -108,7 +101,7 @@ L’obiettivo non è tornare necessariamente a scrivere manualmente ogni riga, m
 - evitare patch fragili;
 - mantenere progetti complessi;
 - recuperare progressivamente familiarità con il codice;
-- non dipendere completamente da Lovable;
+- non dipendere da un singolo tool o provider;
 - verificare realmente il risultato.
 
 L’introduzione di nuovi strumenti deve quindi essere graduale, concreta e comprensibile.
@@ -136,21 +129,9 @@ ChatGPT viene usato per:
 
 ChatGPT non sostituisce il repository, i test o la revisione del codice.
 
-### Lovable — costruzione rapida
+### Lovable — provenance storica
 
-Lovable viene usato per:
-
-- prima costruzione visuale e funzionale;
-- pagine;
-- componenti;
-- responsive;
-- animazioni;
-- collegamento iniziale a Lovable Cloud o Supabase;
-- prototipi;
-- iterazioni rapide;
-- evoluzione di siti e webapp sulla base di specifiche.
-
-Lovable non deve essere autorizzato a reinterpretare liberamente requisiti, identità o sicurezza.
+Lovable non appartiene più al workflow operativo corrente. I repository, commit, package, prompt, gate e snapshot prodotti durante il suo utilizzo restano documentati come provenance storica e non vengono riscritti o cancellati. Un riferimento storico a Lovable non costituisce autorizzazione a riattivarlo, consumare crediti o modificare un progetto esterno.
 
 ### GitHub — fonte ufficiale
 
@@ -168,18 +149,9 @@ GitHub conserva:
 
 GitHub è la memoria tecnica verificabile.
 
-### Cursor — ambiente tecnico e controllo umano
+### Cursor — superficie opzionale/manuale
 
-Cursor è:
-
-- IDE principale;
-- ambiente per aprire e leggere i repository;
-- terminale;
-- superficie per Git e diff;
-- ambiente per verifiche locali;
-- punto di controllo nel quale il fondatore approva o rifiuta modifiche.
-
-Cursor non coincide con l'agente che esegue il task. Può ospitare Cursor Agent o l'estensione Codex, ma la responsabilità umana rimane separata.
+Cursor può essere usato come editor, terminale e superficie manuale per Git e diff. Non è una dipendenza del processo e non coincide con il writer. La responsabilità e i gate umani restano separati dallo strumento usato per visualizzare il repository.
 
 ### Codex — agente operativo sul repository
 
@@ -256,11 +228,6 @@ Brief, specifica, vincoli e criteri di accettazione
 GitHub
 ↓
 Branch e checkpoint iniziale
-↓
-Cursor
-↓
-Controllo umano del repository
-↓
 Codex
 ↓
 Analisi o prima implementazione
@@ -282,31 +249,9 @@ QA
 Produzione
 ```
 
-### Flusso con Lovable
+### Provenance dei flussi precedenti
 
-```text
-ChatGPT
-↓
-Specifica approvata
-↓
-Lovable
-↓
-Costruzione o iterazione visuale
-↓
-GitHub
-↓
-Checkpoint
-↓
-Cursor + Codex
-↓
-Consolidamento tecnico e validazione
-↓
-Revisione indipendente quando necessaria
-↓
-Pull request
-```
-
-Claude Code può essere inserito come revisore specialistico dopo un checkpoint, non come secondo autore contemporaneo.
+I flussi Lovable già conclusi restano ricostruibili tramite Git, decisioni, source artifact e documentazione project-specific. Non sono un percorso operativo attivo. Cursor e altri editor restano superfici opzionali; un revisore specialistico può intervenire dopo un checkpoint, mai come secondo writer contemporaneo.
 
 Flusso vietato:
 
@@ -802,11 +747,11 @@ Prompt vaghi come “sistemami il sito” o “migliora il responsive” non son
 
 ### Fase 1 — Fondamenta
 
-Stato: completata.
+Stato: completata; descrive l'adozione storica iniziale.
 
 - pubblicare `tretnix-knowledge`;
 - configurare ChatGPT;
-- introdurre Cursor;
+- introdurre una superficie locale di controllo, inizialmente Cursor;
 - aggiungere foundation e regole al progetto pilota.
 
 ### Fase 2 — Audit del progetto pilota
@@ -821,7 +766,7 @@ Stato: audit statico e controllo qualità completati.
 
 Stato: approvata.
 
-- installare Codex nell'ambiente Cursor o usare l'app;
+- usare Codex tramite app, terminale o editor opzionale appropriato;
 - configurare le istruzioni globali;
 - verificare che Codex legga `AGENTS.md`;
 - usare Forno Lume START per il primo intervento controllato;
@@ -847,7 +792,7 @@ Stato: attiva.
 - trasformare procedure verificate in skill;
 - auditare Tretnix.com;
 - estrarre standard confermati;
-- configurare Lovable quando disponibile.
+- consolidare ChatGPT + Codex tramite Development OS v1 senza riattivare tool storici.
 
 ### Fase 6 — Portfolio e conservazione del contesto
 
@@ -871,16 +816,12 @@ Stato: documentazione acquisita; verifica finale in corso.
 
 La priorità attuale è:
 
-1. completare e revisionare il branch di consolidamento della knowledge repository;
-2. aprire la pull request, unire e registrare il commit canonico finale;
-3. eseguire una prova di ricostruzione senza chat;
-4. riconciliare lo stato CF-1 di Tretnix.com con branch, PR, commit e verifiche;
-5. completare il merge CF-1, sincronizzare `main` e verificare il working tree pulito;
-6. investigare in sola lettura il mismatch `data-tsd-source`;
-7. proseguire i finding Tretnix.com uno per branch;
-8. mantenere Forno Lume START chiuso e congelato;
-9. preservare i pattern BUSINESS approvati e trattare Package D separatamente;
-10. mantenere RITO Studio START `main@2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6` e BUSINESS `main@3f0ff4d3ed8e675725d8d640c305ab61d47217d7` congelati, senza coinvolgere BUSINESS PLUS.
+1. completare e revisionare Development OS v1 nella Knowledge senza commit o pilot automatico;
+2. sottoporre il candidate al gate owner/full diff review;
+3. mantenere Tretnix.com nel workstream separato e non usarlo come pilot prima del checkpoint dedicato;
+4. proseguire la riconciliazione e i finding Tretnix.com soltanto nel relativo repository;
+5. mantenere Forno Lume START e BUSINESS chiusi e congelati, con Package D separato;
+6. mantenere RITO Studio START e BUSINESS congelati sulle baseline correnti senza coinvolgere BUSINESS PLUS.
 
 ---
 

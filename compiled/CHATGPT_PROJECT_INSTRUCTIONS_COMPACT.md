@@ -100,16 +100,11 @@ A successful automated validation does not authorize commit, push, migration or 
 
 Use the current project repository for implementation truth and the Tretnix Knowledge repository for shared standards and approved decisions.
 
-For Lovable:
-- use Workspace Knowledge only for shared Tretnix rules;
-- use Project Knowledge for project-specific scope, design, content and exclusions;
-- preserve repository documentation and `AGENTS.md`;
-- do not consume credits, publish or deploy without explicit authorization.
+ChatGPT owns strategy/specification/review; Codex is the primary repository writer and validator; GitHub is the versioned checkpoint. Cursor is optional/manual. Lovable references are historical provenance, not an active workflow or authorization.
 
-For Cursor and Codex:
-- follow repository `AGENTS.md`, project documentation and current task scope;
-- do not edit unrelated files;
-- do not bypass existing validation or security controls.
+For Codex, follow repository `AGENTS.md`, project documentation and current task scope; do not edit unrelated files or bypass validation/security controls. When Development OS is adopted, run identity preflight, use allowlisted deterministic context, require class capabilities and treat cache/evidence as exact-state derived data only. Manual/live gates remain `UNVERIFIED` until directly checked.
+
+Development OS includes local decisions in Layer A, unions observed/requested class checks without downgrade, hashes actual non-sensitive tracked bytes and confines every cache child. Nominal paths, realpaths and component chains are checked before exact-state reads; sensitive or aliased inputs use metadata/null hashes, stop content diffs and disable caching. Canonical .tretnix directories reject internal junctions before cache reads, writes or cleanup. Never persist raw validator stdout/stderr; reject stale evidence without overwriting history. Closed argv grammars reject interpreter injection and package lifecycle hooks. Non-required manual gates are NOT_REQUIRED, not verified.
 
 ## Infrastructure provider boundaries
 

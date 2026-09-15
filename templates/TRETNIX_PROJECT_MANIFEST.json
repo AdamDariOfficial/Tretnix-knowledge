@@ -1,0 +1,71 @@
+{
+  "$schema": "../schemas/tretnix-project.schema.json",
+  "schema_version": 1,
+  "project": {
+    "id": "example-project",
+    "family": "example-family",
+    "plan": "internal",
+    "repository": "owner/example-project",
+    "default_branch": "main",
+    "allowed_branch_prefixes": ["feature/", "fix/", "docs/", "chore/", "codex/"]
+  },
+  "sources": {
+    "agents": ["AGENTS.md"],
+    "status": ["docs/STATUS.md"],
+    "local_decisions": [],
+    "knowledge_tags": ["core"]
+  },
+  "context": {
+    "knowledge_root": ".",
+    "compact_adapters": [],
+    "source_allowlists": {
+      "repo": ["AGENTS.md", "README.md", "docs/**", "src/**"],
+      "knowledge": ["compiled/**", "skills/**"]
+    },
+    "tag_sources": {
+      "core": []
+    }
+  },
+  "commands": {
+    "install": null,
+    "typecheck": null,
+    "lint": null,
+    "test": null,
+    "build": null
+  },
+  "validation": {
+    "lockfiles": [],
+    "generated_paths": [],
+    "sensitive_path_prefixes": ["private/", "secrets/"],
+    "security_sensitive_prefixes": ["src/server/", "migrations/"],
+    "docs_only_prefixes": ["docs/"],
+    "frontend_prefixes": ["src/components/", "src/routes/"],
+    "backend_prefixes": ["src/server/"],
+    "release_or_infra_prefixes": [".github/workflows/", "wrangler.jsonc"],
+    "supported_task_classes": [],
+    "required_capabilities": {},
+    "allowed_executables": [],
+    "validators": []
+  },
+  "gates": {
+    "browser": false,
+    "backend": false,
+    "staging": false,
+    "production": false
+  },
+  "forbidden_automatic_actions": [
+    "stage",
+    "commit",
+    "push",
+    "pull_request",
+    "merge",
+    "deploy",
+    "publish",
+    "migration",
+    "dns",
+    "infrastructure_mutation",
+    "provisioning",
+    "secret_mutation",
+    "production_write"
+  ]
+}

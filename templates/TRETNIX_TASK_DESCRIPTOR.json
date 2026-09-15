@@ -1,0 +1,35 @@
+{
+  "$schema": "../schemas/tretnix-task.schema.json",
+  "task_version": 1,
+  "title": "Tretnix Development OS v1",
+  "repository": "Tretnix-knowledge",
+  "objective": "Implement deterministic context, preflight, cache, validation and evidence tooling.",
+  "tags": ["automation", "knowledge", "tooling", "workflow"],
+  "task_class": "security_or_data",
+  "risk": "medium",
+  "writer": "codex",
+  "allowed_scope": [
+    "approved root governance documents",
+    "compiled/",
+    "schemas/",
+    "scripts/",
+    "skills/",
+    "templates/",
+    "tools/tretnix/"
+  ],
+  "forbidden": [
+    "Tretnix.com changes",
+    "stage",
+    "commit",
+    "push",
+    "pull request",
+    "merge",
+    "deploy",
+    "migration",
+    "DNS changes",
+    "secret mutation"
+  ],
+  "required_outputs": ["implementation", "tests", "evidence", "full diff review", "remaining gates"],
+  "expected_branch": "codex/development-os-v1",
+  "working_tree": "dirty_allowed"
+}

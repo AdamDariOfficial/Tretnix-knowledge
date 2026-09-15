@@ -1,0 +1,441 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tretnix.com/schemas/tretnix-project.schema.json",
+  "title": "Tretnix Project Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project",
+    "sources",
+    "context",
+    "commands",
+    "validation",
+    "gates",
+    "forbidden_automatic_actions"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "family",
+        "plan",
+        "repository",
+        "default_branch"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "family": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "plan": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "repository": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "default_branch": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "allowed_branch_prefixes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "sources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agents",
+        "status",
+        "local_decisions",
+        "knowledge_tags"
+      ],
+      "properties": {
+        "agents": {
+          "$ref": "#/$defs/pathList"
+        },
+        "status": {
+          "$ref": "#/$defs/pathList"
+        },
+        "local_decisions": {
+          "$ref": "#/$defs/pathList"
+        },
+        "knowledge_tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "compact_adapters",
+        "tag_sources",
+        "source_allowlists"
+      ],
+      "properties": {
+        "knowledge_root": {
+          "const": "."
+        },
+        "compact_adapters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/contextSource"
+          }
+        },
+        "tag_sources": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/contextSource"
+            }
+          }
+        },
+        "source_allowlists": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "repo",
+            "knowledge"
+          ],
+          "properties": {
+            "repo": {
+              "$ref": "#/$defs/pathList"
+            },
+            "knowledge": {
+              "$ref": "#/$defs/pathList"
+            }
+          }
+        }
+      }
+    },
+    "commands": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "(?=.*\\S)(?!.*\\u0000)\\S"
+          },
+          {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "(?=.*\\S)(?!.*\\u0000)\\S"
+            }
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lockfiles",
+        "generated_paths",
+        "sensitive_path_prefixes",
+        "security_sensitive_prefixes",
+        "docs_only_prefixes",
+        "frontend_prefixes",
+        "backend_prefixes",
+        "release_or_infra_prefixes",
+        "supported_task_classes",
+        "required_capabilities",
+        "allowed_executables",
+        "validators"
+      ],
+      "properties": {
+        "lockfiles": {
+          "$ref": "#/$defs/pathList"
+        },
+        "generated_paths": {
+          "$ref": "#/$defs/pathList"
+        },
+        "sensitive_path_prefixes": {
+          "$ref": "#/$defs/pathList"
+        },
+        "security_sensitive_prefixes": {
+          "$ref": "#/$defs/pathList"
+        },
+        "docs_only_prefixes": {
+          "$ref": "#/$defs/pathList"
+        },
+        "frontend_prefixes": {
+          "$ref": "#/$defs/pathList"
+        },
+        "backend_prefixes": {
+          "$ref": "#/$defs/pathList"
+        },
+        "release_or_infra_prefixes": {
+          "$ref": "#/$defs/pathList"
+        },
+        "supported_task_classes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "docs_only",
+              "frontend",
+              "backend",
+              "security_or_data",
+              "release_or_infra"
+            ]
+          }
+        },
+        "required_capabilities": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "docs_only": {
+              "$ref": "#/$defs/nonEmptyStringList"
+            },
+            "frontend": {
+              "$ref": "#/$defs/nonEmptyStringList"
+            },
+            "backend": {
+              "$ref": "#/$defs/nonEmptyStringList"
+            },
+            "security_or_data": {
+              "$ref": "#/$defs/nonEmptyStringList"
+            },
+            "release_or_infra": {
+              "$ref": "#/$defs/nonEmptyStringList"
+            }
+          }
+        },
+        "allowed_executables": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        },
+        "validators": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "command",
+              "task_classes",
+              "capabilities",
+              "deterministic",
+              "cacheable",
+              "contract_version",
+              "timeout_ms"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9_-]*$"
+              },
+              "command": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "(?=.*\\S)(?!.*\\u0000)\\S"
+                  },
+                  {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "(?=.*\\S)(?!.*\\u0000)\\S"
+                    }
+                  }
+                ]
+              },
+              "runtime": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "task_classes": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "all",
+                    "docs_only",
+                    "frontend",
+                    "backend",
+                    "security_or_data",
+                    "release_or_infra"
+                  ]
+                }
+              },
+              "capabilities": {
+                "$ref": "#/$defs/nonEmptyStringList"
+              },
+              "deterministic": {
+                "type": "boolean"
+              },
+              "cacheable": {
+                "type": "boolean"
+              },
+              "contract_version": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "timeout_ms": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 600000
+              }
+            }
+          }
+        }
+      }
+    },
+    "gates": {
+      "type": "object",
+      "required": [
+        "browser",
+        "backend",
+        "staging",
+        "production"
+      ],
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "forbidden_automatic_actions": {
+      "type": "array",
+      "minItems": 13,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "stage",
+          "commit",
+          "push",
+          "pull_request",
+          "merge",
+          "deploy",
+          "publish",
+          "migration",
+          "dns",
+          "infrastructure_mutation",
+          "provisioning",
+          "secret_mutation",
+          "production_write"
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "pathList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/safePath"
+      },
+      "uniqueItems": true
+    },
+    "nonEmptyStringList": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "uniqueItems": true
+    },
+    "safePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "(?=.*\\S)(?!.*\\u0000)^(?![A-Za-z]:)(?![/\\\\])(?!.*(?:^|[/\\\\])\\.\\.(?:[/\\\\]|$)).+"
+    },
+    "contextSource": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/safePath"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path"
+          ],
+          "properties": {
+            "base": {
+              "enum": [
+                "repo",
+                "knowledge"
+              ]
+            },
+            "path": {
+              "$ref": "#/$defs/safePath"
+            },
+            "sections": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "uniqueItems": true
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "x-tretnix-semantics": [
+    "supported classes require declared capability floors",
+    "validator IDs are unique",
+    "all mandatory forbidden actions are present",
+    "every required capability has a declared provider"
+  ]
+}

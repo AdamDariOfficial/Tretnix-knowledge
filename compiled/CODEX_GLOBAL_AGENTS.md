@@ -66,13 +66,13 @@ A minimal edit made directly in a verified clean working tree may skip the archi
 ## Agent coordination
 
 - Only one writer may modify the same working tree at a time.
-- Do not edit concurrently with Lovable, Cursor Agent, Claude Code or another Codex task.
+- Do not edit concurrently with an editor, reviewer or another Codex task on the same working tree.
 - Start from a clean branch, not `main`.
 - Require a branch, commit or diff checkpoint before handoff.
 - A reviewer starts in read-only mode.
 - Do not apply review findings until the user approves them.
-- Never rewrite published Lovable-connected history.
-- Do not force push, rebase, amend or squash already-pushed commits when it can damage Lovable history.
+- Never rewrite published history, including provenance from historically Lovable-connected repositories.
+- Do not force push, rebase, amend or squash already-pushed commits when it can damage recorded provenance.
 
 ## Task admission and project state
 
@@ -226,6 +226,12 @@ Never use `source-artifacts/**/historical-source-of-truth/` as the current basel
 ## Controlled Change Package
 
 When an approved non-trivial patch is prepared outside the canonical checkout, use the repository package defined by `skills/CONTROLLED_CHANGE_PACKAGE.md`: strict `Apply`, separate `Validate`, exact allowlist and hashes, idempotent recovery, complete logs, checks for unstaged, untracked and staged whitespace, and no automatic stage, commit, push, merge, deployment or migration execution.
+
+## Tretnix Development OS
+
+When `tretnix.project.json` is present, use the repository's Development OS CLI for deterministic preflight, allowlisted context, exact-state fingerprint, capability-aware validation and evidence where relevant. Treat `.tretnix/` as derived local output. Never load sensitive/out-of-allowlist context, reuse uncertain cache state or infer a manual/live PASS. Development OS complements but does not replace the Controlled Change Package.
+
+Include declared local decisions in Layer A. Effective validation requirements are the union of observed path classes and additional requested checks; descriptors never downgrade risk. Fingerprints include actual non-sensitive tracked bytes, including LF/CRLF differences normalized by Git. Inspect nominal path, realpath and every component before exact-state byte reads; sensitive or aliased inputs use metadata/null hashes, stop content diffs and disable cache eligibility. Confine every cache child before reading and fail closed on aliases or escapes. Runtime directories under .tretnix must be real canonical directories; internal junctions also block cache reads, writes and cleanup. Never persist raw validator stdout/stderr in Development OS cache/evidence. Reject stale evidence with non-zero status; preserve historical JSON/reports and require new validation. Validator argv uses closed local/read-only grammars, not arbitrary runtime flags or package lifecycle hooks.
 
 ## UX/UI quality
 
