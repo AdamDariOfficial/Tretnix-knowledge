@@ -1,7 +1,7 @@
 # Tretnix Repository Index
 
-**Versione:** 2.5
-**Aggiornato:** 14 settembre 2026
+**Versione:** 2.6
+**Aggiornato:** 15 settembre 2026
 **Stato dell’inventario:** completo rispetto agli otto repository attualmente dichiarati
 
 Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit del codice.
@@ -453,13 +453,13 @@ BUSINESS PLUS non è ancora fonte canonica trasversale per Native AdminAuth o re
 | Piano | INTERNO |
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
 | Deploy | non applicabile |
-| Stato | operativo; Development OS v1 candidate in review |
+| Stato | operativo; Development OS v1 merged e canonico nella Knowledge; rollout applicativo sperimentale e pending |
 | Branch principale | `main` |
-| Baseline `main` verificata | `94c5cb7818faaad0f82e14279d03ce76bf19d971` |
+| Baseline `main` verificata | `5f9a7a1d669cea8b0165832017e81f24a94480f5` |
 | Snapshot storico usato per la patch di governance del 26 luglio | `Tretnix-knowledge-de29f4f3.zip` |
 | SHA-256 snapshot storico | `3cf34a6f145a1834d211f65917950dc92e940f259d7585f16342d1bb00730032` |
 | Commit della patch di governance | da registrare dopo merge |
-| Ultima revisione | 14 settembre 2026 — Development OS v1 candidate su `codex/development-os-v1` da `main@94c5cb7818faaad0f82e14279d03ce76bf19d971` |
+| Ultima riconciliazione | 15 settembre 2026 — Development OS v1 PR `#22` merged; source `0e5a9f03e1cd2774af4d40aeb441157bbda65446`; branch storico eliminato; dettagli di evidenza in `CURRENT_STATE.md` |
 
 ### Ruolo canonico
 
@@ -543,7 +543,7 @@ Home & Local Services v1.0
 | Git workflow | `tretnix-knowledge` | standard condiviso |
 | Agent handoff | `tretnix-knowledge` | standard condiviso |
 | Codex workflow | `tretnix-knowledge` | approvato, pilota su START |
-| Development OS v1 | `tretnix-knowledge` | candidate implementato; full diff/owner gate prima del merge e pilot separato |
+| Development OS v1 | `tretnix-knowledge` | merged, canonico e utilizzabile nella Knowledge; pilot applicativo pending con checkpoint stabile e autorizzazione esplicita |
 
 ---
 

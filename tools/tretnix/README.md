@@ -1,10 +1,12 @@
 # Tretnix Development OS CLI
 
-**Versione:** 1.1
+**Versione:** 1.2
 **Aggiornato:** 15 settembre 2026
-**Stato:** candidate sperimentale fino al pilot approvato
+**Stato:** CLI v1 merged e operativo nella Knowledge; rollout applicativo sperimentale fino al pilot approvato
 
 Il CLI è Node ESM dependency-free e scrive esclusivamente output derivati sotto `.tretnix/`.
+
+Il merge nella Knowledge è registrato in `CURRENT_STATE.md` (PR `#22`). Il dogfood su questo repository non costituisce pilot applicativo; l'adozione su un repository applicativo richiede checkpoint stabile e autorizzazione esplicita. Adattare il task descriptor di esempio a obiettivo, scope, classe e branch effettivi prima dell'uso; i descriptor locali possono restare sotto `.tretnix/runtime/`.
 
 ## Comandi
 

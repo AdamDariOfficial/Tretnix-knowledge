@@ -1,7 +1,7 @@
 # Tretnix Current State
 
-**Versione:** 1.14
-**Aggiornato:** 14 settembre 2026
+**Versione:** 1.15
+**Aggiornato:** 15 settembre 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
 ---
@@ -22,17 +22,27 @@
 | Campo | Valore |
 |---|---|
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
-| Baseline `main` verificata | `94c5cb7818faaad0f82e14279d03ce76bf19d971` |
+| Baseline `main` verificata | `5f9a7a1d669cea8b0165832017e81f24a94480f5` |
 | Snapshot canonico ricevuto | `Tretnix-knowledge-de29f4f3.zip` |
 | Development pack | acquisito, verificato, estratto e integrato in `main` |
 | Family kit | Beauty v1.1, Professional v1.0 e Home v1.0 presenti |
 | Visibilità | pubblica temporaneamente secondo `TRX-DEC-031` |
-| Validazione knowledge | PASS registrato dopo il merge del 10 settembre; rieseguire sul candidate Development OS v1 corrente |
+| Validazione knowledge | GitHub Knowledge Validation sulla PR `#22`: PASS (`VR`, check `validate` completato con `success` sul source commit); la reconciliation post-merge richiede validation locale sul proprio diff |
 | Evidenza | `VR` per commit, archive e contenuti versionati |
 | Controlled Change Package | canonico in `main` da `996d6b8`; `Apply → Validate` è il metodo standard per cambi non banali esterni |
-| Development OS v1 | candidate su `codex/development-os-v1`; baseline `94c5cb7818faaad0f82e14279d03ce76bf19d971`; full diff/owner gate richiesto prima di commit o merge |
+| Development OS v1 | merged e canonico nella Knowledge; tooling utilizzabile su questo repository |
+| Pull request Development OS | `#22` — `feat: add Tretnix Development OS v1`, merged il 15 settembre 2026 (`VR`, Git e API GitHub) |
+| Source commit Development OS | `0e5a9f03e1cd2774af4d40aeb441157bbda65446` |
+| Merge commit Development OS | `5f9a7a1d669cea8b0165832017e81f24a94480f5` |
+| Branch storico Development OS | `codex/development-os-v1`, eliminato locale e remoto dopo merge (`VR`, branch locali e `ls-remote`) |
+| Final independent Gate B pre-merge | `APPROVE_FOR_COMMIT` (`HR`, esito riportato dall'owner nel task di closeout) |
+| Suite finale pre-merge | `69/69 PASS` (`HR`, esito riportato dall'owner; il dogfood post-merge è un'esecuzione distinta) |
+| Working tree post-merge | verificato clean all'avvio su `main@5f9a7a1d669cea8b0165832017e81f24a94480f5`, uguale a `origin/main` dopo fetch (`VR`) |
+| Rollout applicativo | sperimentale e pending; prossimo gate: pilot controllato su un repository applicativo con checkpoint stabile e autorizzazione esplicita |
 
-Development OS v1 introduce manifest, context resolver/cache, fingerprint, validation planner/cache, evidence e quattro procedure operative. Gli output `.tretnix/` sono locali e ignorati. Il candidate non è canonico finché non supera review owner e merge autorizzato; nessun pilot Tretnix.com è incluso.
+Development OS v1 introduce manifest, context resolver/cache, fingerprint, validation planner/cache, evidence e quattro procedure operative, ora presenti in `main`. Gli output `.tretnix/` sono locali e ignorati. Il dogfood sul repository Knowledge non costituisce pilot applicativo né adozione automatica su altri repository. Git, Knowledge e autorità owner restano superiori a cache ed evidence; Tretnix.com resta nel workstream separato ed è escluso da questo closeout.
+
+La baseline pre-implementazione `94c5cb7818faaad0f82e14279d03ce76bf19d971` resta provenance del merge Development OS, non la baseline operativa corrente.
 
 La riconciliazione cross-family è confluita storicamente in `main@c693dcc25979a93afab3c8cfcdb43f943baee187`; le baseline precedenti restano nella cronologia Git e nel registro degli artefatti.
 
@@ -220,7 +230,7 @@ La scelta Cloudflare resta provider-specifica per il fit del candidate PLUS e se
 
 ## 9. Ordine operativo
 
-1. revisionare il candidate Development OS v1 e mantenere commit, push, merge e pilot come gate separati;
+1. mantenere Development OS v1 merged e operativo nella Knowledge; prossimo gate di adozione: pilot controllato su un repository applicativo soltanto con checkpoint stabile e autorizzazione esplicita;
 2. mantenere Tretnix.com nel workstream e working tree separati;
 3. mantenere Forno Lume START congelato sulla baseline `2ed19ef9a4a886616bccd5aad2054c3027fec680`;
 4. mantenere Forno Lume BUSINESS congelato sulla baseline `ccea04cb0bb50e2624fe505bf7d3f25890b7d456`; riaprirlo soltanto per bug, regressione, sicurezza o requisito approvato;
