@@ -1,8 +1,8 @@
 # Tretnix Backup & Disaster Recovery
 
-**Versione:** 1.0
+**Versione:** 1.1
 **Aggiornato:** 16 settembre 2026
-**Stato:** architettura approvata; implementazione e recovery test pendenti
+**Stato:** Kopia CLOUD / Cloudflare R2 recovery verificato; workspace portabile e Kopia LOCAL ancora pendenti
 **Ambito:** intera cartella padre Tretnix, repository locali e materiale operativo non versionato
 
 ---
@@ -35,18 +35,18 @@ L'architettura target è:
                   LOCAL          CLOUD
                      │             │
                      ▼             ▼
-               SSD interno    Backblaze B2
-                              EU Central
+               SSD interno    Cloudflare R2
+                              EU jurisdiction
 ```
 
 Principi:
 
 - `T:\Tretnix` diventa il workspace operativo canonico soltanto dopo una migrazione verificata;
 - GitHub resta la fonte tecnica ufficiale per codice e documentazione versionata;
-- Kopia è il software di backup e crea due repository indipendenti;
+- Kopia crea due repository indipendenti;
 - il repository Kopia LOCAL vive sull'SSD interno del PC ed è destinato al fast recovery;
-- il repository Kopia CLOUD vive su Backblaze B2 ed è destinato al disaster recovery off-site;
-- Backblaze B2 è storage remoto del repository Kopia, non un secondo software di backup;
+- il repository Kopia CLOUD vive su Cloudflare R2 ed è destinato al disaster recovery off-site;
+- R2 è storage remoto del repository Kopia, non un secondo software di backup;
 - il cloud non deve dipendere dal repository Kopia locale e non deve essere una semplice copia di esso.
 
 Non usare il flusso:
@@ -60,10 +60,20 @@ Usare invece:
 ```text
                      ┌── Kopia LOCAL ──► SSD interno
 T:\Tretnix ─────────┤
-                     └── Kopia CLOUD ──► Backblaze B2
+                     └── Kopia CLOUD ──► Cloudflare R2
 ```
 
 I due repository devono poter fallire indipendentemente.
+
+### Fase transitoria corrente
+
+Fino all'acquisto e alla migrazione dell'SSD esterno, la sorgente live rimane:
+
+```text
+C:\Users\adamd\Desktop\Coding\Tretnix
+```
+
+Kopia CLOUD parte direttamente da questa sorgente transitoria. La presenza del backup cloud verificato non rende ancora completo il disaster recovery target, perché `T:\Tretnix` e Kopia LOCAL non sono stati implementati.
 
 ---
 
@@ -71,15 +81,15 @@ I due repository devono poter fallire indipendentemente.
 
 ### Target
 
-Il workspace target è:
+Il workspace target resta:
 
 ```text
 T:\Tretnix\
 ```
 
-L'SSD esterno è il supporto live. Il disco interno non deve diventare un secondo working tree usato normalmente.
+L'SSD esterno sarà il supporto live. Il disco interno non deve diventare un secondo working tree usato normalmente.
 
-La migrazione deve avvenire per copia e verifica, non con un cut/paste distruttivo. Il workspace precedente viene conservato temporaneamente fino al completamento delle verifiche e del primo ciclo di backup.
+La migrazione deve avvenire per copia e verifica, non con un cut/paste distruttivo. Il workspace precedente viene conservato temporaneamente fino al completamento delle verifiche e del primo ciclo di backup locale e cloud dal nuovo percorso.
 
 ### File system e lettera unità
 
@@ -101,22 +111,18 @@ La scelta di un'alternativa di cifratura richiede verifica separata se BitLocker
 
 ---
 
-## 4. Hardware raccomandato
+## 4. Hardware e capacità
 
-La capacità raccomandata per il workspace è 4 TB salvo che un audit reale dimostri che 2 TB offrono margine sufficiente.
+L'audit operativo del 16 settembre 2026 ha misurato circa 9,5 GB per la cartella padre Tretnix prima delle exclusion di backup; lo snapshot cloud ottimizzato è risultato circa 6,7 GB nella UI Kopia.
 
-Scelta corrente:
+Con queste dimensioni, 2 TB offrono oggi un margine molto ampio. 4 TB restano una scelta possibile soltanto se un audit futuro di crescita, asset o workload ne giustifica il costo.
 
-- **Samsung Portable SSD T9 4 TB** quando il computer supporta USB 3.2 Gen 2x2 / 20 Gbps e il vantaggio prestazionale è realmente utilizzabile;
-- **Samsung T7 Shield 4 TB** quando il computer è limitato a USB 3.2 Gen 2 / 10 Gbps o quando il T9 non offre un beneficio concreto.
+Modelli di riferimento:
 
-Questi modelli sono una raccomandazione di implementazione, non un vincolo architetturale permanente. Prima dell'acquisto devono essere verificati:
+- **Samsung Portable SSD T9** quando il computer supporta USB 3.2 Gen 2x2 / 20 Gbps e il vantaggio prestazionale è realmente utilizzabile;
+- **Samsung T7 Shield** quando il computer è limitato a USB 3.2 Gen 2 / 10 Gbps o quando il T9 non offre un beneficio concreto.
 
-- capacità attuale della cartella Tretnix;
-- crescita prevista;
-- porte e velocità reali del computer;
-- compatibilità Windows;
-- disponibilità e prezzo correnti.
+L'acquisto dell'SSD esterno è intenzionalmente differito fino al primo incasso Tretnix utile. Prima dell'acquisto devono essere riverificati capacità, crescita prevista, porte del computer, disponibilità e prezzo correnti.
 
 ---
 
@@ -160,11 +166,9 @@ L'obiettivo è poter recuperare l'ultimo stato operativo reale, non soltanto l'u
 
 ---
 
-## 7. Esclusioni
+## 7. Exclusion policy verificata
 
-Il cloud non deve sprecare spazio per dati sicuramente rigenerabili.
-
-Candidati iniziali all'esclusione, previa verifica:
+La policy cloud verificata esclude soltanto dati rigenerabili:
 
 ```text
 **/node_modules/**
@@ -174,6 +178,8 @@ Candidati iniziali all'esclusione, previa verifica:
 **/.vite/**
 **/.cache/**
 ```
+
+Il restore test R2 ha confermato che le directory corrispondenti eventualmente ricreate risultano vuote: `0` file e `0` byte di contenuto ripristinato per i path controllati.
 
 Una directory ignorata da Git NON è automaticamente esclusa dal backup.
 
@@ -190,7 +196,7 @@ fixtures
 
 Queste directory o file devono essere classificati con audit project-specific prima di una decisione di esclusione.
 
-La policy di esclusione deve privilegiare sicurezza e recuperabilità rispetto a piccoli risparmi di storage.
+La policy di esclusione privilegia sicurezza e recuperabilità rispetto a piccoli risparmi di storage.
 
 ---
 
@@ -211,15 +217,17 @@ Almeno i seguenti elementi devono essere recuperabili indipendentemente dal PC e
 - recovery key del workspace cifrato;
 - password del repository Kopia LOCAL;
 - password del repository Kopia CLOUD;
-- recovery dell'account Backblaze;
+- recovery dell'account Cloudflare;
 - GitHub recovery codes;
-- eventuali token di reconnect Kopia, trattati come secrets.
+- credenziali S3/API necessarie a riconnettere Kopia CLOUD, trattate come secrets.
+
+Non registrare nella Knowledge account ID, Access Key ID, Secret Access Key, token o password.
 
 ---
 
 ## 9. Backup locale — Kopia LOCAL
 
-Sorgente:
+Sorgente target:
 
 ```text
 T:\Tretnix
@@ -256,50 +264,68 @@ La retention può essere adattata dopo dati reali di crescita e capacità dispon
 
 Il backup locale non è considerato off-site perché appartiene allo stesso failure domain del computer.
 
+Stato corrente: **NON CONFIGURATO**, intenzionalmente differito insieme all'acquisto e alla migrazione dell'SSD esterno.
+
 ---
 
-## 10. Backup cloud — Kopia CLOUD → Backblaze B2
+## 10. Backup cloud — Kopia CLOUD → Cloudflare R2
 
-Sorgente:
+### Sorgente corrente
+
+```text
+C:\Users\adamd\Desktop\Coding\Tretnix
+```
+
+Dopo la migrazione verificata, la sorgente diventerà:
 
 ```text
 T:\Tretnix
 ```
 
-Destinazione:
+### Destinazione e configurazione
 
 ```text
 Kopia CLOUD
-→ Backblaze B2
-→ regione EU Central
+→ Cloudflare R2 Standard
+→ EU jurisdiction
 ```
 
-Backblaze B2 conserva il repository Kopia cifrato. Kopia esegue snapshot, deduplicazione, compressione e cifratura prima dello storage remoto secondo la propria configurazione.
+Configurazione verificata:
 
-Configurazione iniziale:
+- bucket privato dedicato `tretnix-kopia-cloud-dr`;
+- jurisdiction `EU`;
+- Development URL pubblico disabilitato;
+- nessun custom domain;
+- token/API credential dedicato con accesso limitato al bucket;
+- connessione Kopia tramite endpoint S3-compatible R2 EU;
+- region override `auto`;
+- TLS verification attiva;
+- Object Lock non attivato nella prima fase;
+- compressione `zstd`;
+- repository Kopia cifrato con i parametri raccomandati del client.
 
-- bucket privato dedicato a Tretnix;
-- regione EU Central;
-- application key dedicata e limitata al bucket;
-- connessione Kopia tramite endpoint S3-compatible di B2;
-- nessuna master key nelle automazioni;
-- Object Lock non attivato nella prima fase.
-
-Frequenza iniziale proposta:
+### Frequenza e retention operative
 
 ```text
-snapshot: ogni 2 ore
+snapshot: ogni 1 ora
 ```
 
-Retention cloud iniziale:
+Retention cloud:
 
 - 24 snapshot recenti;
+- 0 retention oraria aggiuntiva;
 - 30 giornalieri;
 - 12 settimanali;
 - 12 mensili;
 - 3 annuali.
 
-Retention, costo e frequenza devono essere rivalutati usando lo spazio effettivamente occupato dopo il primo mese.
+La frequenza oraria sostituisce la proposta iniziale ogni 2 ore ed è il comportamento operativo verificato.
+
+### Provider precedente
+
+Backblaze B2 era il provider approvato per la prima implementazione. Lo snapshot cloud era stato creato, ma il restore reale è stato bloccato dai cap del piano non a pagamento su download e transazioni Class B. Per questo il provider attivo è stato sostituito con Cloudflare R2.
+
+Il repository B2 non è più il repository Kopia CLOUD canonico. Può essere mantenuto soltanto come copia legacy temporanea durante il cutover e poi dismesso in modo controllato insieme alla relativa application key, senza cancellare o modificare il repository R2 verificato.
 
 ---
 
@@ -311,11 +337,11 @@ Collegare l'SSD a un altro computer compatibile, sbloccarlo e ripristinare i pre
 
 ### SSD esterno guasto, computer integro
 
-Ripristinare `T:\Tretnix` dal repository Kopia LOCAL.
+Quando Kopia LOCAL sarà configurato, ripristinare `T:\Tretnix` dal repository locale.
 
 ### Computer e SSD esterno persi o distrutti
 
-Usare Kopia su un nuovo computer, riconnettere il repository Kopia CLOUD su Backblaze B2 e ripristinare l'ultimo snapshot valido.
+Usare Kopia su un nuovo computer, riconnettere il repository Kopia CLOUD su Cloudflare R2 e ripristinare l'ultimo snapshot valido.
 
 ### Errore umano o corruzione logica
 
@@ -329,54 +355,73 @@ GitHub rimane un ulteriore livello di recupero per codice e storia versionata.
 
 Un backup non è considerato verificato soltanto perché lo snapshot termina senza errori.
 
-Prima di dichiarare il sistema pronto devono essere eseguiti almeno:
-
-1. restore locale in una directory isolata;
-2. restore cloud in una directory isolata;
-3. controllo di file commerciali, brand, loghi e asset critici;
-4. controllo delle repository Git recuperate;
-5. verifica di `.git`, HEAD, remote e stato locale;
-6. verifica della presenza dei secrets necessari senza mostrarne il contenuto;
-7. verifica che nessun deploy, migration o production write sia stato eseguito.
-
-Stato prima del test:
+Il 16 settembre 2026 è stato eseguito un restore cloud reale e isolato da Cloudflare R2 verso:
 
 ```text
-BACKUP ARCHITECTURE APPROVED / IMPLEMENTATION PENDING
+C:\Users\adamd\Desktop\Tretnix-R2-Restore-Test
 ```
 
-Dopo configurazione ma prima dei restore test:
+Evidenze operative osservate:
+
+- snapshot ottimizzato: circa 6,7 GB nella UI Kopia;
+- estimate pre-snapshot: 19.906 file, 3.584 directory, `0` errori;
+- restore completato da Kopia in 11m 35s;
+- filesystem ripristinato: 19.906 file, 3.583 directory ricorsive più la root, circa 6,27 GiB misurati da PowerShell;
+- exclusion policy verificata: i path esclusi controllati contengono `0` file e `0` byte;
+- 11 repository `.git` recuperate;
+- 10 repository con branch e HEAD corrispondenti alla sorgente;
+- repository TikTok correttamente ripristinata come repository unborn su `feature/tiktok-marketing-intelligence`, con 14 righe di stato identiche tra sorgente e restore;
+- `git fsck --full` ha restituito exit code `0` su tutte le 11 repository; gli oggetti dangling riportati da Git non costituiscono corruzione;
+- working state dirty/untracked confrontato e coerente sui repository verificati.
+
+Stato cloud:
 
 ```text
-BACKUP CONFIGURED / RECOVERY NOT YET VERIFIED
+KOPIA CLOUD / CLOUDFLARE R2: RECOVERY VERIFIED
 ```
 
-Soltanto dopo restore locale e cloud riusciti con evidenza:
+Questo gate NON autorizza ancora:
 
 ```text
 DISASTER RECOVERY VERIFIED
 ```
 
+per l'intera architettura Tretnix. Il gate complessivo richiede ancora:
+
+1. acquisto e configurazione dell'SSD esterno;
+2. migrazione verificata a `T:\Tretnix`;
+3. configurazione Kopia LOCAL;
+4. snapshot locale;
+5. restore locale isolato e verificato;
+6. nuovo controllo cloud dal workspace definitivo quando la sorgente cambia.
+
 ---
 
 ## 13. Sequenza di implementazione
 
-1. eseguire audit read-only della cartella padre Tretnix;
-2. misurare dimensione reale, repository, directory pesanti e dati rigenerabili;
-3. verificare le porte del computer;
-4. acquistare l'SSD appropriato;
-5. configurare NTFS, lettera `T:` e cifratura;
-6. copiare Tretnix senza eliminare l'originale;
-7. verificare integrità e repository;
-8. configurare Kopia LOCAL verso l'SSD interno;
-9. creare il bucket Backblaze B2 EU Central;
-10. configurare Kopia CLOUD direttamente verso B2;
-11. applicare la exclusion policy verificata;
-12. eseguire uno snapshot locale e uno cloud;
-13. eseguire restore locale di prova;
-14. eseguire restore cloud di prova;
-15. verificare i risultati;
-16. soltanto dopo il recovery verificato rimuovere il vecchio workspace ridondante quando non più necessario.
+### Completato
+
+1. audit read-only della cartella padre Tretnix;
+2. misura della dimensione reale e identificazione dei dati rigenerabili;
+3. installazione e configurazione Kopia;
+4. definizione e verifica delle exclusion;
+5. configurazione Kopia CLOUD su Cloudflare R2 EU;
+6. snapshot cloud ottimizzato;
+7. restore cloud reale in directory isolata;
+8. verifica filesystem, exclusion e repository Git.
+
+### Pendente quando viene acquistato l'SSD
+
+1. verificare nuovamente capacità e porte del computer;
+2. acquistare l'SSD appropriato;
+3. configurare NTFS, lettera `T:` e cifratura;
+4. copiare Tretnix senza eliminare l'originale;
+5. verificare integrità e repository;
+6. spostare la sorgente Kopia CLOUD al workspace definitivo soltanto dopo verifica;
+7. configurare Kopia LOCAL verso l'SSD interno;
+8. eseguire snapshot e restore locale di prova;
+9. eseguire un restore cloud dal workspace definitivo;
+10. soltanto dopo entrambi i restore verificati dichiarare `DISASTER RECOVERY VERIFIED`.
 
 ---
 
@@ -406,13 +451,21 @@ Il sistema deve fallire in modo sicuro quando trova una destinazione, credenzial
 
 Al 16 settembre 2026:
 
-- architettura: **APPROVATA**;
+- architettura target: **APPROVATA**;
+- sorgente live transitoria: `C:\Users\adamd\Desktop\Coding\Tretnix`;
 - workspace `T:\Tretnix`: **NON ANCORA MIGRATO**;
-- SSD esterno: **DA SELEZIONARE DOPO AUDIT DEL PC E DELLA DIMENSIONE**;
+- SSD esterno: **ACQUISTO DIFFERITO FINO AL PRIMO INCASSO TRETNIX UTILE**;
 - Kopia LOCAL: **NON CONFIGURATO**;
-- Backblaze B2 / Kopia CLOUD: **NON CONFIGURATO**;
+- Cloudflare R2 / Kopia CLOUD: **CONFIGURATO**;
+- frequenza cloud: **OGNI 1 ORA**;
+- retention cloud: **24 latest / 0 hourly / 30 daily / 12 weekly / 12 monthly / 3 annual**;
+- compressione cloud: **zstd**;
+- exclusion policy: **VERIFICATA**;
+- snapshot cloud: **PASS**;
+- restore cloud: **RECOVERY VERIFIED**;
+- repository Git nel restore: **11/11 recuperate e leggibili; `git fsck` exit 0**;
+- Backblaze B2: **PROVIDER PRECEDENTE, NON PIÙ CANONICO; DISMISSIONE CONTROLLATA AMMESSA DOPO IL CUTOVER**;
 - restore locale: **NON ESEGUITO**;
-- restore cloud: **NON ESEGUITO**;
-- disaster recovery complessivo: **NON ANCORA VERIFICATO**.
+- disaster recovery complessivo: **IMPLEMENTATION PENDING / NON ANCORA VERIFICATO**.
 
-Non dichiarare `DISASTER RECOVERY VERIFIED` fino a evidenza diretta dei restore test.
+Non dichiarare `DISASTER RECOVERY VERIFIED` fino a evidenza diretta del restore locale e del restore cloud sul workspace definitivo.

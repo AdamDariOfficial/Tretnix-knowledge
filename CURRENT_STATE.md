@@ -1,7 +1,7 @@
 # Tretnix Current State
 
-**Versione:** 1.15
-**Aggiornato:** 15 settembre 2026
+**Versione:** 1.16
+**Aggiornato:** 16 settembre 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
 ---
@@ -22,7 +22,7 @@
 | Campo | Valore |
 |---|---|
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
-| Baseline `main` verificata | `5f9a7a1d669cea8b0165832017e81f24a94480f5` |
+| Baseline `main` verificata pre-update backup/DR | `43a29137107f56bc72ed5ff5a5982c0b16a3eda2` |
 | Snapshot canonico ricevuto | `Tretnix-knowledge-de29f4f3.zip` |
 | Development pack | acquisito, verificato, estratto e integrato in `main` |
 | Family kit | Beauty v1.1, Professional v1.0 e Home v1.0 presenti |
@@ -45,6 +45,32 @@ Development OS v1 introduce manifest, context resolver/cache, fingerprint, valid
 La baseline pre-implementazione `94c5cb7818faaad0f82e14279d03ce76bf19d971` resta provenance del merge Development OS, non la baseline operativa corrente.
 
 La riconciliazione cross-family è confluita storicamente in `main@c693dcc25979a93afab3c8cfcdb43f943baee187`; le baseline precedenti restano nella cronologia Git e nel registro degli artefatti.
+
+---
+
+## 2.1 Backup & Disaster Recovery
+
+| Campo | Valore |
+|---|---|
+| Architettura target | approvata da `TRX-DEC-042`; provider cloud aggiornato da `TRX-DEC-043` |
+| Sorgente live transitoria | `C:\Users\adamd\Desktop\Coding\Tretnix` |
+| Workspace target | `T:\Tretnix`, non ancora migrato |
+| SSD esterno | acquisto differito fino al primo incasso Tretnix utile |
+| Kopia LOCAL | non configurato |
+| Kopia CLOUD | Cloudflare R2 Standard, EU jurisdiction |
+| Scheduling cloud | ogni 1 ora |
+| Retention cloud | 24 latest / 0 hourly / 30 daily / 12 weekly / 12 monthly / 3 annual |
+| Compressione | `zstd` |
+| Exclusion policy | `node_modules`, `dist`, `build`, `coverage`, `.vite`, `.cache` verificate |
+| Snapshot cloud | PASS, circa 6,7 GB nella UI Kopia |
+| Restore cloud | `RECOVERY VERIFIED`, completato in 11m 35s |
+| Restore filesystem | 19.906 file; 3.583 directory ricorsive più root; circa 6,27 GiB |
+| Repository Git | 11/11 recuperate; `git fsck --full` exit `0` |
+| Backblaze B2 | provider precedente, non più canonico; dismissione controllata ammessa dopo il cutover documentale |
+| Disaster recovery complessivo | `IMPLEMENTATION PENDING`; restore locale e workspace definitivo ancora mancanti |
+| Evidenza runtime | `HR`: screenshot Kopia e output PowerShell/Git forniti direttamente nella sessione del 16 settembre 2026; policy e decisione diventano `VR` dopo merge |
+
+Il cloud recovery è stato verificato con restore reale in directory isolata e confronto delle repository Git. Questo non autorizza `DISASTER RECOVERY VERIFIED` per l'intera architettura: il gate finale richiede ancora SSD esterno, migrazione verificata a `T:\Tretnix`, Kopia LOCAL, restore locale e nuova verifica cloud dalla sorgente definitiva.
 
 ---
 
