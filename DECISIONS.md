@@ -1,6 +1,6 @@
 # Tretnix Decision Log
 
-**Versione:** 1.16
+**Versione:** 1.17
 **Aggiornato:** 16 settembre 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
@@ -1540,6 +1540,7 @@ Raw stdout/stderr dei validator non vengono persistiti in cache o evidence: poss
 **Stato:** approvata
 **Data:** 16 settembre 2026
 **Ambito:** cartella padre Tretnix, continuità operativa, backup e recovery
+**Sostituita parzialmente da:** `TRX-DEC-043` per provider cloud, frequenza cloud e stato del recovery cloud
 
 ### Contesto
 
@@ -1597,3 +1598,110 @@ DISASTER RECOVERY VERIFIED
 - il backup non autorizza stage, commit, push, PR, merge, deploy, migration o production write;
 - la migrazione a `T:\Tretnix` avviene soltanto dopo audit, copia non distruttiva e verifica;
 - non dichiarare il sistema pronto finché non sono stati eseguiti restore test reali.
+
+---
+
+## TRX-DEC-043 — Cloudflare R2 come provider Kopia CLOUD verificato
+
+**Stato:** approvata
+**Data:** 16 settembre 2026
+**Ambito:** backup cloud e disaster recovery Tretnix
+**Sostituisce parzialmente:** `TRX-DEC-042` per provider cloud, frequenza cloud e stato del recovery cloud
+
+### Contesto
+
+La prima implementazione di Kopia CLOUD su Backblaze B2 ha prodotto snapshot remoti, ma il restore reale è stato bloccato dai cap del piano non a pagamento su download e transazioni Class B. Il requisito Tretnix non è soltanto creare snapshot: il recovery off-site deve essere realmente eseguibile e verificabile.
+
+Cloudflare R2 è stato quindi configurato come candidate replacement con bucket privato dedicato, jurisdiction EU e accesso S3-compatible limitato al bucket. Il 16 settembre 2026 è stato completato un restore reale in directory isolata e sono stati verificati filesystem, exclusion policy e repository Git.
+
+### Decisione
+
+Il provider canonico di Kopia CLOUD diventa:
+
+```text
+Cloudflare R2 Standard
+jurisdiction: EU
+bucket dedicato privato
+S3-compatible
+region override: auto
+```
+
+Backblaze B2 non è più il provider canonico. Può essere mantenuto soltanto come copia legacy temporanea durante il cutover e poi dismesso in modo controllato insieme alla relativa application key.
+
+La configurazione cloud operativa è:
+
+```text
+snapshot: ogni 1 ora
+compression: zstd
+retention:
+  latest: 24
+  hourly: 0
+  daily: 30
+  weekly: 12
+  monthly: 12
+  annual: 3
+```
+
+La exclusion policy verificata è:
+
+```text
+**/node_modules/**
+**/dist/**
+**/build/**
+**/coverage/**
+**/.vite/**
+**/.cache/**
+```
+
+`.git`, working state, file locali rilevanti e file ignorati da Git non vengono esclusi automaticamente.
+
+### Evidenza di recovery cloud
+
+Il restore R2 del 16 settembre 2026 ha registrato:
+
+- snapshot ottimizzato di circa 6,7 GB nella UI Kopia;
+- estimate pre-snapshot di 19.906 file e 3.584 directory con `0` errori;
+- restore completato in 11m 35s;
+- 19.906 file ripristinati;
+- 3.583 directory ricorsive più la root;
+- circa 6,27 GiB misurati da PowerShell;
+- path esclusi verificati a `0` file e `0` byte;
+- 11 repository Git recuperate;
+- branch/HEAD e working state confrontati con la sorgente;
+- repository TikTok unborn ripristinata con branch e 14 righe di stato identiche;
+- `git fsck --full` con exit code `0` su tutte le 11 repository.
+
+Pertanto:
+
+```text
+KOPIA CLOUD / CLOUDFLARE R2: RECOVERY VERIFIED
+```
+
+### Limite del gate
+
+Il recovery cloud verificato non equivale al disaster recovery complessivo.
+
+Restano pendenti:
+
+- acquisto e cifratura dell'SSD esterno;
+- migrazione del workspace a `T:\Tretnix`;
+- Kopia LOCAL;
+- restore locale isolato;
+- nuovo controllo cloud dopo il cambio della sorgente al workspace definitivo.
+
+Fino ad allora:
+
+```text
+DISASTER RECOVERY COMPLESSIVO: IMPLEMENTATION PENDING
+```
+
+`DISASTER RECOVERY VERIFIED` resta vietato fino al completamento dei gate locale e cloud sul workspace definitivo.
+
+### Conseguenze
+
+- Cloudflare R2 è il provider attivo del repository Kopia CLOUD.
+- La frequenza cloud operativa passa dalla proposta ogni 2 ore a ogni 1 ora.
+- Il bucket backup resta separato da bucket applicativi e non usa public Development URL o custom domain.
+- Le credenziali R2 e le password Kopia restano secrets e non vengono versionate nella Knowledge.
+- Backblaze B2 può essere dismesso senza modificare il repository R2 verificato.
+- L'acquisto dell'SSD esterno e Kopia LOCAL restano un gate separato, intenzionalmente differito fino al primo incasso Tretnix utile.
