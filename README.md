@@ -2,8 +2,8 @@
 
 Fonte canonica per identità, decisioni, standard tecnici, repository, procedure operative e adattatori degli strumenti Tretnix.
 
-**Versione:** 1.11
-**Aggiornato:** 14 settembre 2026
+**Versione:** 1.12
+**Aggiornato:** 16 settembre 2026
 **Stato:** operativo
 **Visibilità corrente:** repository GitHub pubblica durante il completamento dell’audit e del consolidamento Tretnix
 **Visibilità successiva:** passaggio a privata soltanto dopo completamento del ciclo, verifica delle dipendenze di accesso e nuova conferma esplicita del proprietario (`TRX-DEC-031`)
@@ -57,6 +57,7 @@ tretnix-knowledge/
 ├── CHAT_RETENTION_AND_HANDOFF.md
 ├── SOURCE_ARTIFACT_REGISTER.md
 ├── DEVELOPMENT_OS.md
+├── BACKUP_AND_DISASTER_RECOVERY.md
 ├── tretnix.project.json
 ├── .gitignore
 │
@@ -156,6 +157,7 @@ tretnix-knowledge/
 | [`CASE_STUDY_STANDARD.md`](./CASE_STUDY_STANDARD.md) | Standard per portfolio concept e client case study | Normativa e descrittiva |
 | [`CURRENT_STATE.md`](./CURRENT_STATE.md) | Snapshot operativo trasversale con livelli di evidenza | Operativa e temporale |
 | [`CHAT_RETENTION_AND_HANDOFF.md`](./CHAT_RETENTION_AND_HANDOFF.md) | Gate per handoff e cancellazione sicura delle chat | Normativa e operativa |
+| [`BACKUP_AND_DISASTER_RECOVERY.md`](./BACKUP_AND_DISASTER_RECOVERY.md) | Workspace portabile, backup locale/cloud e recovery Tretnix | Normativa e operativa |
 | [`SOURCE_ARTIFACT_REGISTER.md`](./SOURCE_ARTIFACT_REGISTER.md) | Registro di artefatti, checksum, ingestione e fonti residue | Operativa |
 | [`templates/READ_ONLY_AUDIT.md`](./templates/READ_ONLY_AUDIT.md) | Procedura standard di audit senza modifiche | Operativa |
 | [`skills/CONTROLLED_CHANGE_PACKAGE.md`](./skills/CONTROLLED_CHANGE_PACKAGE.md) | Applicazione e validazione controllata di modifiche esterne | Operativa e normativa |
