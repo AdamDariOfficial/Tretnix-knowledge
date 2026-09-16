@@ -1,7 +1,7 @@
 # Tretnix Decision Log
 
-**Versione:** 1.15
-**Aggiornato:** 14 settembre 2026
+**Versione:** 1.16
+**Aggiornato:** 16 settembre 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
 
@@ -1532,3 +1532,68 @@ Raw stdout/stderr dei validator non vengono persistiti in cache o evidence: poss
 - la storia dei repository creati o sincronizzati con Lovable non viene riscritta;
 - Development OS può alimentare l'evidence di un Controlled Change Package, ma non sostituisce `Apply`, `Validate`, review e gate separati di `TRX-DEC-032`;
 - adozione su altri repository, CI, pilot e promozione generale richiedono checkpoint separati.
+
+---
+
+## TRX-DEC-042 — Workspace portabile e disaster recovery Tretnix
+
+**Stato:** approvata
+**Data:** 16 settembre 2026
+**Ambito:** cartella padre Tretnix, continuità operativa, backup e recovery
+
+### Contesto
+
+La cartella padre Tretnix contiene non soltanto repository Git, ma anche materiale commerciale, brand, loghi, asset, documenti e altri file operativi che non sono necessariamente presenti su GitHub. GitHub resta la fonte tecnica ufficiale del contenuto versionato, ma non è sufficiente come disaster recovery dell'intero workspace.
+
+### Decisione
+
+Tretnix adotta come architettura target un workspace portabile su SSD esterno, previsto come `T:\Tretnix`, protetto da cifratura e affiancato da tre livelli distinti:
+
+```text
+GitHub                 = codice e conoscenza versionata
+Kopia LOCAL            = snapshot indipendenti verso SSD interno del PC
+Kopia CLOUD            = snapshot indipendenti verso Backblaze B2 EU Central
+Backblaze B2           = storage remoto del repository Kopia CLOUD
+```
+
+Kopia LOCAL e Kopia CLOUD partono entrambi direttamente dal workspace live. Il repository cloud non è una copia del repository locale e i due repository di backup devono poter fallire indipendentemente.
+
+Le repository Git locali restano incluse nei backup, compresi `.git`, working state e file locali rilevanti. Si escludono soltanto dati sicuramente rigenerabili dopo audit, per esempio `node_modules`, build output, coverage e cache. Una directory ignorata da Git non è automaticamente esclusa dal backup.
+
+Secrets e `.env` non vengono versionati nella Knowledge o su GitHub, ma possono essere conservati nei backup Kopia cifrati quando necessari al recovery. Le credenziali di recovery devono esistere fuori dal workspace e fuori dall'unico computer operativo.
+
+Il provider cloud approvato per la prima implementazione è Backblaze B2 in regione EU Central, tramite repository Kopia CLOUD e accesso S3-compatible con bucket privato e application key dedicata limitata al bucket. Object Lock non viene attivato nella prima fase.
+
+Il dettaglio operativo, le retention iniziali, le exclusion policy, la selezione hardware e i gate di restore sono definiti in [`BACKUP_AND_DISASTER_RECOVERY.md`](./BACKUP_AND_DISASTER_RECOVERY.md).
+
+### Gate
+
+L'architettura approvata non equivale a recovery verificato.
+
+Prima della configurazione:
+
+```text
+BACKUP ARCHITECTURE APPROVED / IMPLEMENTATION PENDING
+```
+
+Dopo la configurazione ma prima dei restore test:
+
+```text
+BACKUP CONFIGURED / RECOVERY NOT YET VERIFIED
+```
+
+Soltanto restore locale e cloud riusciti e verificati autorizzano:
+
+```text
+DISASTER RECOVERY VERIFIED
+```
+
+### Conseguenze
+
+- il PC principale diventa una workstation sostituibile, non l'unica sede dei dati Tretnix;
+- il disco interno è fast-recovery storage e appartiene allo stesso failure domain del PC;
+- il cloud è il recovery off-site per perdita simultanea di PC e workspace esterno;
+- GitHub continua a essere usato normalmente per commit, branch, tag e documentazione versionata;
+- il backup non autorizza stage, commit, push, PR, merge, deploy, migration o production write;
+- la migrazione a `T:\Tretnix` avviene soltanto dopo audit, copia non distruttiva e verifica;
+- non dichiarare il sistema pronto finché non sono stati eseguiti restore test reali.
