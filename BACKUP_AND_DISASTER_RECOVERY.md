@@ -1,6 +1,6 @@
 # Tretnix Backup & Disaster Recovery
 
-**Versione:** 1.1
+**Versione:** 1.2
 **Aggiornato:** 16 settembre 2026
 **Stato:** Kopia CLOUD / Cloudflare R2 recovery verificato; workspace portabile e Kopia LOCAL ancora pendenti
 **Ambito:** intera cartella padre Tretnix, repository locali e materiale operativo non versionato
@@ -325,7 +325,9 @@ La frequenza oraria sostituisce la proposta iniziale ogni 2 ore ed è il comport
 
 Backblaze B2 era il provider approvato per la prima implementazione. Lo snapshot cloud era stato creato, ma il restore reale è stato bloccato dai cap del piano non a pagamento su download e transazioni Class B. Per questo il provider attivo è stato sostituito con Cloudflare R2.
 
-Il repository B2 non è più il repository Kopia CLOUD canonico. Può essere mantenuto soltanto come copia legacy temporanea durante il cutover e poi dismesso in modo controllato insieme alla relativa application key, senza cancellare o modificare il repository R2 verificato.
+Il repository B2 non è più il repository Kopia CLOUD canonico. Il 16 settembre 2026 la copia legacy è stata dismessa dopo il completamento del cutover documentale e della verifica R2: tutte le versioni degli oggetti B2 sono state eliminate, il bucket `tretnix-kopia-cloud-dr` è stato eliminato, la relativa application key è stata revocata e la cache locale di autenticazione B2 è stata rimossa.
+
+La directory temporanea `C:\Users\adamd\Desktop\Tretnix-R2-Restore-Test` è stata eliminata soltanto dopo il completamento delle verifiche di recovery. La dismissione B2 non ha modificato né cancellato il repository Kopia CLOUD attivo su Cloudflare R2.
 
 ---
 
@@ -408,7 +410,8 @@ per l'intera architettura Tretnix. Il gate complessivo richiede ancora:
 5. configurazione Kopia CLOUD su Cloudflare R2 EU;
 6. snapshot cloud ottimizzato;
 7. restore cloud reale in directory isolata;
-8. verifica filesystem, exclusion e repository Git.
+8. verifica filesystem, exclusion e repository Git;
+9. dismissione controllata del repository legacy Backblaze B2, del bucket e della relativa application key dopo il cutover R2 verificato.
 
 ### Pendente quando viene acquistato l'SSD
 
@@ -464,7 +467,7 @@ Al 16 settembre 2026:
 - snapshot cloud: **PASS**;
 - restore cloud: **RECOVERY VERIFIED**;
 - repository Git nel restore: **11/11 recuperate e leggibili; `git fsck` exit 0**;
-- Backblaze B2: **PROVIDER PRECEDENTE, NON PIÙ CANONICO; DISMISSIONE CONTROLLATA AMMESSA DOPO IL CUTOVER**;
+- Backblaze B2: **DECOMMISSIONED IL 16 SETTEMBRE 2026; DATI, BUCKET, APPLICATION KEY E CACHE LOCALE RIMOSSI**;
 - restore locale: **NON ESEGUITO**;
 - disaster recovery complessivo: **IMPLEMENTATION PENDING / NON ANCORA VERIFICATO**.
 
