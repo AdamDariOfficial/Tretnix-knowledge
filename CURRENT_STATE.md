@@ -1,6 +1,6 @@
 # Tretnix Current State
 
-**Versione:** 1.16
+**Versione:** 1.17
 **Aggiornato:** 16 settembre 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
@@ -66,9 +66,9 @@ La riconciliazione cross-family è confluita storicamente in `main@c693dcc25979a
 | Restore cloud | `RECOVERY VERIFIED`, completato in 11m 35s |
 | Restore filesystem | 19.906 file; 3.583 directory ricorsive più root; circa 6,27 GiB |
 | Repository Git | 11/11 recuperate; `git fsck --full` exit `0` |
-| Backblaze B2 | provider precedente, non più canonico; dismissione controllata ammessa dopo il cutover documentale |
+| Backblaze B2 | `DECOMMISSIONED` il 16 settembre 2026; repository legacy svuotato, bucket eliminato, application key revocata e cache locale rimossa |
 | Disaster recovery complessivo | `IMPLEMENTATION PENDING`; restore locale e workspace definitivo ancora mancanti |
-| Evidenza runtime | `HR`: screenshot Kopia e output PowerShell/Git forniti direttamente nella sessione del 16 settembre 2026; policy e decisione diventano `VR` dopo merge |
+| Evidenza runtime | `HR`: screenshot Kopia e output PowerShell/Git forniti direttamente nella sessione del 16 settembre 2026; svuotamento B2, rimozione cache e restore-test verificati da output shell; eliminazione bucket e revoca application key confermate dall'owner; policy e stato diventano `VR` dopo merge |
 
 Il cloud recovery è stato verificato con restore reale in directory isolata e confronto delle repository Git. Questo non autorizza `DISASTER RECOVERY VERIFIED` per l'intera architettura: il gate finale richiede ancora SSD esterno, migrazione verificata a `T:\Tretnix`, Kopia LOCAL, restore locale e nuova verifica cloud dalla sorgente definitiva.
 
