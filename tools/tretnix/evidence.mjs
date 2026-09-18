@@ -1,17 +1,23 @@
-import { mkdir } from "node:fs/promises";
+import { mkdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import {
   EVIDENCE_SCHEMA_VERSION,
   TretnixError,
   confineRegularFile,
+  confineSourceFile,
+  effectiveValidatorCapabilities,
+  knowledgeState,
   loadManifest,
   loadTask,
   normalizeRepositoryIdentity,
   pathExists,
   pathMatches,
   readJson,
+  prepareValidatorCommand,
+  requireKnowledgeContracts,
   resolveExistingInside,
   resolveOutputInside,
+  requireRuntimeIgnored,
   sha256,
   stableJson,
   validateEvidence,
@@ -89,6 +95,7 @@ export function renderEvidenceReport(evidence) {
 }
 
 export async function writeEvidence(repo, evidence) {
+  await requireRuntimeIgnored(repo);
   const errors = validateEvidence(evidence);
   if (errors.length) throw new TretnixError("INVALID_EVIDENCE", `Evidence does not satisfy schema v${EVIDENCE_SCHEMA_VERSION}: ${errors.join("; ")}`, { errors });
   if (!/^[0-9A-Za-z._-]+$/.test(evidence.run_id)) throw new TretnixError("UNSAFE_PATH", `Unsafe evidence run ID: ${evidence.run_id}`);
@@ -106,7 +113,8 @@ export async function writeEvidence(repo, evidence) {
   return { evidencePath, reportPath };
 }
 
-export async function regenerateLatestEvidence(repo) {
+export async function regenerateLatestEvidence(repo, knowledge) {
+  await requireRuntimeIgnored(repo);
   const pointerPath = await resolveOutputInside(repo, ".tretnix/runtime/latest-evidence.json", "latest evidence pointer");
   if (!(await pathExists(pointerPath))) throw new TretnixError("MISSING_EVIDENCE", "No previous evidence run is available");
   await confineRegularFile(repo, pointerPath, "latest evidence pointer");
@@ -136,6 +144,40 @@ export async function regenerateLatestEvidence(repo) {
     taskIdentity.manifest_sha256 !== current.fingerprint.manifest_sha256 ||
     taskIdentity.task_sha256 !== (loadedTask ? sha256(stableJson(loadedTask.task, 0)) : null)) {
     throw new TretnixError("STALE_EVIDENCE", "Evidence belongs to a different repository/task state; run a new validation. Historical evidence is preserved.");
+  }
+  const recordedKnowledge = taskIdentity.knowledge;
+  if (!recordedKnowledge || (recordedKnowledge.external && !knowledge)) {
+    throw new TretnixError("STALE_EVIDENCE", "Knowledge state cannot be verified; supply --knowledge for an external checkout and run a new validation for legacy evidence.");
+  }
+  try {
+    const knowledgeRoot = await requireKnowledgeContracts(repo, knowledge);
+    const actualKnowledge = await knowledgeState(knowledgeRoot, repo);
+    if (stableJson(actualKnowledge, 0) !== stableJson(recordedKnowledge, 0)) {
+      throw new TretnixError("STALE_EVIDENCE", "Knowledge contracts or checkout changed; run a new validation.");
+    }
+    for (const source of evidence.sources.filter((entry) => entry.base === "knowledge")) {
+      const file = await confineSourceFile(knowledgeRoot, source.path, manifest, "Knowledge evidence source");
+      if (sha256(await readFile(file)) !== source.sha256 || source.knowledge_commit !== actualKnowledge.head) {
+        throw new TretnixError("STALE_EVIDENCE", "Knowledge context source changed; run a new validation.");
+      }
+    }
+    for (const entry of evidence.validation) {
+      if (!entry.command) continue;
+      const prepared = await prepareValidatorCommand(repo, entry.command, manifest);
+      const validator = manifest.validation.validators.find((candidate) => candidate.id === entry.validator_id);
+      if (!validator) throw new TretnixError("STALE_EVIDENCE", "Validator declaration changed; run a new validation.");
+      const effective = effectiveValidatorCapabilities(prepared, validator);
+      if (entry.runtime_cache_safe !== true || prepared.cacheSafe !== true || current.fingerprint.clean !== true || entry.declared_cacheable !== validator.cacheable ||
+        stableJson(entry.declared_capabilities, 0) !== stableJson(validator.capabilities, 0) ||
+        stableJson(entry.capabilities, 0) !== stableJson(effective, 0) ||
+        entry.capability_basis !== (prepared.attestedCapabilities ? "runtime_profile" : "reviewed_script") ||
+        stableJson(entry.reviewed_script, 0) !== stableJson(prepared.scriptPath ? { path: prepared.scriptPath, sha256: prepared.scriptSha256 } : null, 0)) {
+        throw new TretnixError("STALE_EVIDENCE", "Validator reuse safety or capability attestation cannot be verified; run a new validation.");
+      }
+    }
+  } catch (error) {
+    if (error.code === "STALE_EVIDENCE") throw error;
+    throw new TretnixError("STALE_EVIDENCE", "Knowledge or validator state cannot be verified; run a new validation. Historical evidence is preserved.", { cause: error.code });
   }
   const reportPath = await resolveOutputInside(repo, pointer.report_path, "latest evidence report");
   await writeTextAtomic(reportPath, renderEvidenceReport(evidence), repo);

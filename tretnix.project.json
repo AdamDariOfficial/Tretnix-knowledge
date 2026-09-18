@@ -181,6 +181,12 @@
         "runtime": "node",
         "task_classes": ["all"],
         "capabilities": ["test", "security"],
+        "reviewed_script": {
+          "validator_id": "development-os-tests",
+          "path": "tools/tretnix/tests/tretnix.test.mjs",
+          "sha256": "4b8e53fb259810a7070900dfdb869d2b8cc56967275cf0e1bbfcd2e0cd58653b",
+          "capabilities": ["test", "security"]
+        },
         "deterministic": true,
         "cacheable": true,
         "contract_version": "1.1.0",
@@ -194,6 +200,10 @@
         },
         "task_classes": ["all"],
         "capabilities": ["static", "config"],
+        "reviewed_script": {
+          "win32": { "validator_id": "knowledge-validator", "path": "scripts/validate_knowledge.ps1", "sha256": "b6e709b415918cd5802e28fad70f535b207707f5190d544d4bea1bfd1d64b755", "capabilities": ["static", "config"] },
+          "default": { "validator_id": "knowledge-validator", "path": "scripts/validate_knowledge.py", "sha256": "7dc077197822fff50f8d21fcc1621ad2d08dac8352e5dba1a8bcd8d94073b5f1", "capabilities": ["static", "config"] }
+        },
         "deterministic": true,
         "cacheable": true,
         "contract_version": "1.1.0",

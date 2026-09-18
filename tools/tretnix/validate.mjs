@@ -1,4 +1,4 @@
-import { mkdir, readdir } from "node:fs/promises";
+import { mkdir, readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { performance } from "node:perf_hooks";
 import {
@@ -9,7 +9,11 @@ import {
   commandForPlatform,
   confineRegularFile,
   confineSourceFile,
-  executableAvailable,
+  effectiveValidatorCapabilities,
+  knowledgeState,
+  preparedExecutableAvailable,
+  requireKnowledgeContracts,
+  requireRuntimeIgnored,
   pathExists,
   pathMatches,
   prepareValidatorCommand,
@@ -64,13 +68,24 @@ function runId(fingerprint) {
   return `${new Date().toISOString().replace(/[:.]/g, "-")}-${fingerprint.slice(0, 12)}`;
 }
 
-export function validationPlan(manifest, taskClass) {
+export async function validationPlan(repo, manifest, taskClass) {
   const classes = Array.isArray(taskClass) ? taskClass : [taskClass];
   const unsupported = classes.filter((entry) => !manifest.validation.supported_task_classes.includes(entry));
   const supported = unsupported.length === 0;
   const matching = supported ? manifest.validation.validators.filter((validator) => validator.task_classes.includes("all") || classes.some((entry) => validator.task_classes.includes(entry))) : [];
   const required = [...new Set(classes.flatMap((entry) => manifest.validation.required_capabilities[entry] ?? []))].sort();
-  const provided = [...new Set(matching.flatMap((validator) => validator.capabilities))].sort();
+  const proven = [];
+  for (const validator of matching) {
+    try {
+      const command = commandForPlatform(validator.command);
+      if (!command) continue;
+      const prepared = await prepareValidatorCommand(repo, command, manifest);
+      proven.push(...effectiveValidatorCapabilities(prepared, validator));
+    } catch {
+      // An unavailable, unsafe or unattested profile cannot cover a capability floor.
+    }
+  }
+  const provided = [...new Set(proven)].sort();
   const missing = [...required.filter((capability) => !provided.includes(capability)), ...unsupported.map((entry) => `unsupported_task_class:${entry}`)];
   const selectedIds = new Set(matching.map((validator) => validator.id));
   const notExecuted = manifest.validation.validators
@@ -92,7 +107,7 @@ export function validationCacheKey(keyPayload) {
   return sha256(stableJson(keyPayload, 0));
 }
 
-async function cachedResult(repo, cacheDirectory, key, validator) {
+async function cachedResult(repo, cacheDirectory, key, validator, capabilities) {
   const metadataPath = path.join(cacheDirectory, "metadata.json");
   if (!(await pathExists(metadataPath))) return { hit: false, rejection: null };
   try {
@@ -111,10 +126,10 @@ async function cachedResult(repo, cacheDirectory, key, validator) {
       metadata.exit_code !== 0 ||
       metadata.reusable !== true
     ) return { hit: false, rejection: "STALE_CACHE" };
-    if (!metadata.result || metadata.result.validator_id !== validator.id || metadata.result.command !== commandForPlatform(validator.command) || metadata.result.exit_code !== 0 || metadata.result.result !== "PASS" ||
+    if (!metadata.result || metadata.result.validator_id !== validator.id || metadata.result.command !== commandForPlatform(validator.command) || metadata.result.exit_code !== 0 || metadata.result.result !== "PASS" || metadata.result.runtime_cache_safe !== true || metadata.result.capability_basis !== "runtime_profile" || metadata.result.declared_cacheable !== validator.cacheable || stableJson(metadata.result.capabilities, 0) !== stableJson(capabilities, 0) || stableJson(metadata.result.declared_capabilities, 0) !== stableJson(validator.capabilities, 0) ||
       !/^[0-9a-f]{64}$/.test(metadata.stdout_sha256 ?? "") || !/^[0-9a-f]{64}$/.test(metadata.stderr_sha256 ?? "") ||
       metadata.result_sha256 !== sha256(stableJson(metadata.result, 0)) ||
-      Object.keys(metadata.result).some((name) => !["validator_id", "command", "capabilities", "exit_code", "result", "cache", "duration_ms", "timeout_ms", "cache_key", "cache_rejection", "runtime_version", "started_at", "ended_at"].includes(name))) return { hit: false, rejection: "INCOMPLETE_CACHE" };
+      Object.keys(metadata.result).some((name) => !["validator_id", "command", "capabilities", "declared_capabilities", "declared_cacheable", "runtime_cache_safe", "capability_basis", "reviewed_script", "exit_code", "result", "cache", "duration_ms", "timeout_ms", "cache_key", "cache_rejection", "runtime_version", "started_at", "ended_at"].includes(name))) return { hit: false, rejection: "INCOMPLETE_CACHE" };
     return { hit: true, metadata };
   } catch (error) {
     if (error.code === "UNSAFE_PATH") throw error;
@@ -126,7 +141,12 @@ function rejectedValidator(validator, command, code, result, rejection, details 
   return {
     validator_id: validator.id,
     command,
-    capabilities: validator.capabilities,
+    capabilities: [],
+    declared_capabilities: validator.capabilities,
+    declared_cacheable: validator.cacheable,
+    runtime_cache_safe: false,
+    capability_basis: "unverified",
+    reviewed_script: null,
     exit_code: code,
     result,
     cache: "MISS",
@@ -151,19 +171,35 @@ function sanitizedValidatorEnv(repo) {
   };
 }
 
-async function executeValidator(repo, manifest, validator, fingerprint, plan) {
+async function assertAttestedScriptCurrent(repo, manifest, prepared) {
+  if (!prepared.scriptPath) return;
+  try {
+    const script = await confineSourceFile(repo, prepared.scriptPath, manifest, "reviewed validator script");
+    if (sha256(await readFile(script)) !== prepared.scriptSha256) {
+      throw new TretnixError("APPLICATION_STATE_DRIFT", "Reviewed validator script changed during validation", { reason: "ATTESTED_SCRIPT_CHANGED", path: prepared.scriptPath });
+    }
+  } catch (error) {
+    if (error.code === "APPLICATION_STATE_DRIFT") throw error;
+    throw new TretnixError("APPLICATION_STATE_DRIFT", "Reviewed validator script cannot be verified during validation", { reason: "ATTESTED_SCRIPT_UNAVAILABLE", path: prepared.scriptPath, cause: error.code });
+  }
+}
+
+async function executeValidator(repo, manifest, validator, fingerprint, plan, assertApplicationStateCurrent) {
   const command = commandForPlatform(validator.command);
   if (!command) return rejectedValidator(validator, null, 127, "UNAVAILABLE", "NO_PLATFORM_COMMAND");
   let prepared;
+  let capabilities;
   try {
     prepared = await prepareValidatorCommand(repo, command, manifest);
+    capabilities = effectiveValidatorCapabilities(prepared, validator);
   } catch (error) {
+    if (["COMMAND_UNAVAILABLE", "MISSING_FILE"].includes(error.code)) return rejectedValidator(validator, command, 127, "UNAVAILABLE", error.code);
     const forbiddenAction = error.code === "FORBIDDEN_COMMAND" ? error.details.action ?? "forbidden" : "unsafe_validator_command";
     return rejectedValidator(validator, command, 126, "BLOCKED", error.code ?? "UNSAFE_COMMAND", { forbidden_action: forbiddenAction });
   }
-  if (!executableAvailable(prepared.executable)) return rejectedValidator(validator, command, 127, "UNAVAILABLE", "COMMAND_UNAVAILABLE");
+  if (!preparedExecutableAvailable(prepared)) return rejectedValidator(validator, command, 127, "UNAVAILABLE", "COMMAND_UNAVAILABLE");
 
-  const runtime = runtimeVersion(validator.runtime ?? prepared.profile);
+  const runtime = prepared.runtimeVersion ?? runtimeVersion(validator.runtime ?? prepared.profile);
   const keyPayload = {
     repository_fingerprint: fingerprint.fingerprint,
     effective_classes: plan.effective_classes,
@@ -177,19 +213,31 @@ async function executeValidator(repo, manifest, validator, fingerprint, plan) {
   };
   const key = validationCacheKey(keyPayload);
   const cacheDirectory = await resolveOutputInside(repo, `.tretnix/cache/validation/${key}`, "validation cache entry");
-  const cacheable = validator.deterministic === true && validator.cacheable === true && fingerprint.cache_eligible;
+  // A clean tree has no diff to inspect. On a dirty tree, untracked Git
+  // attributes/configuration can change whitespace results without changing
+  // the repository fingerprint, so even this fixed profile must execute.
+  const runtimeCacheSafe = prepared.cacheSafe === true && fingerprint.clean === true;
+  const cacheable = validator.deterministic === true && validator.cacheable === true && fingerprint.cache_eligible && runtimeCacheSafe;
   let cacheRejection = null;
   if (cacheable) {
-    const cached = await cachedResult(repo, cacheDirectory, key, validator);
-    if (cached.hit) return { ...cached.metadata.result, cache: "HIT", duration_ms: 0, cache_key: key, cache_rejection: null };
+    await assertApplicationStateCurrent();
+    const cached = await cachedResult(repo, cacheDirectory, key, validator, capabilities);
+    if (cached.hit) {
+      await assertApplicationStateCurrent();
+      return { ...cached.metadata.result, cache: "HIT", duration_ms: 0, cache_key: key, cache_rejection: null };
+    }
     cacheRejection = cached.rejection;
   }
 
+  await assertApplicationStateCurrent();
+  await assertAttestedScriptCurrent(repo, manifest, prepared);
   const startedAt = new Date().toISOString();
   const started = performance.now();
   const execution = runProcess(prepared.executable, prepared.args, { cwd: repo, env: sanitizedValidatorEnv(repo), timeout: validator.timeout_ms, allowTimeout: true });
   const duration = Math.round(performance.now() - started);
   const endedAt = new Date().toISOString();
+  await assertAttestedScriptCurrent(repo, manifest, prepared);
+  await assertApplicationStateCurrent();
   const timedOut = execution.error?.code === "ETIMEDOUT";
   const stdout = execution.stdout ?? "";
   const stderr = execution.stderr ?? "";
@@ -198,7 +246,12 @@ async function executeValidator(repo, manifest, validator, fingerprint, plan) {
   const result = {
     validator_id: validator.id,
     command,
-    capabilities: validator.capabilities,
+    capabilities,
+    declared_capabilities: validator.capabilities,
+    declared_cacheable: validator.cacheable,
+    runtime_cache_safe: runtimeCacheSafe,
+    capability_basis: prepared.attestedCapabilities ? "runtime_profile" : "reviewed_script",
+    reviewed_script: prepared.scriptPath ? { path: prepared.scriptPath, sha256: prepared.scriptSha256 } : null,
     exit_code: exitCode,
     result: timedOut ? "TIMEOUT" : exitCode === 0 ? "PASS" : "FAIL",
     cache: "MISS",
@@ -226,21 +279,54 @@ async function executeValidator(repo, manifest, validator, fingerprint, plan) {
   return result;
 }
 
-export async function validateRepository({ repo, manifest, manifestPath, task = null, taskPath = null, contextResult = null }) {
+export async function validateRepository({ repo, knowledge, manifest, manifestPath, task = null, taskPath = null, contextResult = null }) {
+  await requireRuntimeIgnored(repo);
+  const knowledgeRoot = await requireKnowledgeContracts(repo, knowledge);
+  const initialKnowledge = await knowledgeState(knowledgeRoot, repo);
+  const assertKnowledgeCurrent = async () => {
+    if (stableJson(await knowledgeState(knowledgeRoot, repo), 0) !== stableJson(initialKnowledge, 0)) {
+      throw new TretnixError("STALE_KNOWLEDGE", "Knowledge contracts or checkout changed during validation; run again");
+    }
+    for (const source of contextResult?.sources.filter((entry) => entry.base === "knowledge") ?? []) {
+      const file = await confineSourceFile(knowledgeRoot, source.path, manifest, "Knowledge context source");
+      if (source.knowledge_commit !== initialKnowledge.head || sha256(await readFile(file)) !== source.sha256) {
+        throw new TretnixError("STALE_KNOWLEDGE", "Knowledge context source changed during validation; run again");
+      }
+    }
+  };
+  await assertKnowledgeCurrent();
   if (task && taskPath) await confineSourceFile(repo, taskPath, manifest, "task descriptor");
   const startedAt = new Date().toISOString();
   const preflight = await preflightRepository(repo, manifest, manifestPath, { task });
   const fingerprint = preflight.fingerprint ?? await repositoryFingerprint(repo, manifest, manifestPath);
+  const assertApplicationStateCurrent = async () => {
+    let current;
+    try {
+      current = await repositoryFingerprint(repo, manifest, manifestPath);
+    } catch (error) {
+      throw new TretnixError("APPLICATION_STATE_DRIFT", "Application state cannot be verified during validation; run again", { cause: error.code });
+    }
+    if (current.fingerprint !== fingerprint.fingerprint || current.clean !== fingerprint.clean || current.cache_eligible !== fingerprint.cache_eligible) {
+      throw new TretnixError("APPLICATION_STATE_DRIFT", "Application repository changed during validation; run again", { admitted_fingerprint: fingerprint.fingerprint, current_fingerprint: current.fingerprint });
+    }
+  };
   const paths = [...new Set([...fingerprint.working_tree.staged, ...fingerprint.working_tree.unstaged, ...fingerprint.working_tree.untracked])].sort();
   const taskClass = classifyTask(paths, manifest, task?.task_class);
-  const plan = validationPlan(manifest, effectiveTaskClasses(paths, manifest, task?.task_class));
+  const plan = await validationPlan(repo, manifest, effectiveTaskClasses(paths, manifest, task?.task_class));
   const validations = [];
   if (preflight.ok && plan.missing_capabilities.length === 0) {
-    for (const validator of plan.validators) validations.push(await executeValidator(repo, manifest, validator, fingerprint, plan));
+    for (const validator of plan.validators) {
+      await assertApplicationStateCurrent();
+      validations.push(await executeValidator(repo, manifest, validator, fingerprint, plan, assertApplicationStateCurrent));
+    }
   } else {
     for (const validator of plan.validators) plan.not_executed.push({ validator_id: validator.id, reason: preflight.ok ? "MISSING_CAPABILITY" : "PREFLIGHT_FAILED" });
     plan.selected = [];
   }
+  await assertKnowledgeCurrent();
+  const provenCapabilities = [...new Set(validations.filter((entry) => entry.result === "PASS").flatMap((entry) => entry.capabilities))].sort();
+  plan.provided_capabilities = provenCapabilities;
+  plan.missing_capabilities = plan.required_capabilities.filter((capability) => !provenCapabilities.includes(capability));
   const manualGates = Object.entries(manifest.gates ?? {}).map(([id, required]) => ({ id, required, status: required ? "UNVERIFIED" : "NOT_REQUIRED" }));
   const forbiddenActions = validations.filter((entry) => entry.forbidden_action).map((entry) => `${entry.validator_id}:${entry.forbidden_action}`);
   const validationFailed = validations.some((entry) => entry.exit_code !== 0);
@@ -266,6 +352,7 @@ export async function validateRepository({ repo, manifest, manifestPath, task = 
       manifest_sha256: fingerprint.manifest_sha256,
       task_path: task && taskPath ? path.relative(repo, taskPath).replaceAll("\\", "/") : null,
       task_sha256: task ? sha256(stableJson(task, 0)) : null,
+      knowledge: initialKnowledge,
     },
     preflight: { ok: preflight.ok, issues: preflight.issues },
     context: contextResult ? { cache: contextResult.cache, key: contextResult.key, source_count: contextResult.source_count, bytes: contextResult.bytes, lines: contextResult.lines } : null,
@@ -296,6 +383,7 @@ export async function validateRepository({ repo, manifest, manifestPath, task = 
     forbidden_actions_observed: forbiddenActions,
     result: failed ? "FAIL" : manualGates.some((gate) => gate.required) ? "REVIEW_REQUIRED" : "PASS",
   };
+  await assertApplicationStateCurrent();
   const outputs = await writeEvidence(repo, evidence);
   return { preflight, fingerprint, taskClass, plan, validations, evidence, outputs };
 }

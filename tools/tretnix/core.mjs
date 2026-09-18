@@ -7,9 +7,9 @@ import { spawnSync } from "node:child_process";
 export const PROJECT_SCHEMA_VERSION = 1;
 export const TASK_SCHEMA_VERSION = 1;
 export const EVIDENCE_SCHEMA_VERSION = 1;
-export const RESOLVER_VERSION = "1.2.1";
+export const RESOLVER_VERSION = "1.3.0";
 export const FINGERPRINT_CONTRACT_VERSION = "1.2.1";
-export const VALIDATION_CACHE_CONTRACT_VERSION = "1.2.0";
+export const VALIDATION_CACHE_CONTRACT_VERSION = "1.4.0";
 export const TASK_CLASSES = ["docs_only", "frontend", "backend", "security_or_data", "release_or_infra"];
 export const REQUIRED_FORBIDDEN_ACTIONS = [
   "stage", "commit", "push", "pull_request", "merge", "deploy", "publish", "migration", "dns",
@@ -261,6 +261,7 @@ export async function readJson(target, code = "INVALID_JSON") {
 export async function writeTextAtomic(target, content, root = null) {
   if (!root) throw new TretnixError("UNSAFE_PATH", "Atomic writes require an explicit authorized root");
   const confinedTarget = await confineOutputPath(root, target, "write target");
+  if (pathMatches(relativePosix(root, confinedTarget), [".tretnix/"])) await requireRuntimeIgnored(root);
   await mkdir(path.dirname(confinedTarget), { recursive: true });
   const temporary = `${confinedTarget}.${process.pid}.tmp`;
   await confineOutputPath(root, temporary, "atomic temporary target");
@@ -276,6 +277,7 @@ export function runProcess(executable, args, options = {}) {
   const result = spawnSync(executable, args, {
     cwd: options.cwd,
     encoding: options.binary ? null : "utf8",
+    input: options.input,
     env: options.env ?? process.env,
     maxBuffer: options.maxBuffer ?? 64 * 1024 * 1024,
     shell: false,
@@ -451,11 +453,19 @@ function validateEvidenceCommand(errors, command, field) {
 }
 
 function validateEvidenceValidation(errors, validation, field) {
-  const allowed = ["validator_id", "command", "capabilities", "exit_code", "result", "cache", "duration_ms", "timeout_ms", "cache_key", "cache_rejection", "runtime_version", "started_at", "ended_at", "forbidden_action"];
+  const allowed = ["validator_id", "command", "capabilities", "declared_capabilities", "declared_cacheable", "runtime_cache_safe", "capability_basis", "reviewed_script", "exit_code", "result", "cache", "duration_ms", "timeout_ms", "cache_key", "cache_rejection", "runtime_version", "started_at", "ended_at", "forbidden_action"];
   if (!exactKeys(errors, validation, allowed, field)) return;
   requireString(errors, validation.validator_id, `${field}.validator_id`);
   if (validation.command !== null) requireString(errors, validation.command, `${field}.command`);
-  requireStringArray(errors, validation.capabilities, `${field}.capabilities`, { nonEmpty: true });
+  requireStringArray(errors, validation.capabilities, `${field}.capabilities`);
+  if (validation.declared_capabilities !== undefined) requireStringArray(errors, validation.declared_capabilities, `${field}.declared_capabilities`, { nonEmpty: true });
+  if (validation.declared_cacheable !== undefined && typeof validation.declared_cacheable !== "boolean") errors.push(`${field}.declared_cacheable must be boolean`);
+  if (validation.runtime_cache_safe !== undefined && typeof validation.runtime_cache_safe !== "boolean") errors.push(`${field}.runtime_cache_safe must be boolean`);
+  if (validation.capability_basis !== undefined && !["runtime_profile", "reviewed_script", "unverified"].includes(validation.capability_basis)) errors.push(`${field}.capability_basis is unsupported`);
+  if (validation.reviewed_script !== undefined && validation.reviewed_script !== null && exactKeys(errors, validation.reviewed_script, ["path", "sha256"], `${field}.reviewed_script`)) {
+    if (!isSafeRelativePath(validation.reviewed_script.path)) errors.push(`${field}.reviewed_script.path must be safe`);
+    requireSha(errors, validation.reviewed_script.sha256, `${field}.reviewed_script.sha256`, 64);
+  }
   requireInteger(errors, validation.exit_code, `${field}.exit_code`);
   if (!["PASS", "FAIL", "TIMEOUT", "UNAVAILABLE", "BLOCKED"].includes(validation.result)) errors.push(`${field}.result is unsupported`);
   if (!["HIT", "MISS"].includes(validation.cache)) errors.push(`${field}.cache is unsupported`);
@@ -549,7 +559,7 @@ function validateProjectSemantics(manifest) {
       const ids = new Set();
       for (const [index, validator] of manifest.validation.validators.entries()) {
         const field = `validation.validators[${index}]`;
-        if (!exactKeys(errors, validator, ["id", "command", "runtime", "task_classes", "capabilities", "deterministic", "cacheable", "contract_version", "timeout_ms"], field)) continue;
+        if (!exactKeys(errors, validator, ["id", "command", "runtime", "task_classes", "capabilities", "reviewed_script", "deterministic", "cacheable", "contract_version", "timeout_ms"], field)) continue;
         requireString(errors, validator.id, `${field}.id`);
         if (ids.has(validator.id)) errors.push(`${field}.id must be unique`);
         ids.add(validator.id);
@@ -557,6 +567,20 @@ function validateProjectSemantics(manifest) {
         if (validator.runtime !== undefined) requireString(errors, validator.runtime, `${field}.runtime`);
         requireStringArray(errors, validator.task_classes, `${field}.task_classes`, { nonEmpty: true, enumValues: ["all", ...TASK_CLASSES] });
         requireStringArray(errors, validator.capabilities, `${field}.capabilities`, { nonEmpty: true });
+        const attestations = validator.reviewed_script?.path ? [validator.reviewed_script] : Object.values(validator.reviewed_script ?? {});
+        for (const [attestationIndex, attestation] of attestations.entries()) {
+          const prefix = `${field}.reviewed_script[${attestationIndex}]`;
+          if (!exactKeys(errors, attestation, ["validator_id", "path", "sha256", "capabilities"], prefix)) continue;
+          if (attestation.validator_id !== validator.id) errors.push(`${prefix}.validator_id must match validator.id`);
+          if (!isSafeRelativePath(attestation.path)) errors.push(`${prefix}.path must be a safe relative path`);
+          requireSha(errors, attestation.sha256, `${prefix}.sha256`, 64);
+          requireStringArray(errors, attestation.capabilities, `${prefix}.capabilities`, { nonEmpty: true });
+          if (Array.isArray(attestation.capabilities) && Array.isArray(validator.capabilities) &&
+            (attestation.capabilities.length !== validator.capabilities.length ||
+              attestation.capabilities.some((capability) => !validator.capabilities.includes(capability)))) {
+            errors.push(`${prefix}.capabilities must match validator.capabilities exactly`);
+          }
+        }
         if (typeof validator.deterministic !== "boolean") errors.push(`${field}.deterministic must be a boolean`);
         if (typeof validator.cacheable !== "boolean") errors.push(`${field}.cacheable must be a boolean`);
         requireString(errors, validator.contract_version, `${field}.contract_version`);
@@ -824,6 +848,165 @@ export function forbiddenCommandReason(command) {
   return forbidden.find(([pattern]) => pattern.test(normalized))?.[1] ?? null;
 }
 
+// The caller selects the trusted checkout explicitly; never guess sibling directories.
+const CANONICAL_KNOWLEDGE_REPOSITORY = "adamdariofficial/tretnix-knowledge";
+export async function resolveKnowledgeRoot(repo, knowledge) {
+  if (knowledge !== undefined && (typeof knowledge !== "string" || knowledge.trim() === "")) {
+    throw new TretnixError("MISSING_KNOWLEDGE_ROOT", "Supply --knowledge <canonical Knowledge checkout>");
+  }
+  const root = path.resolve(knowledge ?? repo);
+  try {
+    await confineExistingPath(root, root, "Knowledge root");
+    if (!sameCanonicalPath(gitText(root, ["rev-parse", "--show-toplevel"]), root)) {
+      throw new TretnixError("UNSAFE_PATH", "Knowledge root must be the Git checkout root");
+    }
+    if (normalizeRepositoryIdentity(gitText(root, ["remote", "get-url", "origin"])) !== CANONICAL_KNOWLEDGE_REPOSITORY) {
+      throw new TretnixError("MISSING_KNOWLEDGE_ROOT", "Supply --knowledge <canonical Knowledge checkout>; contract copies in an application are not authoritative");
+    }
+    for (const kind of ["project", "task", "evidence"]) {
+      await confineSourceFile(root, `schemas/tretnix-${kind}.schema.json`, undefined, "Knowledge contract");
+    }
+  } catch (error) {
+    if (["ENOENT", "MISSING_FILE"].includes(error.code)) {
+      throw new TretnixError("MISSING_KNOWLEDGE_ROOT", "Supply --knowledge <canonical Knowledge checkout> containing the published Tretnix contracts");
+    }
+    throw error;
+  }
+  return root;
+}
+
+export async function knowledgeContractChecks(root) {
+  const checks = [];
+  for (const [kind, filename] of [["project", "PROJECT_MANIFEST"], ["task", "TASK_DESCRIPTOR"], ["evidence", "EVIDENCE_SCHEMA"]]) {
+    const schemaPath = await confineSourceFile(root, `schemas/tretnix-${kind}.schema.json`, undefined, `${kind} schema`);
+    const templatePath = await confineSourceFile(root, `templates/TRETNIX_${filename}.json`, undefined, `${kind} template`);
+    const schema = await readJson(schemaPath, "INVALID_SCHEMA_JSON");
+    const template = await readJson(templatePath, "INVALID_TEMPLATE_JSON");
+    const errors = validatePublishedContract(kind, template, schema);
+    checks.push({ id: `${kind}_schema`, status: errors.length ? "FAIL" : "PASS", path: schemaPath, template: templatePath, errors });
+  }
+  return checks;
+}
+
+export async function requireKnowledgeContracts(repo, knowledge) {
+  const root = await resolveKnowledgeRoot(repo, knowledge);
+  const checks = await knowledgeContractChecks(root);
+  if (checks.some((check) => check.status !== "PASS")) {
+    throw new TretnixError("INVALID_KNOWLEDGE_CONTRACT", "Knowledge schema/templates differ from the runtime contracts", { checks });
+  }
+  return root;
+}
+
+const KNOWLEDGE_CONTRACT_PATHS = [
+  ...["project", "task", "evidence"].map((kind) => `schemas/tretnix-${kind}.schema.json`),
+  ...["PROJECT_MANIFEST", "TASK_DESCRIPTOR", "EVIDENCE_SCHEMA"].map((kind) => `templates/TRETNIX_${kind}.json`),
+];
+
+export async function knowledgeState(root, repo) {
+  const contracts = [];
+  for (const relative of KNOWLEDGE_CONTRACT_PATHS) {
+    const file = await confineSourceFile(root, relative, undefined, "Knowledge contract");
+    contracts.push([relative, sha256(await readFile(file))]);
+  }
+  return {
+    repository: normalizeRepositoryIdentity(gitText(root, ["remote", "get-url", "origin"])),
+    head: gitText(root, ["rev-parse", "HEAD"]),
+    contracts_sha256: sha256(stableJson(contracts, 0)),
+    external: path.resolve(root) !== path.resolve(repo),
+  };
+}
+
+export async function requireRuntimeIgnored(repo) {
+  await assertRuntimeNamespace(path.resolve(repo), path.join(path.resolve(repo), ".tretnix", "runtime"));
+  // Probe the directory itself: ignoring just known children is insufficient.
+  const result = runProcess("git", ["-C", repo, "check-ignore", "--no-index", "-v", "-z", "--stdin"], { input: ".tretnix/\0" });
+  const [source, , pattern, ignoredPath] = (result.stdout ?? "").split("\0");
+  const trackedIgnore = gitText(repo, ["ls-files", "--", ".gitignore"]) === ".gitignore";
+  const trackedRuntime = gitText(repo, ["ls-files", "--", ".tretnix"]);
+  if (result.status !== 0 || source !== ".gitignore" || !pattern || pattern.startsWith("!") || ignoredPath !== ".tretnix/" || !trackedIgnore || trackedRuntime) {
+    throw new TretnixError("RUNTIME_NOT_IGNORED", "Before Development OS writes, add .tretnix/ to the tracked root .gitignore through a reviewed Git change. Global/local excludes or tracked runtime files are insufficient.");
+  }
+  await confineSourceFile(repo, ".gitignore", undefined, "portable runtime ignore");
+  return { source, pattern, portable: true };
+}
+
+const PACKAGE_BIN_PROFILES = {
+  tsc: { package: "typescript", target: "bin/tsc", argv: ["--noEmit"] },
+  eslint: { package: "eslint", target: "bin/eslint.js", argv: ["."] },
+  vite: { package: "vite", target: "bin/vite.js", argv: ["build"] },
+};
+
+async function prepareLocalPackageBin(repo, name, args, command) {
+  const profile = PACKAGE_BIN_PROFILES[name];
+  if (stableJson(args, 0) !== stableJson(profile.argv, 0)) throw new TretnixError("UNSAFE_COMMAND", `Unsupported ${name} validator argv grammar`);
+  const project = await readJson(await confineSourceFile(repo, "package.json", undefined, "package manifest"), "INVALID_PACKAGE_JSON");
+  if (typeof (project.dependencies?.[profile.package] ?? project.devDependencies?.[profile.package]) !== "string") {
+    throw new TretnixError("COMMAND_UNAVAILABLE", `Declare the local ${profile.package} dependency; no global fallback or install is permitted`);
+  }
+  const directory = `node_modules/${profile.package}`;
+  let installedPath;
+  let target;
+  try {
+    installedPath = await confineSourceFile(repo, `${directory}/package.json`, undefined, "installed package manifest");
+    target = await confineSourceFile(repo, `${directory}/${profile.target}`, undefined, "local package bin");
+  } catch (error) {
+    if (error.code === "MISSING_FILE") throw new TretnixError("COMMAND_UNAVAILABLE", `Local ${profile.package} dependency/bin is missing; install is not performed`);
+    throw error;
+  }
+  const installed = await readJson(installedPath, "INVALID_PACKAGE_JSON");
+  const bin = typeof installed.bin === "string" ? installed.bin : installed.bin?.[name];
+  if (installed.name !== profile.package || typeof installed.version !== "string" || !installed.version || !isSafeRelativePath(bin) || bin.replace(/^\.\//, "") !== profile.target) {
+    throw new TretnixError("UNSAFE_COMMAND", `Installed ${profile.package} identity/bin does not match the reviewed profile`);
+  }
+  return {
+    executable: process.execPath,
+    args: [target, ...args],
+    display: command,
+    profile: name,
+    attestedCapabilities: [name === "tsc" ? "typecheck" : name === "eslint" ? "lint" : "build"],
+    // Ignored dependency bytes are not part of the repository fingerprint.
+    // Package tools load arbitrary transitive modules/config: never reuse their cache.
+    cacheSafe: false,
+    runtimeVersion: `${process.version};${profile.package}@${installed.version};bin:${sha256(await readFile(target))}`,
+  };
+}
+
+export function preparedExecutableAvailable(prepared) {
+  if (prepared.executable === process.execPath) return true;
+  return executableAvailable(prepared.executable);
+}
+
+export function effectiveValidatorCapabilities(prepared, validator) {
+  const claimed = validator.capabilities ?? [];
+  if (prepared.attestedCapabilities) {
+    if (validator.reviewed_script !== undefined) throw new TretnixError("UNATTESTED_CAPABILITY", `Fixed validator ${validator.id} cannot use a script attestation`);
+    if (claimed.some((capability) => !prepared.attestedCapabilities.includes(capability))) {
+      throw new TretnixError("UNATTESTED_CAPABILITY", `Validator ${validator.id} claims a capability outside its fixed profile`);
+    }
+  } else {
+    const declared = validator.reviewed_script;
+    const direct = declared && Object.hasOwn(declared, "path");
+    const keys = declared && typeof declared === "object" && !Array.isArray(declared) ? Object.keys(declared) : [];
+    if (!keys.length || keys.some((key) => !(direct ? ["validator_id", "path", "sha256", "capabilities"] : ["win32", "default"]).includes(key))) {
+      throw new TretnixError("UNATTESTED_CAPABILITY", `Validator ${validator.id} has an invalid script attestation`);
+    }
+    const attestation = direct ? declared : declared?.[process.platform] ?? declared?.default;
+    if (attestation && (typeof attestation !== "object" || Array.isArray(attestation) ||
+      Object.keys(attestation).some((key) => !["validator_id", "path", "sha256", "capabilities"].includes(key)))) {
+      throw new TretnixError("UNATTESTED_CAPABILITY", `Validator ${validator.id} has an invalid script attestation`);
+    }
+    if (!attestation || !prepared.scriptPath || attestation.validator_id !== validator.id || !isSafeRelativePath(attestation.path) ||
+      attestation.path.replaceAll("\\", "/").replace(/^\.\//, "") !== prepared.scriptPath ||
+      attestation.sha256 !== prepared.scriptSha256 || !Array.isArray(attestation.capabilities) ||
+      claimed.length !== attestation.capabilities.length ||
+      new Set(claimed).size !== claimed.length || new Set(attestation.capabilities).size !== attestation.capabilities.length ||
+      claimed.some((capability) => !attestation.capabilities.includes(capability))) {
+      throw new TretnixError("UNATTESTED_CAPABILITY", `Validator ${validator.id} requires a reviewed attestation for its exact local script and capabilities`);
+    }
+  }
+  return claimed;
+}
+
 function executableName(executable) {
   return path.basename(executable).toLowerCase().replace(/\.exe$/, "");
 }
@@ -836,7 +1019,7 @@ async function validatePackageScript(repo, executable, args, manifest) {
     else if (args.length === 1 && ["test", "build"].includes(args[0])) scriptName = args[0];
   } else if (name === "bun" && args[0] === "run" && args.length === 2) scriptName = args[1];
   if (!scriptName) throw new TretnixError("UNSAFE_COMMAND", `${name} validators must invoke one exact package script without forwarded arguments`);
-  const packagePath = await resolveExistingInside(repo, "package.json", "package script manifest");
+  const packagePath = await confineSourceFile(repo, "package.json", undefined, "package script manifest");
   const packageJson = await readJson(packagePath, "INVALID_PACKAGE_JSON");
   const script = packageJson.scripts?.[scriptName];
   if (typeof script !== "string") throw new TretnixError("UNSAFE_COMMAND", `Package script is missing: ${scriptName}`);
@@ -859,14 +1042,23 @@ export async function prepareValidatorCommand(repo, command, manifest) {
   if (["powershell", "pwsh"].includes(name)) {
     const prefix = args.slice(0, -2).map((arg) => arg.toLowerCase());
     if (!(prefix.length === 0 || JSON.stringify(prefix) === JSON.stringify(["-noprofile", "-executionpolicy", "bypass"])) || args.at(-2)?.toLowerCase() !== "-file" || !args.at(-1)?.endsWith(".ps1")) reject();
-    await confineRegularFile(repo, args.at(-1), "PowerShell validator script");
+    const script = await confineSourceFile(repo, args.at(-1), manifest, "PowerShell validator script");
+    return { executable, args, display: command, profile: name, cacheSafe: false, scriptPath: relativePosix(repo, script), scriptSha256: sha256(await readFile(script)) };
   } else if (name === "node") {
+    if (args[0] === "--experimental-strip-types") {
+      if (args.length !== 2 || args[1].startsWith("-") || !args[1].endsWith(".ts")) reject();
+      const script = await confineSourceFile(repo, args[1], manifest, "Node TypeScript validator script");
+      if (!process.allowedNodeEnvironmentFlags.has("--experimental-strip-types")) throw new TretnixError("COMMAND_UNAVAILABLE", "The current Node runtime does not support --experimental-strip-types");
+      return { executable: process.execPath, args, display: command, profile: "node", cacheSafe: false, runtimeVersion: process.version, scriptPath: relativePosix(repo, script), scriptSha256: sha256(await readFile(script)) };
+    }
     const scripts = args[0] === "--test" || args[0] === "--check" ? args.slice(1) : args;
     if (scripts.length !== 1 || scripts[0].startsWith("-") || !/\.(mjs|cjs|js)$/.test(scripts[0])) reject();
-    await confineRegularFile(repo, scripts[0], "Node validator script");
+    const script = await confineSourceFile(repo, scripts[0], manifest, "Node validator script");
+    return { executable, args, display: command, profile: name, cacheSafe: false, scriptPath: relativePosix(repo, script), scriptSha256: sha256(await readFile(script)) };
   } else if (["python", "python3"].includes(name)) {
     if (args.length !== 1 || args[0].startsWith("-") || !args[0].endsWith(".py")) reject();
-    await confineRegularFile(repo, args[0], "Python validator script");
+    const script = await confineSourceFile(repo, args[0], manifest, "Python validator script");
+    return { executable, args, display: command, profile: name, cacheSafe: false, scriptPath: relativePosix(repo, script), scriptSha256: sha256(await readFile(script)) };
   } else if (name === "git") {
     const forms = [
       ["-c", "core.whitespace=cr-at-eol", "diff", "--check"],
@@ -874,15 +1066,19 @@ export async function prepareValidatorCommand(repo, command, manifest) {
       ["status", "--short"], ["rev-parse", "HEAD"], ["ls-files", "-z"],
     ];
     if (!forms.some((form) => JSON.stringify(form) === JSON.stringify(args))) reject();
+    return { executable, args, display: command, profile: name, cacheSafe: stableJson(args, 0) === stableJson(forms[0], 0), attestedCapabilities: args.includes("diff") && args.includes("--check") ? ["whitespace"] : [] };
   } else if (["npm", "pnpm", "yarn", "bun"].includes(name)) {
     // Execute the checked inner argv directly: no lifecycle hooks or package shell.
     const inner = await validatePackageScript(repo, executable, args, manifest);
     return { ...inner, display: command };
+  } else if (Object.hasOwn(PACKAGE_BIN_PROFILES, name)) {
+    return prepareLocalPackageBin(repo, name, args, command);
   } else reject();
   return { executable, args, display: command, profile: name };
 }
 
 export async function safeClearCache(repo) {
+  await requireRuntimeIgnored(repo);
   const cacheRoot = await resolveOutputInside(repo, ".tretnix/cache", "cache root");
   const expected = path.join(repo, ".tretnix", "cache");
   if (path.resolve(cacheRoot) !== path.resolve(expected)) {

@@ -334,6 +334,17 @@
             "null"
           ],
           "pattern": "^[0-9a-f]{64}$"
+        },
+        "knowledge": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["repository", "head", "contracts_sha256", "external"],
+          "properties": {
+            "repository": { "type": "string", "minLength": 1 },
+            "head": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "contracts_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "external": { "type": "boolean" }
+          }
         }
       }
     }
@@ -538,7 +549,27 @@
           ]
         },
         "capabilities": {
+          "$ref": "#/$defs/stringList"
+        },
+        "declared_capabilities": {
           "$ref": "#/$defs/nonEmptyStringList"
+        },
+        "declared_cacheable": { "type": "boolean" },
+        "runtime_cache_safe": { "type": "boolean" },
+        "capability_basis": { "enum": ["runtime_profile", "reviewed_script", "unverified"] },
+        "reviewed_script": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "sha256"],
+              "properties": {
+                "path": { "$ref": "#/$defs/safePath" },
+                "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+              }
+            }
+          ]
         },
         "exit_code": {
           "type": "integer"

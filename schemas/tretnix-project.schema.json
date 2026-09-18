@@ -313,6 +313,20 @@
               "capabilities": {
                 "$ref": "#/$defs/nonEmptyStringList"
               },
+              "reviewed_script": {
+                "oneOf": [
+                  { "$ref": "#/$defs/reviewedScript" },
+                  {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": false,
+                    "properties": {
+                      "win32": { "$ref": "#/$defs/reviewedScript" },
+                      "default": { "$ref": "#/$defs/reviewedScript" }
+                    }
+                  }
+                ]
+              },
               "deterministic": {
                 "type": "boolean"
               },
@@ -386,6 +400,17 @@
         "pattern": "\\S"
       },
       "uniqueItems": true
+    },
+    "reviewedScript": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["validator_id", "path", "sha256", "capabilities"],
+      "properties": {
+        "validator_id": { "type": "string", "minLength": 1, "pattern": "\\S" },
+        "path": { "$ref": "#/$defs/safePath" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "capabilities": { "$ref": "#/$defs/nonEmptyStringList" }
+      }
     },
     "safePath": {
       "type": "string",

@@ -14,6 +14,8 @@ import {
   relativePosix,
   resolveExistingInside,
   resolveOutputInside,
+  requireKnowledgeContracts,
+  requireRuntimeIgnored,
   sha256,
   stableJson,
   taskRepositoryMatches,
@@ -121,12 +123,13 @@ function renderPack(task, selected, key) {
 
 export async function resolveContext({ repo, knowledge, manifest, manifestPath, task, taskPath }) {
   const repoRoot = path.resolve(repo);
+  await requireRuntimeIgnored(repoRoot);
   const confinedManifestPath = await confineSourceFile(repoRoot, manifestPath, manifest, "project manifest");
   const confinedTaskPath = await confineSourceFile(repoRoot, taskPath, manifest, "task descriptor");
   if (!taskRepositoryMatches(task.repository, manifest.project.repository, manifest.project.id)) {
     throw new TretnixError("TASK_REPOSITORY_MISMATCH", `Task repository does not match the project manifest: ${task.repository}`);
   }
-  const knowledgeRoot = knowledge ? path.resolve(knowledge) : repoRoot;
+  const knowledgeRoot = await requireKnowledgeContracts(repoRoot, knowledge);
   const knowledgeCommit = gitText(knowledgeRoot, ["rev-parse", "HEAD"]);
   const sources = [];
   sources.push(...manifest.sources.local_decisions.map((entry) => normalizeSource(entry, { base: "repo", reason: "Layer A approved local decisions" })));
