@@ -1,7 +1,7 @@
 # Tretnix Development OS CLI
 
-**Versione:** 1.2
-**Aggiornato:** 15 settembre 2026
+**Versione:** 1.3
+**Aggiornato:** 16 settembre 2026
 **Stato:** CLI v1 merged e operativo nella Knowledge; rollout applicativo sperimentale fino al pilot approvato
 
 Il CLI è Node ESM dependency-free e scrive esclusivamente output derivati sotto `.tretnix/`.
@@ -25,6 +25,19 @@ node tools/tretnix/tretnix.mjs cache clear --repo .
 
 ## Output locali
 
+Per un'applicazione con checkout Knowledge separato, eseguire il CLI da quella Knowledge senza copiarne schema, template o sorgenti nell'applicazione:
+
+```powershell
+node tools/tretnix/tretnix.mjs doctor --repo <app> --knowledge <Knowledge>
+node tools/tretnix/tretnix.mjs context --repo <app> --task <descriptor-relativo-app> --knowledge <Knowledge>
+node tools/tretnix/tretnix.mjs validate --repo <app> --task <descriptor-relativo-app> --knowledge <Knowledge>
+node tools/tretnix/tretnix.mjs evidence --repo <app> --knowledge <Knowledge>
+```
+
+`--repo` conserva identità/fingerprint e containment dei sorgenti applicativi; `--knowledge` seleziona la root Git reale dei contratti e delle fonti Knowledge, senza alias. Il tooling verifica il remote `origin` canonico e la corrispondenza dei contratti; l'operatore verifica l'autorità del checkout. Il default locale supporta soltanto il dogfood del repository Knowledge identificato dal remote, non applicazioni con copie dei contratti. Root assente: `MISSING_KNOWLEDGE_ROOT`. Non si cercano directory sorelle e non si scaricano schema. `$schema` resta metadata, senza risoluzione come path/URL. `preflight` non richiede fonti Knowledge; `evidence` applicativo richiede la stessa root esplicita usata da `validate`.
+
+Prima del bootstrap, aggiungere `.tretnix/` al `.gitignore` radice tracciato tramite normale modifica revisionata. Git deve confermare che la regola vincente ignora l'intera directory; ignore globali o `.git/info/exclude`, ignore dei soli figli e runtime tracciato sono rifiutati. `RUNTIME_NOT_IGNORED` blocca ogni writer OS prima di creare output o avviare validator. `doctor` segnala il requisito senza scrivere: è utilizzabile prima che `.tretnix/` esista. Nessun comando modifica automaticamente `.gitignore`.
+
 ```text
 .tretnix/
 ├── cache/
@@ -42,9 +55,19 @@ node tools/tretnix/tretnix.mjs cache clear --repo .
 
 La directory è gitignored. I validator sono tokenizzati, eseguiti senza shell e limitati a profili locali/read-only, con timeout. Nessun comando esegue stage, commit, push, PR, merge, deploy, publish, migration, DNS, infrastructure/provisioning, secret mutation o production write.
 
-La grammar argv è chiusa: un solo script Node (opzionalmente `--test`/`--check`), un solo `.py`, `-File` PowerShell locale (opzionalmente `-NoProfile -ExecutionPolicy Bypass`) e forme Git read-only esplicite. Package script ammessi sono risolti all'argv interno verificato, senza shell/lifecycle hook. Flag arbitrari, eval concatenati, module/preload/loader/import injection e profili sconosciuti sono rifiutati; `allowed_executables` non amplia le grammar implementate. Script locali autorizzati restano soggetti a review, non un sandbox.
+La grammar argv è chiusa: un solo script Node `.js/.mjs/.cjs` (opzionalmente `--test`/`--check`), il profilo Node `.ts` ristretto descritto sotto, un solo `.py`, `-File` PowerShell locale (opzionalmente `-NoProfile -ExecutionPolicy Bypass`) e forme Git read-only esplicite. Package script ammessi sono risolti all'argv interno verificato, senza shell/lifecycle hook. Flag arbitrari, eval concatenati, module/preload/loader/import injection e profili sconosciuti sono rifiutati; `allowed_executables` non amplia le grammar implementate. Script locali autorizzati restano soggetti a review, non un sandbox.
 
 Ogni child cache letto è verificato autonomamente per containment lessicale/reale, assenza di alias e regular-file. `.tretnix/` e le directory critiche cache/runtime/evidence devono essere directory reali nel namespace canonico: symlink/junction/reparse point, anche interni al repository, bloccano letture cache, scritture e cleanup con errore esplicito e preservano i sorgenti. Prima di letture/hash exact-state di tracked, untracked, lockfile e manifest vengono valutati path nominale, realpath e ogni componente della catena. Path sensibili o aliasati usano soltanto metadata/sentinel con hash `null`, rendono lo stato non cache-eligible e interrompono entrambi i diff di contenuto. Un target reale sensibile resta classificato sensibile. Raw stdout/stderr dei validator restano transitori: cache/evidence conservano metadata, digest dell'output e risultati, non log raw. Eventuali log legacy sono confinati ma non letti; `cache clear` li elimina.
+
+## Profili applicativi
+
+I profili applicativi ammessi sono soltanto `tsc --noEmit`, `eslint .`, `vite build` e `node --experimental-strip-types <unico-file-locale.ts>`. I tre package bin vengono eseguiti dal Node corrente usando target fissi in `node_modules/typescript/bin/tsc`, `node_modules/eslint/bin/eslint.js`, `node_modules/vite/bin/vite.js`, dopo verifica di dipendenza dichiarata, identità/versione/bin installati e containment senza alias. Nessuna risoluzione PATH, shim `.bin`, fallback globale o installazione. Layout installati con symlink/junction falliscono chiusi; la grammar non supporta executable arbitrari.
+
+`bun run <script-esatto>` e gli altri package wrapper già ammessi risolvono l'argv interno senza richiedere il package manager né eseguire hook lifecycle. `doctor` prepara senza eseguire: distingue `PASS`, `UNAVAILABLE`, `UNSAFE`, `MALFORMED`. Node TS usa il Node corrente con verifica del supporto al flag. Le capability dichiarate diventano effettive solo entro il ceiling del profilo fisso (TSC `typecheck`, ESLint `lint`, Vite build `build`, Git diff check `whitespace`) oppure con `reviewed_script` revisionato, vincolato a `validator_id`, path locale confinato, SHA-256 e insieme esatto di capability. Il manifest non costituisce una review automatica dello script: un cambio di questi campi richiede nuova approvazione. Script locali, package script e bin TSC/ESLint/Vite non riusano cache né evidence precedente, anche se dichiarati cacheable, poiché input ignorati/transitivi possono variare; i risultati conservano `reusable: false`. Solo il Git diff check ammesso conserva HIT su stato Git pulito equivalente; con modifiche locali viene rieseguito perché attributi/configurazioni Git non fingerprintati possono influenzarlo. Nessun floor delle classi viene ridotto. Resolver: `1.3.0`; validation cache: `1.4.0`; fingerprint: `1.2.1`; schema: v1.
+
+Ogni validator deve lasciare invariato lo stato applicativo ammesso. Il fingerprint viene verificato prima di eseguire o riusare un risultato, dopo ogni esecuzione e prima di scrivere evidence; lo script attestato viene ricontrollato per hash prima e dopo l'esecuzione. `APPLICATION_STATE_DRIFT` interrompe la run senza nuova evidence corrente e lascia le modifiche visibili per la review. Un validator che genera output tracciati o non ignorati deve essere adattato prima dell'adozione.
+
+L'evidence registra identità e digest dei contratti Knowledge e ricontrolla le fonti `knowledge:` sul replay. Un report con validator nuovi che dipendono da file ignorati non può essere ripresentato con `evidence`: eseguire nuovamente `validate`. Anche evidenze storiche senza identità Knowledge richiedono nuova validation. Lo schema evidence v1 aggiunge un campo opzionale per preservare la lettura storica; il replay richiede il nuovo campo.
 
 ## Exit code
 

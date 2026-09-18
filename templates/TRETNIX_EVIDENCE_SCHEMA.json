@@ -85,6 +85,12 @@
     "manifest_path": "tretnix.project.json",
     "manifest_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
     "task_path": null,
-    "task_sha256": null
+    "task_sha256": null,
+    "knowledge": {
+      "repository": "AdamDariOfficial/Tretnix-knowledge",
+      "head": "0000000000000000000000000000000000000000",
+      "contracts_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "external": false
+    }
   }
 }

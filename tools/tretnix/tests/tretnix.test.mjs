@@ -9,6 +9,7 @@ import {
   loadTask,
   isSensitivePath,
   prepareValidatorCommand,
+  effectiveValidatorCapabilities,
   readJson,
   safeClearCache,
   validateEvidence,
@@ -20,6 +21,7 @@ import {
   writeJsonAtomic,
   sha256,
   inspectPath,
+  requireRuntimeIgnored,
 } from "../core.mjs";
 import { resolveContext } from "../context.mjs";
 import { regenerateLatestEvidence, writeEvidence } from "../evidence.mjs";
@@ -174,6 +176,7 @@ for (const runtimePath of [".tretnix", ".tretnix/cache", ".tretnix/cache/context
 
 test("Gate B R1 canonical runtime namespace supports normal cache and evidence lifecycle", async () => {
   const fixture = await createFixture();
+  addReusableGitValidator(fixture);
   await safeClearCache(fixture.repo);
   assert.equal((await inspectPath(fixture.repo, ".tretnix")).aliased, false);
   assert.equal((await resolveContext(fixture)).cache, "MISS");
@@ -181,8 +184,9 @@ test("Gate B R1 canonical runtime namespace supports normal cache and evidence l
   const first = await validateRepository(fixture);
   const second = await validateRepository(fixture);
   assert.equal(first.validations[0].cache, "MISS");
-  assert.equal(second.validations[0].cache, "HIT");
-  await regenerateLatestEvidence(fixture.repo);
+  assert.equal(second.validations[0].cache, "MISS");
+  assert.equal(second.validations[1].cache, "HIT");
+  await assert.rejects(() => regenerateLatestEvidence(fixture.repo), { code: "STALE_EVIDENCE" });
   await safeClearCache(fixture.repo);
   assert.equal((await cacheStatus(fixture.repo)).context.entries, 0);
   assert.ok((await readFile(second.outputs.evidencePath)).length > 0);
@@ -202,7 +206,7 @@ async function createFixture(name = "repo with spaces") {
   git(repo, "config", "user.email", "tests@tretnix.invalid");
   git(repo, "config", "user.name", "Tretnix Tests");
   git(repo, "config", "core.autocrlf", "false");
-  git(repo, "remote", "add", "origin", "https://github.com/owner/example.git");
+  git(repo, "remote", "add", "origin", "https://github.com/AdamDariOfficial/Tretnix-knowledge.git");
   const manifest = {
     $schema: "schemas/tretnix-project.schema.json",
     schema_version: 1,
@@ -210,7 +214,7 @@ async function createFixture(name = "repo with spaces") {
       id: "example",
       family: "tretnix",
       plan: "internal",
-      repository: "owner/example",
+      repository: "AdamDariOfficial/Tretnix-knowledge",
       default_branch: "main",
       allowed_branch_prefixes: ["test/"],
     },
@@ -251,6 +255,7 @@ async function createFixture(name = "repo with spaces") {
           runtime: "node",
           task_classes: ["all"],
           capabilities: ["static", "whitespace", "test", "security", "config"],
+          reviewed_script: { validator_id: "fixture-pass", path: "fixture-validator.mjs", sha256: sha256("process.stdout.write('fixture pass\\n');\n"), capabilities: ["static", "whitespace", "test", "security", "config"] },
           deterministic: true,
           cacheable: true,
           contract_version: "1.1.0",
@@ -292,7 +297,7 @@ async function createFixture(name = "repo with spaces") {
     run_id: "fixture",
     started_at: "2026-09-14T00:00:00.000Z",
     ended_at: "2026-09-14T00:00:01.000Z",
-    repository: "owner/example",
+    repository: "AdamDariOfficial/Tretnix-knowledge",
     branch: "main",
     head: "0".repeat(40),
     fingerprint: "0".repeat(64),
@@ -387,8 +392,9 @@ for (const artifact of ["TASK_CONTEXT.md", "metadata.json"]) test(`Gate B contex
 
 for (const artifact of ["metadata.json", "stdout.log", "stderr.log"]) test(`Gate B validation child ${artifact} junction escape fails closed`, async () => {
   const fixture = await createFixture();
+  addReusableGitValidator(fixture);
   const first = await validateRepository(fixture);
-  const directory = path.join(fixture.repo, ".tretnix", "cache", "validation", first.validations[0].cache_key);
+  const directory = path.join(fixture.repo, ".tretnix", "cache", "validation", first.validations[1].cache_key);
   const outside = path.join(path.dirname(fixture.repo), "outside-validation");
   await mkdir(outside);
   const child = path.join(directory, artifact);
@@ -425,11 +431,11 @@ test("Gate B requested docs cannot downgrade security and changed plan invalidat
 test("Gate B mixed release and security requires the union and both validators", async () => {
   const fixture = await createFixture();
   fixture.manifest.validation.validators = [
-    { ...fixture.manifest.validation.validators[0], id: "security", task_classes: ["security_or_data"], capabilities: ["static", "test", "security", "whitespace"] },
-    { ...fixture.manifest.validation.validators[0], id: "release", task_classes: ["release_or_infra"], capabilities: ["static", "test", "config", "whitespace"] },
+    { ...fixture.manifest.validation.validators[0], id: "security", task_classes: ["security_or_data"], capabilities: ["static", "test", "security", "whitespace"], reviewed_script: { ...fixture.manifest.validation.validators[0].reviewed_script, validator_id: "security", capabilities: ["static", "test", "security", "whitespace"] } },
+    { ...fixture.manifest.validation.validators[0], id: "release", task_classes: ["release_or_infra"], capabilities: ["static", "test", "config", "whitespace"], reviewed_script: { ...fixture.manifest.validation.validators[0].reviewed_script, validator_id: "release", capabilities: ["static", "test", "config", "whitespace"] } },
   ];
   const classes = effectiveTaskClasses(["server/auth.mjs", "infra/config.json"], fixture.manifest, "docs_only");
-  const plan = validationPlan(fixture.manifest, classes);
+  const plan = await validationPlan(fixture.repo, fixture.manifest, classes);
   assert.deepEqual(plan.selected, ["security", "release"]);
   assert.deepEqual(plan.missing_capabilities, []);
   assert.ok(plan.required_capabilities.includes("security") && plan.required_capabilities.includes("config"));
@@ -440,7 +446,7 @@ test("Gate B mixed release and security requires the union and both validators",
   assert.deepEqual(result.evidence.validation_plan.effective_classes, classes);
   assert.deepEqual(result.validations.map((entry) => entry.validator_id), ["security", "release"]);
   fixture.manifest.validation.validators.pop();
-  const missing = validationPlan(fixture.manifest, classes);
+  const missing = await validationPlan(fixture.repo, fixture.manifest, classes);
   assert.ok(missing.missing_capabilities.includes("config"));
 });
 
@@ -450,7 +456,7 @@ for (const change of ["working tree", "branch", "HEAD", "manifest", "task", "rem
   await writeJsonAtomic(fixture.manifestPath, fixture.manifest, fixture.repo);
   const result = await validateRepository(fixture);
   assert.equal(result.evidence.result, "PASS");
-  await regenerateLatestEvidence(fixture.repo);
+  await assert.rejects(() => regenerateLatestEvidence(fixture.repo), { code: "STALE_EVIDENCE" });
   const originalEvidence = await readFile(result.outputs.evidencePath);
   const originalReport = await readFile(result.outputs.reportPath);
   if (change === "working tree") await writeFile(path.join(fixture.repo, "new.txt"), "delta");
@@ -539,6 +545,7 @@ test("Gate B synthetic stdout and stderr secrets are never persisted", async () 
   const fixture = await createFixture();
   const marker = "SYNTHETIC_SECRET_DO_NOT_PERSIST_90210";
   await writeFile(path.join(fixture.repo, "fixture-validator.mjs"), `process.stdout.write('${marker}'); process.stderr.write('${marker}');\n`);
+  fixture.manifest.validation.validators[0].reviewed_script.sha256 = sha256(`process.stdout.write('${marker}'); process.stderr.write('${marker}');\n`);
   const first = await validateRepository(fixture);
   assert.equal(first.validations[0].result, "PASS");
   async function inspect(directory) {
@@ -551,7 +558,7 @@ test("Gate B synthetic stdout and stderr secrets are never persisted", async () 
   }
   await inspect(path.join(fixture.repo, ".tretnix"));
   const second = await validateRepository(fixture);
-  assert.equal(second.validations[0].cache, "HIT");
+  assert.equal(second.validations[0].cache, "MISS");
   await inspect(path.join(fixture.repo, ".tretnix"));
 });
 
@@ -591,7 +598,7 @@ test("Gate B overlapping security and release prefix retains both classes", asyn
   fixture.manifest.validation.release_or_infra_prefixes.push("server/");
   const classes = effectiveTaskClasses(["server/auth.mjs"], fixture.manifest, "docs_only");
   assert.deepEqual(classes, ["docs_only", "release_or_infra", "security_or_data"]);
-  const plan = validationPlan(fixture.manifest, classes);
+  const plan = await validationPlan(fixture.repo, fixture.manifest, classes);
   assert.ok(plan.required_capabilities.includes("security"));
   assert.ok(plan.required_capabilities.includes("config"));
 });
@@ -776,19 +783,21 @@ test("sensitive tracked paths disable cache eligibility without storing their co
 
 test("validation cache misses, hits, invalidates and preserves manual gates", async () => {
   const fixture = await createFixture("validation cache");
+  addReusableGitValidator(fixture);
   const first = await validateRepository(fixture);
-  assert.deepEqual(first.evidence.cache.misses, ["fixture-pass"]);
+  assert.deepEqual(first.evidence.cache.misses, ["fixture-pass", "git-diff-check"]);
   assert.equal(first.evidence.result, "REVIEW_REQUIRED");
   assert.ok(first.evidence.manual_gates.every((gate) => gate.status === (gate.required ? "UNVERIFIED" : "NOT_REQUIRED")));
   const second = await validateRepository(fixture);
-  assert.deepEqual(second.evidence.cache.hits, ["fixture-pass"]);
+  assert.deepEqual(second.evidence.cache.hits, ["git-diff-check"]);
+  assert.deepEqual(second.evidence.cache.misses, ["fixture-pass"]);
 
   await writeFile(path.join(fixture.repo, "delta.txt"), "x", "utf8");
   const changed = await validateRepository(fixture);
-  assert.deepEqual(changed.evidence.cache.misses, ["fixture-pass"]);
+  assert.deepEqual(changed.evidence.cache.misses, ["fixture-pass", "git-diff-check"]);
   await rm(path.join(fixture.repo, "delta.txt"));
   const restored = await validateRepository(fixture);
-  assert.deepEqual(restored.evidence.cache.hits, ["fixture-pass"]);
+  assert.deepEqual(restored.evidence.cache.hits, ["git-diff-check"]);
 
   fixture.manifest.validation.validators[0].contract_version = "1.0.1";
   const contractChanged = await validateRepository(fixture);
@@ -800,7 +809,7 @@ test("failed, unavailable and forbidden validators do not become cached PASS", a
   fixture.manifest.gates = {};
   await writeFile(path.join(fixture.repo, "fail-validator.mjs"), "process.exit(7);\n", "utf8");
   fixture.manifest.validation.validators = [
-    { id: "fail", command: "node fail-validator.mjs", runtime: "node", task_classes: ["all"], capabilities: ["static", "whitespace", "test", "security"], deterministic: true, cacheable: true, contract_version: "1.1.0", timeout_ms: 30000 },
+    { id: "fail", command: "node fail-validator.mjs", runtime: "node", task_classes: ["all"], capabilities: ["static", "whitespace", "test", "security"], reviewed_script: { validator_id: "fail", path: "fail-validator.mjs", sha256: sha256("process.exit(7);\n"), capabilities: ["static", "whitespace", "test", "security"] }, deterministic: true, cacheable: true, contract_version: "1.1.0", timeout_ms: 30000 },
     { id: "missing", command: { unavailable_platform: "node fixture-validator.mjs" }, task_classes: ["all"], capabilities: ["static"], deterministic: true, cacheable: true, contract_version: "1.1.0", timeout_ms: 30000 },
     { id: "blocked", command: "git push origin main", runtime: "git", task_classes: ["all"], capabilities: ["static"], deterministic: true, cacheable: true, contract_version: "1.1.0", timeout_ms: 30000 },
   ];
@@ -941,7 +950,7 @@ test("direct exported APIs confine manifest and task paths independently of the 
 test("application task classes remain fail-closed until a repository configures them", async () => {
   const fixture = await createFixture("unsupported application classes");
   for (const taskClass of ["frontend", "backend"]) {
-    const plan = validationPlan(fixture.manifest, taskClass);
+    const plan = await validationPlan(fixture.repo, fixture.manifest, taskClass);
     assert.equal(plan.supported, false);
     assert.deepEqual(plan.selected, []);
     assert.deepEqual(plan.missing_capabilities, [`unsupported_task_class:${taskClass}`]);
@@ -972,24 +981,25 @@ test("symlink and latest-evidence traversal cannot escape the repository", async
 
 test("validation cache rejects corrupt, incomplete and old entries and runtime changes alter keys", async () => {
   const fixture = await createFixture("validation cache failures");
+  addReusableGitValidator(fixture);
   const first = await validateRepository(fixture);
-  const key = first.validations[0].cache_key;
+  const key = first.validations[1].cache_key;
   const directory = path.join(fixture.repo, ".tretnix", "cache", "validation", key);
   const metadataPath = path.join(directory, "metadata.json");
 
   await writeFile(metadataPath, "{broken", "utf8");
   const corrupt = await validateRepository(fixture);
-  assert.equal(corrupt.validations[0].cache_rejection, "CORRUPT_CACHE");
+  assert.equal(corrupt.validations[1].cache_rejection, "CORRUPT_CACHE");
   const broken = await readJson(metadataPath);
   delete broken.result;
   await writeJsonAtomic(metadataPath, broken, fixture.repo);
   const incomplete = await validateRepository(fixture);
-  assert.equal(incomplete.validations[0].cache_rejection, "INCOMPLETE_CACHE");
+  assert.equal(incomplete.validations[1].cache_rejection, "INCOMPLETE_CACHE");
   const metadata = await readJson(metadataPath);
   metadata.cache_contract_version = "0.0.0";
   await writeJsonAtomic(metadataPath, metadata, fixture.repo);
   const stale = await validateRepository(fixture);
-  assert.equal(stale.validations[0].cache_rejection, "STALE_CACHE");
+  assert.equal(stale.validations[1].cache_rejection, "STALE_CACHE");
 
   const payload = { repository_fingerprint: "a", validator_id: "v", exact_command: "node v.mjs", relevant_runtime_version: "node-a", cache_contract_version: "1", validator_contract_version: "1" };
   assert.notEqual(validationCacheKey(payload), validationCacheKey({ ...payload, relevant_runtime_version: "node-b" }));
@@ -1015,6 +1025,7 @@ test("validator execution is shell-free, wrapper-resistant and deterministic on 
     runtime: "node",
     task_classes: ["all"],
     capabilities: ["static", "whitespace", "test", "security"],
+    reviewed_script: { validator_id: "timeout", path: "timeout-validator.mjs", sha256: sha256("await new Promise((resolve) => setTimeout(resolve, 5000));\n"), capabilities: ["static", "whitespace", "test", "security"] },
     deterministic: true,
     cacheable: true,
     contract_version: "1.1.0",
@@ -1030,16 +1041,19 @@ test("validator execution is shell-free, wrapper-resistant and deterministic on 
 
 test("security-sensitive changes invalidate exact-state validation proof", async () => {
   const fixture = await createFixture("security invalidation");
+  addReusableGitValidator(fixture);
   fixture.task.task_class = "security_or_data";
   const first = await validateRepository(fixture);
   const second = await validateRepository(fixture);
   assert.equal(first.validations[0].cache, "MISS");
-  assert.equal(second.validations[0].cache, "HIT");
+  assert.equal(second.validations[0].cache, "MISS");
+  assert.equal(second.validations[1].cache, "HIT");
   await mkdir(path.join(fixture.repo, "server"), { recursive: true });
   await writeFile(path.join(fixture.repo, "server", "auth.mjs"), "export const secure = true;\n", "utf8");
   const changed = await validateRepository(fixture);
   assert.equal(changed.taskClass, "security_or_data");
   assert.equal(changed.validations[0].cache, "MISS");
+  assert.equal(changed.validations[1].cache, "MISS");
   assert.notEqual(changed.fingerprint.fingerprint, first.fingerprint.fingerprint);
 });
 
@@ -1072,7 +1086,8 @@ test("CLI integration covers doctor, preflight, context, validate, evidence and 
   const after = JSON.parse(invoke("cache", "status", "--repo", fixture.repo).stdout);
   assert.deepEqual(after.cache, { context: { entries: 0 }, validation: { entries: 0 } });
   const evidence = invoke("evidence", "--repo", fixture.repo);
-  assert.equal(evidence.status, 0, evidence.stderr);
+  assert.equal(evidence.status, 1, evidence.stderr);
+  assert.equal(JSON.parse(evidence.stderr).error, "STALE_EVIDENCE");
   assert.equal(git(fixture.repo, "status", "--porcelain"), "", "ignored CLI output must not dirty the fixture repository");
 });
 
@@ -1084,4 +1099,501 @@ test("cache clear refuses a cache junction that resolves outside the repository"
   await symlink(outside, path.join(fixture.repo, ".tretnix", "cache"), "junction");
   await assert.rejects(() => safeClearCache(fixture.repo), (error) => error.code === "UNSAFE_PATH");
   assert.equal(await readFile(path.join(outside, "sentinel.txt"), "utf8").catch(() => "missing"), "missing");
+});
+
+async function applicationFixture() {
+  const app = await createFixture("separate application");
+  const knowledge = await createFixture("canonical Knowledge");
+  git(app.repo, "remote", "set-url", "origin", "https://github.com/owner/example.git");
+  app.manifest.project.repository = "owner/example";
+  await writeJsonAtomic(path.join(app.repo, "tretnix.project.json"), app.manifest, app.repo);
+  await assert.rejects(() => doctor(app.repo, app.manifest, app.manifestPath), { code: "MISSING_KNOWLEDGE_ROOT" });
+  await rm(path.join(app.repo, "schemas"), { recursive: true });
+  await rm(path.join(app.repo, "templates"), { recursive: true });
+  git(app.repo, "add", ".");
+  git(app.repo, "commit", "-m", "test: separate application contracts");
+  return { ...app, knowledge: knowledge.repo };
+}
+
+function addReusableGitValidator(fixture) {
+  fixture.manifest.validation.validators.push({
+    id: "git-diff-check", command: "git -c core.whitespace=cr-at-eol diff --check", runtime: "git",
+    task_classes: ["all"], capabilities: ["whitespace"], deterministic: true, cacheable: true,
+    contract_version: "1.1.0", timeout_ms: 30000,
+  });
+}
+
+function useApplicationProfile(fixture, command, capability, script = null) {
+  if (fixture.manifest.validation.validators.length === 1) {
+    const original = fixture.manifest.validation.validators[0];
+    fixture.manifest.validation.validators.push({ ...original, id: "fixture-capability-proof", reviewed_script: { ...original.reviewed_script, validator_id: "fixture-capability-proof" } });
+  }
+  const validator = fixture.manifest.validation.validators[0];
+  validator.command = command;
+  validator.capabilities = [capability];
+  if (script) validator.reviewed_script = { validator_id: validator.id, path: script.path, sha256: script.sha256, capabilities: [capability] };
+  else delete validator.reviewed_script;
+}
+
+test("application doctor and full CLI lifecycle use separate Knowledge without copies", async () => {
+  const fixture = await applicationFixture();
+  const result = await doctor(fixture.repo, fixture.manifest, fixture.manifestPath, fixture.knowledge);
+  assert.equal(result.ok, true);
+  for (const check of result.checks.filter((entry) => entry.id.endsWith("_schema"))) {
+    assert.ok(check.path.startsWith(fixture.knowledge + path.sep));
+    assert.ok(check.template.startsWith(fixture.knowledge + path.sep));
+  }
+  await assert.rejects(() => doctor(fixture.repo, fixture.manifest, fixture.manifestPath), { code: "MISSING_KNOWLEDGE_ROOT" });
+  const invoke = (...args) => spawnSync(process.execPath, [cliPath, ...args, "--repo", fixture.repo], { encoding: "utf8", windowsHide: true });
+  assert.equal(JSON.parse(invoke("doctor").stderr).error, "MISSING_KNOWLEDGE_ROOT");
+  for (const args of [
+    ["doctor", "--knowledge", fixture.knowledge], ["preflight"],
+    ["context", "--task", "task.json", "--knowledge", fixture.knowledge],
+    ["validate", "--task", "task.json", "--knowledge", fixture.knowledge],
+  ]) {
+    const execution = invoke(...args);
+    assert.equal(execution.status, 0, `${args[0]}: ${execution.stderr}`);
+  }
+  const replay = invoke("evidence", "--knowledge", fixture.knowledge);
+  assert.equal(replay.status, 1);
+  assert.equal(JSON.parse(replay.stderr).error, "STALE_EVIDENCE");
+  const context = await resolveContext({ ...fixture, task: { ...fixture.task, tags: ["security"] } });
+  const selected = context.sources.find((source) => source.display_path === "knowledge:STANDARDS.md");
+  assert.equal(selected.knowledge_commit, git(fixture.knowledge, "rev-parse", "HEAD"));
+  assert.equal(git(fixture.repo, "status", "--porcelain"), "");
+  assert.equal(git(fixture.knowledge, "status", "--porcelain"), "");
+});
+
+test("external Knowledge contract drift makes evidence stale without changing the application", async () => {
+  const fixture = await applicationFixture();
+  await validateRepository({ ...fixture, knowledge: fixture.knowledge, task: null, taskPath: null });
+  await assert.rejects(() => regenerateLatestEvidence(fixture.repo), { code: "STALE_EVIDENCE" });
+  const contract = path.join(fixture.knowledge, "schemas/tretnix-project.schema.json");
+  await writeFile(contract, `${await readFile(contract, "utf8")}\n`);
+  await assert.rejects(() => regenerateLatestEvidence(fixture.repo, fixture.knowledge), { code: "STALE_EVIDENCE" });
+  assert.equal(git(fixture.repo, "status", "--porcelain"), "");
+});
+
+test("external Knowledge context-source drift makes evidence stale", async () => {
+  const fixture = await applicationFixture();
+  fixture.task.tags = ["security"];
+  await writeJsonAtomic(path.join(fixture.repo, "task.json"), fixture.task, fixture.repo);
+  git(fixture.repo, "add", "task.json");
+  git(fixture.repo, "commit", "-m", "test: select Knowledge source");
+  const contextResult = await resolveContext(fixture);
+  await validateRepository({ ...fixture, contextResult });
+  await writeFile(path.join(fixture.knowledge, "STANDARDS.md"), "# Standards\n\n## Security\n\nChanged.\n");
+  await assert.rejects(() => regenerateLatestEvidence(fixture.repo, fixture.knowledge), { code: "STALE_EVIDENCE" });
+});
+
+test("validation refuses a context snapshot after its Knowledge source changes", async () => {
+  const fixture = await applicationFixture();
+  fixture.task.tags = ["security"];
+  const contextResult = await resolveContext(fixture);
+  await writeFile(path.join(fixture.knowledge, "STANDARDS.md"), "# Standards\n\n## Security\n\nChanged.\n");
+  await assert.rejects(() => validateRepository({ ...fixture, contextResult }), { code: "STALE_KNOWLEDGE" });
+});
+
+test("unfingerprinted installed validator state cannot replay a PASS", async () => {
+  const fixture = await createFixture();
+  await installFixtureBins(fixture);
+  useApplicationProfile(fixture, "bun run tsc", "typecheck");
+  const result = await validateRepository(fixture);
+  assert.equal(result.validations[0].result, "PASS");
+  await writeFile(path.join(fixture.repo, "node_modules/typescript/bin/tsc"), "console.log('changed ignored validator');\n");
+  await assert.rejects(() => regenerateLatestEvidence(fixture.repo), { code: "STALE_EVIDENCE" });
+});
+
+test("separate Knowledge rejects mismatched/malformed contracts and escaped roots", async () => {
+  const fixture = await applicationFixture();
+  const schema = path.join(fixture.knowledge, "schemas/tretnix-project.schema.json");
+  await writeFile(schema, '{"type":"object","required":[],"properties":{}}');
+  assert.equal((await doctor(fixture.repo, fixture.manifest, fixture.manifestPath, fixture.knowledge)).ok, false);
+  await assert.rejects(() => resolveContext(fixture), { code: "INVALID_KNOWLEDGE_CONTRACT" });
+  await assert.rejects(() => validateRepository(fixture), { code: "INVALID_KNOWLEDGE_CONTRACT" });
+  await assert.rejects(() => readFile(path.join(fixture.repo, ".tretnix/runtime/context.json")), { code: "ENOENT" });
+  await writeFile(schema, 'invalid json');
+  await assert.rejects(() => doctor(fixture.repo, fixture.manifest, fixture.manifestPath, fixture.knowledge), { code: "INVALID_SCHEMA_JSON" });
+  await writeFile(schema, JSON.stringify(publishedSchemas.project));
+  const alias = path.join(path.dirname(fixture.repo), "knowledge-alias");
+  await symlink(fixture.knowledge, alias, "junction");
+  await assert.rejects(() => doctor(fixture.repo, fixture.manifest, fixture.manifestPath, alias), { code: "UNSAFE_PATH" });
+  await assert.rejects(() => doctor(fixture.repo, fixture.manifest, fixture.manifestPath, path.join(fixture.knowledge, "schemas")), { code: "UNSAFE_PATH" });
+  await assert.rejects(() => doctor(fixture.repo, fixture.manifest, fixture.manifestPath, path.join(fixture.knowledge, "missing")), { code: "MISSING_KNOWLEDGE_ROOT" });
+  await writeFile(path.join(fixture.knowledge, "templates/TRETNIX_TASK_DESCRIPTOR.json"), '{}');
+  assert.equal((await doctor(fixture.repo, fixture.manifest, fixture.manifestPath, fixture.knowledge)).ok, false);
+});
+
+for (const base of ["repo", "knowledge"]) test(`application source confinement is independent for ${base}`, async () => {
+  const fixture = await applicationFixture();
+  fixture.manifest.context.source_allowlists[base].push("../outside.md", "linked/**");
+  fixture.task.required_sources = [{ base, path: "../outside.md" }];
+  await assert.rejects(() => resolveContext(fixture), { code: "UNSAFE_PATH" });
+  const root = base === "repo" ? fixture.repo : fixture.knowledge;
+  await mkdir(path.join(root, "docs"));
+  await symlink(path.join(root, "docs"), path.join(root, "linked"), "junction");
+  fixture.task.required_sources = [{ base, path: "linked/input.md" }];
+  await writeFile(path.join(root, "docs/input.md"), "Safe but aliased");
+  await assert.rejects(() => resolveContext(fixture), { code: "UNSAFE_PATH" });
+});
+
+test("unignored runtime blocks every writer before the first output, doctor stays read-only", async () => {
+  const fixture = await createFixture();
+  await writeFile(path.join(fixture.repo, ".gitignore"), ".env*\n");
+  const result = await doctor(fixture.repo, fixture.manifest, fixture.manifestPath);
+  assert.equal(result.checks.find((entry) => entry.id === "runtime_ignore").error, "RUNTIME_NOT_IGNORED");
+  for (const writer of [
+    () => preflight(fixture.repo, fixture.manifest, fixture.manifestPath),
+    () => resolveContext(fixture), () => validateRepository(fixture),
+    () => regenerateLatestEvidence(fixture.repo), () => safeClearCache(fixture.repo),
+    () => writeEvidence(fixture.repo, {}),
+    () => writeJsonAtomic(path.join(fixture.repo, ".tretnix/runtime/probe.json"), {}, fixture.repo),
+  ]) await assert.rejects(writer, { code: "RUNTIME_NOT_IGNORED" });
+  for (const command of ["preflight", "context", "validate", "evidence"]) {
+    const execution = spawnSync(process.execPath, [cliPath, command, "--repo", fixture.repo, "--task", "task.json"], { encoding: "utf8", windowsHide: true });
+    assert.equal(JSON.parse(execution.stderr).error, "RUNTIME_NOT_IGNORED");
+  }
+  await assert.rejects(() => readFile(path.join(fixture.repo, ".tretnix")), { code: "ENOENT" });
+});
+
+test("runtime requires portable whole-directory ignore and rejects local/global-only or tracked output", async () => {
+  const fixture = await createFixture();
+  await writeFile(path.join(fixture.repo, ".gitignore"), ".env*\n");
+  await writeFile(path.join(fixture.repo, ".git/info/exclude"), ".tretnix/\n");
+  await assert.rejects(() => requireRuntimeIgnored(fixture.repo), { code: "RUNTIME_NOT_IGNORED" });
+  await writeFile(path.join(fixture.repo, ".git/info/exclude"), "");
+  const globalIgnore = path.join(path.dirname(fixture.repo), "global-ignore");
+  await writeFile(globalIgnore, ".tretnix/\n");
+  git(fixture.repo, "config", "core.excludesFile", globalIgnore);
+  await assert.rejects(() => requireRuntimeIgnored(fixture.repo), { code: "RUNTIME_NOT_IGNORED" });
+  for (const pattern of [".tretnix/runtime/\n", ".tretnix/\n!.tretnix/\n", ".tretnix/*\n"]) {
+    await writeFile(path.join(fixture.repo, ".gitignore"), pattern);
+    await assert.rejects(() => requireRuntimeIgnored(fixture.repo), { code: "RUNTIME_NOT_IGNORED" });
+  }
+  await writeFile(path.join(fixture.repo, ".gitignore"), "/.tretnix/\n");
+  assert.equal((await requireRuntimeIgnored(fixture.repo)).portable, true);
+  await mkdir(path.join(fixture.repo, ".tretnix"));
+  await writeFile(path.join(fixture.repo, ".tretnix/tracked.json"), '{}');
+  git(fixture.repo, "add", "-f", ".tretnix/tracked.json");
+  await assert.rejects(() => requireRuntimeIgnored(fixture.repo), { code: "RUNTIME_NOT_IGNORED" });
+});
+
+async function installFixtureBins(fixture) {
+  const profiles = [["tsc", "typescript", "bin/tsc", "--noEmit"], ["eslint", "eslint", "bin/eslint.js", "."], ["vite", "vite", "bin/vite.js", "build"]];
+  const packageJson = { devDependencies: {}, scripts: { test: "node --experimental-strip-types local-test.ts", pretest: "git push", posttest: "git commit" } };
+  for (const [name, dependency, target, arg] of profiles) {
+    packageJson.devDependencies[dependency] = "1.0.0";
+    packageJson.scripts[name] = `${name} ${arg}`;
+    const directory = path.join(fixture.repo, "node_modules", dependency);
+    await mkdir(path.join(directory, "bin"), { recursive: true });
+    await writeFile(path.join(directory, "package.json"), JSON.stringify({ name: dependency, version: "1.0.0", bin: { [name]: target } }));
+    await writeFile(path.join(directory, target), "console.log('local dependency validator');\n");
+  }
+  await writeFile(path.join(fixture.repo, "package.json"), JSON.stringify(packageJson));
+  await writeFile(path.join(fixture.repo, "local-test.ts"), "const value: number = 1; console.log(value);\n");
+  await writeFile(path.join(fixture.repo, ".gitignore"), ".tretnix/\nnode_modules/\n.env*\n");
+  return profiles;
+}
+
+test("reviewed local application profiles unwrap bun scripts, pin Node, and never use hooks or cache", async () => {
+  const fixture = await createFixture();
+  const profiles = await installFixtureBins(fixture);
+  for (const [name, dependency, target, arg] of profiles) {
+    for (const command of [`${name} ${arg}`, `bun run ${name}`]) {
+      const prepared = await prepareValidatorCommand(fixture.repo, command, fixture.manifest);
+      assert.equal(prepared.executable, process.execPath);
+      assert.deepEqual(prepared.args, [path.join(fixture.repo, "node_modules", dependency, target), arg]);
+      assert.equal(prepared.cacheSafe, false);
+    }
+  }
+  useApplicationProfile(fixture, "bun run tsc", "typecheck");
+  git(fixture.repo, "add", ".");
+  git(fixture.repo, "commit", "-m", "test: local validator fixture");
+  for (const command of ["bun run tsc", "bun run eslint", "bun run vite", "bun run test"]) {
+    const capability = command === "bun run tsc" ? "typecheck" : command === "bun run eslint" ? "lint" : command === "bun run vite" ? "build" : "test";
+    useApplicationProfile(fixture, command, capability, command === "bun run test" ? { path: "local-test.ts", sha256: sha256("const value: number = 1; console.log(value);\n") } : null);
+    const first = await validateRepository(fixture);
+    const second = await validateRepository(fixture);
+    assert.equal(first.validations[0].result, "PASS");
+    assert.equal(second.validations[0].result, "PASS");
+    assert.equal(second.validations[0].cache, "MISS");
+  }
+  assert.equal(git(fixture.repo, "status", "--porcelain"), "");
+});
+
+test("application grammar rejects extra flags, injections, forwarded args, wrappers and hidden forbidden actions", async () => {
+  const fixture = await createFixture();
+  await installFixtureBins(fixture);
+  for (const command of [
+    "tsc --noEmit --project other.json", "tsc --watch", "tsc", "eslint src", "eslint . --fix",
+    "vite dev", "vite preview", "vite build --mode development", "vite --host",
+    "node --experimental-strip-types --eval=1", "node --experimental-strip-types local-test.ts other.ts",
+    "node --experimental-strip-types local-test.ts --import=x", "node --import=x local-test.ts",
+    "node --loader=x local-test.ts", "node -r x local-test.ts", "node --eval=1 local-test.ts",
+    "bun run tsc -- --noEmit", "bun run test extra", "bun run pretest", "bun run posttest",
+  ]) await assert.rejects(() => prepareValidatorCommand(fixture.repo, command, fixture.manifest), (error) => ["UNSAFE_COMMAND", "FORBIDDEN_COMMAND"].includes(error.code), command);
+  for (const script of ["sh -c 'tsc --noEmit'", "npm run tsc", "bun run tsc", "git push origin main", "node local-test.ts; git add ."]) {
+    await writeFile(path.join(fixture.repo, "package.json"), JSON.stringify({ scripts: { test: script } }));
+    await assert.rejects(() => prepareValidatorCommand(fixture.repo, "bun run test", fixture.manifest), (error) => ["UNSAFE_COMMAND", "FORBIDDEN_COMMAND"].includes(error.code));
+  }
+});
+
+test("local bin profile rejects installed identity/bin traversal and directory aliases", async () => {
+  const fixture = await createFixture();
+  await installFixtureBins(fixture);
+  const installed = path.join(fixture.repo, "node_modules/typescript/package.json");
+  for (const [name, bin] of [["typescript", "../escape.js"], ["typescript", "/outside.js"], ["typescript", "bin/custom.js"], ["impostor", "bin/tsc"]]) {
+    await writeFile(installed, JSON.stringify({ name, version: "1.0.0", bin: { tsc: bin } }));
+    await assert.rejects(() => prepareValidatorCommand(fixture.repo, "tsc --noEmit", fixture.manifest), { code: "UNSAFE_COMMAND" });
+  }
+  await installFixtureBins(fixture);
+  const bin = path.join(fixture.repo, "node_modules/typescript/bin");
+  const saved = path.join(path.dirname(fixture.repo), "saved-bin");
+  await rename(bin, saved);
+  await symlink(saved, bin, "junction");
+  await assert.rejects(() => prepareValidatorCommand(fixture.repo, "tsc --noEmit", fixture.manifest), { code: "UNSAFE_PATH" });
+  await assert.rejects(() => prepareValidatorCommand(fixture.repo, "node --experimental-strip-types ../escape.ts", fixture.manifest), { code: "UNSAFE_PATH" });
+  await mkdir(path.join(fixture.repo, "tests"));
+  await rename(path.join(fixture.repo, "local-test.ts"), path.join(fixture.repo, "tests/local-test.ts"));
+  await symlink(path.join(fixture.repo, "tests"), path.join(fixture.repo, "alias-tests"), "junction");
+  await assert.rejects(() => prepareValidatorCommand(fixture.repo, "node --experimental-strip-types alias-tests/local-test.ts", fixture.manifest), { code: "UNSAFE_PATH" });
+});
+
+test("missing project dependencies are UNAVAILABLE with no global substitution or installation", async () => {
+  const fixture = await createFixture();
+  await installFixtureBins(fixture);
+  // A .bin shim is deliberately never consulted, even when the real dependency is missing.
+  await mkdir(path.join(fixture.repo, "node_modules/.bin"));
+  await writeFile(path.join(fixture.repo, "node_modules/.bin/tsc"), "global impostor");
+  await rm(path.join(fixture.repo, "node_modules/typescript"), { recursive: true });
+  await assert.rejects(() => prepareValidatorCommand(fixture.repo, "bun run tsc", fixture.manifest), { code: "COMMAND_UNAVAILABLE" });
+  const fakeGlobal = path.join(path.dirname(fixture.repo), "fake-global");
+  await mkdir(fakeGlobal);
+  await writeFile(path.join(fakeGlobal, process.platform === "win32" ? "tsc.cmd" : "tsc"), "impostor");
+  const probe = spawnSync(process.execPath, ["--input-type=module", "-e", 'import {loadManifest,prepareValidatorCommand} from "./tools/tretnix/core.mjs"; const repo=process.argv[1]; const {manifest}=await loadManifest(repo); try { await prepareValidatorCommand(repo,"bun run tsc",manifest); process.stdout.write("UNEXPECTED_PASS"); } catch (error) { process.stdout.write(error.code); }', fixture.repo], {
+    cwd: path.resolve(import.meta.dirname, "../../.."),
+    env: { ...process.env, PATH: `${fakeGlobal}${path.delimiter}${process.env.PATH ?? ""}` },
+    encoding: "utf8", windowsHide: true,
+  });
+  assert.equal(probe.status, 0, probe.stderr);
+  assert.equal(probe.stdout, "COMMAND_UNAVAILABLE");
+  useApplicationProfile(fixture, "bun run tsc", "typecheck");
+  const result = await validateRepository(fixture);
+  assert.equal(result.validations[0].result, "UNAVAILABLE");
+  assert.equal(result.validations[0].exit_code, 127);
+  assert.deepEqual(result.evidence.forbidden_actions_observed, []);
+  const diagnostic = await doctor(fixture.repo, fixture.manifest, fixture.manifestPath);
+  assert.equal(diagnostic.checks.find((entry) => entry.id.startsWith("command:")).status, "UNAVAILABLE");
+});
+
+test("doctor distinguishes available effective Node, unavailable, unsafe and malformed without executing", async () => {
+  const fixture = await createFixture();
+  await installFixtureBins(fixture);
+  for (const [command, status] of [["bun run test", "PASS"], ["bun run tsc", "PASS"], ["vite dev", "UNSAFE"], ["node missing.mjs", "UNAVAILABLE"]]) {
+    fixture.manifest.validation.validators[0].command = command;
+    if (command === "bun run test") {
+      fixture.manifest.validation.validators[0].capabilities = ["test"];
+      fixture.manifest.validation.validators[0].reviewed_script = { validator_id: "fixture-pass", path: "local-test.ts", sha256: sha256("const value: number = 1; console.log(value);\n"), capabilities: ["test"] };
+    } else {
+      delete fixture.manifest.validation.validators[0].reviewed_script;
+      if (command === "bun run tsc") fixture.manifest.validation.validators[0].capabilities = ["typecheck"];
+    }
+    const result = await doctor(fixture.repo, fixture.manifest, fixture.manifestPath);
+    assert.equal(result.checks.find((entry) => entry.id.startsWith("command:")).status, status);
+  }
+  await writeFile(path.join(fixture.repo, "package.json"), "malformed");
+  fixture.manifest.validation.validators[0].command = "bun run test";
+  const result = await doctor(fixture.repo, fixture.manifest, fixture.manifestPath);
+  assert.equal(result.checks.find((entry) => entry.id.startsWith("command:")).status, "MALFORMED");
+  await assert.rejects(() => readFile(path.join(fixture.repo, ".tretnix")), { code: "ENOENT" });
+});
+
+test("F-01 ignored validator input changes force real execution and make evidence non-replayable", async () => {
+  const fixture = await createFixture();
+  const script = 'import { readFileSync, appendFileSync } from "node:fs";\nconst value = readFileSync("node_modules/probe.txt", "utf8");\nappendFileSync("node_modules/runs.txt", `${value}\\n`);\n';
+  await writeFile(path.join(fixture.repo, ".gitignore"), ".tretnix/\nnode_modules/\n.env*\n");
+  await mkdir(path.join(fixture.repo, "node_modules"));
+  await writeFile(path.join(fixture.repo, "node_modules/probe.txt"), "first");
+  await writeFile(path.join(fixture.repo, "fixture-validator.mjs"), script);
+  fixture.manifest.validation.validators[0].reviewed_script.sha256 = sha256(script);
+  await writeJsonAtomic(fixture.manifestPath, fixture.manifest, fixture.repo);
+  git(fixture.repo, "add", ".");
+  git(fixture.repo, "commit", "-m", "test: reviewed validator with ignored input");
+  const first = await validateRepository(fixture);
+  assert.equal(first.validations[0].result, "PASS");
+  assert.equal(first.validations[0].cache, "MISS");
+  assert.equal(await readFile(path.join(fixture.repo, "node_modules/runs.txt"), "utf8"), "first\n");
+  await writeFile(path.join(fixture.repo, "node_modules/probe.txt"), "second");
+  await assert.rejects(() => regenerateLatestEvidence(fixture.repo), { code: "STALE_EVIDENCE" });
+  const second = await validateRepository(fixture);
+  assert.equal(second.fingerprint.fingerprint, first.fingerprint.fingerprint);
+  assert.equal(second.validations[0].cache, "MISS");
+  assert.equal(await readFile(path.join(fixture.repo, "node_modules/runs.txt"), "utf8"), "first\nsecond\n");
+  const metadata = await readJson(path.join(fixture.repo, ".tretnix/cache/validation", second.validations[0].cache_key, "metadata.json"));
+  assert.equal(metadata.reusable, false);
+  assert.equal(second.validations[0].declared_cacheable, true);
+  assert.equal(second.validations[0].runtime_cache_safe, false);
+});
+
+test("F-01 reviewed scripts and fixed package bins never inherit manifest cacheability", async () => {
+  const fixture = await createFixture();
+  await installFixtureBins(fixture);
+  for (const command of ["node fixture-validator.mjs", "node --check fixture-validator.mjs", "node --test fixture-validator.mjs", "node --experimental-strip-types local-test.ts", "tsc --noEmit", "eslint .", "vite build", "bun run tsc", "bun run test"]) {
+    const prepared = await prepareValidatorCommand(fixture.repo, command, fixture.manifest);
+    assert.equal(prepared.cacheSafe, false, command);
+  }
+  for (const command of ["git -c core.whitespace=cr-at-eol diff --check", "git diff --check", "git status --short", "git rev-parse HEAD", "git ls-files -z"]) {
+    const prepared = await prepareValidatorCommand(fixture.repo, command, fixture.manifest);
+    assert.equal(prepared.cacheSafe, command === "git -c core.whitespace=cr-at-eol diff --check", command);
+  }
+});
+
+test("F-01 Git whitespace proof reuses only a clean tree", async () => {
+  const fixture = await createFixture();
+  addReusableGitValidator(fixture);
+  const cleanFirst = await validateRepository(fixture);
+  const cleanSecond = await validateRepository(fixture);
+  assert.equal(cleanFirst.fingerprint.clean, true);
+  assert.equal(cleanFirst.validations[1].cache, "MISS");
+  assert.equal(cleanSecond.validations[1].cache, "HIT");
+  await writeFile(path.join(fixture.repo, "STATUS.md"), "# Status\n\nChanged.\n");
+  const dirtyFirst = await validateRepository(fixture);
+  const dirtySecond = await validateRepository(fixture);
+  assert.equal(dirtyFirst.fingerprint.clean, false);
+  assert.equal(dirtyFirst.validations[1].cache, "MISS");
+  assert.equal(dirtySecond.validations[1].cache, "MISS");
+  assert.equal(dirtySecond.validations[1].runtime_cache_safe, false);
+  await assert.rejects(() => regenerateLatestEvidence(fixture.repo), { code: "STALE_EVIDENCE" });
+});
+
+test("OR-01 tracked mutation blocks a later valid Git cache HIT and current evidence", async () => {
+  const fixture = await createFixture();
+  addReusableGitValidator(fixture);
+  const script = 'import { existsSync, writeFileSync } from "node:fs";\nif (existsSync("node_modules/trigger")) writeFileSync("STATUS.md", "# Status\\n\\nChanged.  \\n");\n';
+  await writeFile(path.join(fixture.repo, ".gitignore"), ".tretnix/\nnode_modules/\n.env*\n");
+  await writeFile(path.join(fixture.repo, "fixture-validator.mjs"), script);
+  fixture.manifest.validation.validators[0].reviewed_script.sha256 = sha256(script);
+  await writeJsonAtomic(fixture.manifestPath, fixture.manifest, fixture.repo);
+  git(fixture.repo, "add", ".");
+  git(fixture.repo, "commit", "-m", "test: conditional tracked mutation validator");
+
+  const seed = await validateRepository(fixture);
+  assert.equal(seed.fingerprint.clean, true);
+  assert.equal(seed.validations[1].cache, "MISS");
+  const pointerPath = path.join(fixture.repo, ".tretnix/runtime/latest-evidence.json");
+  const pointerBefore = await readFile(pointerPath, "utf8");
+  await mkdir(path.join(fixture.repo, "node_modules"));
+  await writeFile(path.join(fixture.repo, "node_modules/trigger"), "mutate");
+  const before = await repositoryFingerprint(fixture.repo, fixture.manifest, fixture.manifestPath);
+  assert.equal(before.fingerprint, seed.fingerprint.fingerprint);
+  await assert.rejects(() => validateRepository(fixture), { code: "APPLICATION_STATE_DRIFT" });
+  assert.match(await readFile(path.join(fixture.repo, "STATUS.md"), "utf8"), /Changed\.  /);
+  assert.notEqual((await repositoryFingerprint(fixture.repo, fixture.manifest, fixture.manifestPath)).fingerprint, seed.fingerprint.fingerprint);
+  assert.equal(await readFile(pointerPath, "utf8"), pointerBefore);
+});
+
+test("OR-01 final executed validator mutation aborts before successful evidence", async () => {
+  const fixture = await createFixture();
+  const script = 'import { writeFileSync } from "node:fs";\nwriteFileSync("STATUS.md", "# Status\\n\\nChanged.\\n");\n';
+  await writeFile(path.join(fixture.repo, "fixture-validator.mjs"), script);
+  fixture.manifest.validation.validators[0].reviewed_script.sha256 = sha256(script);
+  await writeJsonAtomic(fixture.manifestPath, fixture.manifest, fixture.repo);
+  git(fixture.repo, "add", ".");
+  git(fixture.repo, "commit", "-m", "test: final tracked mutator");
+  await assert.rejects(() => validateRepository(fixture), { code: "APPLICATION_STATE_DRIFT" });
+  assert.match(await readFile(path.join(fixture.repo, "STATUS.md"), "utf8"), /Changed\./);
+  await assert.rejects(() => readFile(path.join(fixture.repo, ".tretnix/runtime/latest-evidence.json")), { code: "ENOENT" });
+});
+
+test("OR-01 self-modifying reviewed script loses attestation and current proof", async () => {
+  const fixture = await createFixture();
+  const script = 'import { appendFileSync } from "node:fs";\nappendFileSync("fixture-validator.mjs", "// changed\\n");\n';
+  await writeFile(path.join(fixture.repo, "fixture-validator.mjs"), script);
+  fixture.manifest.validation.validators[0].reviewed_script.sha256 = sha256(script);
+  await writeJsonAtomic(fixture.manifestPath, fixture.manifest, fixture.repo);
+  git(fixture.repo, "add", ".");
+  git(fixture.repo, "commit", "-m", "test: self-modifying reviewed validator");
+  await assert.rejects(() => validateRepository(fixture), (error) => error.code === "APPLICATION_STATE_DRIFT" && error.details.reason === "ATTESTED_SCRIPT_CHANGED");
+  assert.match(await readFile(path.join(fixture.repo, "fixture-validator.mjs"), "utf8"), /\/\/ changed/);
+  await assert.rejects(() => readFile(path.join(fixture.repo, ".tretnix/runtime/latest-evidence.json")), { code: "ENOENT" });
+});
+
+test("F-02 fixed profiles reject capability escalation while legitimate mappings remain valid", async () => {
+  const fixture = await createFixture();
+  await installFixtureBins(fixture);
+  for (const [command, allowed, forbidden] of [["tsc --noEmit", "typecheck", ["security", "build"]], ["eslint .", "lint", ["build", "security"]], ["vite build", "build", ["security", "arbitrary"]], ["git -c core.whitespace=cr-at-eol diff --check", "whitespace", ["test"]]]) {
+    const prepared = await prepareValidatorCommand(fixture.repo, command, fixture.manifest);
+    assert.deepEqual(effectiveValidatorCapabilities(prepared, { id: "fixed", capabilities: [allowed] }), [allowed]);
+    for (const claim of forbidden) assert.throws(() => effectiveValidatorCapabilities(prepared, { id: "fixed", capabilities: [claim] }), { code: "UNATTESTED_CAPABILITY" });
+  }
+  useApplicationProfile(fixture, "tsc --noEmit", "security");
+  fixture.manifest.validation.validators[1].capabilities = ["static", "whitespace", "test", "config"];
+  fixture.manifest.validation.validators[1].reviewed_script.capabilities = ["static", "whitespace", "test", "config"];
+  const plan = await validationPlan(fixture.repo, fixture.manifest, "security_or_data");
+  assert.ok(plan.missing_capabilities.includes("security"));
+  const validation = await validateRepository({ ...fixture, task: { ...fixture.task, task_class: "security_or_data" } });
+  assert.equal(validation.evidence.result, "FAIL");
+  assert.ok(validation.evidence.validation_plan.missing_capabilities.includes("security"));
+});
+
+test("F-02 reviewed script attestation binds path, bytes and explicit capability set", async () => {
+  const fixture = await createFixture();
+  const validator = fixture.manifest.validation.validators[0];
+  const prepared = await prepareValidatorCommand(fixture.repo, validator.command, fixture.manifest);
+  assert.deepEqual(effectiveValidatorCapabilities(prepared, validator), validator.capabilities);
+  const original = structuredClone(validator.reviewed_script);
+  for (const invalid of [
+    null,
+    { ...original, path: "../fixture-validator.mjs" },
+    { ...original, path: path.join(fixture.repo, "fixture-validator.mjs") },
+    { ...original, path: "other-validator.mjs" },
+    { ...original, sha256: "0".repeat(64) },
+    { ...original, capabilities: ["static"] },
+    { ...original, capabilities: [...original.capabilities, "build"] },
+    { ...original, validator_id: "different-validator" },
+    { ...original, capabilities: ["static", "static"] },
+    { ...original, unexpected: true },
+  ]) {
+    if (invalid === null) delete validator.reviewed_script;
+    else validator.reviewed_script = invalid;
+    assert.throws(() => effectiveValidatorCapabilities(prepared, validator), { code: "UNATTESTED_CAPABILITY" });
+  }
+  validator.reviewed_script = original;
+  validator.capabilities = [...validator.capabilities, "build"];
+  assert.throws(() => effectiveValidatorCapabilities(prepared, validator), { code: "UNATTESTED_CAPABILITY" });
+  validator.capabilities.pop();
+  assert.notDeepEqual(validateProjectManifest({ ...fixture.manifest, validation: { ...fixture.manifest.validation, validators: [{ ...validator, reviewed_script: { ...original, validator_id: "different-validator" } }] } }), []);
+  await writeFile(path.join(fixture.repo, "other-validator.mjs"), await readFile(path.join(fixture.repo, "fixture-validator.mjs")));
+  validator.command = "node other-validator.mjs";
+  const sameBytesDifferentPath = await prepareValidatorCommand(fixture.repo, validator.command, fixture.manifest);
+  assert.throws(() => effectiveValidatorCapabilities(sameBytesDifferentPath, validator), { code: "UNATTESTED_CAPABILITY" });
+  validator.command = "node fixture-validator.mjs";
+  await writeFile(path.join(fixture.repo, "fixture-validator.mjs"), "process.exit(0);\n");
+  const changed = await prepareValidatorCommand(fixture.repo, validator.command, fixture.manifest);
+  assert.throws(() => effectiveValidatorCapabilities(changed, validator), { code: "UNATTESTED_CAPABILITY" });
+  const stalePlan = await validationPlan(fixture.repo, fixture.manifest, "docs_only");
+  assert.ok(stalePlan.missing_capabilities.includes("static"));
+});
+
+test("F-02 attestation cannot bypass grammar, containment or fixed-profile ceilings", async () => {
+  const fixture = await createFixture();
+  const validator = fixture.manifest.validation.validators[0];
+  validator.reviewed_script = { ...validator.reviewed_script, win32: { ...validator.reviewed_script } };
+  assert.notDeepEqual(validateProjectManifest(fixture.manifest), []);
+  validator.reviewed_script = { path: "../outside.mjs", sha256: "0".repeat(64), capabilities: ["static"] };
+  assert.notDeepEqual(validateProjectManifest(fixture.manifest), []);
+  validator.reviewed_script = { path: "fixture-validator.mjs", sha256: "0".repeat(64), capabilities: ["static"] };
+  for (const command of ["node ../outside.mjs", "node C:/outside.mjs", "sh -c node fixture-validator.mjs", "node --import=fixture-validator.mjs fixture-validator.mjs", "evil fixture-validator.mjs"]) {
+    await assert.rejects(() => prepareValidatorCommand(fixture.repo, command, fixture.manifest), (error) => ["UNSAFE_PATH", "UNSAFE_COMMAND"].includes(error.code));
+  }
+  await assert.rejects(() => prepareValidatorCommand(fixture.repo, "node missing.mjs", fixture.manifest), { code: "MISSING_FILE" });
+  await mkdir(path.join(fixture.repo, "safe"));
+  await writeFile(path.join(fixture.repo, "safe/probe.mjs"), "process.exit(0);\n");
+  await symlink(path.join(fixture.repo, "safe"), path.join(fixture.repo, "aliased"), "junction");
+  await assert.rejects(() => prepareValidatorCommand(fixture.repo, "node aliased/probe.mjs", fixture.manifest), { code: "UNSAFE_PATH" });
+  await installFixtureBins(fixture);
+  const fixed = await prepareValidatorCommand(fixture.repo, "tsc --noEmit", fixture.manifest);
+  validator.capabilities = ["typecheck"];
+  validator.reviewed_script = { path: "fixture-validator.mjs", sha256: "0".repeat(64), capabilities: ["typecheck"] };
+  assert.throws(() => effectiveValidatorCapabilities(fixed, validator), { code: "UNATTESTED_CAPABILITY" });
 });

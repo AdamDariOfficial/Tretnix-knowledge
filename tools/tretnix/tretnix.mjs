@@ -4,20 +4,20 @@ import { pathToFileURL } from "node:url";
 import {
   TretnixError,
   confineExistingPath,
-  commandExecutable,
   commandForPlatform,
   executableAvailable,
+  effectiveValidatorCapabilities,
+  prepareValidatorCommand,
+  preparedExecutableAvailable,
+  resolveKnowledgeRoot,
+  knowledgeContractChecks,
+  requireKnowledgeContracts,
+  requireRuntimeIgnored,
   loadManifest,
   loadTask,
   normalizeRepositoryIdentity,
-  readJson,
-  resolveExistingInside,
   safeClearCache,
   stableJson,
-  validateEvidence,
-  validateProjectManifest,
-  validateTaskDescriptor,
-  validatePublishedContract,
   writeJsonAtomic,
 } from "./core.mjs";
 import { preflightRepository, repositoryIdentity } from "./fingerprint.mjs";
@@ -42,7 +42,7 @@ function parseArgs(argv) {
 }
 
 function usage() {
-  return `Tretnix Development OS v1\n\nCommands:\n  doctor --repo <path>\n  preflight --repo <path> [--require-clean]\n  context --repo <path> --task <descriptor> [--knowledge <path>]\n  validate --repo <path> [--task <descriptor>]\n  evidence --repo <path>\n  cache status --repo <path>\n  cache clear --repo <path>\n`;
+  return `Tretnix Development OS v1\n\nCommands:\n  doctor --repo <path> [--knowledge <path>]\n  preflight --repo <path> [--require-clean]\n  context --repo <path> --task <descriptor> [--knowledge <path>]\n  validate --repo <path> [--task <descriptor>] [--knowledge <path>]\n  evidence --repo <path> [--knowledge <path>]\n  cache status --repo <path>\n  cache clear --repo <path>\n`;
 }
 
 export async function preflight(repo, manifest, manifestPath, requireClean = false) {
@@ -51,24 +51,18 @@ export async function preflight(repo, manifest, manifestPath, requireClean = fal
   return result;
 }
 
-export async function doctor(repo, manifest, manifestPath) {
+export async function doctor(repo, manifest, manifestPath, knowledge) {
   const confinedManifestPath = await confineExistingPath(repo, manifestPath, "project manifest");
   const checks = [];
   checks.push({ id: "node", status: "PASS", version: process.version });
   checks.push({ id: "git", status: executableAvailable("git") ? "PASS" : "FAIL" });
   checks.push({ id: "manifest", status: "PASS", path: confinedManifestPath });
-  const contracts = [
-    ["project", manifest.$schema, "templates/TRETNIX_PROJECT_MANIFEST.json", validateProjectManifest],
-    ["task", "schemas/tretnix-task.schema.json", "templates/TRETNIX_TASK_DESCRIPTOR.json", validateTaskDescriptor],
-    ["evidence", "schemas/tretnix-evidence.schema.json", "templates/TRETNIX_EVIDENCE_SCHEMA.json", validateEvidence],
-  ];
-  for (const [id, schemaRelative, templateRelative, validator] of contracts) {
-    const schemaPath = await resolveExistingInside(repo, schemaRelative, `${id} schema`);
-    const templatePath = await resolveExistingInside(repo, templateRelative, `${id} template`);
-    const schema = await readJson(schemaPath, "INVALID_SCHEMA_JSON");
-    const template = await readJson(templatePath, "INVALID_TEMPLATE_JSON");
-    const errors = [...validatePublishedContract(id, template, schema), ...validator(template)];
-    checks.push({ id: `${id}_schema`, status: errors.length ? "FAIL" : "PASS", path: schemaPath, template: templatePath, errors });
+  const knowledgeRoot = await resolveKnowledgeRoot(repo, knowledge);
+  checks.push(...await knowledgeContractChecks(knowledgeRoot));
+  try {
+    checks.push({ id: "runtime_ignore", status: "PASS", ...await requireRuntimeIgnored(repo) });
+  } catch (error) {
+    checks.push({ id: "runtime_ignore", status: "FAIL", error: error.code, message: error.message });
   }
   const identity = repositoryIdentity(repo, manifest);
   checks.push({
@@ -79,8 +73,15 @@ export async function doctor(repo, manifest, manifestPath) {
   });
   for (const validator of manifest.validation.validators) {
     const command = commandForPlatform(validator.command);
-    const executable = commandExecutable(command);
-    checks.push({ id: `command:${validator.id}`, status: command && executableAvailable(executable) ? "PASS" : "UNAVAILABLE", command, executable });
+    try {
+      if (!command) throw new TretnixError("COMMAND_UNAVAILABLE", "No command configured for this platform");
+      const prepared = await prepareValidatorCommand(repo, command, manifest);
+      effectiveValidatorCapabilities(prepared, validator);
+      checks.push({ id: `command:${validator.id}`, status: preparedExecutableAvailable(prepared) ? "PASS" : "UNAVAILABLE", command, executable: prepared.executable, args: prepared.args, profile: prepared.profile });
+    } catch (error) {
+      const status = ["COMMAND_UNAVAILABLE", "MISSING_FILE"].includes(error.code) ? "UNAVAILABLE" : ["INVALID_PACKAGE_JSON", "INVALID_MANIFEST"].includes(error.code) ? "MALFORMED" : "UNSAFE";
+      checks.push({ id: `command:${validator.id}`, status, command, error: error.code, message: error.message });
+    }
   }
   return { schema_version: 1, ok: checks.every((entry) => entry.status === "PASS"), checks };
 }
@@ -94,7 +95,7 @@ async function main() {
   const repo = path.resolve(parsed.options.repo ?? process.cwd());
   const { manifest, manifestPath } = await loadManifest(repo, parsed.options.manifest);
   if (parsed.command === "doctor") {
-    const result = await doctor(repo, manifest, manifestPath);
+    const result = await doctor(repo, manifest, manifestPath, parsed.options.knowledge);
     process.stdout.write(stableJson(result));
     return result.ok ? 0 : 2;
   }
@@ -106,19 +107,23 @@ async function main() {
   if (parsed.command === "context") {
     if (!parsed.options.task) throw new TretnixError("MISSING_ARGUMENT", "context requires --task <descriptor>");
     const { task, taskPath } = await loadTask(repo, parsed.options.task, manifest);
+    const knowledge = await requireKnowledgeContracts(repo, parsed.options.knowledge);
+    await requireRuntimeIgnored(repo);
     const gate = await preflightRepository(repo, manifest, manifestPath, { task });
     await writeJsonAtomic(path.join(repo, ".tretnix", "runtime", "preflight.json"), gate, repo);
     if (!gate.ok) throw new TretnixError("PREFLIGHT_FAILED", "Context resolution stopped because project identity/state preflight failed", { issues: gate.issues });
-    const result = await resolveContext({ repo, knowledge: parsed.options.knowledge, manifest, manifestPath, task, taskPath });
+    const result = await resolveContext({ repo, knowledge, manifest, manifestPath, task, taskPath });
     process.stdout.write(stableJson(result));
     return 0;
   }
   if (parsed.command === "validate") {
+    const knowledge = await requireKnowledgeContracts(repo, parsed.options.knowledge);
+    await requireRuntimeIgnored(repo);
     const loadedTask = parsed.options.task ? await loadTask(repo, parsed.options.task, manifest) : null;
     const gate = await preflightRepository(repo, manifest, manifestPath, { task: loadedTask?.task ?? null });
     let contextResult = null;
-    if (gate.ok && loadedTask) contextResult = await resolveContext({ repo, knowledge: parsed.options.knowledge, manifest, manifestPath, task: loadedTask.task, taskPath: loadedTask.taskPath });
-    const result = await validateRepository({ repo, manifest, manifestPath, task: loadedTask?.task ?? null, taskPath: loadedTask?.taskPath ?? null, contextResult });
+    if (gate.ok && loadedTask) contextResult = await resolveContext({ repo, knowledge, manifest, manifestPath, task: loadedTask.task, taskPath: loadedTask.taskPath });
+    const result = await validateRepository({ repo, knowledge, manifest, manifestPath, task: loadedTask?.task ?? null, taskPath: loadedTask?.taskPath ?? null, contextResult });
     process.stdout.write(stableJson({
       result: result.evidence.result,
       task_class: result.taskClass,
@@ -131,7 +136,7 @@ async function main() {
     return result.evidence.result === "FAIL" ? 1 : 0;
   }
   if (parsed.command === "evidence") {
-    const result = await regenerateLatestEvidence(repo);
+    const result = await regenerateLatestEvidence(repo, parsed.options.knowledge);
     process.stdout.write(stableJson({ evidence: result.evidencePath, report: result.reportPath, result: result.evidence.result }));
     return 0;
   }
