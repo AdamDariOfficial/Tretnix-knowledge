@@ -1,8 +1,8 @@
 # Tretnix Development OS
 
-**Versione:** 1.3
-**Aggiornato:** 16 settembre 2026
-**Stato:** v1 merged e canonica nella Knowledge; tooling operativo sulla Knowledge, rollout applicativo sperimentale fino al pilot approvato
+**Versione:** 1.4
+**Aggiornato:** 18 settembre 2026
+**Stato:** v1 e enablement del pilot applicativo merged nella Knowledge; gate tooling verificato per questo ciclo, prima adozione applicativa in corso
 
 ---
 
@@ -165,9 +165,9 @@ Prima di ogni scrittura OS, inclusi preflight, context, validation, evidence e c
 
 Nell'adozione applicativa, adattare il project manifest e il task descriptor dei template, dichiarare validator reali e floor delle classi, e aggiungere `.tretnix/` al `.gitignore` radice tramite normale modifica Git revisionata prima del bootstrap. Eseguire inizialmente soltanto `doctor --repo <app> --knowledge <Knowledge>`; gli altri comandi che scrivono diventano utilizzabili dopo la precondizione di ignore. Una preparazione tecnica valida non chiude il gate del pilot né abilita azioni Git o live.
 
-La v1 è stata implementata, validata e unita in `Tretnix-knowledge` con PR `#22`: source commit `0e5a9f03e1cd2774af4d40aeb441157bbda65446`, merge `main@5f9a7a1d669cea8b0165832017e81f24a94480f5`. Manifest, procedure e tooling sono canonici nella Knowledge e utilizzabili su questo repository. Le ulteriori modifiche mantengono review e autorizzazioni separate per commit, push, PR e merge.
+La v1 base è stata implementata e unita in `Tretnix-knowledge` con PR `#22`: source `0e5a9f03e1cd2774af4d40aeb441157bbda65446`, merge storico `main@5f9a7a1d669cea8b0165832017e81f24a94480f5`; la closure documentale iniziale è confluita nella PR `#23`. L'enablement del pilot applicativo è stato unito con PR `#27`: source `89341884d6b320d7d8c002987b2c0c495f5bc7c7`, merge `main@7c12a6ba5a843c31d21de143344be79ac03ed4fc`. La verifica post-merge su quel main ha chiuso OR-01 con regressioni mirate e suite `93/93 PASS`; F-01 e F-02 restano chiusi. Manifest, procedure e tooling sono canonici nella Knowledge. Le ulteriori modifiche mantengono review e autorizzazioni separate per commit, push, PR e merge.
 
-Il rollout del resolver e del tooling sui repository applicativi resta sperimentale fino a un pilot reale approvato. Il prossimo gate è un pilot controllato su un repository applicativo con checkpoint stabile e autorizzazione esplicita; nessun repository applicativo è automaticamente migrato o adottato. Il dogfood della Knowledge verifica l'uso locale e le cache, non completa questo gate. Tretnix.com resta nel workstream separato ed è escluso dal closeout; un eventuale manifest o pilot richiede un task dedicato successivo al suo checkpoint stabile.
+Il primo pilot applicativo è `IN PROGRESS` su RITO Studio BUSINESS PLUS, ma l'adozione nel repository applicativo non è ancora completata: `.tretnix/` deve entrare nel `.gitignore` radice tracciato con review, il manifest candidato deve essere finalizzato, poi vanno eseguiti doctor, preflight, context, validate ed evidence con la Knowledge canonica e misurate cache e limitazioni. Solo dopo si apre il gate parity/UI START/BUSINESS → PLUS. Il rollout generale resta sperimentale; nessun repository è automaticamente migrato o adottato. Il dogfood della Knowledge non completa il pilot applicativo. Tretnix.com resta nel workstream separato.
 
 Le metriche locali disponibili sono numero e dimensione delle fonti, righe/byte del context pack, hit/miss, validator eseguiti o riusati, durata e errori. Non viene inviata telemetria.
 

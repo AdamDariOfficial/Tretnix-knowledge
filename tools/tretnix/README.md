@@ -1,12 +1,12 @@
 # Tretnix Development OS CLI
 
-**Versione:** 1.3
-**Aggiornato:** 16 settembre 2026
-**Stato:** CLI v1 merged e operativo nella Knowledge; rollout applicativo sperimentale fino al pilot approvato
+**Versione:** 1.4
+**Aggiornato:** 18 settembre 2026
+**Stato:** CLI v1 ed enablement del pilot applicativo merged nella Knowledge; prima adozione applicativa in corso, non completata
 
 Il CLI è Node ESM dependency-free e scrive esclusivamente output derivati sotto `.tretnix/`.
 
-Il merge nella Knowledge è registrato in `CURRENT_STATE.md` (PR `#22`). Il dogfood su questo repository non costituisce pilot applicativo; l'adozione su un repository applicativo richiede checkpoint stabile e autorizzazione esplicita. Adattare il task descriptor di esempio a obiettivo, scope, classe e branch effettivi prima dell'uso; i descriptor locali possono restare sotto `.tretnix/runtime/`.
+I merge nella Knowledge sono registrati in `CURRENT_STATE.md`: v1 base con PR `#22`, enablement applicativo con PR `#27`. Il gate tooling Knowledge è stato verificato; il pilot su RITO Studio BUSINESS PLUS è `IN PROGRESS` e l'adozione nel repository applicativo resta da completare. Il dogfood su questa Knowledge non costituisce pilot applicativo; l'adozione richiede checkpoint stabile e gate del progetto. Adattare il task descriptor di esempio a obiettivo, scope, classe e branch effettivi prima dell'uso; i descriptor locali possono restare sotto `.tretnix/runtime/`.
 
 ## Comandi
 

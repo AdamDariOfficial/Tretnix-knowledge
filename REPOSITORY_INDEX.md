@@ -1,7 +1,7 @@
 # Tretnix Repository Index
 
-**Versione:** 2.6
-**Aggiornato:** 15 settembre 2026
+**Versione:** 2.7
+**Aggiornato:** 18 settembre 2026
 **Stato dell’inventario:** completo rispetto agli otto repository attualmente dichiarati
 
 Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit del codice.
@@ -427,10 +427,13 @@ reinterpretati come baseline correnti né riscritti nel lineage storico di BUSIN
 | Produzione | non autorizzata |
 | Staging | backend live Cloudflare attivo; chiusura E2E pendente |
 | Branch principale remota | `main` |
-| Commit remoto verificato | `eba1a2a91fd3a531b4a4667d038b631758d0a664` |
-| Working branch riportata | `feat/rito-business-plus-complete` con delta controllato non ancora integrato |
+| Commit remoto `main` verificato corrente | `a0ce8a2a4fb758e2d16bd5cb794e91d14f7726b5` (`VR`, 18 settembre 2026) |
+| Baseline remota storica | `eba1a2a91fd3a531b4a4667d038b631758d0a664`, ancestor del `main` corrente |
+| Tag annotato storico | `family-business-plus-v1.0`, preservato; dereferenzia a `a0ce8a2a4fb758e2d16bd5cb794e91d14f7726b5` |
+| Working branch storica riportata | `feat/rito-business-plus-complete` con delta non integrato nel ciclo precedente; checkout locale verificato ora su `main` |
+| Development OS applicativo | pilot `IN PROGRESS`, adozione non completata: candidato `tretnix.project.json` locale untracked; `.gitignore` radice tracciato senza `.tretnix/` |
 | Stato auth | Native RITO AdminAuth in debugging: ramo di rifiuto normale verificato, login valido/sessione non ancora certificati |
-| Ultima riconciliazione | 13 agosto 2026 |
+| Ultima riconciliazione | 18 settembre 2026 per baseline Git e preparazione Development OS; stato staging/auth del 13 agosto resta storico e non è stato riverificato live |
 
 ### Architettura corrente
 
@@ -439,6 +442,8 @@ Il candidate live usa Cloudflare Workers, D1, Durable Objects/Hibernation WebSoc
 Cloudflare è un provider infrastrutturale scelto per il fit di questo progetto, non un requisito del dominio Beauty & Wellness. Prima del freeze finale, dopo la chiusura funzionale, è previsto un gate separato di provider-boundary hardening secondo `TRX-DEC-035`.
 
 BUSINESS PLUS non è ancora fonte canonica trasversale per Native AdminAuth o realtime finché login/session/logout, WebSocket authorization e `/consulenza` → D1 → realtime/reconnect non sono chiusi con evidenza.
+
+La preparazione del pilot Development OS non prova l'adozione: il gate applicativo richiede la review di `.gitignore` e manifest, i comandi doctor/preflight/context/validate/evidence sotto la Knowledge canonica e misure cache prima della parity/UI START/BUSINESS → PLUS. La baseline e il tag storici non vengono riscritti.
 
 ---
 
@@ -453,13 +458,14 @@ BUSINESS PLUS non è ancora fonte canonica trasversale per Native AdminAuth o re
 | Piano | INTERNO |
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
 | Deploy | non applicabile |
-| Stato | operativo; Development OS v1 merged e canonico nella Knowledge; rollout applicativo sperimentale e pending |
+| Stato | operativo; Development OS v1 e enablement del pilot applicativo merged; gate tooling Knowledge verificato, prima adozione applicativa ancora in corso |
 | Branch principale | `main` |
-| Baseline `main` verificata | `5f9a7a1d669cea8b0165832017e81f24a94480f5` |
+| Baseline `main` verificata corrente | `7c12a6ba5a843c31d21de143344be79ac03ed4fc` |
+| Merge storico Development OS v1 | PR `#22`, `5f9a7a1d669cea8b0165832017e81f24a94480f5`; closure post-merge PR `#23` |
 | Snapshot storico usato per la patch di governance del 26 luglio | `Tretnix-knowledge-de29f4f3.zip` |
 | SHA-256 snapshot storico | `3cf34a6f145a1834d211f65917950dc92e940f259d7585f16342d1bb00730032` |
 | Commit della patch di governance | da registrare dopo merge |
-| Ultima riconciliazione | 15 settembre 2026 — Development OS v1 PR `#22` merged; source `0e5a9f03e1cd2774af4d40aeb441157bbda65446`; branch storico eliminato; dettagli di evidenza in `CURRENT_STATE.md` |
+| Ultima riconciliazione | 18 settembre 2026 — enablement applicativo PR `#27` merged; source `89341884d6b320d7d8c002987b2c0c495f5bc7c7`; OR-01 verificato post-merge; dettagli e livelli di evidenza in `CURRENT_STATE.md` |
 
 ### Ruolo canonico
 
@@ -501,7 +507,7 @@ Forno Lume START — frozen `2ed19ef9a4a886616bccd5aad2054c3027fec680`
 Beauty & Wellness v1.1
 └── RITO Studio START — frozen `2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6`; historical tag `family-start-v1.0` preserved
     └── RITO Studio BUSINESS — frozen `3f0ff4d3ed8e675725d8d640c305ab61d47217d7`
-        └── RITO Studio BUSINESS PLUS — remote `main` `eba1a2a91fd3a531b4a4667d038b631758d0a664`, historical parent lineage preserved; live staging/E2E state unchanged by this gate
+        └── RITO Studio BUSINESS PLUS — remote `main` `a0ce8a2a4fb758e2d16bd5cb794e91d14f7726b5`, tag storico preservato; pilot Development OS applicativo non ancora completato
 
 Professional Services v1.0
 └── QUADRA Studio START
@@ -543,7 +549,7 @@ Home & Local Services v1.0
 | Git workflow | `tretnix-knowledge` | standard condiviso |
 | Agent handoff | `tretnix-knowledge` | standard condiviso |
 | Codex workflow | `tretnix-knowledge` | approvato, pilota su START |
-| Development OS v1 | `tretnix-knowledge` | merged, canonico e utilizzabile nella Knowledge; pilot applicativo pending con checkpoint stabile e autorizzazione esplicita |
+| Development OS v1 | `tretnix-knowledge` | base e enablement del pilot merged; gate tooling Knowledge verificato, pilot applicativo `IN PROGRESS` su RITO Studio BUSINESS PLUS, adozione non completata |
 
 ---
 
