@@ -184,12 +184,12 @@
         "reviewed_script": {
           "validator_id": "development-os-tests",
           "path": "tools/tretnix/tests/tretnix.test.mjs",
-          "sha256": "4b8e53fb259810a7070900dfdb869d2b8cc56967275cf0e1bbfcd2e0cd58653b",
+          "sha256": "07f2c247df2ee7029f9c8b7246b33c87b560abdff448844f8143d220d6871fea",
           "capabilities": ["test", "security"]
         },
         "deterministic": true,
         "cacheable": true,
-        "contract_version": "1.1.0",
+        "contract_version": "1.2.0",
         "timeout_ms": 120000
       },
       {
@@ -201,12 +201,12 @@
         "task_classes": ["all"],
         "capabilities": ["static", "config"],
         "reviewed_script": {
-          "win32": { "validator_id": "knowledge-validator", "path": "scripts/validate_knowledge.ps1", "sha256": "b6e709b415918cd5802e28fad70f535b207707f5190d544d4bea1bfd1d64b755", "capabilities": ["static", "config"] },
-          "default": { "validator_id": "knowledge-validator", "path": "scripts/validate_knowledge.py", "sha256": "7dc077197822fff50f8d21fcc1621ad2d08dac8352e5dba1a8bcd8d94073b5f1", "capabilities": ["static", "config"] }
+          "win32": { "validator_id": "knowledge-validator", "path": "scripts/validate_knowledge.ps1", "sha256": "e3a52ed67d1794d4f049244cc73172c3885a26a93b5fa22114006829ffffcc9e", "capabilities": ["static", "config"] },
+          "default": { "validator_id": "knowledge-validator", "path": "scripts/validate_knowledge.py", "sha256": "9d2ea16a6a11e58111ffae46e6ddef48f144777ae28903885c784fb69d5affe8", "capabilities": ["static", "config"] }
         },
         "deterministic": true,
         "cacheable": true,
-        "contract_version": "1.1.0",
+        "contract_version": "1.2.0",
         "timeout_ms": 120000
       },
       {

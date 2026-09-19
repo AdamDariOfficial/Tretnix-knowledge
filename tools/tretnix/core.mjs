@@ -37,6 +37,33 @@ export function sha256(value) {
   return createHash("sha256").update(value).digest("hex");
 }
 
+export function reviewedScriptSha256(value) {
+  if (!Buffer.isBuffer(value) && !(value instanceof Uint8Array)) {
+    throw new TypeError("reviewedScriptSha256 requires raw script bytes");
+  }
+  let crlfCount = 0;
+  for (let index = 0; index < value.length - 1; index += 1) {
+    if (value[index] === 0x0d && value[index + 1] === 0x0a) {
+      crlfCount += 1;
+      index += 1;
+    }
+  }
+  if (crlfCount === 0) return sha256(value);
+  const canonical = Buffer.allocUnsafe(value.length - crlfCount);
+  let target = 0;
+  for (let index = 0; index < value.length; index += 1) {
+    if (value[index] === 0x0d && value[index + 1] === 0x0a) {
+      canonical[target] = 0x0a;
+      target += 1;
+      index += 1;
+    } else {
+      canonical[target] = value[index];
+      target += 1;
+    }
+  }
+  return sha256(canonical);
+}
+
 export function stableValue(value) {
   if (Array.isArray(value)) return value.map(stableValue);
   if (value && typeof value === "object") {
@@ -1043,22 +1070,22 @@ export async function prepareValidatorCommand(repo, command, manifest) {
     const prefix = args.slice(0, -2).map((arg) => arg.toLowerCase());
     if (!(prefix.length === 0 || JSON.stringify(prefix) === JSON.stringify(["-noprofile", "-executionpolicy", "bypass"])) || args.at(-2)?.toLowerCase() !== "-file" || !args.at(-1)?.endsWith(".ps1")) reject();
     const script = await confineSourceFile(repo, args.at(-1), manifest, "PowerShell validator script");
-    return { executable, args, display: command, profile: name, cacheSafe: false, scriptPath: relativePosix(repo, script), scriptSha256: sha256(await readFile(script)) };
+    return { executable, args, display: command, profile: name, cacheSafe: false, scriptPath: relativePosix(repo, script), scriptSha256: reviewedScriptSha256(await readFile(script)) };
   } else if (name === "node") {
     if (args[0] === "--experimental-strip-types") {
       if (args.length !== 2 || args[1].startsWith("-") || !args[1].endsWith(".ts")) reject();
       const script = await confineSourceFile(repo, args[1], manifest, "Node TypeScript validator script");
       if (!process.allowedNodeEnvironmentFlags.has("--experimental-strip-types")) throw new TretnixError("COMMAND_UNAVAILABLE", "The current Node runtime does not support --experimental-strip-types");
-      return { executable: process.execPath, args, display: command, profile: "node", cacheSafe: false, runtimeVersion: process.version, scriptPath: relativePosix(repo, script), scriptSha256: sha256(await readFile(script)) };
+      return { executable: process.execPath, args, display: command, profile: "node", cacheSafe: false, runtimeVersion: process.version, scriptPath: relativePosix(repo, script), scriptSha256: reviewedScriptSha256(await readFile(script)) };
     }
     const scripts = args[0] === "--test" || args[0] === "--check" ? args.slice(1) : args;
     if (scripts.length !== 1 || scripts[0].startsWith("-") || !/\.(mjs|cjs|js)$/.test(scripts[0])) reject();
     const script = await confineSourceFile(repo, scripts[0], manifest, "Node validator script");
-    return { executable, args, display: command, profile: name, cacheSafe: false, scriptPath: relativePosix(repo, script), scriptSha256: sha256(await readFile(script)) };
+    return { executable, args, display: command, profile: name, cacheSafe: false, scriptPath: relativePosix(repo, script), scriptSha256: reviewedScriptSha256(await readFile(script)) };
   } else if (["python", "python3"].includes(name)) {
     if (args.length !== 1 || args[0].startsWith("-") || !args[0].endsWith(".py")) reject();
     const script = await confineSourceFile(repo, args[0], manifest, "Python validator script");
-    return { executable, args, display: command, profile: name, cacheSafe: false, scriptPath: relativePosix(repo, script), scriptSha256: sha256(await readFile(script)) };
+    return { executable, args, display: command, profile: name, cacheSafe: false, scriptPath: relativePosix(repo, script), scriptSha256: reviewedScriptSha256(await readFile(script)) };
   } else if (name === "git") {
     const forms = [
       ["-c", "core.whitespace=cr-at-eol", "diff", "--check"],

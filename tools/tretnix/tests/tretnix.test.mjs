@@ -20,6 +20,7 @@ import {
   publishedSchemas,
   writeJsonAtomic,
   sha256,
+  reviewedScriptSha256,
   inspectPath,
   requireRuntimeIgnored,
 } from "../core.mjs";
@@ -1516,6 +1517,74 @@ test("OR-01 self-modifying reviewed script loses attestation and current proof",
   await assert.rejects(() => validateRepository(fixture), (error) => error.code === "APPLICATION_STATE_DRIFT" && error.details.reason === "ATTESTED_SCRIPT_CHANGED");
   assert.match(await readFile(path.join(fixture.repo, "fixture-validator.mjs"), "utf8"), /\/\/ changed/);
   await assert.rejects(() => readFile(path.join(fixture.repo, ".tretnix/runtime/latest-evidence.json")), { code: "ENOENT" });
+});
+
+test("reviewed script identity treats LF, CRLF and mixed EOL as the same reviewed bytes", async () => {
+  const fixture = await createFixture();
+  const validator = fixture.manifest.validation.validators[0];
+  const scriptPath = path.join(fixture.repo, "fixture-validator.mjs");
+  const lf = Buffer.from("const first = 1;\nconst second = 2;\nprocess.exit(first + second === 3 ? 0 : 1);\n");
+  const crlf = Buffer.from("const first = 1;\r\nconst second = 2;\r\nprocess.exit(first + second === 3 ? 0 : 1);\r\n");
+  const mixed = Buffer.from("const first = 1;\r\nconst second = 2;\nprocess.exit(first + second === 3 ? 0 : 1);\r\n");
+  const reviewed = reviewedScriptSha256(lf);
+  assert.equal(reviewedScriptSha256(crlf), reviewed);
+  assert.equal(reviewedScriptSha256(mixed), reviewed);
+  validator.reviewed_script.sha256 = reviewed;
+  for (const bytes of [lf, crlf, mixed]) {
+    await writeFile(scriptPath, bytes);
+    const prepared = await prepareValidatorCommand(fixture.repo, validator.command, fixture.manifest);
+    assert.equal(prepared.scriptSha256, reviewed);
+    assert.deepEqual(effectiveValidatorCapabilities(prepared, validator), validator.capabilities);
+    const diagnostic = await doctor(fixture.repo, fixture.manifest, fixture.manifestPath);
+    assert.equal(diagnostic.checks.find((entry) => entry.id === "command:fixture-pass").status, "PASS");
+  }
+});
+
+test("reviewed script identity rejects non-EOL changes and preserves lone CR bytes", async () => {
+  const fixture = await createFixture();
+  const validator = fixture.manifest.validation.validators[0];
+  const scriptPath = path.join(fixture.repo, "fixture-validator.mjs");
+  const reviewed = Buffer.from("const value = 1;\nprocess.exit(value === 1 ? 0 : 1);\n");
+  validator.reviewed_script.sha256 = reviewedScriptSha256(reviewed);
+  await writeFile(scriptPath, reviewed);
+  const prepared = await prepareValidatorCommand(fixture.repo, validator.command, fixture.manifest);
+  assert.deepEqual(effectiveValidatorCapabilities(prepared, validator), validator.capabilities);
+  for (const changed of [
+    Buffer.from("const value = 2;\nprocess.exit(value === 1 ? 0 : 1);\n"),
+    Buffer.from("const value = 1;\rprocess.exit(value === 1 ? 0 : 1);\n"),
+  ]) {
+    await writeFile(scriptPath, changed);
+    const changedPrepared = await prepareValidatorCommand(fixture.repo, validator.command, fixture.manifest);
+    assert.notEqual(changedPrepared.scriptSha256, prepared.scriptSha256);
+    assert.throws(() => effectiveValidatorCapabilities(changedPrepared, validator), { code: "UNATTESTED_CAPABILITY" });
+  }
+});
+
+test("PowerShell, Python, TypeScript and package scripts share canonical reviewed identity", async () => {
+  const fixture = await createFixture();
+  const validator = fixture.manifest.validation.validators[0];
+  const profiles = [
+    ["powershell -NoProfile -ExecutionPolicy Bypass -File local-validator.ps1", "local-validator.ps1", "Write-Output 'ok'\n"],
+    ["python local-validator.py", "local-validator.py", "print('ok')\n"],
+    ["node --experimental-strip-types local-validator.ts", "local-validator.ts", "const value: number = 1; console.log(value);\n"],
+  ];
+  await writeFile(path.join(fixture.repo, "package.json"), JSON.stringify({ scripts: { checked: "node fixture-validator.mjs", prechecked: "git push", postchecked: "git commit" } }));
+  profiles.push(["bun run checked", "fixture-validator.mjs", "process.stdout.write('ok\\n');\n"]);
+  for (const [command, relative, source] of profiles) {
+    const lf = Buffer.from(source);
+    const crlf = Buffer.from(source.replaceAll("\n", "\r\n"));
+    const digest = reviewedScriptSha256(lf);
+    validator.command = command;
+    validator.reviewed_script = { validator_id: validator.id, path: relative, sha256: digest, capabilities: [...validator.capabilities] };
+    await writeFile(path.join(fixture.repo, relative), lf);
+    const preparedLf = await prepareValidatorCommand(fixture.repo, command, fixture.manifest);
+    await writeFile(path.join(fixture.repo, relative), crlf);
+    const preparedCrlf = await prepareValidatorCommand(fixture.repo, command, fixture.manifest);
+    assert.equal(preparedLf.scriptSha256, digest, command);
+    assert.equal(preparedCrlf.scriptSha256, digest, command);
+    assert.equal(preparedCrlf.cacheSafe, false, command);
+    assert.deepEqual(effectiveValidatorCapabilities(preparedCrlf, validator), validator.capabilities, command);
+  }
 });
 
 test("F-02 fixed profiles reject capability escalation while legitimate mappings remain valid", async () => {
