@@ -1,7 +1,7 @@
 # Tretnix Current State
 
-**Versione:** 1.17
-**Aggiornato:** 16 settembre 2026
+**Versione:** 1.18
+**Aggiornato:** 18 settembre 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
 ---
@@ -22,25 +22,30 @@
 | Campo | Valore |
 |---|---|
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
-| Baseline `main` verificata pre-update backup/DR | `43a29137107f56bc72ed5ff5a5982c0b16a3eda2` |
+| Baseline `main` corrente verificata | `7c12a6ba5a843c31d21de143344be79ac03ed4fc` (`VR`, ref remoto e Git dopo fetch) |
+| Baseline storica pre-update backup/DR | `43a29137107f56bc72ed5ff5a5982c0b16a3eda2` |
 | Snapshot canonico ricevuto | `Tretnix-knowledge-de29f4f3.zip` |
 | Development pack | acquisito, verificato, estratto e integrato in `main` |
 | Family kit | Beauty v1.1, Professional v1.0 e Home v1.0 presenti |
 | Visibilità | pubblica temporaneamente secondo `TRX-DEC-031` |
-| Validazione knowledge | GitHub Knowledge Validation sulla PR `#22`: PASS (`VR`, check `validate` completato con `success` sul source commit); la reconciliation post-merge richiede validation locale sul proprio diff |
+| Validazione knowledge | PR `#22`: check `validate` PASS storico (`VR`); PR `#27`: Knowledge validation/check `validate` PASS sul source e sul merge (`VR`, run GitHub identificabili). Verifica locale post-merge su `7c12a6ba...`: suite Development OS `93/93 PASS`, Knowledge validator PASS, doctor PASS e `git diff --check` PASS (esecuzione diretta riportata nel task, `HR` finché non versionata come artefatto) |
 | Evidenza | `VR` per commit, archive e contenuti versionati |
 | Controlled Change Package | canonico in `main` da `996d6b8`; `Apply → Validate` è il metodo standard per cambi non banali esterni |
-| Development OS v1 | merged e canonico nella Knowledge; tooling utilizzabile su questo repository |
+| Development OS v1 | implementazione base e enablement del pilot applicativo merged; gate tooling lato Knowledge verificato e chiuso per questo ciclo; adozione applicativa ancora incompleta |
 | Pull request Development OS | `#22` — `feat: add Tretnix Development OS v1`, merged il 15 settembre 2026 (`VR`, Git e API GitHub) |
 | Source commit Development OS | `0e5a9f03e1cd2774af4d40aeb441157bbda65446` |
 | Merge commit Development OS | `5f9a7a1d669cea8b0165832017e81f24a94480f5` |
+| Closure post-merge Development OS v1 | PR `#23`, source `875a55bd70f09bba391710517eeb86d81dfee875`, merge `20ab883ff3291f2061c2b9b08c2bfb927b2bb4d5` (`VR`, provenance storica) |
+| Baseline storica immediatamente prima di PR `#27` | `main@0d6103c9f60b0b44eec7edae627ed240ad257499`, primo parent del merge applicativo (`VR`) |
+| Enablement pilot applicativo | PR `#27` — `feat: enable Development OS application pilot`, source `89341884d6b320d7d8c002987b2c0c495f5bc7c7`, merge `7c12a6ba5a843c31d21de143344be79ac03ed4fc` (`VR`) |
+| OR-01 / F-01 / F-02 | chiusi nel tooling merged; OR-01 verificato post-merge su `7c12a6ba...` con regressioni mirate e suite `93/93 PASS` (esecuzione locale riportata, `HR`) |
 | Branch storico Development OS | `codex/development-os-v1`, eliminato locale e remoto dopo merge (`VR`, branch locali e `ls-remote`) |
 | Final independent Gate B pre-merge | `APPROVE_FOR_COMMIT` (`HR`, esito riportato dall'owner nel task di closeout) |
 | Suite finale pre-merge | `69/69 PASS` (`HR`, esito riportato dall'owner; il dogfood post-merge è un'esecuzione distinta) |
-| Working tree post-merge | verificato clean all'avvio su `main@5f9a7a1d669cea8b0165832017e81f24a94480f5`, uguale a `origin/main` dopo fetch (`VR`) |
-| Rollout applicativo | sperimentale e pending; prossimo gate: pilot controllato su un repository applicativo con checkpoint stabile e autorizzazione esplicita |
+| Working tree post-merge storico | verificato clean all'avvio su `main@5f9a7a1d669cea8b0165832017e81f24a94480f5`, uguale a `origin/main` nel ciclo PR `#23` (`VR`) |
+| Pilot applicativo | `IN PROGRESS` su RITO Studio BUSINESS PLUS; l'adozione nel repository applicativo non è ancora completata né registrata in Git |
 
-Development OS v1 introduce manifest, context resolver/cache, fingerprint, validation planner/cache, evidence e quattro procedure operative, ora presenti in `main`. Gli output `.tretnix/` sono locali e ignorati. Il dogfood sul repository Knowledge non costituisce pilot applicativo né adozione automatica su altri repository. Git, Knowledge e autorità owner restano superiori a cache ed evidence; Tretnix.com resta nel workstream separato ed è escluso da questo closeout.
+Development OS v1 introduce manifest, context resolver/cache, fingerprint, validation planner/cache, evidence e quattro procedure operative, ora presenti in `main`. PR `#27` ha unito le protezioni necessarie al pilot applicativo; il controllo post-merge ha verificato OR-01 senza avviare l'adozione PLUS. Gli output `.tretnix/` sono locali e ignorati nella Knowledge. Il dogfood sul repository Knowledge non costituisce pilot applicativo né adozione automatica su altri repository. Git, Knowledge e autorità owner restano superiori a cache ed evidence; Tretnix.com resta nel workstream separato.
 
 La baseline pre-implementazione `94c5cb7818faaad0f82e14279d03ce76bf19d971` resta provenance del merge Development OS, non la baseline operativa corrente.
 
@@ -193,8 +198,10 @@ Servono PR, branch, commit completo, output dei controlli e report hydration per
 | START | `AdamDariOfficial/rito-studio-START`, `main@2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6`, ancestor validato `8fe09095eafb6be8083ddc8b8b7d79f2a21db483`, PR `#17` |
 | START historical lineage | tag annotato `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7` preservato come evidenza storica |
 | BUSINESS | `AdamDariOfficial/rito-studio-BUSINESS`, `main@3f0ff4d3ed8e675725d8d640c305ab61d47217d7`, ancestor validato `ccb50d7b7c6ffbeba96d33b02615a0f428018116`, PR `#10` |
-| BUSINESS PLUS | `AdamDariOfficial/rito-studio-BUSINESS-PLUS`, remote `main` verificato a `eba1a2a91fd3a531b4a4667d038b631758d0a664` |
-| Working branch PLUS riportata | `feat/rito-business-plus-complete` con delta controllato ancora non integrato |
+| BUSINESS PLUS | `AdamDariOfficial/rito-studio-BUSINESS-PLUS`, remote `main@a0ce8a2a4fb758e2d16bd5cb794e91d14f7726b5` verificato il 18 settembre 2026 (`VR`); tag annotato storico `family-business-plus-v1.0` preservato e dereferenziato allo stesso commit |
+| Baseline PLUS storica | `eba1a2a91fd3a531b4a4667d038b631758d0a664`, ancestor del `main` corrente (`VR`), non baseline operativa attuale |
+| Working branch PLUS storica riportata | `feat/rito-business-plus-complete` con delta non integrato nel ciclo precedente (`HR`); il checkout locale verificato per questo gate è `main@a0ce8a2...` |
+| Adozione Development OS PLUS | `IN PROGRESS`, non completata: `tretnix.project.json` candidato locale untracked, `.gitignore` radice tracciato senza `.tretnix/` (`VR` per stato Git locale, non per adozione) |
 | Backend live PLUS | staging Cloudflare con D1 + Durable Objects + rate limiting + Native RITO AdminAuth |
 | Auth staging | login nativo diretto raggiungibile; rifiuto credenziali non valide nel ramo normale; credenziale corretta ancora rifiutata, sessione non certificata |
 | E2E live | `/consulenza` → D1 → admin realtime/reconnect ancora da chiudere con evidenza diretta |
@@ -223,6 +230,19 @@ aggiornamento non autorizza modifiche a RITO Studio BUSINESS PLUS.
 
 La scelta Cloudflare resta provider-specifica per il fit del candidate PLUS e segue
 `TRX-DEC-035`; non costituisce un vincolo per l'intera famiglia Beauty & Wellness.
+
+Il prossimo gate, separato da questa riconciliazione Knowledge, è l'adozione Development OS nel repository applicativo RITO Studio BUSINESS PLUS:
+
+1. verificare la baseline applicativa frozen e il working tree;
+2. aggiungere `.tretnix/` al `.gitignore` radice tracciato tramite modifica Git revisionata;
+3. revisionare e finalizzare il candidato `tretnix.project.json`;
+4. eseguire `doctor` con la root Knowledge canonica;
+5. eseguire preflight, context, validate ed evidence con la stessa root Knowledge;
+6. misurare context cache MISS/HIT e comportamento della validation cache;
+7. registrare limiti e metriche del pilot;
+8. solo dopo, procedere all'implementazione parity/UI START/BUSINESS → PLUS nel relativo gate.
+
+Il manifest candidato untracked non prova l'adozione. Nessun browser, staging, produzione o deploy è stato verificato in questo closeout Knowledge.
 
 ---
 
@@ -256,7 +276,7 @@ La scelta Cloudflare resta provider-specifica per il fit del candidate PLUS e se
 
 ## 9. Ordine operativo
 
-1. mantenere Development OS v1 merged e operativo nella Knowledge; prossimo gate di adozione: pilot controllato su un repository applicativo soltanto con checkpoint stabile e autorizzazione esplicita;
+1. mantenere chiuso il gate tooling Development OS lato Knowledge dopo PR `#27` e verifica OR-01; proseguire il pilot applicativo `IN PROGRESS` su RITO Studio BUSINESS PLUS soltanto con il gate separato descritto nella sezione 6;
 2. mantenere Tretnix.com nel workstream e working tree separati;
 3. mantenere Forno Lume START congelato sulla baseline `2ed19ef9a4a886616bccd5aad2054c3027fec680`;
 4. mantenere Forno Lume BUSINESS congelato sulla baseline `ccea04cb0bb50e2624fe505bf7d3f25890b7d456`; riaprirlo soltanto per bug, regressione, sicurezza o requisito approvato;
