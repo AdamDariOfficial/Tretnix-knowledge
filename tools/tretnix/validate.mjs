@@ -18,6 +18,7 @@ import {
   pathMatches,
   prepareValidatorCommand,
   readJson,
+  reviewedScriptSha256,
   resolveOutputInside,
   runProcess,
   sha256,
@@ -175,7 +176,7 @@ async function assertAttestedScriptCurrent(repo, manifest, prepared) {
   if (!prepared.scriptPath) return;
   try {
     const script = await confineSourceFile(repo, prepared.scriptPath, manifest, "reviewed validator script");
-    if (sha256(await readFile(script)) !== prepared.scriptSha256) {
+    if (reviewedScriptSha256(await readFile(script)) !== prepared.scriptSha256) {
       throw new TretnixError("APPLICATION_STATE_DRIFT", "Reviewed validator script changed during validation", { reason: "ATTESTED_SCRIPT_CHANGED", path: prepared.scriptPath });
     }
   } catch (error) {

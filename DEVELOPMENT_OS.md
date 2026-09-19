@@ -1,7 +1,7 @@
 # Tretnix Development OS
 
-**Versione:** 1.4
-**Aggiornato:** 18 settembre 2026
+**Versione:** 1.5
+**Aggiornato:** 19 settembre 2026
 **Stato:** v1 e enablement del pilot applicativo merged nella Knowledge; gate tooling verificato per questo ciclo, prima adozione applicativa in corso
 
 ---
@@ -132,7 +132,7 @@ Tutti gli script locali (Node JS/TS, Python e PowerShell), anche se invocati tra
 
 Una validation ammette un solo fingerprint applicativo: il runtime ricontrolla lo stato prima di ogni validator/cache HIT, dopo ogni esecuzione e immediatamente prima dell'evidence. I validator devono lasciare invariato lo stato del repository. Una mutazione produce `APPLICATION_STATE_DRIFT`, interrompe la run senza nuova evidence corrente e non viene ripristinata automaticamente. Per gli script con `reviewed_script`, il digest attestato viene ricontrollato prima e dopo l'esecuzione. Questi controlli preservano l'equivalenza pratica senza promettere locking del filesystem.
 
-Le capability dichiarate non bastano a soddisfare i floor: TSC prova solo `typecheck`, ESLint solo `lint`, Vite build solo `build`, Git diff check solo `whitespace`. Uno script locale può attestare capability semantiche soltanto tramite `reviewed_script` nel manifest, soggetto a review dell'owner e vincolato a ID del validator, path confinato, SHA-256 dei byte dello script e insieme esatto di capability. Un cambio di identità, path, byte o capability richiede una nuova review e dichiarazione; l'attestazione non rende la cache riusabile e non dimostra da sola la correttezza semantica dello script. Il piano, i gate e l'evidence usano solo capability effettive. Il contratto della validation cache passa a `1.4.0` per il cambiamento delle condizioni di riuso/prova; resolver `1.3.0`, fingerprint `1.2.1` e schema v1 restano invariati.
+Le capability dichiarate non bastano a soddisfare i floor: TSC prova solo `typecheck`, ESLint solo `lint`, Vite build solo `build`, Git diff check solo `whitespace`. Uno script locale può attestare capability semantiche soltanto tramite `reviewed_script` nel manifest, soggetto a review dell'owner e vincolato a ID del validator, path confinato, SHA-256 dei byte sorgente canonici e insieme esatto di capability. In questo solo dominio hash, ogni coppia byte CRLF (`0D 0A`) viene canonicalizzata a LF (`0A`) in memoria; lone CR, encoding, newline finale e ogni altro byte restano significativi. Il fingerprint del repository non cambia. Un cambio significativo di identità, path, sorgente o capability richiede una nuova review e dichiarazione; l'attestazione non rende la cache riusabile e non dimostra da sola la correttezza semantica dello script. Il piano, i gate e l'evidence usano solo capability effettive. I validator Knowledge con `reviewed_script` usano il contract `1.2.0`; validation cache `1.4.0`, resolver `1.3.0`, fingerprint `1.2.1` e schema v1 restano invariati.
 
 L'evidence registra il commit, il remote e il digest dei sei contratti Knowledge; `validate` verifica che contratti e fonti `knowledge:` del context restino identici prima e dopo i validator. `evidence --knowledge <checkout>` ricontrolla queste identità e gli hash delle fonti prima di ripresentare un report applicativo. Una run con validator dipendenti da stato locale ignorato non è ripresentabile: richiede nuova `validate`. Il campo di identità Knowledge è additivo nello schema evidence v1; evidenze storiche prive del campo restano leggibili ma non ripresentabili.
 
