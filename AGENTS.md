@@ -78,12 +78,19 @@ Require:
 - an exact source commit or an explicitly closed set of allowed commits;
 - a clean or exactly resumable working-tree state;
 - a non-`main` target branch;
-- a manifest and exact file allowlist;
-- payload SHA-256 verification;
-- separate `Apply` and `Validate` scripts;
-- no automatic stage, commit, push, merge, deploy or migration execution;
-- manual review of status and diff;
-- browser/backend/staging gates reported separately.
+- a manifest, exact file allowlist, payload binding and final hashes;
+- a one-ZIP/one-block operator entry point when the package is delivered manually;
+- separate `Apply`, `Validate` and `Verify-Staged` responsibilities;
+- explicit staged-state contract for every validator;
+- exact-state recovery rather than heuristic resume;
+- audit/parity/read-only checks completed on the full candidate before owner review when required;
+- temporary browser harness only in ignored/constrained paths with `finally` cleanup;
+- no automatic stage, commit, push, PR, merge, deploy or migration execution;
+- manual review of status and diff before exact staging;
+- browser/backend/staging/production gates reported separately;
+- dynamic PR capability checks rather than a permanent assumption about connector permissions.
+
+If a validator forbids staged files, do not rerun it after `git add`; use the package `Verify-Staged` contract for exact staged allowlist, zero unstaged/untracked state, final hashes and cached whitespace checks. A validator that explicitly allows staged files may be rerun when required.
 
 A traditional `.patch` remains valid when it is the simplest format. In that case follow `TRX-DEC-022`, tie it to an exact archive, run `git apply --check`, test it on a second pristine extraction and keep later Git checkpoints separate.
 

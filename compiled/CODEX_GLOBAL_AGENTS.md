@@ -225,7 +225,13 @@ Never use `source-artifacts/**/historical-source-of-truth/` as the current basel
 
 ## Controlled Change Package
 
-When an approved non-trivial patch is prepared outside the canonical checkout, use the repository package defined by `skills/CONTROLLED_CHANGE_PACKAGE.md`: strict `Apply`, separate `Validate`, exact allowlist and hashes, idempotent recovery, complete logs, checks for unstaged, untracked and staged whitespace, and no automatic stage, commit, push, merge, deployment or migration execution.
+When an approved non-trivial patch is prepared outside the canonical checkout, use the current `skills/CONTROLLED_CHANGE_PACKAGE.md` contract: one-ZIP/one-block operator entry, strict `Apply`, separate `Validate`, `Verify-Staged`, exact allowlist and final hashes, manifest/payload binding, PowerShell 5.1-safe collection handling where applicable, exact-state resumability and complete CCP logs.
+
+Finish required audit/parity/read-only checks on the complete candidate before owner review. Temporary browser harnesses may exist only in ignored/constrained paths and must be cleaned in `finally` with Git state rechecked.
+
+Every validator declares whether staged files are `allowed`, `forbidden` or `not_applicable`. Never rerun a `forbidden` validator after `git add`; use exact staged allowlist, zero unstaged/untracked state, final hashes and `git diff --cached --check` through `Verify-Staged`. Do not assign a commit identity to uncommitted candidate content.
+
+No package automatically stages, commits, pushes, opens/merges a PR, deploys or executes migrations. Treat PR creation via integrations as a dynamic capability and fall back to an owner-created PR only after verifying base/head/SHA and then verifying the resulting PR.
 
 ## Tretnix Development OS
 

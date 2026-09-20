@@ -9,91 +9,125 @@ Usare questo template per descrivere un pacchetto di modifica controllata Tretni
 - prepared date:
 - prepared by:
 - package version:
+- CCP procedure version:
 - objective:
 - target branch:
+- operator delivery: one ZIP / one PowerShell block
 - related decisions:
 - related specification:
+
+## Package integrity
+
+- ZIP filename:
+- ZIP SHA-256:
+- internal checksum file:
+- manifest/payload binding:
+- payload extra-file policy: fail closed
 
 ## Repositories
 
 Per ogni repository:
 
 - display name:
-- remote URL:
-- local path rule:
+- remote repository identity:
+- accepted remote forms:
+- local path resolution rule:
 - source branch:
 - allowed base SHA:
 - target branch:
-- package manager:
+- candidate identity rule: base SHA + exact allowlist + final hashes
+- package manager/runtime:
 - generated files allowed for recovery:
+- ignored runtime/harness paths:
 - migrations included as files:
 - migrations executed automatically: no
 - deploy executed automatically: no
 
 ## File allowlist
 
-| Repository | Path | Operation | Baseline SHA-256 or base commit | Payload SHA-256 |
+| Repository | Path | Operation | Baseline SHA-256 / base identity | Final SHA-256 |
 |---|---|---|---|---|
 | | | modify / create / delete | | |
 
-## Validation commands
+## Validation commands and staged-state contract
 
-| Repository | Command | Required | Notes |
-|---|---|---:|---|
-| | | yes / no | |
+| Repository | Validator / Command | Required | Staged-state contract | Notes |
+|---|---|---:|---|---|
+| | | yes / no | allowed / forbidden / not_applicable | |
 
-## Explicit exclusions
+## QA aggregation
 
-- stage:
-- commit:
-- push:
-- pull request:
-- merge:
-- deploy:
-- database migration execution:
-- production writes:
-- unrelated formatting:
-- dependency updates:
+- audit/parity required before owner review:
+- browser QA:
+- backend/RLS:
+- responsive widths:
+- keyboard:
+- reduced motion:
+- staging:
+- production:
+- temporary browser harness rule: ignored/constrained path + finally cleanup + post-cleanup Git check
+
+## Explicit exclusions and gates
+
+- automatic stage: no
+- automatic commit: no
+- automatic push: no
+- automatic pull request: no
+- automatic merge: no
+- automatic deploy: no
+- database migration execution: no
+- DNS mutation: no
+- secret/provisioning mutation: no
+- production writes: no
+- unrelated formatting: no
+- dependency updates: no unless explicitly scoped
 
 ## Recovery states
 
 - clean base:
 - branch created only:
-- known partial application:
-- complete application:
+- known partial application by exact hashes:
+- complete candidate:
+- staged candidate verification:
 - generated-file recovery:
 - unexpected state behavior: stop without destructive cleanup
 
-## Acceptance evidence
+## Package self-test evidence
 
 - archive integrity:
 - manifest/payload match:
+- internal checksums:
 - sensitive-file scan:
+- forbidden-action scan:
+- static syntax review:
+- Windows PowerShell 5.1 compatibility review/run:
 - clean-base fixture:
+- branch-created-only fixture:
 - resumability fixture:
+- complete/idempotent fixture:
+- unexpected-state negative fixture:
+- staged verification fixture:
 - unstaged whitespace check:
 - untracked text whitespace scan:
-- staged whitespace check after `git add`:
-- static syntax check:
-- checks not executed in preparation environment:
+- staged whitespace check:
+- checks not executable in preparation environment:
 
-## Required human QA
+## PR capability
 
-- browser:
-- responsive widths:
-- keyboard:
-- reduced motion:
-- backend/RLS:
-- staging:
-- production:
+- direct PR creation capability checked at gate:
+- current observation/date:
+- fallback when unavailable: verified base/head/SHA + direct PR link + title/body + owner creates + post-create verification
+- observation is time-bound and must be rechecked after tool/permission changes: yes
 
 ## Required final report
 
-- initial SHA and branch;
-- final changed-file list;
+- initial repository/remote/branch/SHA;
+- package ZIP SHA-256;
+- candidate identity and final changed-file list;
 - Apply result;
 - Validate matrix;
-- warnings;
-- manual QA result;
-- remaining risks;
-- commit/push/PR/migration/deploy state.
+- audit/parity/QA result;
+- warnings and unavailable checks;
+- owner review result;
+- Verify-Staged result;
+- separate stage/commit/push/PR/migration/merge/deploy state.

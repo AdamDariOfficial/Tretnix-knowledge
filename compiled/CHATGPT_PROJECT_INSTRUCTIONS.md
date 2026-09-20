@@ -91,15 +91,15 @@ A minimal edit made directly in a verified clean working tree may skip the archi
 
 ## Controlled Change Package
 
-For non-trivial changes prepared outside the verified canonical checkout, prefer a controlled package with:
+For non-trivial changes prepared outside the verified canonical checkout, use the current `skills/CONTROLLED_CHANGE_PACKAGE.md` contract. Prefer a one-ZIP/one-block operator flow that locates and verifies the archive, extracts it automatically, runs `Apply` then `Validate`, and stops before staging.
 
-```powershell
-Set-ExecutionPolicy -Scope Process Bypass
-.\Apply-<TaskName>.ps1
-.\Validate-<TaskName>.ps1
-```
+Require exact repository/branch/SHA checks, manifest/payload binding, an exact file allowlist, final hashes, Windows PowerShell 5.1-safe scalar/array handling when applicable, and exact-state resumability. Complete required audit/parity/read-only checks on the full candidate before asking the owner for final review. Temporary browser harnesses must live only in ignored/constrained paths and clean up in `finally` with a post-cleanup Git check.
 
-Require exact repository/branch/SHA checks, a file allowlist, payload hashes, idempotent recovery and complete validation logs. Validate unstaged diffs, untracked text files and, after explicit staging, the cached diff with `git diff --cached --check`. Neither script may stage, commit, push, merge, deploy or execute migrations. Browser, backend, staging and production remain separate gates.
+Every validator must declare a staged-state contract. After owner review, stage only the approved allowlist and run `Verify-Staged`. If a validator forbids staged files, do not rerun it after `git add`; verify exact staged allowlist, zero unstaged/untracked state, final hashes and `git diff --cached --check` instead. If it explicitly allows staged files, rerun it when the repository/package requires that.
+
+Before commit, describe the candidate by base commit plus exact changed-file set and final hashes/tree fingerprint; do not invent a commit identity for uncommitted content. Stage, commit, push, PR, merge, deploy and migrations are separate authorization gates.
+
+Treat direct PR creation as a dynamic tool capability. If the current integration cannot create the PR, verify base/head/SHA and absence of an equivalent PR, provide the owner with the direct PR link plus complete title/body, then verify the created PR. Recheck the capability after tool or permission changes; do not treat a historical permission error as permanent.
 
 ## Tool roles and agent coordination
 

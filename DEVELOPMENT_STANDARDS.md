@@ -1,7 +1,7 @@
 # Tretnix Development Standards
 
-**Versione:** 1.13
-**Aggiornato:** 14 settembre 2026
+**Versione:** 1.14
+**Aggiornato:** 20 settembre 2026
 **Ambito:** tutti i progetti Tretnix, salvo eccezioni documentate
 
 Le parole **DEVE**, **NON DEVE**, **DOVREBBE** e **PUÒ** esprimono il livello di obbligatorietà.
@@ -1109,43 +1109,80 @@ Non cancellare la sorgente originale prima di aver verificato integrità, comple
 
 Per modifiche non banali preparate fuori dal working tree canonico, usare la procedura definita in [`skills/CONTROLLED_CHANGE_PACKAGE.md`](./skills/CONTROLLED_CHANGE_PACKAGE.md) e approvata da `TRX-DEC-032`.
 
-Il pacchetto DEVE separare:
+### Consegna operatore
+
+Il default di consegna è **one ZIP / one-block**:
 
 ```text
-Apply
-Validate
-QA manuale/backend
-commit
-push
-pull request
-staging
-merge/deploy
+download ZIP
+→ localizzazione e SHA-256 dell'archivio
+→ estrazione automatica
+→ Apply
+→ Validate
+→ QA aggregato quando richiesto
+→ review owner
+→ exact stage
+→ Verify-Staged
+→ commit
+→ push
+→ pull request
+→ merge/deploy nei gate separati
 ```
+
+L'operatore non deve estrarre manualmente lo ZIP né assemblare una sequenza di comandi quando il package può orchestrare in sicurezza localizzazione, checksum, estrazione, `Apply` e `Validate`. Il blocco iniziale si ferma prima di qualunque stage o mutazione remota.
 
 ### Apply
 
 Lo script di applicazione DEVE:
 
 - verificare remote, branch, commit e working tree;
+- normalizzare esplicitamente in array gli output nativi che possono avere cardinalità `0/1/N` su Windows PowerShell 5.1;
+- evitare interpolazioni ambigue come `"$relative:"`; usare `${relative}` quando necessario;
 - rifiutare stage o modifiche fuori allowlist;
-- applicare soltanto payload con hash verificati;
-- supportare ripresa idempotente di stati conosciuti;
+- verificare binding manifest/payload e checksum prima della modifica;
+- applicare soltanto lo stato autorizzato e verificare gli hash finali;
+- supportare ripresa idempotente soltanto per stati exact-state conosciuti;
 - fermarsi senza cleanup distruttivo su uno stato inatteso;
-- non eseguire commit, push, deploy o migrazioni.
+- non eseguire stage, commit, push, PR, merge, deploy o migrazioni.
 
-### Validate
+### Validate e QA aggregato
 
 Lo script di validazione DEVE:
 
-- usare soltanto comandi realmente presenti;
-- registrare output completo ed exit code;
-- produrre una matrice per tutte le repository coinvolte;
+- usare soltanto comandi realmente presenti e dichiarati;
+- registrare output ed exit code nei log CCP consentiti;
+- produrre una matrice completa dei gate automatici richiesti;
+- completare audit/parity/read-only checks richiesti sul candidate completo prima della review owner;
 - conservare il diff prima di ripristinare file generati pre-approvati;
 - distinguere lint semantico e formattazione;
 - eseguire il controllo whitespace del diff non staged;
-- eseguire il controllo whitespace del diff staged quando esiste uno stage;
 - controllare separatamente i file testuali untracked, che `git diff --check` non vede;
-- dichiarare esplicitamente browser, backend, staging e produzione non verificati.
+- dichiarare esplicitamente browser, backend, staging e produzione `UNVERIFIED` o `NOT_REQUIRED` secondo il task.
+
+Un browser harness temporaneo DEVE vivere soltanto in un path ignorato e confinato, essere rimosso in `finally` e lasciare invariato lo stato Git al termine.
+
+### Candidate identity e staged-state contract
+
+Prima del commit il candidate viene identificato tramite base commit, allowlist e hash/fingerprint finali. Un report read-only non deve attribuire allo stato non committato una commit identity inesistente.
+
+Ogni validator DEVE dichiarare uno staged-state contract, almeno `allowed`, `forbidden` o `not_applicable`.
+
+Dopo la review owner, `Verify-Staged` DEVE verificare:
+
+- staged allowlist esatta;
+- zero modifiche unstaged;
+- zero file untracked non autorizzati;
+- hash finali del candidate;
+- `git diff --cached --check`;
+- eventuali validator post-stage soltanto quando il loro staged-state contract lo consente.
+
+Se un validator vieta staged files, NON deve essere rilanciato dopo `git add`. La verifica staged esatta sostituisce soltanto quel rerun incompatibile, non i gate già richiesti e completati sul candidate pre-stage.
+
+### Self-test e gate remoti
+
+Prima della consegna il package DEVE verificare almeno integrità ZIP, binding manifest/payload, hash, sintassi statica degli script, fixture clean/resume/unexpected-state, idempotenza, forbidden-action scan e compatibilità dichiarata del runtime. Le prove non eseguite devono essere indicate esplicitamente.
+
+Stage, commit, push, PR, merge, deploy, migration, DNS, secret mutation e production write restano gate distinti. La capability di apertura PR tramite tool viene verificata al momento del gate; un fallback manuale osservato in una sessione non diventa una limitazione permanente.
 
 Il controllo `Set-ExecutionPolicy -Scope Process Bypass` è ammesso soltanto per la sessione PowerShell corrente e non deve modificare policy persistenti.
 
