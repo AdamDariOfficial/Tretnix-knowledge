@@ -1,7 +1,7 @@
 # Tretnix Decision Log
 
-**Versione:** 1.17
-**Aggiornato:** 16 settembre 2026
+**Versione:** 1.18
+**Aggiornato:** 20 settembre 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
 
@@ -1117,27 +1117,50 @@ Finché la repository è pubblica è vietato versionare:
 
 **Stato:** approvata
 **Data:** 27 luglio 2026
+**Aggiornata:** 20 settembre 2026
 **Ambito:** repository Tretnix e modifiche multi-repository
 
 ### Contesto
 
 Durante il ciclo Impeccable su Tretnix, Forno Lume START e Forno Lume BUSINESS, i pacchetti PowerShell separati `Apply` e `Validate` hanno protetto le baseline, rilevato stati inattesi, consentito riprese sicure e prodotto evidenza completa dei controlli.
 
+Il 20 settembre 2026 il workflow è stato validato operativamente su RITO Studio BUSINESS PLUS con consegna a singolo ZIP e singolo blocco PowerShell. Le prove hanno anche evidenziato due classi di errore da prevenire esplicitamente nei package futuri: ambiguità scalar/array di Windows PowerShell 5.1 e interpolazioni come `"$relative:"`, che devono usare `${relative}` quando i due punti seguono immediatamente la variabile.
+
 ### Decisione
 
-Per modifiche non banali preparate fuori dal working tree canonico, Tretnix adotta il **Controlled Change Package**:
+Per modifiche non banali preparate fuori dal working tree canonico, Tretnix adotta il **Controlled Change Package**. La consegna operatore standard è:
 
-```powershell
-Set-ExecutionPolicy -Scope Process Bypass
-.\Apply-<TaskName>.ps1
-.\Validate-<TaskName>.ps1
+```text
+download ZIP
+→ un solo blocco PowerShell
+→ localizzazione ZIP
+→ verifica SHA-256 dell'archivio
+→ estrazione automatica
+→ Apply
+→ Validate
+→ QA aggregato quando richiesto
+→ review finale owner
+→ stage esatto
+→ Verify-Staged
+→ commit
+→ push
+→ pull request
+→ merge/deploy soltanto nei rispettivi gate
 ```
 
-Lo script `Apply` verifica repository, remote, branch, commit, working tree, allowlist e hash; applica soltanto i file approvati ed è idempotente.
+`Apply`, `Validate` e `Verify-Staged` restano responsabilità tecniche separate anche quando il primo avvio è orchestrato da un unico blocco. Il blocco iniziale DEVE fermarsi prima di stage, commit, push, PR, merge, deploy o migrazioni.
 
-Lo script `Validate` esegue i comandi già definiti dal repository, conserva log ed exit code, gestisce soltanto file generati pre-approvati e distingue i gate automatici dai controlli manuali.
+`Apply` verifica repository, remote, branch, commit, working tree, allowlist, binding manifest/payload e hash finali; applica soltanto lo stato autorizzato, riconosce stati parziali solo tramite identità esatte ed è idempotente.
 
-Entrambi gli script non possono eseguire automaticamente stage, commit, push, pull request, merge, deploy o migrazioni database. Browser, backend, staging e produzione restano gate umani separati.
+`Validate` esegue i comandi definiti dal repository, conserva i log CCP consentiti, aggrega i gate automatici richiesti e separa chiaramente QA browser/backend/staging/production. Audit, parity e controlli read-only richiesti sul candidate completo devono essere completati prima di chiedere review all'owner, salvo un blocco reale che richieda una decisione.
+
+Ogni validator DEVE dichiarare il proprio **staged-state contract**. Se accetta file staged, può essere rieseguito dopo lo stage quando richiesto. Se vieta file staged, NON deve essere rilanciato dopo `git add`: `Verify-Staged` usa invece allowlist staged esatta, zero modifiche unstaged, zero untracked, hash finali e `git diff --cached --check`, oltre agli altri controlli read-only compatibili.
+
+Prima del commit il candidate non possiede ancora una commit identity propria. Deve quindi essere identificato come `base commit + exact changed-file set + final hashes` o fingerprint/tree identity equivalente. I report read-only non devono inventare un commit SHA per uno stato non ancora committato; dopo il commit si verifica che il commit/tree risultante corrisponda al candidate revisionato.
+
+Un browser harness temporaneo è ammesso soltanto in path ignorati e confinati, con cleanup in `finally` e controllo dello stato Git prima e dopo. Non deve diventare parte del candidate per errore.
+
+Stage, commit, push, apertura PR, merge, deploy e migrazione restano gate distinti con autorizzazione esplicita. La possibilità di creare direttamente una PR tramite integrazione è una capability dinamica: se non disponibile, si verificano base/head/SHA e assenza di PR, si consegnano link diretto, titolo e body completi all'owner, poi si verifica la PR creata. Un errore di permesso osservato in una sessione non viene trattato come limitazione permanente e la capability va ricontrollata periodicamente e dopo modifiche di strumenti o permessi.
 
 La procedura canonica vive in:
 
@@ -1147,12 +1170,12 @@ skills/CONTROLLED_CHANGE_PACKAGE.md
 
 ### Conseguenze
 
-- ChatGPT può preparare un pacchetto soltanto per uno scope approvato e una baseline identificabile.
-- Il pacchetto deve includere manifest, hash, allowlist, esclusioni e istruzioni di ripresa.
-- I comandi repository-specifici restano l’autorità per typecheck, lint, test e build.
-- Un formatter globale non viene usato per nascondere errori lint senza approvazione esplicita.
+- Il pacchetto deve includere manifest, allowlist, binding e checksum del payload, hash finali, esclusioni, staged-state contract e stati di ripresa esatti.
+- Il self-test del package copre almeno sintassi statica, binding manifest/payload, integrità ZIP, fixture clean/resume/unexpected-state e scansione delle azioni vietate.
+- Windows PowerShell 5.1 deve essere trattato come runtime supportato quando il package è destinato al workflow Windows; output scalari e collezioni da helper nativi devono essere normalizzati esplicitamente.
+- I comandi repository-specifici restano l'autorità per typecheck, lint, test e build; il package non inventa validator.
+- Il successo automatico non autorizza implicitamente review, stage, commit, push, PR, merge, migrazione o deploy.
 - Una modifica piccola in un working tree verificato può continuare a usare il normale workflow di branch e diff.
-- Il successo dei controlli automatici non autorizza implicitamente commit, push, migrazione o deploy.
 
 ---
 

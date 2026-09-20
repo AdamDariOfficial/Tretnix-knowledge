@@ -2,8 +2,8 @@
 
 Fonte canonica per identità, decisioni, standard tecnici, repository, procedure operative e adattatori degli strumenti Tretnix.
 
-**Versione:** 1.12
-**Aggiornato:** 16 settembre 2026
+**Versione:** 1.13
+**Aggiornato:** 20 settembre 2026
 **Stato:** operativo
 **Visibilità corrente:** repository GitHub pubblica durante il completamento dell’audit e del consolidamento Tretnix
 **Visibilità successiva:** passaggio a privata soltanto dopo completamento del ciclo, verifica delle dipendenze di accesso e nuova conferma esplicita del proprietario (`TRX-DEC-031`)
@@ -211,15 +211,20 @@ Il workflow `.github/workflows/knowledge-validation.yml` usa Python sulle pull r
 
 ### `skills/`
 
-Contiene procedure riutilizzabili già validate sul lavoro reale. Il Controlled Change Package separa applicazione, validazione, QA e operazioni Git/remoto tramite script PowerShell controllati.
+Contiene procedure riutilizzabili già validate sul lavoro reale. Il Controlled Change Package v1.2 usa un flusso one-ZIP/one-block per localizzazione, checksum, estrazione, `Apply` e `Validate`, poi si ferma prima dei gate Git/remoti. Dopo una sola review finale owner, lo stage esatto viene controllato da `Verify-Staged` prima del commit.
 
-Esecuzione standard:
+Sequenza logica:
 
-```powershell
-Set-ExecutionPolicy -Scope Process Bypass
-.\Apply-<TaskName>.ps1
-.\Validate-<TaskName>.ps1
+```text
+one-block: ZIP → SHA-256 → extract → Apply → Validate
+→ QA aggregato quando richiesto
+→ owner review
+→ exact stage
+→ Verify-Staged
+→ commit → push → PR → merge/deploy nei gate separati
 ```
+
+Ogni validator dichiara se accetta file staged. Un validator che li vieta non viene rilanciato dopo `git add`; la verifica staged usa allowlist esatta, zero unstaged/untracked, hash finali e cached whitespace check.
 
 ### `templates/project-foundation`
 
@@ -428,11 +433,13 @@ git -c core.whitespace=cr-at-eol diff --check
 git status --short
 ```
 
-Dopo `git add`, ripetere il validatore ed eseguire:
+Per **questa repository**, il validator Knowledge supporta esplicitamente anche file staged. Dopo `git add`, può quindi essere ripetuto insieme a:
 
 ```powershell
 git -c core.whitespace=cr-at-eol diff --cached --check
 ```
+
+Questa è una proprietà del validator Knowledge, non una regola universale: i CCP seguono lo staged-state contract dichiarato per ciascun validator.
 
 Su ambienti con Python è ammesso il comando equivalente:
 
