@@ -36,16 +36,17 @@ https://forno-lume.tretnix.com
 
 ## Verified project state
 
-Confirmed as of 20 July 2026:
+Current repository state reconciled for this Knowledge kit:
 
-- the agent foundation is merged into `main`;
-- audit, remediation and technical closure are complete at source baseline `d15f639267dfdd57194536154abfa1d0ff3b4542`;
-- production verification was completed successfully by the project owner;
-- the project is documented and frozen;
-- `bun run typecheck`, `bun run build`, the client, SSR and Nitro/Cloudflare production builds, and `git diff --check` passed;
-- ESLint with the Prettier rule disabled returned zero errors;
-- full lint does not pass because the Windows checkout uses CRLF while Prettier expects LF;
-- six pre-existing `react-refresh/only-export-components` warnings remain in shadcn scaffold files and were not introduced by remediation.
+- project `main` is `2ed19ef9a4a886616bccd5aad2054c3027fec680`;
+- the validated implementation ancestor for the 10 September cross-family reconciliation is `0730a759c6f8bb71f7ad3a3fb810ee8540e18556`;
+- PR `#17` merged the reconciliation into `main`;
+- `d15f639267dfdd57194536154abfa1d0ff3b4542` remains the historical technical-closure source baseline from 18 July 2026;
+- `a817903923c1bbfe177d8b59e70a4aa1137b7ab1` remains the historical final-polish freeze;
+- Cloudflare post-merge SUCCESS and owner `prefers-reduced-motion` PASS are recorded in the canonical Knowledge for the current baseline;
+- the project remains released and frozen.
+
+The historical closure checks remain part of the project record. This kit reconciliation does not rerun the application build, browser QA or deployment and must not be cited as a new runtime verification.
 
 Further source changes require a confirmed bug, confirmed regression, security issue or explicitly approved product requirement, followed by an explicit approved task. Backlog alone does not authorize implementation.
 

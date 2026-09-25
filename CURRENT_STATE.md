@@ -1,7 +1,7 @@
 # Tretnix Current State
 
-**Versione:** 1.18
-**Aggiornato:** 18 settembre 2026
+**Versione:** 1.19
+**Aggiornato:** 24 settembre 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
 ---
@@ -22,34 +22,21 @@
 | Campo | Valore |
 |---|---|
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
-| Baseline `main` corrente verificata | `7c12a6ba5a843c31d21de143344be79ac03ed4fc` (`VR`, ref remoto e Git dopo fetch) |
-| Baseline storica pre-update backup/DR | `43a29137107f56bc72ed5ff5a5982c0b16a3eda2` |
-| Snapshot canonico ricevuto | `Tretnix-knowledge-de29f4f3.zip` |
-| Development pack | acquisito, verificato, estratto e integrato in `main` |
-| Family kit | Beauty v1.1, Professional v1.0 e Home v1.0 presenti |
+| Baseline `main` corrente verificata | `e76b626355d5c3aed8a8b2c2905d4f1bde0090d2` (`VR`, `main` remoto verificato il 24 settembre 2026) |
+| Baseline precedente CCP v1.2 | `01bf3a6c07f26c0bd39a1a3685ce62eef4f91a70`, merge PR `#30` — `docs: formalize CCP operator workflow v1.2` |
+| ChatGPT workstream enforcement | PR `#31` merged; source `d2446f6ec344a838b3398632804ebf912c90a645`; merge `e76b626355d5c3aed8a8b2c2905d4f1bde0090d2` |
+| Adapter ChatGPT versionati | full + compact instructions, `CHATGPT_KNOWLEDGE_ROUTER.md`, `CHATGPT_WORKSTREAM_PLAYBOOK.md`; tutti derivati dalla Knowledge, non fonti autonome |
+| Controlled Change Package | procedura canonica v1.2: one-ZIP/one-block, `Apply` → `Validate` → owner review → exact stage → `Verify-Staged`; stage/commit/push/PR/merge/deploy restano gate separati |
+| Development OS | tooling condiviso merged e operativo nella Knowledge; cache/evidence locali sotto `.tretnix/` non sostituiscono Git o l'autorità owner |
+| Prima adozione applicativa Development OS | RITO Studio BUSINESS PLUS PR `#4` merged il 20 settembre 2026; manifest, static validator e ignore `.tretnix/` sono versionati nel repository applicativo |
+| Evidenza | `VR` per commit, PR e contenuti versionati; gli esiti locali restano distinti dalle verifiche runtime/deploy non rieseguite in questa riconciliazione |
 | Visibilità | pubblica temporaneamente secondo `TRX-DEC-031` |
-| Validazione knowledge | PR `#22`: check `validate` PASS storico (`VR`); PR `#27`: Knowledge validation/check `validate` PASS sul source e sul merge (`VR`, run GitHub identificabili). Verifica locale post-merge su `7c12a6ba...`: suite Development OS `93/93 PASS`, Knowledge validator PASS, doctor PASS e `git diff --check` PASS (esecuzione diretta riportata nel task, `HR` finché non versionata come artefatto) |
-| Evidenza | `VR` per commit, archive e contenuti versionati |
-| Controlled Change Package | canonico in `main` da `996d6b8`; `Apply → Validate` è il metodo standard per cambi non banali esterni |
-| Development OS v1 | implementazione base e enablement del pilot applicativo merged; gate tooling lato Knowledge verificato e chiuso per questo ciclo; adozione applicativa ancora incompleta |
-| Pull request Development OS | `#22` — `feat: add Tretnix Development OS v1`, merged il 15 settembre 2026 (`VR`, Git e API GitHub) |
-| Source commit Development OS | `0e5a9f03e1cd2774af4d40aeb441157bbda65446` |
-| Merge commit Development OS | `5f9a7a1d669cea8b0165832017e81f24a94480f5` |
-| Closure post-merge Development OS v1 | PR `#23`, source `875a55bd70f09bba391710517eeb86d81dfee875`, merge `20ab883ff3291f2061c2b9b08c2bfb927b2bb4d5` (`VR`, provenance storica) |
-| Baseline storica immediatamente prima di PR `#27` | `main@0d6103c9f60b0b44eec7edae627ed240ad257499`, primo parent del merge applicativo (`VR`) |
-| Enablement pilot applicativo | PR `#27` — `feat: enable Development OS application pilot`, source `89341884d6b320d7d8c002987b2c0c495f5bc7c7`, merge `7c12a6ba5a843c31d21de143344be79ac03ed4fc` (`VR`) |
-| OR-01 / F-01 / F-02 | chiusi nel tooling merged; OR-01 verificato post-merge su `7c12a6ba...` con regressioni mirate e suite `93/93 PASS` (esecuzione locale riportata, `HR`) |
-| Branch storico Development OS | `codex/development-os-v1`, eliminato locale e remoto dopo merge (`VR`, branch locali e `ls-remote`) |
-| Final independent Gate B pre-merge | `APPROVE_FOR_COMMIT` (`HR`, esito riportato dall'owner nel task di closeout) |
-| Suite finale pre-merge | `69/69 PASS` (`HR`, esito riportato dall'owner; il dogfood post-merge è un'esecuzione distinta) |
-| Working tree post-merge storico | verificato clean all'avvio su `main@5f9a7a1d669cea8b0165832017e81f24a94480f5`, uguale a `origin/main` nel ciclo PR `#23` (`VR`) |
-| Pilot applicativo | `IN PROGRESS` su RITO Studio BUSINESS PLUS; l'adozione nel repository applicativo non è ancora completata né registrata in Git |
 
-Development OS v1 introduce manifest, context resolver/cache, fingerprint, validation planner/cache, evidence e quattro procedure operative, ora presenti in `main`. PR `#27` ha unito le protezioni necessarie al pilot applicativo; il controllo post-merge ha verificato OR-01 senza avviare l'adozione PLUS. Gli output `.tretnix/` sono locali e ignorati nella Knowledge. Il dogfood sul repository Knowledge non costituisce pilot applicativo né adozione automatica su altri repository. Git, Knowledge e autorità owner restano superiori a cache ed evidence; Tretnix.com resta nel workstream separato.
+La PR `#31` formalizza il comportamento operativo di ChatGPT: capability e autorizzazione sono gate distinti; un'operazione non supportata nella sessione viene marcata `UNSUPPORTED_IN_CURRENT_SESSION` e non viene ritentata in loop. PR, merge e cancellazione branch restano gate indipendenti. Il router e il playbook in `compiled/` aiutano ChatGPT a trovare le fonti canoniche e ad applicare il workstream senza duplicare la Knowledge nei Project Sources.
 
-La baseline pre-implementazione `94c5cb7818faaad0f82e14279d03ce76bf19d971` resta provenance del merge Development OS, non la baseline operativa corrente.
+L'adozione Development OS in RITO Studio BUSINESS PLUS non rende automaticamente conclusi browser, backend, staging o produzione: questi restano gate del progetto e devono essere documentati con evidenza propria. Tretnix.com resta un workstream separato.
 
-La riconciliazione cross-family è confluita storicamente in `main@c693dcc25979a93afab3c8cfcdb43f943baee187`; le baseline precedenti restano nella cronologia Git e nel registro degli artefatti.
+La baseline pre-implementazione `94c5cb7818faaad0f82e14279d03ce76bf19d971` e le baseline intermedie Development OS restano provenance storica nella cronologia Git, non riferimenti operativi correnti.
 
 ---
 
@@ -139,30 +126,35 @@ Forno Lume BUSINESS PLUS conserva il lineage già verificato dal parent storico 
 | Repository | `forno-lume-BUSINESS-PLUS` |
 | Repository remoto | `https://github.com/AdamDariOfficial/forno-lume-BUSINESS-PLUS.git` |
 | Branch principale | `main` |
-| Parent BUSINESS frozen | `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` |
-| Primo commit PLUS | `54751867c9bfe30a34cf5081409317e53ca0ee67` |
-| Merge bootstrap Lovable | `6dd30ec251a2c808de3692fb4e7cf43a4f10e2f6` |
-| Checkpoint bootstrap validato | `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e` |
-| Stato | `BOOTSTRAP_VALIDATED / PRODUCT_SCOPE_PENDING` |
-| Package D BUSINESS | pendente e separato; non assorbito né autorizzato dal progetto PLUS |
-| Evidenza | `VR` per lineage Git, checkpoint, working tree e validation automatizzata; browser QA e deploy non eseguiti |
+| Parent BUSINESS frozen storico | `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9` |
+| Bootstrap validato storico | `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e` |
+| Candidate di integrazione | `a2c3c8dbffece8e0a7be2656e3c01ef367981eef` |
+| Main / merge corrente | `3f1659d7c5ab51c4167eb31d51ee3d9b19239eb6` |
+| Pull request | `#1` — `feat: finalize Forno Lume Business Plus`, merged il 7 settembre 2026 |
+| Scope PR | 87 file nel candidate approvato |
+| Stato | `IMPLEMENTATION_MERGED / SECURITY_CLOSEOUT_PASS_RECORDED / PRODUCTION_NOT_AUTHORIZED` |
+| Package D BUSINESS | resta separato; non assorbito né autorizzato dal progetto PLUS |
+| Evidenza | `VR` per lineage, commit, PR e contenuti versionati; staging/security è registrato nella PR `#1` e non è stato rieseguito live in questa riconciliazione |
 
-Il bootstrap è stato creato dal parent frozen BUSINESS richiesto. Il primo commit PLUS `54751867c9bfe30a34cf5081409317e53ca0ee67` ha come parent diretto `389bd1eec59fe8680cb1d6e685fac77e6c7c0df9`; il checkpoint corrente `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e` conserva quindi l'ancestry canonica richiesta.
+Il bootstrap `bdfcb81...` resta una tappa storica del lineage, ma non è più la baseline prodotto corrente. La PR `#1` integra il candidate BUSINESS PLUS completo con prenotazioni, eventi pubblici, richieste per eventi privati, hero management, admin mobile-first e architettura live Cloudflare con D1, R2, Durable Objects/WebSocket, rate limiting e Native AdminAuth.
 
-Il delta bootstrap rispetto al frozen BUSINESS è limitato a `package.json`, `bun.lock` e `README.md`. In `package.json`, `@Lovable.dev/vite-tanstack-config` passa da `^2.7.1` a `2.9.1`; il lockfile viene aggiornato di conseguenza e `README.md` viene aggiunto dal remix. Non risultano modifiche ai sorgenti applicativi nel delta bootstrap.
+La PR `#1` registra come evidenza di closeout staging/security:
 
-Validation locale registrata il 10 agosto 2026 sul checkpoint `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e`:
+- verdict `SECURITY_CLOSEOUT_PASS`;
+- Worker version `980acef3-e0c1-4a72-9cad-a7a0352b8c8f`;
+- Worker tag `fl-security-2c91ea4c2c4e138d`;
+- candidate fingerprint `2c91ea4c2c4e138d3a2a640b1d87dc9bb64cb0e98d6f96cdc5f97da4cf041f12`;
+- direct security headers PASS;
+- HTTP → HTTPS entry routes PASS;
+- browser CSP PASS;
+- G21 runtime PASS;
+- Trivy PASS;
+- source secret scan PASS;
+- final ZAP adjudication PASS.
 
-- `bun install --frozen-lockfile`: superato;
-- `bun run typecheck`: superato;
-- `bun run lint`: exit `0`, con `0` errori e `8` warning `react-refresh/only-export-components`;
-- `bun run build`: superato per client, SSR e Nitro Cloudflare module;
-- `src/routeTree.gen.ts`: residuo post-build classificato come solo EOL tramite `git diff --quiet --ignore-cr-at-eol`, quindi ripristinato;
-- working tree finale: pulita.
+Questi risultati sono evidenza versionata del ciclo chiuso nella PR; questa riconciliazione Knowledge non li sostituisce con una nuova verifica live.
 
-Browser QA e deploy non sono stati eseguiti. Il checkpoint `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e` è quindi un bootstrap tecnico validato, non una baseline prodotto BUSINESS PLUS completata.
-
-La descrizione e il `README.md` ereditati dal remix contengono ancora wording storico START e non costituiscono la specifica attiva BUSINESS PLUS. Il Project Knowledge Lovable è stato configurato come guardrail operativo per identità PLUS, parent frozen, separazione del Package D e gate di implementazione; la specifica prodotto BUSINESS PLUS resta da definire e approvare prima di modifiche funzionali.
+La produzione resta esplicitamente fuori scope: la PR non autorizza né prova production deploy, DNS, migration, secret rotation o admin reprovisioning. Qualunque attivazione production richiede un gate separato con evidenza diretta.
 
 ---
 
@@ -171,22 +163,24 @@ La descrizione e il `README.md` ereditati dal remix contengono ancora wording st
 | Campo | Valore |
 |---|---|
 | Repository | `tretnix` |
-| Deploy | `https://tretnix.com` |
-| Stato | produzione, remediation controllata |
-| Evidenza dello stato recente | `HR` |
+| Deploy pubblico | `https://tretnix.com` |
+| Branch principale | `main` |
+| Main corrente verificato | `d860da0c3a1e121582ebe29f6f68e21da350392a` (`VR`, 24 settembre 2026) |
+| Ultimo merge | PR `#11` — `feat: connect Intelligence producers to central inbox` |
+| Stato sorgente | Portfolio V1 + backend Cloudflare + Intelligence Inbox/connectors merged |
+| Produzione recente | PR `#10` e `#11` dichiarano esplicitamente produzione/public routing non toccati; il cutover production non viene considerato provato da questa riconciliazione |
+| Evidenza | `VR` per Git/PR; staging runtime riportato nelle PR, non rieseguito live in questo pass |
 
-Stato operativo riportato e ancora da riconciliare completamente con le evidenze del repository:
+Sequenza recente verificata in GitHub:
 
-- CF-1 risulta unito; registrare PR, merge commit e controlli eseguiti;
-- investigare il mismatch `data-tsd-source` in sola lettura;
-- dopo la diagnosi usare una sola branch `fix/impeccable-homepage-optimization` per CF-2, CF-3, CF-4 e CF-5;
-- usare un solo writer, reviewer read-only in parallelo e una sola pull request finale;
-- mantenere CF-6 rinviato finché non esistono asset definitivi;
-- indicare il modello Codex consigliato prima di ogni incarico.
+- PR `#8` — Portfolio V1 e backend Cloudflare con D1, R2, Native AdminAuth e rate limiting;
+- PR `#9` — preparazione production route-free; registra D1 `tretnix-production`, R2 `tretnix-media-production` e namespace rate-limit, mantenendo Worker creation, migrations, secrets, routing e cutover come gate separati;
+- PR `#10` — foundation protetta `/admin/intelligence`, D1 inbox/review events e human-review workflow; produzione non toccata;
+- PR `#11` — ingest firmato producer-agnostic, nonce/replay protection, audit append-only, integrazione Daily Tech Watch e TikTok; produzione non toccata.
 
-Servono PR, branch, commit completo, output dei controlli e report hydration per elevare i singoli elementi da `HR` a `VR`.
+La PR `#11` registra staging migration `0005_intelligence_ingest.sql`, Worker version `90a32d8d-b2f4-4858-b260-7d1a0cbb211d`, deployment `a096e626-8906-4276-991f-efcf7c62060a`, smoke/E2E security e trasporto reale dei producer come PASS. Questa Knowledge registra l'evidenza versionata ma non dichiara una nuova verifica live del deploy.
 
-**Branch locale finale:** `fix/impeccable-final-polish`, derivata dal checkpoint Pass 2 già pubblicato. Installazione congelata, typecheck, lint e build risultano superati dopo le correzioni browser-QA. Restano browser QA conclusivo, commit/push della branch finale e test della migrazione Supabase in staging. Nessuna migrazione è stata applicata. Evidenza: `HR`.
+La superficie production corrente non deve essere mutata per effetto di questa riconciliazione. Production Worker, migrations, secrets, routing, DNS e cutover restano autorizzazioni separate quando non esiste prova versionata di un gate successivo.
 
 ---
 
@@ -198,51 +192,34 @@ Servono PR, branch, commit completo, output dei controlli e report hydration per
 | START | `AdamDariOfficial/rito-studio-START`, `main@2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6`, ancestor validato `8fe09095eafb6be8083ddc8b8b7d79f2a21db483`, PR `#17` |
 | START historical lineage | tag annotato `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7` preservato come evidenza storica |
 | BUSINESS | `AdamDariOfficial/rito-studio-BUSINESS`, `main@3f0ff4d3ed8e675725d8d640c305ab61d47217d7`, ancestor validato `ccb50d7b7c6ffbeba96d33b02615a0f428018116`, PR `#10` |
-| BUSINESS PLUS | `AdamDariOfficial/rito-studio-BUSINESS-PLUS`, remote `main@a0ce8a2a4fb758e2d16bd5cb794e91d14f7726b5` verificato il 18 settembre 2026 (`VR`); tag annotato storico `family-business-plus-v1.0` preservato e dereferenziato allo stesso commit |
-| Baseline PLUS storica | `eba1a2a91fd3a531b4a4667d038b631758d0a664`, ancestor del `main` corrente (`VR`), non baseline operativa attuale |
-| Working branch PLUS storica riportata | `feat/rito-business-plus-complete` con delta non integrato nel ciclo precedente (`HR`); il checkout locale verificato per questo gate è `main@a0ce8a2...` |
-| Adozione Development OS PLUS | `IN PROGRESS`, non completata: `tretnix.project.json` candidato locale untracked, `.gitignore` radice tracciato senza `.tretnix/` (`VR` per stato Git locale, non per adozione) |
-| Backend live PLUS | staging Cloudflare con D1 + Durable Objects + rate limiting + Native RITO AdminAuth |
-| Auth staging | login nativo diretto raggiungibile; rifiuto credenziali non valide nel ramo normale; credenziale corretta ancora rifiutata, sessione non certificata |
-| E2E live | `/consulenza` → D1 → admin realtime/reconnect ancora da chiudere con evidenza diretta |
-| Produzione PLUS | `NOT AUTHORIZED` |
-| Deploy parent | Cloudflare SUCCESS sui merge SHA START e BUSINESS; verifica owner `prefers-reduced-motion` PASS |
-| Evidenza | `VR` per commit, ancestry, PR e merge dei parent; `VD` per deploy Cloudflare post-merge; provenienza asset upstream/licenze/copyright/model release RITO ancora sconosciuta o non verificata |
-| Lineage/freeze reconciliation | START e BUSINESS sono riconciliati e frozen sulle baseline del 10 settembre. I parent e tag storici già registrati restano evidenza del lineage e non vengono riscritti retroattivamente. |
+| BUSINESS PLUS | `AdamDariOfficial/rito-studio-BUSINESS-PLUS`, `main@70a2317dcbcb98368ae8cab856308d51f9f681e7` verificato il 24 settembre 2026 (`VR`) |
+| Tag PLUS storico | `family-business-plus-v1.0` preservato sul checkpoint storico `a0ce8a2a4fb758e2d16bd5cb794e91d14f7726b5`; non rappresenta il `main` corrente |
+| Development OS PLUS | adozione merged con PR `#4` il 20 settembre 2026; manifest, static validator e `.tretnix/` ignore versionati |
+| Parity pubblica PLUS | PR `#5` merged; riconciliazione shared public surfaces e browser QA registrati |
+| Hero/admin refinement | PR `#6` merged; hero carousel e `/admin/hero`; nessuna migrazione/deploy eseguiti da quella PR |
+| Staging/security closeout | PR `#7` merged; `security-closeout-v1.0.6`, staging Worker `e19570f7-88b0-423a-a571-dd0c49b30f86`, migration `0003_hero_management.sql` applicata in staging e runtime QA registrato PASS |
+| Production readiness | PR `#8` merged; source/tooling/runbook fail-closed preparati senza production mutation |
+| Production preflight remediation | PR `#9` formatting-only e PR `#10` admin identity fail-closed merged |
+| Produzione PLUS | `NOT AUTHORIZED / NO PRODUCTION MUTATION VERIFIED` |
+| Evidenza | `VR` per commit, PR e documentazione versionata; staging/runtime è registrato nel closeout PR `#7`; production non è certificata |
 
-Il ciclo del 5–6 settembre e il tag `family-start-v1.0` restano evidenza storica. Il pass cross-family
-del 10 settembre è stato unito in START con PR `#17` e in BUSINESS con PR `#10`, producendo le
-baseline correnti indicate nella tabella.
+RITO Studio START e BUSINESS restano congelati sulle baseline del 10 settembre e conservano le differenze intenzionali già documentate. Il tag PLUS storico preserva il freeze precedente e non viene spostato per inseguire `main`.
 
-Gli output del ciclo precedente riportati dal proprietario registrano `git diff --check`, lint con
-`0` errori e `6` warning Fast Refresh ereditati, build client/SSR/Nitro e browser QA finale
-approvato; restano evidenza storica `HR`. Per il ciclo cross-family corrente, commit, ancestry, PR
-e merge sono `VR`; deploy Cloudflare sui merge SHA e verifica owner reduced-motion sono registrati
-come superati.
+La sequenza PLUS corrente è verificata tramite PR `#4`–`#10`:
 
-RITO Studio BUSINESS è ora riconciliato sulla baseline `3f0ff4d3...`. Restano intenzionali il
-dettaglio trattamento query-driven, l'assenza delle route `/team` e `/prenota`, booking tramite
-WhatsApp + telefono e contatto tramite email + telefono. Il repository non deve essere ricreato.
+1. adozione Development OS;
+2. parity START/BUSINESS → PLUS;
+3. hero/admin refinement;
+4. formalizzazione staging/security closeout;
+5. production-readiness source/tooling;
+6. correzione formatting del production preflight;
+7. fail-closed dell'identità admin production tramite `RITO_ADMIN_EMAIL` esplicita.
 
-`TRX-DEC-033` resta un gate storico di avvio. `TRX-DEC-038` e `TRX-DEC-039` governano i pattern
-condivisi finali relativi ai divider editoriali e alla coppia legale `Privacy` + `Cookie`. Questo
-aggiornamento non autorizza modifiche a RITO Studio BUSINESS PLUS.
+La PR `#7` registra staging runtime QA, AdminAuth, protected hero write, Consultation E2E e targeted security regression come PASS; l'OSV refresh conserva soltanto il debito LOW già accettato `RITO-SEC-007`. La PR dichiara esplicitamente production `NOT TESTED / NOT CERTIFIED / NOT AUTHORIZED`.
 
-La scelta Cloudflare resta provider-specifica per il fit del candidate PLUS e segue
-`TRX-DEC-035`; non costituisce un vincolo per l'intera famiglia Beauty & Wellness.
+Le PR `#8`–`#10` preparano e irrigidiscono il gate production ma non eseguono migration, Worker deploy, DNS/custom-domain changes, secret provisioning/rotation, production data mutation o freeze/tag. Il prossimo gate production richiede ancora gli input legali/controller/privacy previsti e prove dirette delle operazioni effettivamente autorizzate.
 
-Il prossimo gate, separato da questa riconciliazione Knowledge, è l'adozione Development OS nel repository applicativo RITO Studio BUSINESS PLUS:
-
-1. verificare la baseline applicativa frozen e il working tree;
-2. aggiungere `.tretnix/` al `.gitignore` radice tracciato tramite modifica Git revisionata;
-3. revisionare e finalizzare il candidato `tretnix.project.json`;
-4. eseguire `doctor` con la root Knowledge canonica;
-5. eseguire preflight, context, validate ed evidence con la stessa root Knowledge;
-6. misurare context cache MISS/HIT e comportamento della validation cache;
-7. registrare limiti e metriche del pilot;
-8. solo dopo, procedere all'implementazione parity/UI START/BUSINESS → PLUS nel relativo gate.
-
-Il manifest candidato untracked non prova l'adozione. Nessun browser, staging, produzione o deploy è stato verificato in questo closeout Knowledge.
+Cloudflare resta una scelta provider-specifica per questo progetto e non un vincolo automatico della famiglia Beauty & Wellness.
 
 ---
 
@@ -276,30 +253,30 @@ Il manifest candidato untracked non prova l'adozione. Nessun browser, staging, p
 
 ## 9. Ordine operativo
 
-1. mantenere chiuso il gate tooling Development OS lato Knowledge dopo PR `#27` e verifica OR-01; proseguire il pilot applicativo `IN PROGRESS` su RITO Studio BUSINESS PLUS soltanto con il gate separato descritto nella sezione 6;
-2. mantenere Tretnix.com nel workstream e working tree separati;
-3. mantenere Forno Lume START congelato sulla baseline `2ed19ef9a4a886616bccd5aad2054c3027fec680`;
-4. mantenere Forno Lume BUSINESS congelato sulla baseline `ccea04cb0bb50e2624fe505bf7d3f25890b7d456`; riaprirlo soltanto per bug, regressione, sicurezza o requisito approvato;
-5. mantenere il Package D BUSINESS separato e pendente: il final polish completato non lo autorizza né lo assorbe;
-6. non modificare retroattivamente il lineage di Forno Lume BUSINESS PLUS;
-7. mantenere RITO Studio START e BUSINESS congelati sulle baseline registrate, preservando le differenze intenzionali;
-8. non riallineare o modificare RITO Studio BUSINESS PLUS per effetto di questo gate;
+1. trattare `Tretnix-knowledge main@e76b626355d5c3aed8a8b2c2905d4f1bde0090d2` come baseline canonica di partenza finché un merge successivo non la sostituisce;
+2. mantenere Tretnix.com sul workstream separato: `main@d860da0c3a1e121582ebe29f6f68e21da350392a` include Intelligence Inbox/connectors, ma production routing/cutover resta un gate distinto se non esiste evidenza successiva;
+3. mantenere Forno Lume START congelato su `2ed19ef9a4a886616bccd5aad2054c3027fec680`;
+4. mantenere Forno Lume BUSINESS congelato su `ccea04cb0bb50e2624fe505bf7d3f25890b7d456` e Package D separato;
+5. trattare Forno Lume BUSINESS PLUS `main@3f1659d7c5ab51c4167eb31d51ee3d9b19239eb6` come implementazione merged con security closeout registrato, senza autorizzare production;
+6. mantenere RITO Studio START e BUSINESS congelati sulle baseline registrate;
+7. trattare RITO Studio BUSINESS PLUS `main@70a2317dcbcb98368ae8cab856308d51f9f681e7` come baseline sorgente corrente; Development OS, parity, hero, staging/security e production-readiness source sono merged, mentre production resta non autorizzata;
+8. non avviare Professional Services o Home & Local Services senza i rispettivi gate;
 9. aggiornare questa Knowledge quando cambiano baseline, gate, PR, validation o stato di deploy verificato.
 
 ---
 
 ## 10. Cancellazione chat
 
-Il development pack e le tre specifiche non sono più un blocco documentale dopo il merge.
+Il vecchio development-pack/governance closeout non è più un gate operativo aperto. La cancellazione di chat segue ora `CHAT_RETENTION_AND_HANDOFF.md`.
 
-Prima di cancellare tutte le chat devono comunque essere completati:
+Prima di eliminare una chat che contiene lavoro Tretnix verificare almeno:
 
-- merge della patch di governance aggiornata;
-- sincronizzazione locale di `main`;
-- prova di bootstrap in una nuova sessione;
-- conservazione offline dello ZIP originale del development pack e dello snapshot `de29f4f3…` usato per la patch;
-- formalizzazione degli stati Tretnix.com non presenti nel pack;
-- trasferimento di eventuali allegati unici residui.
+- che decisioni, baseline, PR e stati operativi ancora rilevanti siano formalizzati nella Knowledge o nel repository progetto corretto;
+- che file o allegati unici siano stati trasferiti in una fonte versionata o in un archivio deliberatamente conservato;
+- che non restino credenziali, evidence o handoff esistenti soltanto nella conversazione;
+- che il workstream attivo abbia un checkpoint Git o un handoff sufficiente a riprenderlo senza ricostruzioni speculative.
+
+Una chat resta contesto secondario: non sostituisce una decisione approvata, la cronologia Git o lo stato documentato del repository.
 
 ---
 
