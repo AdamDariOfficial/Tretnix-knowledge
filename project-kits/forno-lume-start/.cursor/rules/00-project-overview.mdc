@@ -7,7 +7,9 @@ alwaysApply: true
 
 - Read and follow the root `AGENTS.md`.
 - This repository is the closed and frozen canonical visual and single-page reference for Hospitality START.
-- Audit, remediation, technical closure and owner production verification are complete at `d15f639267dfdd57194536154abfa1d0ff3b4542`.
+- Current reconciled `main` is `2ed19ef9a4a886616bccd5aad2054c3027fec680`; the validated implementation ancestor for the 10 September reconciliation is `0730a759c6f8bb71f7ad3a3fb810ee8540e18556`.
+- `d15f639267dfdd57194536154abfa1d0ff3b4542` remains the historical technical-closure baseline and must not be presented as current `main`.
+- PR `#17` merged the current reconciliation; the project remains released and frozen.
 - Further source work requires a confirmed bug, regression, security issue or explicitly approved product requirement and a scoped task.
 - Preserve the warm, artisanal and premium client identity.
 - Do not reinterpret the site as generic SaaS.

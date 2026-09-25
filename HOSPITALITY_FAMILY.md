@@ -1,7 +1,7 @@
 # Tretnix Hospitality Family
 
-**Versione:** 1.6
-**Aggiornato:** 11 settembre 2026
+**Versione:** 1.7
+**Aggiornato:** 24 settembre 2026
 **Stato:** canonico per la famiglia Forno Lume
 
 ---
@@ -150,21 +150,55 @@ Il repository Forno Lume BUSINESS PLUS già esistente conserva il lineage verifi
 
 ### Forno Lume BUSINESS PLUS
 
-Bootstrap tecnico verificato:
+Lineage e bootstrap storico:
 
 ```text
 frozen BUSINESS parent: 389bd1eec59fe8680cb1d6e685fac77e6c7c0df9
 first PLUS commit: 54751867c9bfe30a34cf5081409317e53ca0ee67
 remix merge commit: 6dd30ec251a2c808de3692fb4e7cf43a4f10e2f6
 validated bootstrap HEAD: bdfcb81b5c7051d20306327009bbe0a5fcf62d1e
-branch: main
-browser QA: not performed
-deployment: not performed
 ```
 
-Il primo commit PLUS deriva direttamente dal frozen BUSINESS richiesto e il checkpoint `bdfcb81b5c7051d20306327009bbe0a5fcf62d1e` conserva tale ancestry. Il remix non ha modificato i sorgenti applicativi: il delta rispetto al frozen parent è limitato a `package.json`, `bun.lock` e `README.md`. La variazione di `package.json` fissa `@Lovable.dev/vite-tanstack-config` a `2.9.1`; installazione con lockfile congelato, TypeScript, lint e build sono stati eseguiti sul checkpoint bootstrap.
+Baseline prodotto corrente:
 
-BUSINESS PLUS non è ancora fonte canonica per nuovi pattern e non è una baseline prodotto completata. Lo scope prodotto resta da definire e approvare. Fino a quel gate, preserva integralmente i pattern canonici START/BUSINESS pertinenti e non assorbe il Package D BUSINESS.
+```text
+integration candidate: a2c3c8dbffece8e0a7be2656e3c01ef367981eef
+main / merge: 3f1659d7c5ab51c4167eb31d51ee3d9b19239eb6
+pull request: #1 — feat: finalize Forno Lume Business Plus
+merged: 7 September 2026
+changed files: 87
+status: implementation merged; security closeout recorded; production not authorized
+```
+
+La PR `#1` sostituisce il vecchio stato `bootstrap / product scope pending` come riferimento operativo. Il lineage dal frozen BUSINESS `389bd1...` resta invariato e il checkpoint `bdfcb81...` rimane una tappa storica.
+
+Il prodotto merged include:
+
+- prenotazioni con capacità server-authoritative;
+- eventi pubblici route-aware;
+- richieste separate per eventi privati;
+- hero management;
+- admin mobile-first;
+- profilo `local | live`;
+- Cloudflare Worker;
+- D1;
+- R2;
+- Durable Objects/WebSocket realtime;
+- Workers Rate Limiting;
+- Native AdminAuth;
+- tooling e migrazioni per staging.
+
+La PR `#1` registra `SECURITY_CLOSEOUT_PASS` e associa il closeout al Worker version
+`980acef3-e0c1-4a72-9cad-a7a0352b8c8f`, tag `fl-security-2c91ea4c2c4e138d` e fingerprint
+`2c91ea4c2c4e138d3a2a640b1d87dc9bb64cb0e98d6f96cdc5f97da4cf041f12`. Nello stesso record risultano PASS direct security headers, HTTP → HTTPS entry routes, browser CSP, G21 runtime, Trivy, source secret scan e final ZAP adjudication.
+
+Questa evidenza è versionata nella PR e non viene reinterpretata come una nuova verifica live durante la riconciliazione Knowledge.
+
+Production resta un gate separato. La PR non autorizza production deploy, DNS, migration, secret rotation o admin reprovisioning e dichiara production `NOT AUTHORIZED`.
+
+BUSINESS PLUS è una reference project-specific per i pattern implementati e verificati nel proprio scope; non diventa automaticamente standard trasversale Tretnix. La promozione di Native AdminAuth, realtime, reservation architecture o altri pattern a standard condiviso richiede una decisione e una verifica separata.
+
+Il Package D BUSINESS resta separato e non viene assorbito retroattivamente dalla variante PLUS.
 
 ---
 
