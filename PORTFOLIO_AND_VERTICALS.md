@@ -1,7 +1,7 @@
 # Tretnix Portfolio and Verticals
 
-**Versione:** 1.3
-**Aggiornato:** 11 settembre 2026
+**Versione:** 1.4
+**Aggiornato:** 25 settembre 2026
 **Stato:** canonico per portfolio, lifecycle e gate; le specifiche complete sono nei documenti e family kit dedicati
 
 ---
@@ -50,19 +50,18 @@ Regole:
 
 ## 3. Portfolio corrente
 
-| Verticale | Concept | Specifica | Progetti | Stato |
+| Verticale | Concept | Specifica | Progetti | Stato lifecycle sintetico |
 |---|---|---|---|---|
-| Food & Hospitality | Forno Lume | `HOSPITALITY_FAMILY.md`; `case-studies/FORNO_LUME.md` | START; BUSINESS | START `2ed19ef...` e BUSINESS `ccea04c...` rilasciati/frozen e riconciliati il 10 settembre; Package D separato |
-| Beauty & Wellness | RITO Studio | `family-kits/beauty-wellness-v1.1/`; `case-studies/RITO_STUDIO.md` | START; BUSINESS; BUSINESS PLUS | START `2ab4dc4...` e BUSINESS `3f0ff4d...` rilasciati/frozen e riconciliati il 10 settembre; BUSINESS PLUS separato con gate propri |
-| Professional Services | QUADRA Studio | `family-kits/professional-services-v1.0/` | START; BUSINESS | preparazione completa; implementazione non iniziata |
-| Home & Local Services | NODO Servizi | `family-kits/home-local-services-v1.0/` | START; BUSINESS | preparazione completa; implementazione non iniziata |
+| Food & Hospitality | Forno Lume | `HOSPITALITY_FAMILY.md`; `case-studies/FORNO_LUME.md` | START; BUSINESS; BUSINESS PLUS | START e BUSINESS rilasciati/frozen; BUSINESS PLUS esiste con gate propri; stato corrente in `CURRENT_STATE.md` |
+| Beauty & Wellness | RITO Studio | `family-kits/beauty-wellness-v1.1/`; `case-studies/RITO_STUDIO.md` | START; BUSINESS; BUSINESS PLUS | START e BUSINESS rilasciati/frozen; BUSINESS PLUS esiste con gate propri; stato corrente in `CURRENT_STATE.md` |
+| Professional Services | QUADRA Studio | `family-kits/professional-services-v1.0/` | START; BUSINESS | `PREPARATION_COMPLETE / IMPLEMENTATION_NOT_STARTED` |
+| Home & Local Services | NODO Servizi | `family-kits/home-local-services-v1.0/` | START; BUSINESS | `PREPARATION_COMPLETE / IMPLEMENTATION_NOT_STARTED` |
 
-Le specifiche dei tre nuovi verticali sono approvate come baseline di preparazione. Non autorizzano automaticamente Lovable, repository remote, backend, deploy o raccolta dati.
+Le specifiche dei verticali sono baseline di prodotto e design, non autorizzazioni operative. Prompt Lovable, subscription runbook e altri materiali del ciclo iniziale restano provenance storica salvo ri-autorizzazione esplicita.
 
-I dossier canonici Forno Lume e RITO Studio sono pronti come fonti per una futura integrazione Tretnix.com, che richiede un task separato e una baseline Tretnix.com pulita e approvata.
+Baseline, PR, deploy e gate correnti appartengono a `CURRENT_STATE.md`, `REPOSITORY_INDEX.md` e soprattutto ai repository interessati.
 
 ---
-
 ## 4. Food & Hospitality
 
 ```text
@@ -88,13 +87,11 @@ HOSPITALITY_FAMILY.md
 | Concept | `RITO Studio` |
 | Descriptor | `Beauty & Care Atelier` |
 | Tagline | `La bellezza, nel suo ritmo.` |
-| START reale | `rito-studio-START` · `main@2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6` · PR `#17` |
-| BUSINESS reale | `rito-studio-BUSINESS` · `main@3f0ff4d3ed8e675725d8d640c305ab61d47217d7` · PR `#10` |
-| Stato parent | START e BUSINESS rilasciati/frozen; deploy Cloudflare post-merge SUCCESS e reduced-motion owner PASS |
-| BUSINESS PLUS reale | `rito-studio-BUSINESS-PLUS` · remote `main@eba1a2a91fd3a531b4a4667d038b631758d0a664` + working candidate su `feat/rito-business-plus-complete` |
-| Stato PLUS | staging Cloudflare; Native RITO AdminAuth in debugging; `/consulenza` → D1 → realtime/reconnect non ancora certificato; produzione non autorizzata |
+| START | repository reale; baseline frozen corrente da risolvere nelle fonti di stato |
+| BUSINESS | repository reale; baseline frozen corrente da risolvere nelle fonti di stato |
+| BUSINESS PLUS | repository reale con lifecycle e gate separati |
 
-Lineage corrente:
+Lineage:
 
 ```text
 RITO Studio START
@@ -102,11 +99,11 @@ RITO Studio START
 → RITO Studio BUSINESS PLUS
 ```
 
-I riferimenti START/BUSINESS conservati dal candidate PLUS restano lineage storico e non vengono riscritti dalle baseline parent del 10 settembre. Lo stato PLUS non è incluso nella chiusura dei due parent.
+I parent e i tag storici restano provenance e non vengono riscritti retroattivamente. Lo stato di staging, security, production-readiness o deploy di BUSINESS PLUS non viene duplicato qui: usare `CURRENT_STATE.md`, `REPOSITORY_INDEX.md` e il repository PLUS.
 
-Il dossier canonico [`case-studies/RITO_STUDIO.md`](case-studies/RITO_STUDIO.md) rappresenta esclusivamente START + BUSINESS come un solo `portfolio_concept`. La sua esistenza non autorizza modifiche o pubblicazione su Tretnix.com.
+Il dossier canonico [`case-studies/RITO_STUDIO.md`](case-studies/RITO_STUDIO.md) rappresenta il perimetro portfolio documentato nel dossier stesso e non autorizza modifiche o pubblicazione su Tretnix.com.
 
-L'evoluzione futura verso prenotazioni, clienti, pacchetti/fidelity o gestionale resta separata e richiede scope e gate propri; non è implicata dal consultation inbox del BUSINESS PLUS corrente.
+L'evoluzione futura verso prenotazioni, clienti, pacchetti/fidelity o gestionale richiede scope e gate propri.
 
 Fonti:
 
@@ -119,7 +116,6 @@ repository RITO del piano interessato
 ```
 
 ---
-
 ## 6. Professional Services
 
 | Campo | Valore |
@@ -170,51 +166,32 @@ family-kits/home-local-services-v1.0/
 
 ---
 
-## 8. Ordine del mese intensivo
+## 8. Sequenza storica del ciclo intensivo
 
-Priorità approvata:
+La sequenza RITO → QUADRA → NODO registrata nel ciclo iniziale resta provenance storica, non priorità operativa corrente.
 
-```text
-1. RITO Studio START
-2. RITO Studio BUSINESS
-3. QUADRA Studio START
-4. QUADRA Studio BUSINESS
-5. NODO Servizi START
-```
-
-Stretch goal:
-
-```text
-6. NODO Servizi BUSINESS
-```
-
-Qualità, QA e freeze dei deliverable precedenti hanno priorità sullo stretch goal.
+Le priorità attuali appartengono a `CURRENT_STATE.md`, issue/roadmap e task approvati. Non usare questa sezione per autorizzare l'avvio di un progetto.
 
 ---
 
-## 9. Gate START
+## 9. Gate START corrente
 
 Prima di ogni nuovo START:
 
-- abbonamenti necessari attivi;
-- workspace e consumi verificati;
-- comando esplicito riferito al progetto corretto;
-- repository e branch iniziali identificati;
-- specifica copiata e congelata;
-- `STATUS.md` su `IMPLEMENTATION_AUTHORIZED`;
-- scope e prompt revisionati;
-- backend, auth, database, upload e raccolta dati confermati fuori scope quando previsto;
-- nessun secondo agente sugli stessi file.
+- esiste un comando esplicito riferito al progetto e al piano corretti;
+- repository creation, paid-tool use e servizi esterni sono autorizzati separatamente quando necessari;
+- repository e baseline iniziali sono identificati prima della scrittura;
+- la specifica/family kit applicabile è identificata e revisionata;
+- `STATUS.md` passa a `IMPLEMENTATION_AUTHORIZED` soltanto dopo il gate owner;
+- scope, out-of-scope, acceptance criteria e required verification sono espliciti;
+- backend, auth, database, upload e raccolta dati restano fuori scope quando la specifica lo richiede;
+- opera un solo writer sullo stesso working tree.
 
-Per RITO valgono inoltre i due gate espliciti:
+Il toolchain corrente segue `TRX-DEC-041`: ChatGPT coordina e revisiona, Codex è il writer operativo principale, GitHub è il checkpoint versionato. Lovable non è un prerequisito generale.
 
-```text
-LOVABLE_SUBSCRIPTION_CONFIRMED
-RITO_STUDIO_START_AUTHORIZED
-```
+`TRX-DEC-025` resta provenance del ciclo storico RITO Studio START. Non costituisce un gate automatico per Professional Services, Home & Local Services o piani RITO successivi.
 
 ---
-
 ## 10. START → BUSINESS
 
 ```text

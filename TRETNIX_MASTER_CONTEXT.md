@@ -1,7 +1,7 @@
 # Tretnix Master Context
 
-**Versione:** 1.10
-**Aggiornato:** 15 settembre 2026
+**Versione:** 1.11
+**Aggiornato:** 25 settembre 2026
 **Stato:** canonico
 
 ---
@@ -340,7 +340,7 @@ Le chat possono essere cancellate soltanto dopo il gate definito in `CHAT_RETENT
 
 ---
 
-## 7. Fonte unica della verità
+## 7. Fonte unica della verità e ruoli documentali
 
 La fonte canonica trasversale è:
 
@@ -348,7 +348,37 @@ La fonte canonica trasversale è:
 tretnix-knowledge
 ```
 
-Ogni repository di progetto dovrà progressivamente contenere soltanto il contesto locale:
+“Fonte canonica” non significa che ogni file possa descrivere tutto. I ruoli sono separati:
+
+```text
+TRETNIX_MASTER_CONTEXT.md
+= identità, modello operativo, tool roles e principi stabili
+
+DECISIONS.md
+= scelte approvate e loro motivazione
+
+DEVELOPMENT_STANDARDS.md
+= regole tecniche e operative condivise
+
+REPOSITORY_INDEX.md
+= inventario, identità, relazioni e checkpoint auditati dei repository
+
+CURRENT_STATE.md
+= snapshot trasversale datato; non sostituisce lo stato locale e non auto-certifica il proprio main
+
+PORTFOLIO_AND_VERTICALS.md
+= mappa dei verticali, lifecycle e gate condivisi
+
+documenti *_FAMILY.md + family-kits/
+= governance e specifiche di famiglia
+
+repository del progetto
+= prodotto, architettura, sicurezza, stato dettagliato, roadmap, issue e codice verificabile
+```
+
+`TRETNIX_MASTER_CONTEXT.md` non registra baseline operative correnti, priorità temporanee o gate runtime di singoli progetti. Quando una risposta dipende dallo stato attuale, leggere `CURRENT_STATE.md`, `REPOSITORY_INDEX.md` e soprattutto il repository interessato.
+
+Ogni repository di progetto mantiene progressivamente il proprio contesto locale:
 
 ```text
 AGENTS.md
@@ -360,39 +390,16 @@ docs/
 
 `AGENTS.md` è il punto di ingresso comune per Codex e per gli altri agenti compatibili. Non creare file duplicati con le stesse regole senza una necessità reale.
 
-La separazione prevista è:
-
-```text
-tretnix-knowledge
-= identità, standard e procedure condivise
-
-repository del progetto
-= prodotto, architettura, design, sicurezza e stato specifici
-
-GitHub Issues
-= task e bug operativi
-
-CURRENT_STATE.md
-= indice trasversale sintetico, non sostitutivo degli status locali
-
-SOURCE_ARTIFACT_REGISTER.md
-= artefatti, checksum, ingestione e fonti residue
-
-family-kits/
-= specifiche complete e versionate dei verticali
-```
-
 ### Precedenza
 
 1. decisioni approvate;
 2. standard condivisi;
 3. documenti specifici del progetto;
-4. specifica del task;
+4. specifica approvata del task;
 5. codice e deploy verificati;
 6. conversazioni da formalizzare.
 
 ---
-
 ## 8. Modello delle offerte e dei progetti
 
 Tretnix utilizza livelli di offerta:
@@ -403,189 +410,60 @@ Tretnix utilizza livelli di offerta:
 - CUSTOM;
 - INTERNO.
 
-Il primo verticale operativo è Food & Hospitality.
+Le famiglie attualmente documentate sono:
 
-La mappa corrente comprende inoltre:
+- Food & Hospitality — Forno Lume;
+- Beauty & Wellness — RITO Studio;
+- Professional Services — QUADRA Studio;
+- Home & Local Services — NODO Servizi.
 
-- Beauty & Wellness, con specifica `v1.1` completa in `family-kits/beauty-wellness-v1.1/` e lineage reale `RITO Studio START → BUSINESS → BUSINESS PLUS`; START è frozen su `main@2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6`, BUSINESS è frozen e riconciliato su `main@3f0ff4d3ed8e675725d8d640c305ab61d47217d7`, mentre il tag START precedente e lo stato BUSINESS PLUS restano governati come lineage/gate separati;
-- Professional Services, con specifica `v1.0` completa in `family-kits/professional-services-v1.0/` e concept `QUADRA Studio`;
-- Home & Local Services, con specifica `v1.0` completa in `family-kits/home-local-services-v1.0/` e concept `NODO Servizi`.
-
-La mappa, il lifecycle e i gate sono in `PORTFOLIO_AND_VERTICALS.md`.
+Le specifiche e i gate di famiglia sono nei documenti `*_FAMILY.md`, in `PORTFOLIO_AND_VERTICALS.md` e nei relativi `family-kits/`. Baseline, PR, deploy e gate correnti non vengono duplicati in questo Master Context: usare `CURRENT_STATE.md`, `REPOSITORY_INDEX.md` e il repository del progetto.
 
 ### Principio di evoluzione
 
 Un progetto di piano superiore non deve necessariamente essere ridisegnato da zero.
 
-Nel caso della famiglia Forno Lume:
+La famiglia Hospitality segue il lineage:
 
 ```text
 Forno Lume START
 ↓
 Forno Lume BUSINESS
 ↓
-futuro Forno Lume BUSINESS PLUS
+Forno Lume BUSINESS PLUS
 ```
 
-START definisce il linguaggio visuale e di interazione approvato. BUSINESS espande architettura informativa, route, contenuti e funzionalità. I pattern verificati nei Package A, B, B2 e C sono approvati nel perimetro documentato; il Package D e gli ambiti futuri restano separati.
+La famiglia Beauty & Wellness segue:
+
+```text
+RITO Studio START
+↓
+RITO Studio BUSINESS
+↓
+RITO Studio BUSINESS PLUS
+```
+
+I piani superiori preservano l'identità approvata del parent e aggiungono soltanto architettura, contenuti e funzionalità autorizzati. Un gate START non autorizza automaticamente BUSINESS o BUSINESS PLUS.
 
 ---
 
-## 9. Progetti canonici iniziali
+## 9. Ruoli stabili dei repository di riferimento
 
-### Tretnix.com
+| Repository/famiglia | Ruolo stabile |
+|---|---|
+| `tretnix` | sito istituzionale, brand Tretnix, area amministrativa e superfici interne approvate |
+| `forno-lume-START` | riferimento visuale e single-page Hospitality START |
+| `forno-lume-BUSINESS` | riferimento multipagina Hospitality per i pattern verificati nel proprio scope |
+| `forno-lume-BUSINESS-PLUS` | reference project-specific Hospitality per funzionalità e backend di piano superiore; non standard trasversale automatico |
+| `rito-studio-START` | riferimento Beauty & Wellness START |
+| `rito-studio-BUSINESS` | riferimento multipagina Beauty & Wellness nel proprio scope |
+| `rito-studio-BUSINESS-PLUS` | reference project-specific per consultation/admin/backend e relativi pattern verificati; non standard trasversale automatico |
 
-Ruolo:
+Una repository non diventa canonica per ogni aspetto. Il ruolo di un pattern deriva da decisioni, qualità verificata, scope e adozione documentata.
 
-- sito istituzionale;
-- riferimento per il brand Tretnix;
-- esperienza premium e boutique;
-- riferimento per componenti istituzionali;
-- area amministrativa;
-- gestione contatti.
-
-Stato dichiarato:
-
-- completato e in produzione;
-- restano revisioni di dettaglio su SEO, aspetti legali e colori;
-- richiede audit tecnico e di sicurezza prima di essere considerato riferimento tecnico generale.
-
-Aree note da controllare:
-
-- navbar;
-- scroll-spy;
-- navigazione cross-route;
-- autenticazione;
-- ruoli;
-- admin;
-- analytics;
-- contact requests;
-- accessibilità;
-- SEO;
-- sicurezza Supabase.
-
-### Forno Lume START
-
-Ruolo:
-
-- riferimento canonico per la qualità visuale Hospitality;
-- riferimento canonico per tipografia e palette Hospitality;
-- riferimento canonico per la struttura premium single-page START;
-- riferimento canonico per qualità responsive e comportamento percepito della navbar;
-- riferimento canonico per sobrietà delle interazioni, linguaggio del movimento e reveal editoriali sotto la fold.
-
-Stato verificato corrente:
-
-- completato;
-- rimediato;
-- tecnicamente chiuso e riconciliato sulla baseline sorgente `2ed19ef9a4a886616bccd5aad2054c3027fec680`;
-- deploy Cloudflare post-merge della baseline corrente registrato come SUCCESS;
-- verifica owner di `prefers-reduced-motion` registrata come PASS;
-- documentato;
-- congelato.
-
-Ulteriori modifiche sorgente richiedono:
-
-- un bug confermato;
-- una regressione confermata;
-- un problema di sicurezza;
-- un requisito di prodotto approvato esplicitamente.
-
-La presenza di elementi nel backlog non autorizza pulizia opzionale o nuove modifiche.
-
-Il ruolo canonico non si estende automaticamente a routing multipagina, gallerie e lightbox, funzionalità BUSINESS o BUSINESS PLUS, sistemi amministrativi, autenticazione, autorizzazione, backend, database o storage. Questi ambiti devono essere valutati nel repository pertinente.
-
-### Forno Lume BUSINESS
-
-Ruolo:
-
-- evoluzione multipagina di START;
-- espansione della famiglia Hospitality;
-- riferimento tecnico approvato per i pattern multipagina verificati fino al Package C.
-
-Stato verificato corrente:
-
-- Package A, B, micro-fix “L'incontro”, B2 e C completati e uniti;
-- baseline sorgente corrente su `main`: `ccea04cb0bb50e2624fe505bf7d3f25890b7d456`;
-- build Cloudflare Pages completata tramite Bun e lockfile;
-- deploy di produzione verificato dal proprietario il 25 luglio 2026;
-- deploy Cloudflare post-merge del 10 settembre: SUCCESS;
-- Package D ancora pendente e separato;
-- repository parent congelato sulla baseline corrente.
-
-Route previste:
-
-- `/`;
-- `/menu`;
-- `/chi-siamo`;
-- `/galleria`;
-- `/contatti`;
-- `/privacy`;
-- `/cookie`;
-- pagina 404.
-
-Pattern approvati fino al Package C:
-
-- conservazione dell’identità START con implementazione tecnica migliorata;
-- accessibilità di drawer e lightbox;
-- route reset, history restoration, direct URL e refresh;
-- ordine editoriale mobile;
-- motion e reduced motion coerenti con START;
-- fallback runtime e 404;
-- demo `noindex, follow`;
-- JSON-LD generico e non commerciale;
-- attribuzione Tretnix nel footer.
-
-I dettagli del contratto e delle policy sono in `HOSPITALITY_FAMILY.md`.
-
-### RITO Studio START
-
-Ruolo:
-
-- primo progetto Beauty & Wellness;
-- baseline canonica START per identità, composizione, comportamento condiviso e nuovi confronti START → BUSINESS;
-- piano START chiuso e congelato.
-
-Stato verificato corrente:
-
-```text
-FROZEN
-main: 2ab4dc46ef06fa006560c6d721b28be2cb9a7fa6
-validated ancestor: 8fe09095eafb6be8083ddc8b8b7d79f2a21db483
-PR: #17
-post-merge Cloudflare: SUCCESS
-owner reduced-motion verification: PASS
-```
-
-Il tag annotato remoto `family-start-v1.0` → `74ee03c4d39a974872f94f53d14ec2873815ccf7`
-resta evidenza storica del freeze precedente. La baseline del 10 settembre ha deploy Cloudflare
-post-merge SUCCESS e verifica owner `prefers-reduced-motion` PASS.
-
-### RITO Studio BUSINESS
-
-Ruolo:
-
-- evoluzione multipagina Beauty & Wellness dello START;
-- repository operativo esistente, non da ricreare;
-- fonte project-specific per catalogo e dettaglio trattamento query-driven, gallery/lightbox e routing multipagina RITO.
-
-Stato corrente verificato:
-
-```text
-main: 3f0ff4d3ed8e675725d8d640c305ab61d47217d7
-validated ancestor: ccb50d7b7c6ffbeba96d33b02615a0f428018116
-PR: #10
-post-merge Cloudflare: SUCCESS
-owner reduced-motion verification: PASS
-```
-
-La riconciliazione del 10 settembre preserva le differenze BUSINESS intenzionali, incluse l'assenza delle
-route `/team` e `/prenota`, il dettaglio trattamento query-driven, booking tramite WhatsApp +
-telefono e contatto tramite email + telefono. Backend, database, auth, pagamenti e modifiche
-BUSINESS PLUS richiedono gate separati.
+Per baseline, gate e stato corrente usare le fonti temporali appropriate, non questo documento.
 
 ---
-
 ## 10. Principio di uniformazione
 
 Non uniformare indiscriminatamente l’identità visiva dei clienti.
@@ -743,88 +621,38 @@ Prompt vaghi come “sistemami il sito” o “migliora il responsive” non son
 
 ---
 
-## 14. Piano di adozione
+## 14. Adozione del workflow
 
-### Fase 1 — Fondamenta
+La storia dell'adozione iniziale — Cursor, Lovable, primo pilot Forno Lume, introduzione Codex, Development OS e successive riconciliazioni — resta ricostruibile tramite Git, `DECISIONS.md`, audit e source artifacts.
 
-Stato: completata; descrive l'adozione storica iniziale.
+Il toolchain operativo corrente è quello definito da `TRX-DEC-041`:
 
-- pubblicare `tretnix-knowledge`;
-- configurare ChatGPT;
-- introdurre una superficie locale di controllo, inizialmente Cursor;
-- aggiungere foundation e regole al progetto pilota.
+```text
+ChatGPT = strategia, specifica, coordinamento e review
+Codex   = writer/validator operativo principale
+GitHub  = fonte versionata e checkpoint
+Cursor  = superficie opzionale/manuale
+Lovable = provenance storica salvo nuova autorizzazione esplicita
+```
 
-### Fase 2 — Audit del progetto pilota
+Development OS è un layer deterministico locale. La sua adozione in un repository non autorizza Git remoto, browser, backend, staging o produzione.
 
-Stato: audit statico e controllo qualità completati.
+Questo Master Context non conserva lo stato di rollout corrente: usare `DEVELOPMENT_OS.md`, `CURRENT_STATE.md` e il repository applicativo.
 
-- auditare `forno-lume-START` in sola lettura;
-- correggere severità ed evidenze del report;
-- mantenere separati bug confermati, rischi, scelte intenzionali e controlli mancanti.
+## 15. Priorità operative
 
-### Fase 3 — Introduzione di Codex
+Le priorità correnti non sono conoscenza stabile e non vengono mantenute in questo documento.
 
-Stato: approvata.
+Usare:
 
-- usare Codex tramite app, terminale o editor opzionale appropriato;
-- configurare le istruzioni globali;
-- verificare che Codex legga `AGENTS.md`;
-- usare Forno Lume START per il primo intervento controllato;
-- mantenere un solo writer;
-- revisionare il diff prima delle correzioni successive.
+- `CURRENT_STATE.md` per coordinamento trasversale datato;
+- issue/roadmap/PR del repository per lavoro operativo;
+- documentazione project-specific per gate e stato dettagliato;
+- `PORTFOLIO_AND_VERTICALS.md` per lifecycle e dipendenze tra piani.
 
-### Fase 4 — Primo intervento controllato
-
-Stato: completata su Forno Lume START.
-
-- task e remediation approvati completati;
-- chiusura tecnica verificata sulla baseline `d15f639267dfdd57194536154abfa1d0ff3b4542`;
-- produzione verificata dal proprietario del progetto;
-- repository documentato e congelato.
-
-### Fase 5 — Consolidamento
-
-Stato: attiva.
-
-- preservare i pattern BUSINESS verificati nei Package A, B, B2 e C;
-- aprire il Package D come task separato;
-- mantenere il confronto con la baseline canonica START;
-- trasformare procedure verificate in skill;
-- auditare Tretnix.com;
-- estrarre standard confermati;
-- consolidare ChatGPT + Codex tramite Development OS v1 senza riattivare tool storici.
-
-### Fase 6 — Portfolio e conservazione del contesto
-
-Stato: documentazione acquisita; verifica finale in corso.
-
-- development pack del 25 luglio acquisito, verificato ed estratto;
-- Beauty v1.1, Professional v1.0 e Home v1.0 versionati come family kit;
-- `RITO Studio START` e `RITO Studio BUSINESS` sono congelati e riconciliati sulle baseline del 10 settembre; BUSINESS PLUS resta separato;
-- eseguire la prova di ricostruzione senza chat dopo il merge;
-- conservare offline lo ZIP originale;
-- usare `CURRENT_STATE.md` per lo stato trasversale e le issue per i task.
-
-### Fase 7 — Specializzazione
-
-- valutare Claude Code quando emerge un bisogno concreto;
-- aggiungere RLS review;
-- aggiungere pre-deploy;
-- valutare test browser, Codex Cloud e automazioni dopo aver stabilizzato il processo.
-
-## 15. Priorità corrente
-
-La priorità attuale è:
-
-1. mantenere Development OS v1 merged, canonico e operativo nella Knowledge, con Git e autorità owner superiori a cache ed evidence;
-2. mantenere il rollout applicativo sperimentale e pending fino a un pilot controllato con checkpoint stabile e autorizzazione esplicita; il dogfood Knowledge non costituisce pilot applicativo;
-3. mantenere Tretnix.com nel workstream separato e non usarlo come pilot prima del checkpoint dedicato;
-4. proseguire la riconciliazione e i finding Tretnix.com soltanto nel relativo repository;
-5. mantenere Forno Lume START e BUSINESS chiusi e congelati, con Package D separato;
-6. mantenere RITO Studio START e BUSINESS congelati sulle baseline correnti senza coinvolgere BUSINESS PLUS.
+Una priorità riportata in chat non modifica automaticamente questi gate.
 
 ---
-
 ## 16. Non obiettivi della fase iniziale
 
 Non sono priorità immediate:

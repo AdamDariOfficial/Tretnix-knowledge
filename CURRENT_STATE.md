@@ -1,7 +1,7 @@
 # Tretnix Current State
 
-**Versione:** 1.19
-**Aggiornato:** 24 settembre 2026
+**Versione:** 1.20
+**Aggiornato:** 25 settembre 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
 ---
@@ -22,24 +22,22 @@
 | Campo | Valore |
 |---|---|
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
-| Baseline `main` corrente verificata | `e76b626355d5c3aed8a8b2c2905d4f1bde0090d2` (`VR`, `main` remoto verificato il 24 settembre 2026) |
-| Baseline precedente CCP v1.2 | `01bf3a6c07f26c0bd39a1a3685ce62eef4f91a70`, merge PR `#30` — `docs: formalize CCP operator workflow v1.2` |
-| ChatGPT workstream enforcement | PR `#31` merged; source `d2446f6ec344a838b3398632804ebf912c90a645`; merge `e76b626355d5c3aed8a8b2c2905d4f1bde0090d2` |
-| Adapter ChatGPT versionati | full + compact instructions, `CHATGPT_KNOWLEDGE_ROUTER.md`, `CHATGPT_WORKSTREAM_PLAYBOOK.md`; tutti derivati dalla Knowledge, non fonti autonome |
-| Controlled Change Package | procedura canonica v1.2: one-ZIP/one-block, `Apply` → `Validate` → owner review → exact stage → `Verify-Staged`; stage/commit/push/PR/merge/deploy restano gate separati |
-| Development OS | tooling condiviso merged e operativo nella Knowledge; cache/evidence locali sotto `.tretnix/` non sostituiscono Git o l'autorità owner |
-| Prima adozione applicativa Development OS | RITO Studio BUSINESS PLUS PR `#4` merged il 20 settembre 2026; manifest, static validator e ignore `.tretnix/` sono versionati nel repository applicativo |
-| Evidenza | `VR` per commit, PR e contenuti versionati; gli esiti locali restano distinti dalle verifiche runtime/deploy non rieseguite in questa riconciliazione |
+| Identità dello snapshot | questo file è versionato nel commit che lo contiene; il `main` corrente della Knowledge si risolve da Git all'inizio del task e non viene hardcodedato nello snapshot |
+| Autorità | decisioni e standard governano; questo file coordina stato trasversale ma non sostituisce repository, `docs/STATUS.md`, PR, issue o deploy evidence del progetto |
+| Controlled Change Package | procedura canonica v1.2: one-ZIP/one-block, `Apply` → `Validate` → owner review → exact stage → `Verify-Staged`; i gate Git/remoti restano separati |
+| ChatGPT workstream | router/playbook e adapter full/compact sono versionati in `compiled/`; capability e authorization restano dimensioni separate |
+| Development OS | tooling condiviso canonico; la prima adozione applicativa è merged in RITO Studio BUSINESS PLUS, mentre rollout ulteriori restano project-specific |
+| CI Knowledge | `.github/workflows/knowledge-validation.yml` esegue il validator cross-platform e la suite Development OS; l'esito di una singola run deve essere verificato dalla relativa evidence CI |
+| Evidenza | `VR` per commit, PR e contenuti versionati; browser/backend/staging/production richiedono evidenza propria |
 | Visibilità | pubblica temporaneamente secondo `TRX-DEC-031` |
 
-La PR `#31` formalizza il comportamento operativo di ChatGPT: capability e autorizzazione sono gate distinti; un'operazione non supportata nella sessione viene marcata `UNSUPPORTED_IN_CURRENT_SESSION` e non viene ritentata in loop. PR, merge e cancellazione branch restano gate indipendenti. Il router e il playbook in `compiled/` aiutano ChatGPT a trovare le fonti canoniche e ad applicare il workstream senza duplicare la Knowledge nei Project Sources.
+La Knowledge non può auto-certificare il proprio `main` scrivendo qui uno SHA “corrente”: ogni merge che modifica questo file renderebbe immediatamente obsoleto quel valore. Per task repository-dependent, leggere sempre il ref Git reale della sessione corrente.
 
-L'adozione Development OS in RITO Studio BUSINESS PLUS non rende automaticamente conclusi browser, backend, staging o produzione: questi restano gate del progetto e devono essere documentati con evidenza propria. Tretnix.com resta un workstream separato.
+`TRETNIX_MASTER_CONTEXT.md` conserva identità, modello operativo e ruoli stabili; `REPOSITORY_INDEX.md` inventaria repository e relazioni; `CURRENT_STATE.md` conserva soltanto lo snapshot trasversale datato. Lo stato dettagliato resta nel repository del progetto.
 
-La baseline pre-implementazione `94c5cb7818faaad0f82e14279d03ce76bf19d971` e le baseline intermedie Development OS restano provenance storica nella cronologia Git, non riferimenti operativi correnti.
+Gli adapter in `compiled/` sono derivati e non fonti autonome. La loro installazione effettiva in una superficie esterna non si deduce dalla sola presenza nel repository.
 
 ---
-
 ## 2.1 Backup & Disaster Recovery
 
 | Campo | Valore |
@@ -253,7 +251,7 @@ Cloudflare resta una scelta provider-specifica per questo progetto e non un vinc
 
 ## 9. Ordine operativo
 
-1. trattare `Tretnix-knowledge main@e76b626355d5c3aed8a8b2c2905d4f1bde0090d2` come baseline canonica di partenza finché un merge successivo non la sostituisce;
+1. risolvere da Git il ref reale di Tretnix Knowledge all'inizio di ogni task repository-dependent; questo snapshot non hardcodea il proprio `main` come baseline corrente;
 2. mantenere Tretnix.com sul workstream separato: `main@d860da0c3a1e121582ebe29f6f68e21da350392a` include Intelligence Inbox/connectors, ma production routing/cutover resta un gate distinto se non esiste evidenza successiva;
 3. mantenere Forno Lume START congelato su `2ed19ef9a4a886616bccd5aad2054c3027fec680`;
 4. mantenere Forno Lume BUSINESS congelato su `ccea04cb0bb50e2624fe505bf7d3f25890b7d456` e Package D separato;

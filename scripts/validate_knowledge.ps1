@@ -1,4 +1,4 @@
-﻿param(
+param(
     [string]$RepositoryRoot = ""
 )
 
@@ -18,14 +18,30 @@ $RequiredPaths = @(
     "AGENTS.md",
     "TRETNIX_MASTER_CONTEXT.md",
     "DEVELOPMENT_STANDARDS.md",
+    "UX_UI_QUALITY_SYSTEM.md",
     "DECISIONS.md",
     "REPOSITORY_INDEX.md",
+    "HOSPITALITY_FAMILY.md",
+    "BEAUTY_WELLNESS_FAMILY.md",
+    "PROFESSIONAL_SERVICES_FAMILY.md",
+    "HOME_LOCAL_SERVICES_FAMILY.md",
+    "PORTFOLIO_AND_VERTICALS.md",
+    "CASE_STUDY_STANDARD.md",
     "CURRENT_STATE.md",
+    "CHAT_RETENTION_AND_HANDOFF.md",
     "SOURCE_ARTIFACT_REGISTER.md",
+    "DEVELOPMENT_OS.md",
+    "BACKUP_AND_DISASTER_RECOVERY.md",
+    "tretnix.project.json",
     "templates\READ_ONLY_AUDIT.md",
     "templates\CONTROLLED_CHANGE_PACKAGE_MANIFEST.md",
     "skills\CONTROLLED_CHANGE_PACKAGE.md",
-    "compiled\README.md"
+    "compiled\README.md",
+    "compiled\CHATGPT_PROJECT_INSTRUCTIONS.md",
+    "compiled\CHATGPT_PROJECT_INSTRUCTIONS_COMPACT.md",
+    "compiled\CHATGPT_KNOWLEDGE_ROUTER.md",
+    "compiled\CHATGPT_WORKSTREAM_PLAYBOOK.md",
+    "compiled\CODEX_GLOBAL_AGENTS.md"
 )
 
 $CanonicalMetadataFiles = @(
@@ -335,6 +351,181 @@ if (Test-Path -LiteralPath $FamilyKitsRoot -PathType Container) {
     }
 }
 
+$AuthorityRequiredMarkers = @{
+    "TRETNIX_MASTER_CONTEXT.md" = @(
+        "CURRENT_STATE.md`n= snapshot trasversale datato",
+        "REPOSITORY_INDEX.md`n= inventario",
+        "non registra baseline operative correnti"
+    )
+    "CURRENT_STATE.md" = @(
+        "non viene hardcodedato nello snapshot",
+        "snapshot trasversale datato"
+    )
+    "REPOSITORY_INDEX.md" = @(
+        "non hardcodea il proprio ``main``",
+        "registro live"
+    )
+    "PORTFOLIO_AND_VERTICALS.md" = @(
+        "TRX-DEC-041",
+        "Lovable non "
+    )
+    "PROFESSIONAL_SERVICES_FAMILY.md" = @(
+        "provenance storica",
+        "IMPLEMENTATION_AUTHORIZED"
+    )
+    "HOME_LOCAL_SERVICES_FAMILY.md" = @(
+        "provenance storica",
+        "IMPLEMENTATION_AUTHORIZED"
+    )
+    ".github/workflows/knowledge-validation.yml" = @(
+        "actions/setup-node@v4",
+        "node --test tools/tretnix/tests/tretnix.test.mjs"
+    )
+}
+
+$AuthorityForbiddenMarkers = @{
+    "CURRENT_STATE.md" = @(
+        "Baseline ``main`` corrente verificata",
+        "Tretnix-knowledge main@"
+    )
+    "REPOSITORY_INDEX.md" = @(
+        "Baseline ``main`` verificata corrente",
+        "Tretnix-knowledge main@"
+    )
+    "TRETNIX_MASTER_CONTEXT.md" = @("futuro Forno Lume BUSINESS PLUS")
+    "PORTFOLIO_AND_VERTICALS.md" = @("abbonamenti necessari attivi;")
+    "PROFESSIONAL_SERVICES_FAMILY.md" = @("L'avvio richiede abbonamenti attivi")
+    "HOME_LOCAL_SERVICES_FAMILY.md" = @("L'avvio richiede abbonamenti attivi")
+    "family-kits/professional-services-v1.0/README.md" = @(
+        "implementazione bloccata fino all'attivazione degli abbonamenti"
+    )
+    "family-kits/home-local-services-v1.0/README.md" = @(
+        "implementazione bloccata fino all'attivazione degli abbonamenti"
+    )
+}
+
+$AdapterRequiredMarkers = @{
+    "compiled/README.md" = @(
+        "CHATGPT_KNOWLEDGE_ROUTER.md",
+        "CHATGPT_WORKSTREAM_PLAYBOOK.md"
+    )
+    "compiled/CHATGPT_PROJECT_INSTRUCTIONS.md" = @(
+        "UNSUPPORTED_IN_CURRENT_SESSION",
+        "compiled/CHATGPT_KNOWLEDGE_ROUTER.md",
+        "compiled/CHATGPT_WORKSTREAM_PLAYBOOK.md"
+    )
+    "compiled/CHATGPT_PROJECT_INSTRUCTIONS_COMPACT.md" = @(
+        "UNSUPPORTED_IN_CURRENT_SESSION",
+        "compiled/CHATGPT_KNOWLEDGE_ROUTER.md",
+        "compiled/CHATGPT_WORKSTREAM_PLAYBOOK.md"
+    )
+    "compiled/CHATGPT_KNOWLEDGE_ROUTER.md" = @(
+        "## Ambiguit",
+        "## Regola di sufficienza",
+        "non diventano istruzioni correnti"
+    )
+    "compiled/CHATGPT_WORKSTREAM_PLAYBOOK.md" = @(
+        "UNSUPPORTED_IN_CURRENT_SESSION",
+        "## 11. Capability check",
+        "## 12. Regola anti-loop"
+    )
+    "compiled/CODEX_GLOBAL_AGENTS.md" = @(
+        "historical START activation gates",
+        "PREPARATION_COMPLETE"
+    )
+}
+
+$AdapterForbiddenMarkers = @{
+    "compiled/CHATGPT_KNOWLEDGE_ROUTER.md" = @(
+        "CURRENT / BASELINE / HISTORICAL / DERIVED",
+        "## Lifecycle taxonomy",
+        "## Tassonomia lifecycle"
+    )
+}
+
+foreach ($Contract in @($AuthorityRequiredMarkers, $AdapterRequiredMarkers)) {
+    foreach ($Relative in $Contract.Keys) {
+        $Path = Join-Path $Root $Relative
+        if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) { continue }
+        try { $Text = Read-Utf8Strict $Path }
+        catch { continue }
+        $Text = $Text.Replace("`r`n", "`n")
+        foreach ($Marker in @($Contract[$Relative])) {
+            if (-not $Text.Contains([string]$Marker)) {
+                Add-ValidationError "missing semantic contract marker: $($Relative.Replace('\', '/')) -> $Marker"
+            }
+        }
+    }
+}
+
+foreach ($Contract in @($AuthorityForbiddenMarkers, $AdapterForbiddenMarkers)) {
+    foreach ($Relative in $Contract.Keys) {
+        $Path = Join-Path $Root $Relative
+        if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) { continue }
+        try { $Text = Read-Utf8Strict $Path }
+        catch { continue }
+        $Text = $Text.Replace("`r`n", "`n")
+        foreach ($Marker in @($Contract[$Relative])) {
+            if ($Text.Contains([string]$Marker)) {
+                Add-ValidationError "forbidden stale/drift marker: $($Relative.Replace('\', '/')) -> $Marker"
+            }
+        }
+    }
+}
+
+$ProjectManifestPath = Join-Path $Root "tretnix.project.json"
+if (Test-Path -LiteralPath $ProjectManifestPath -PathType Leaf) {
+    try {
+        $ProjectManifest = (Read-Utf8Strict $ProjectManifestPath) | ConvertFrom-Json
+        foreach ($Validator in @($ProjectManifest.validation.validators)) {
+            $Reviewed = $Validator.reviewed_script
+            if ($null -eq $Reviewed) { continue }
+
+            $Entries = @()
+            if ($Reviewed.PSObject.Properties.Name -contains "path") {
+                $Entries = @($Reviewed)
+            }
+            else {
+                foreach ($Key in @("win32", "default")) {
+                    if ($Reviewed.PSObject.Properties.Name -contains $Key -and $null -ne $Reviewed.$Key) {
+                        $Entries += $Reviewed.$Key
+                    }
+                }
+            }
+
+            foreach ($Entry in $Entries) {
+                if ($null -eq $Entry.path -or $null -eq $Entry.sha256) {
+                    Add-ValidationError "invalid reviewed_script declaration: $($Validator.id)"
+                    continue
+                }
+                $Relative = [string]$Entry.path
+                try { $Target = [System.IO.Path]::GetFullPath((Join-Path $Root $Relative)) }
+                catch {
+                    Add-ValidationError "invalid reviewed_script path: $($Validator.id) -> $Relative"
+                    continue
+                }
+                $InsideRoot = $Target.Equals($Root, [System.StringComparison]::OrdinalIgnoreCase) -or
+                    $Target.StartsWith($RootPrefix, [System.StringComparison]::OrdinalIgnoreCase)
+                if (-not $InsideRoot) {
+                    Add-ValidationError "reviewed_script escapes repository: $($Validator.id) -> $Relative"
+                    continue
+                }
+                if (-not (Test-Path -LiteralPath $Target -PathType Leaf)) {
+                    Add-ValidationError "reviewed_script file missing: $($Validator.id) -> $Relative"
+                    continue
+                }
+                $ActualHash = Get-BytesSha256 (Get-LfNormalizedBytes $Target)
+                if ($ActualHash -ne ([string]$Entry.sha256).ToLowerInvariant()) {
+                    Add-ValidationError "reviewed_script SHA-256 mismatch: $($Validator.id) -> $Relative"
+                }
+            }
+        }
+    }
+    catch {
+        # JSON validation reports malformed project manifests separately.
+    }
+}
+
 $TrackedFiles = @()
 $PreviousPreference = $ErrorActionPreference
 $ErrorActionPreference = "Continue"
@@ -384,5 +575,5 @@ if ($Errors.Count -gt 0) {
 Write-Host "Tretnix knowledge validation: PASSED" -ForegroundColor Green
 Write-Host "Markdown files checked: $($MarkdownFiles.Count)"
 Write-Host "JSON files checked: $($JsonFiles.Count)"
-Write-Host "Decision sequence, local links, LF-normalized family manifests, sensitive filenames and staged/unstaged/untracked whitespace: valid"
+Write-Host "Decision sequence, local links, family manifests, authority/adapter contracts, reviewed-script hashes and staged/unstaged/untracked whitespace: valid"
 exit 0

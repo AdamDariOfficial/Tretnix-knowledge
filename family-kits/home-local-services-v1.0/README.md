@@ -1,18 +1,20 @@
 # Tretnix — Home & Local Services Family
 
-**Concept portfolio:** NODO Servizi  
-**Versione:** 1.0  
-**Data:** 25 luglio 2026  
-**Stato:** preparazione offline completa; implementazione bloccata fino all'attivazione degli abbonamenti
+**Concept portfolio:** NODO Servizi
+**Versione:** 1.0
+**Data:** 25 luglio 2026
+**Stato:** preparazione offline completa; implementazione non autorizzata
 
-Questa cartella definisce la famiglia Home & Local Services prima dell'avvio di Lovable e Codex.
+Questa cartella conserva la specifica Home & Local Services preparata nel ciclo iniziale e i relativi artefatti operativi storici.
 
-## Gate operativo
+Il toolchain Tretnix corrente è governato da `TRX-DEC-041`. I prompt Lovable e il subscription activation runbook restano provenance del ciclo di preparazione: non sono prerequisiti operativi correnti e non autorizzano consumo crediti, creazione di progetti esterni o pubblicazione.
+
+## Gate operativo corrente
 
 La specifica è approvata come baseline di preparazione. Non autorizza ancora:
 
-- creazione del progetto Lovable;
-- consumo di crediti;
+- implementazione;
+- consumo di crediti o servizi a pagamento;
 - creazione o modifica di repository remoti;
 - attivazione di backend;
 - pubblicazione o deploy;
@@ -21,10 +23,11 @@ La specifica è approvata come baseline di preparazione. Non autorizza ancora:
 
 L'implementazione può iniziare soltanto dopo:
 
-1. attivazione manuale degli abbonamenti previsti;
-2. verifica del workspace e dei consumi;
-3. nuovo comando esplicito dell'utente;
-4. registrazione dell'avvio in `docs/STATUS.md`.
+1. comando owner esplicito per `NODO Servizi START`;
+2. autorizzazione separata per repository o servizi esterni quando necessari;
+3. repository e baseline verificati;
+4. scope, acceptance criteria e required verification approvati;
+5. registrazione dell'avvio in `docs/STATUS.md` come `IMPLEMENTATION_AUTHORIZED`.
 
 ## Repository previsti
 
@@ -52,17 +55,24 @@ I nomi sono approvati come concept portfolio. Marchio, denominazione e dominio r
 - `docs/STATUS.md`
 - `docs/APPROVAL.md`
 
-## Prompt e procedure pronte
+## Prompt e procedure
 
-- `prompts/LOVABLE_START_PROMPT.md`
-- `prompts/LOVABLE_BUSINESS_PROMPT.md`
+Correnti:
+
 - `prompts/CODEX_START_READ_ONLY_AUDIT.md`
 - `prompts/CODEX_BUSINESS_CONSOLIDATION.md`
 - `prompts/IMPECCABLE_START_REVIEW.md`
 - `prompts/IMPECCABLE_BUSINESS_PARITY_REVIEW.md`
-- `checklists/SUBSCRIPTION_ACTIVATION_RUNBOOK.md`
 - `checklists/START_FREEZE_CHECKLIST.md`
 - `checklists/BUSINESS_FREEZE_CHECKLIST.md`
+
+Storici/provenance:
+
+- `prompts/LOVABLE_START_PROMPT.md`
+- `prompts/LOVABLE_BUSINESS_PROMPT.md`
+- `checklists/SUBSCRIPTION_ACTIVATION_RUNBOOK.md`
+
+La presenza di questi artefatti storici non riattiva Lovable e non costituisce autorizzazione.
 
 ## Regola fondamentale
 

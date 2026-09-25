@@ -201,8 +201,8 @@
         "task_classes": ["all"],
         "capabilities": ["static", "config"],
         "reviewed_script": {
-          "win32": { "validator_id": "knowledge-validator", "path": "scripts/validate_knowledge.ps1", "sha256": "e3a52ed67d1794d4f049244cc73172c3885a26a93b5fa22114006829ffffcc9e", "capabilities": ["static", "config"] },
-          "default": { "validator_id": "knowledge-validator", "path": "scripts/validate_knowledge.py", "sha256": "9d2ea16a6a11e58111ffae46e6ddef48f144777ae28903885c784fb69d5affe8", "capabilities": ["static", "config"] }
+          "win32": { "validator_id": "knowledge-validator", "path": "scripts/validate_knowledge.ps1", "sha256": "240804bde67861537dc8ca1a3a8fc5d09b8291b5473da64755679a4d1e8af2ee", "capabilities": ["static", "config"] },
+          "default": { "validator_id": "knowledge-validator", "path": "scripts/validate_knowledge.py", "sha256": "b319f503e7e64a6ee48c7a5c9850a063a91ebe535200b91980e856a1ae547102", "capabilities": ["static", "config"] }
         },
         "deterministic": true,
         "cacheable": true,

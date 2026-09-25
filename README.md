@@ -2,8 +2,8 @@
 
 Fonte canonica per identità, decisioni, standard tecnici, repository, procedure operative e adattatori degli strumenti Tretnix.
 
-**Versione:** 1.13
-**Aggiornato:** 20 settembre 2026
+**Versione:** 1.14
+**Aggiornato:** 25 settembre 2026
 **Stato:** operativo
 **Visibilità corrente:** repository GitHub pubblica durante il completamento dell’audit e del consolidamento Tretnix
 **Visibilità successiva:** passaggio a privata soltanto dopo completamento del ciclo, verifica delle dipendenze di accesso e nuova conferma esplicita del proprietario (`TRX-DEC-031`)
@@ -79,32 +79,16 @@ tretnix-knowledge/
 │       ├── tretnix.mjs
 │       └── tests/
 │
-├── audits/
-│   ├── KNOWLEDGE_CONSOLIDATION_2026-07-26.md
-│   ├── DEVELOPMENT_PACK_INGESTION_2026-07-26.md
-│   └── CONTROLLED_CHANGE_PACKAGE_VALIDATION_2026-07-27.md
-│
-├── family-kits/
-│   ├── beauty-wellness-v1.1/
-│   ├── professional-services-v1.0/
-│   └── home-local-services-v1.0/
-├── case-studies/
-│   ├── FORNO_LUME.md
-│   └── RITO_STUDIO.md
-│
-├── operations/
-│   └── development-launch-2026-07-25/
-│
-├── source-artifacts/
-│   └── 2026-07-25-development-pack/
-│
 ├── compiled/
 │   ├── README.md
 │   ├── CHATGPT_PROJECT_INSTRUCTIONS.md
-│   ├── LOVABLE_WORKSPACE_KNOWLEDGE.md
-│   ├── CURSOR_USER_RULES.md
+│   ├── CHATGPT_PROJECT_INSTRUCTIONS_COMPACT.md
+│   ├── CHATGPT_KNOWLEDGE_ROUTER.md
+│   ├── CHATGPT_WORKSTREAM_PLAYBOOK.md
 │   ├── CODEX_GLOBAL_AGENTS.md
-│   └── CODEX_SETUP.md
+│   ├── CODEX_SETUP.md
+│   ├── LOVABLE_WORKSPACE_KNOWLEDGE.md
+│   └── CURSOR_USER_RULES.md
 │
 ├── skills/
 │   ├── CONTROLLED_CHANGE_PACKAGE.md
@@ -113,57 +97,40 @@ tretnix-knowledge/
 │   ├── RELEASE_FREEZE.md
 │   └── SECURITY_RETEST.md
 │
+├── family-kits/
+├── case-studies/
+├── operations/
+├── source-artifacts/
 ├── templates/
-│   ├── READ_ONLY_AUDIT.md
-│   ├── CONTROLLED_IMPLEMENTATION_TASK.md
-│   ├── CONTROLLED_CHANGE_PACKAGE_MANIFEST.md
-│   ├── READ_ONLY_DIFF_REVIEW.md
-│   ├── TRETNIX_PROJECT_MANIFEST.json
-│   ├── TRETNIX_TASK_DESCRIPTOR.json
-│   ├── TRETNIX_EVIDENCE_SCHEMA.json
-│   └── project-foundation/
-│       ├── AGENTS.md
-│       ├── .cursorignore
-│       └── .cursor/
-│           └── rules/
-│               └── 00-project-overview.mdc
-│
 └── project-kits/
-    └── forno-lume-start/
-        ├── README.md
-        ├── AGENTS.md
-        ├── .cursorignore
-        └── .cursor/
-            └── rules/
-                └── 00-project-overview.mdc
 ```
 
----
+La struttura abbreviata mostra i contratti correnti senza duplicare l'intero albero. I contenuti sotto `family-kits/`, `templates/` e `project-kits/` restano versionati e validati dalle rispettive regole.
 
-## 4. Documenti canonici
+---
+## 4. Documenti canonici e responsabilità
 
 | File | Funzione | Natura |
 |---|---|---|
-| [`TRETNIX_MASTER_CONTEXT.md`](./TRETNIX_MASTER_CONTEXT.md) | Contesto aziendale e operativo complessivo | Descrittiva |
+| [`TRETNIX_MASTER_CONTEXT.md`](./TRETNIX_MASTER_CONTEXT.md) | Identità, modello operativo, tool roles e principi stabili; non conserva baseline correnti di progetto | Descrittiva stabile |
 | [`DEVELOPMENT_STANDARDS.md`](./DEVELOPMENT_STANDARDS.md) | Regole tecniche trasversali | Normativa |
 | [`UX_UI_QUALITY_SYSTEM.md`](./UX_UI_QUALITY_SYSTEM.md) | Standard UX/UI, consistenza visuale, anti-AI-slop e Visual QA | Normativa |
 | [`DECISIONS.md`](./DECISIONS.md) | Decisioni approvate e motivazioni | Normativa |
-| [`REPOSITORY_INDEX.md`](./REPOSITORY_INDEX.md) | Inventario e ruolo dei progetti | Descrittiva |
+| [`REPOSITORY_INDEX.md`](./REPOSITORY_INDEX.md) | Inventario, identità, relazioni e checkpoint auditati; non è lo status live | Descrittiva |
+| [`CURRENT_STATE.md`](./CURRENT_STATE.md) | Snapshot trasversale datato; non sostituisce `docs/STATUS.md` e non auto-certifica il proprio `main` | Operativa e temporale |
+| [`PORTFOLIO_AND_VERTICALS.md`](./PORTFOLIO_AND_VERTICALS.md) | Mappa dei verticali, lifecycle e gate di avvio | Normativa e descrittiva |
 | [`HOSPITALITY_FAMILY.md`](./HOSPITALITY_FAMILY.md) | Contratto, policy e baseline verificate della famiglia Hospitality | Normativa e descrittiva |
 | [`BEAUTY_WELLNESS_FAMILY.md`](./BEAUTY_WELLNESS_FAMILY.md) | Indice e governance Beauty & Wellness | Normativa e descrittiva |
 | [`PROFESSIONAL_SERVICES_FAMILY.md`](./PROFESSIONAL_SERVICES_FAMILY.md) | Indice e governance Professional Services | Normativa e descrittiva |
 | [`HOME_LOCAL_SERVICES_FAMILY.md`](./HOME_LOCAL_SERVICES_FAMILY.md) | Indice e governance Home & Local Services | Normativa e descrittiva |
-| [`PORTFOLIO_AND_VERTICALS.md`](./PORTFOLIO_AND_VERTICALS.md) | Mappa dei verticali, lifecycle e gate di avvio | Normativa e descrittiva |
 | [`CASE_STUDY_STANDARD.md`](./CASE_STUDY_STANDARD.md) | Standard per portfolio concept e client case study | Normativa e descrittiva |
-| [`CURRENT_STATE.md`](./CURRENT_STATE.md) | Snapshot operativo trasversale con livelli di evidenza | Operativa e temporale |
 | [`CHAT_RETENTION_AND_HANDOFF.md`](./CHAT_RETENTION_AND_HANDOFF.md) | Gate per handoff e cancellazione sicura delle chat | Normativa e operativa |
 | [`BACKUP_AND_DISASTER_RECOVERY.md`](./BACKUP_AND_DISASTER_RECOVERY.md) | Workspace portabile, backup locale/cloud e recovery Tretnix | Normativa e operativa |
 | [`SOURCE_ARTIFACT_REGISTER.md`](./SOURCE_ARTIFACT_REGISTER.md) | Registro di artefatti, checksum, ingestione e fonti residue | Operativa |
-| [`templates/READ_ONLY_AUDIT.md`](./templates/READ_ONLY_AUDIT.md) | Procedura standard di audit senza modifiche | Operativa |
+| [`DEVELOPMENT_OS.md`](./DEVELOPMENT_OS.md) | Contratto e adozione del layer deterministico Development OS | Normativa e operativa |
 | [`skills/CONTROLLED_CHANGE_PACKAGE.md`](./skills/CONTROLLED_CHANGE_PACKAGE.md) | Applicazione e validazione controllata di modifiche esterne | Operativa e normativa |
 
 ---
-
 ## 5. Contenuti compilati
 
 La cartella [`compiled/`](./compiled/) contiene versioni sintetiche derivate dai documenti canonici e pronte da copiare nelle impostazioni degli strumenti.
@@ -206,7 +173,7 @@ Quando Python è disponibile, il validatore cross-platform equivalente rimane:
 python scripts/validate_knowledge.py
 ```
 
-Il workflow `.github/workflows/knowledge-validation.yml` usa Python sulle pull request e sui push a `main`. I due validatori applicano lo stesso contratto e non sostituiscono la review umana: controllano struttura, link locali, JSON, manifest dei family kit, sequenza delle decisioni e file sensibili tracciati.
+Il workflow `.github/workflows/knowledge-validation.yml` usa Python 3.13 e Node 22 sulle pull request e sui push a `main`. Esegue sia `scripts/validate_knowledge.py` sia `node --test tools/tretnix/tests/tretnix.test.mjs`. I validator locali PowerShell/Python restano equivalenti per il contratto Knowledge e non sostituiscono la review umana.
 
 
 ### `skills/`
@@ -331,21 +298,21 @@ Non inserire bug temporanei o task correnti nella knowledge permanente.
 
 ### ChatGPT
 
-Usare questa repository per:
+Usare questa repository per strategia, specifiche, criteri di accettazione, coordinamento e review.
 
-- strategia;
-- specifiche;
-- criteri di accettazione;
-- confronto tra report;
-- revisione degli audit;
-- documentazione;
-- preparazione dei task.
-
-Le istruzioni pronte da copiare sono in:
+Configurazione derivata:
 
 ```text
-compiled/CHATGPT_PROJECT_INSTRUCTIONS.md
+Project Instructions
+= compiled/CHATGPT_PROJECT_INSTRUCTIONS_COMPACT.md
+  oppure compiled/CHATGPT_PROJECT_INSTRUCTIONS.md quando il limite lo consente
+
+Project Sources
+= compiled/CHATGPT_KNOWLEDGE_ROUTER.md
++ compiled/CHATGPT_WORKSTREAM_PLAYBOOK.md
 ```
+
+Gli adapter sono derivati. Le fonti canoniche restano nella Knowledge e nei repository progetto; non duplicarle stabilmente nei Project Sources.
 
 ### Lovable
 

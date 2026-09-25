@@ -1,7 +1,7 @@
 # Tretnix Professional Services Family
 
-**Versione:** 1.0
-**Aggiornato:** 26 luglio 2026
+**Versione:** 1.1
+**Aggiornato:** 25 settembre 2026
 **Stato:** canonico per governance e indice; specifica completa acquisita in `family-kits/professional-services-v1.0/`
 
 ---
@@ -144,18 +144,27 @@ Ogni futuro portale o workflow documentale richiede un progetto separato di sicu
 
 La baseline è approvata ma non autorizza:
 
-- progetto Lovable;
-- consumo crediti;
-- repository remoto;
-- backend;
-- pubblicazione;
+- implementazione;
+- consumo di crediti o servizi a pagamento;
+- creazione di repository remoti;
+- attivazione di backend;
+- pubblicazione o deploy;
 - raccolta dati;
 - BUSINESS prima del freeze START.
 
-L'avvio richiede abbonamenti attivi, workspace e saldo registrati, repository pronto, comando esplicito e `STATUS.md` su `IMPLEMENTATION_AUTHORIZED`.
+Il toolchain corrente segue `TRX-DEC-041`: ChatGPT coordina e revisiona, Codex è il writer operativo principale e GitHub è il checkpoint versionato.
+
+I prompt Lovable e `SUBSCRIPTION_ACTIVATION_RUNBOOK.md` nel family kit restano provenance storica del ciclo di preparazione. Non sono prerequisiti operativi correnti e non autorizzano l'uso di Lovable; un eventuale riutilizzo richiede un gate esplicito separato.
+
+L'avvio richiede:
+
+1. comando owner esplicito per `QUADRA Studio START`;
+2. autorizzazione separata per creare repository o usare servizi esterni quando necessari;
+3. repository/baseline e working tree verificati prima della scrittura;
+4. scope, acceptance criteria e required verification definiti;
+5. `docs/STATUS.md` aggiornato a `IMPLEMENTATION_AUTHORIZED`.
 
 ---
-
 ## 8. Fonti complete
 
 ```text

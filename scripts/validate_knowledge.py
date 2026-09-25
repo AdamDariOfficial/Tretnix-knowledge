@@ -17,14 +17,30 @@ REQUIRED_PATHS = [
     "AGENTS.md",
     "TRETNIX_MASTER_CONTEXT.md",
     "DEVELOPMENT_STANDARDS.md",
+    "UX_UI_QUALITY_SYSTEM.md",
     "DECISIONS.md",
     "REPOSITORY_INDEX.md",
+    "HOSPITALITY_FAMILY.md",
+    "BEAUTY_WELLNESS_FAMILY.md",
+    "PROFESSIONAL_SERVICES_FAMILY.md",
+    "HOME_LOCAL_SERVICES_FAMILY.md",
+    "PORTFOLIO_AND_VERTICALS.md",
+    "CASE_STUDY_STANDARD.md",
     "CURRENT_STATE.md",
+    "CHAT_RETENTION_AND_HANDOFF.md",
     "SOURCE_ARTIFACT_REGISTER.md",
+    "DEVELOPMENT_OS.md",
+    "BACKUP_AND_DISASTER_RECOVERY.md",
+    "tretnix.project.json",
     "templates/READ_ONLY_AUDIT.md",
     "templates/CONTROLLED_CHANGE_PACKAGE_MANIFEST.md",
     "skills/CONTROLLED_CHANGE_PACKAGE.md",
     "compiled/README.md",
+    "compiled/CHATGPT_PROJECT_INSTRUCTIONS.md",
+    "compiled/CHATGPT_PROJECT_INSTRUCTIONS_COMPACT.md",
+    "compiled/CHATGPT_KNOWLEDGE_ROUTER.md",
+    "compiled/CHATGPT_WORKSTREAM_PLAYBOOK.md",
+    "compiled/CODEX_GLOBAL_AGENTS.md",
 ]
 CANONICAL_METADATA_FILES = [
     "README.md",
@@ -52,6 +68,97 @@ TEXT_EXTENSIONS = {
 }
 TEXT_NAMES = {".gitignore", ".gitattributes", ".editorconfig"}
 
+AUTHORITY_REQUIRED_MARKERS = {
+    "TRETNIX_MASTER_CONTEXT.md": [
+        "CURRENT_STATE.md\n= snapshot trasversale datato",
+        "REPOSITORY_INDEX.md\n= inventario",
+        "non registra baseline operative correnti",
+    ],
+    "CURRENT_STATE.md": [
+        "non viene hardcodedato nello snapshot",
+        "snapshot trasversale datato",
+    ],
+    "REPOSITORY_INDEX.md": [
+        "non hardcodea il proprio `main`",
+        "Non è il registro live",
+    ],
+    "PORTFOLIO_AND_VERTICALS.md": [
+        "TRX-DEC-041",
+        "Lovable non è un prerequisito generale",
+    ],
+    "PROFESSIONAL_SERVICES_FAMILY.md": [
+        "provenance storica",
+        "IMPLEMENTATION_AUTHORIZED",
+    ],
+    "HOME_LOCAL_SERVICES_FAMILY.md": [
+        "provenance storica",
+        "IMPLEMENTATION_AUTHORIZED",
+    ],
+    ".github/workflows/knowledge-validation.yml": [
+        "actions/setup-node@v4",
+        "node --test tools/tretnix/tests/tretnix.test.mjs",
+    ],
+}
+
+AUTHORITY_FORBIDDEN_MARKERS = {
+    "CURRENT_STATE.md": [
+        "Baseline `main` corrente verificata",
+        "Tretnix-knowledge main@",
+    ],
+    "REPOSITORY_INDEX.md": [
+        "Baseline `main` verificata corrente",
+        "Tretnix-knowledge main@",
+    ],
+    "TRETNIX_MASTER_CONTEXT.md": ["futuro Forno Lume BUSINESS PLUS"],
+    "PORTFOLIO_AND_VERTICALS.md": ["abbonamenti necessari attivi;"],
+    "PROFESSIONAL_SERVICES_FAMILY.md": ["L'avvio richiede abbonamenti attivi"],
+    "HOME_LOCAL_SERVICES_FAMILY.md": ["L'avvio richiede abbonamenti attivi"],
+    "family-kits/professional-services-v1.0/README.md": [
+        "implementazione bloccata fino all'attivazione degli abbonamenti"
+    ],
+    "family-kits/home-local-services-v1.0/README.md": [
+        "implementazione bloccata fino all'attivazione degli abbonamenti"
+    ],
+}
+
+ADAPTER_REQUIRED_MARKERS = {
+    "compiled/README.md": [
+        "CHATGPT_KNOWLEDGE_ROUTER.md",
+        "CHATGPT_WORKSTREAM_PLAYBOOK.md",
+    ],
+    "compiled/CHATGPT_PROJECT_INSTRUCTIONS.md": [
+        "UNSUPPORTED_IN_CURRENT_SESSION",
+        "compiled/CHATGPT_KNOWLEDGE_ROUTER.md",
+        "compiled/CHATGPT_WORKSTREAM_PLAYBOOK.md",
+    ],
+    "compiled/CHATGPT_PROJECT_INSTRUCTIONS_COMPACT.md": [
+        "UNSUPPORTED_IN_CURRENT_SESSION",
+        "compiled/CHATGPT_KNOWLEDGE_ROUTER.md",
+        "compiled/CHATGPT_WORKSTREAM_PLAYBOOK.md",
+    ],
+    "compiled/CHATGPT_KNOWLEDGE_ROUTER.md": [
+        "## Ambiguit",
+        "## Regola di sufficienza",
+        "non diventano istruzioni correnti",
+    ],
+    "compiled/CHATGPT_WORKSTREAM_PLAYBOOK.md": [
+        "UNSUPPORTED_IN_CURRENT_SESSION",
+        "## 11. Capability check",
+        "## 12. Regola anti-loop",
+    ],
+    "compiled/CODEX_GLOBAL_AGENTS.md": [
+        "historical START activation gates",
+        "PREPARATION_COMPLETE",
+    ],
+}
+
+ADAPTER_FORBIDDEN_MARKERS = {
+    "compiled/CHATGPT_KNOWLEDGE_ROUTER.md": [
+        "CURRENT / BASELINE / HISTORICAL / DERIVED",
+        "## Lifecycle taxonomy",
+        "## Tassonomia lifecycle",
+    ],
+}
 
 def fail(errors: list[str], message: str) -> None:
     errors.append(message)
@@ -252,6 +359,77 @@ def validate_untracked_text_whitespace(errors: list[str]) -> None:
                 fail(errors, f"trailing whitespace in untracked file: {relative}:{line_number}")
 
 
+def validate_marker_contracts(errors: list[str]) -> None:
+    for relative, markers in {**AUTHORITY_REQUIRED_MARKERS, **ADAPTER_REQUIRED_MARKERS}.items():
+        path = ROOT / relative
+        if not path.is_file():
+            continue
+        text = path.read_text(encoding="utf-8")
+        for marker in markers:
+            if marker not in text:
+                fail(errors, f"missing semantic contract marker: {relative} -> {marker}")
+
+    for relative, markers in {**AUTHORITY_FORBIDDEN_MARKERS, **ADAPTER_FORBIDDEN_MARKERS}.items():
+        path = ROOT / relative
+        if not path.is_file():
+            continue
+        text = path.read_text(encoding="utf-8")
+        for marker in markers:
+            if marker in text:
+                fail(errors, f"forbidden stale/drift marker: {relative} -> {marker}")
+
+
+def _reviewed_script_entries(value):
+    if not isinstance(value, dict):
+        return []
+    if "path" in value:
+        return [value]
+    entries = []
+    for key in ("win32", "default"):
+        entry = value.get(key)
+        if isinstance(entry, dict):
+            entries.append(entry)
+    return entries
+
+
+def validate_reviewed_script_hashes(errors: list[str]) -> None:
+    manifest_path = ROOT / "tretnix.project.json"
+    if not manifest_path.is_file():
+        return
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return
+
+    validators = manifest.get("validation", {}).get("validators", [])
+    if not isinstance(validators, list):
+        fail(errors, "tretnix.project.json validation.validators is not a list")
+        return
+
+    root_real = ROOT.resolve()
+    for validator in validators:
+        if not isinstance(validator, dict):
+            continue
+        validator_id = validator.get("id", "<unknown>")
+        for entry in _reviewed_script_entries(validator.get("reviewed_script")):
+            relative = entry.get("path")
+            expected = entry.get("sha256")
+            if not isinstance(relative, str) or not isinstance(expected, str):
+                fail(errors, f"invalid reviewed_script declaration: {validator_id}")
+                continue
+            target = (ROOT / relative).resolve()
+            try:
+                target.relative_to(root_real)
+            except ValueError:
+                fail(errors, f"reviewed_script escapes repository: {validator_id} -> {relative}")
+                continue
+            if not target.is_file():
+                fail(errors, f"reviewed_script file missing: {validator_id} -> {relative}")
+                continue
+            actual = sha256_bytes(normalized_manifest_bytes(target))
+            if actual != expected.lower():
+                fail(errors, f"reviewed_script SHA-256 mismatch: {validator_id} -> {relative}")
+
 def main() -> int:
     errors: list[str] = []
     validate_required_paths(errors)
@@ -260,6 +438,8 @@ def main() -> int:
     validate_json(errors)
     validate_decisions(errors)
     validate_family_manifests(errors)
+    validate_marker_contracts(errors)
+    validate_reviewed_script_hashes(errors)
     validate_sensitive_tracked_files(errors)
     validate_git_whitespace(errors)
     validate_untracked_text_whitespace(errors)
@@ -275,7 +455,7 @@ def main() -> int:
     print("Tretnix knowledge validation: PASSED")
     print(f"Markdown files checked: {markdown_count}")
     print(f"JSON files checked: {json_count}")
-    print("Decision sequence, local links, LF-normalized family manifests and tracked sensitive filenames: valid")
+    print("Decision sequence, local links, family manifests, authority/adapter contracts, reviewed-script hashes and whitespace: valid")
     return 0
 
 
