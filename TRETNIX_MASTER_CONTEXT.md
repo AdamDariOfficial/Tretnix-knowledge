@@ -1,7 +1,7 @@
 # Tretnix Master Context
 
-**Versione:** 1.11
-**Aggiornato:** 25 settembre 2026
+**Versione:** 1.12
+**Aggiornato:** 26 settembre 2026
 **Stato:** canonico
 
 ---
@@ -262,6 +262,45 @@ Agente modifica direttamente la produzione
 ↓
 Deploy senza revisione
 ```
+
+---
+
+### Tretnix Intelligence — modello operativo ricorrente
+
+Tretnix Intelligence è il sistema interno che trasforma sorgenti monitorate in review package strutturati per decisione umana.
+
+Il modello operativo approvato è staging-first:
+
+```text
+sorgente monitorata
+↓
+discovery / acquisizione
+↓
+preprocessing deterministico
+↓
+semantic batch bounded
+↓
+dedup / confronto / candidate update
+↓
+review package
+↓
+Tretnix Intelligence Inbox staging
+↓
+human review
+↓
+eventuale formalizzazione Knowledge separata
+```
+
+Il runtime ricorrente usa un daemon persistente avviato dal task Windows `Tretnix Intelligence`. L'automazione può arrivare fino alla staging Inbox, ma non può approvare o rifiutare elementi al posto dell'owner, modificare automaticamente la Tretnix Knowledge o attivare la produzione.
+
+Un ciclo senza nuovi input è valido. Una model call reale avviene soltanto quando esiste lavoro semanticamente eleggibile; il limite resta una call per batch e non esiste fallback per singolo video. Gli errori successivi a una call consumata devono preservarne gli artefatti e privilegiare recovery deterministica rispetto a un nuovo consumo.
+
+Il runbook operativo è versionato in:
+
+`operations/tretnix-intelligence/OPERATIONAL_RUNBOOK.md`
+
+La decisione normativa è `TRX-DEC-044`.
+
 
 ---
 

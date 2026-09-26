@@ -1,7 +1,7 @@
 # Tretnix Current State
 
-**Versione:** 1.20
-**Aggiornato:** 25 settembre 2026
+**Versione:** 1.21
+**Aggiornato:** 26 settembre 2026
 **Stato:** snapshot operativo trasversale; aggiornare quando cambia un gate, una baseline o una fase
 
 ---
@@ -179,6 +179,57 @@ Sequenza recente verificata in GitHub:
 La PR `#11` registra staging migration `0005_intelligence_ingest.sql`, Worker version `90a32d8d-b2f4-4858-b260-7d1a0cbb211d`, deployment `a096e626-8906-4276-991f-efcf7c62060a`, smoke/E2E security e trasporto reale dei producer come PASS. Questa Knowledge registra l'evidenza versionata ma non dichiara una nuova verifica live del deploy.
 
 La superficie production corrente non deve essere mutata per effetto di questa riconciliazione. Production Worker, migrations, secrets, routing, DNS e cutover restano autorizzazioni separate quando non esiste prova versionata di un gate successivo.
+
+---
+
+## 5.1 Tretnix Intelligence — recurring staging automation
+
+| Campo | Valore |
+|---|---|
+| Runtime | Tretnix Intelligence `0.3.0` |
+| Stato riportato | `FULLY_AUTOMATED_STAGING_OPERATIONAL / ACTIVATION_PASS_FIRST_CYCLE_ACTIVE` |
+| Modello scheduler | `LONG_RUNNING_DAEMON` |
+| Windows task | `Tretnix Intelligence`, una istanza logica, trigger `AtLogOn`, `IgnoreNew` |
+| Adapter preprocess | `codex_preprocess.py` |
+| Semantic batch | automatico quando eleggibile; massimo 1 call per batch; nessun fallback per-video |
+| Inbox sync | automatico verso `tretnix-staging` per package nuovi/cambiati |
+| Human review | obbligatoria |
+| Knowledge write automatico | vietato |
+| Production mutation | vietata |
+| Decisione | `TRX-DEC-044` |
+| Runbook | `operations/tretnix-intelligence/OPERATIONAL_RUNBOOK.md` |
+| Evidenza | `HR` per activation/runtime report del 25 settembre 2026; la formalizzazione Knowledge non auto-certifica lo stato runtime |
+
+### Activation evidence riportata
+
+Il closeout runtime del 25 settembre 2026 riporta:
+
+- task scheduler `Running` con una sola radice logica daemon;
+- primo ciclo automatico `ACTIVE`;
+- 2 nuovi input TikTok reali;
+- preprocessing 2/2 con `codex_preprocess.py`;
+- 1 nuovo semantic batch da 2 item;
+- 1 model call reale, senza fallback o retry aggiuntivo;
+- candidate count stabile 18 → 18, con aggiornamento del solo `TTK-006`;
+- auto-sync staging 13/13 riusciti, 0 falliti;
+- 6 payload staging materialmente mutati e readback server-native 6/6 PASS;
+- tutti gli item interessati ancora `pending`, review fields null e zero review decision automatiche;
+- Knowledge writes 0;
+- production mutations, migration, deploy e DNS 0;
+- validation finale riportata 141/141 PASS.
+
+Questi esiti restano `HR` finché non sono riconciliati tramite artefatti versionati o verifica indipendente.
+
+### Confine operativo
+
+Il sistema può automatizzare discovery, preprocess, semantic batching, candidate update, review-package generation e staging sync. Restano gate separati:
+
+- human review dell'Inbox;
+- formalizzazione nella Tretnix Knowledge;
+- qualunque activation o mutation production.
+
+Il runbook canonico descrive health check, fail-closed e recovery senza includere secret.
+
 
 ---
 

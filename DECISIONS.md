@@ -1,7 +1,7 @@
 # Tretnix Decision Log
 
-**Versione:** 1.18
-**Aggiornato:** 20 settembre 2026
+**Versione:** 1.19
+**Aggiornato:** 26 settembre 2026
 
 Questo file contiene decisioni approvate. Non contiene proposte, task o bug.
 
@@ -1728,3 +1728,94 @@ DISASTER RECOVERY COMPLESSIVO: IMPLEMENTATION PENDING
 - Le credenziali R2 e le password Kopia restano secrets e non vengono versionate nella Knowledge.
 - Backblaze B2 può essere dismesso senza modificare il repository R2 verificato.
 - L'acquisto dell'SSD esterno e Kopia LOCAL restano un gate separato, intenzionalmente differito fino al primo incasso Tretnix utile.
+
+---
+
+## TRX-DEC-044 — Tretnix Intelligence: automazione ricorrente su staging con human review obbligatoria
+
+**Stato:** approvata
+**Data:** 25 settembre 2026
+**Ambito:** Tretnix Intelligence, Tretnix.com Intelligence Inbox, automazione interna Tretnix
+
+### Contesto
+
+Il primo pilot live e il successivo hardening pre-automation hanno validato il flusso locale TikTok → preprocess → semantic batch → review package → staging Inbox. Il 25 settembre 2026 è stata inoltre completata, secondo evidence runtime riportata e non promossa automaticamente a verifica diretta della Knowledge, la prima attivazione ricorrente reale con daemon persistente e primo ciclo automatico attivo.
+
+### Decisione
+
+Tretnix Intelligence adotta come modello operativo corrente una automazione ricorrente **staging-first** con:
+
+- un solo Windows Scheduled Task denominato `Tretnix Intelligence`;
+- modello di esecuzione `LONG_RUNNING_DAEMON`;
+- trigger `AtLogOn`;
+- policy `IgnoreNew` per impedire istanze scheduler concorrenti;
+- preprocessing tramite `codex_preprocess.py` o suo successore canonico documentato;
+- semantic analysis a batch bounded per creator;
+- `max_semantic_calls_per_batch = 1`;
+- nessun fallback semantico per singolo video;
+- aggiornamento deterministico di candidati, evidence e provenance;
+- auto-sync esclusivamente verso la Tretnix Intelligence Inbox di **staging**;
+- invio automatico soltanto di review package nuovi o materialmente cambiati.
+
+L'automazione può eseguire:
+
+```text
+discovery
+→ acquisizione
+→ preprocessing
+→ semantic batch quando eleggibile
+→ dedup / reinforce / contradiction / candidate update
+→ review package
+→ staging Inbox sync
+```
+
+Restano **obbligatoriamente umani** e separati:
+
+```text
+decisione approve / reject / send_to_test / already_known / needs_more_evidence
+Knowledge formalization
+production activation o production mutation
+```
+
+Il modello non può trasformare autonomamente un candidate in conoscenza approvata né decidere per conto dell'owner la review dell'Inbox.
+
+### Fail-closed
+
+Se un'invariante di activation o runtime non è verificabile:
+
+1. impedire nuovi cicli quando necessario;
+2. disabilitare il task scheduler o ripristinare i flag automatici se il sistema è in stato incerto;
+3. preservare gli artefatti di una model call già consumata;
+4. non ripetere automaticamente una call valida già consumata;
+5. non annullare alla cieca sync staging già riusciti;
+6. conservare evidence sufficiente alla diagnosi;
+7. richiedere un nuovo gate prima di riattivare.
+
+Un errore di accesso a Windows Scheduled Tasks non può essere interpretato come `NOT_INSTALLED`.
+
+### Confine staging / production
+
+`FULLY_AUTOMATED_STAGING_OPERATIONAL` non autorizza:
+
+- production Inbox;
+- production D1 mutation;
+- migration;
+- deploy;
+- DNS o custom-domain change;
+- automatic Knowledge write;
+- automatic human-review decision.
+
+Qualunque estensione oltre staging richiede un gate separato con evidenza diretta.
+
+### Motivazione
+
+L'automazione riduce il lavoro manuale ripetitivo e permette a Tretnix di trasformare input esterni in materiale strutturato da revisionare, mantenendo però il controllo umano sui passaggi che cambiano conoscenza approvata, decisioni operative o produzione.
+
+### Conseguenze
+
+- Il daemon può restare `Running`; la salute si verifica tramite istanza unica, heartbeat/log/state progression e completamento dei cicli interni, non tramite uscita del processo.
+- Un ciclo senza nuovi input è un esito valido e non deve generare lavoro artificiale.
+- Una real semantic call è ammessa soltanto per batch realmente eleggibile e irrisolto.
+- La canonicalizzazione payload Python ↔ JavaScript deve restare byte/hash compatible.
+- Duplicate `knowledge_ref` validi devono essere normalizzati deterministicamente senza sprecare una call già consumata, preservando audit/provenance.
+- La staging Inbox mantiene `pending` e campi review null finché non interviene una persona.
