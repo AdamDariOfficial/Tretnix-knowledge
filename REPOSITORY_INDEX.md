@@ -1,7 +1,7 @@
 # Tretnix Repository Index
 
-**Versione:** 2.8
-**Aggiornato:** 24 settembre 2026
+**Versione:** 2.9
+**Aggiornato:** 25 settembre 2026
 **Stato dell’inventario:** completo rispetto agli otto repository attualmente dichiarati
 
 Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit del codice.
@@ -10,28 +10,29 @@ Questo indice descrive il ruolo noto dei repository. Non sostituisce l’audit d
 
 ## 1. Regole dell’inventario
 
-Ogni repository deve registrare:
+`REPOSITORY_INDEX.md` è l'inventario trasversale dei repository: identifica risorse reali, relazioni, ruolo canonico e checkpoint auditati. Non è il registro live dei gate operativi e non sostituisce `CURRENT_STATE.md` o lo status locale del progetto.
+
+Ogni repository deve registrare, quando applicabile:
 
 - nome;
 - categoria;
 - piano;
 - URL;
 - deploy;
-- stato;
+- stato sintetico;
 - branch principale;
-- commit auditato;
+- commit auditato o regola esplicita per risolverlo;
 - relazione con altri progetti;
 - ruolo canonico;
 - informazioni confermate;
 - aspetti da verificare;
 - problemi già conosciuti;
 - accessi disponibili;
-- data dell’ultimo audit.
+- data dell'ultimo audit.
 
-L’inventario è completo soltanto rispetto al manifest approvato.
+L'inventario è completo soltanto rispetto al manifest approvato. Per `Tretnix-knowledge` il commit `main` corrente non viene hardcodeato nell'indice stesso: deve essere risolto da Git, perché ogni merge che modifica questo file cambierebbe il valore da registrare.
 
 ---
-
 # 2. Repository attuali
 
 ## 2.1 Tretnix.com
@@ -444,24 +445,25 @@ trasversali soltanto tramite decisione/adoption separata.
 | Piano | INTERNO |
 | Repository | `https://github.com/AdamDariOfficial/Tretnix-knowledge.git` |
 | Deploy | non applicabile |
-| Stato | operativo; CCP v1.2 e ChatGPT workstream enforcement merged; prima adozione Development OS applicativa merged in RITO PLUS |
+| Stato | operativo; CCP v1.2, ChatGPT workstream e Development OS versionati |
 | Branch principale | `main` |
-| Baseline `main` verificata corrente | `e76b626355d5c3aed8a8b2c2905d4f1bde0090d2` |
-| CCP operator workflow | PR `#30`, merge `01bf3a6c07f26c0bd39a1a3685ce62eef4f91a70` |
-| ChatGPT workstream enforcement | PR `#31`, source `d2446f6ec344a838b3398632804ebf912c90a645`, merge `e76b626355d5c3aed8a8b2c2905d4f1bde0090d2` |
+| Commit corrente | risolvere da Git al momento del task; l'indice non hardcodea il proprio `main` |
+| Checkpoint governance storico | PR `#31` — ChatGPT workstream enforcement |
+| Checkpoint state reconciliation storico | PR `#32` — current state + Forno START kit reconciliation |
 | Development OS adoption applicativa | RITO Studio BUSINESS PLUS PR `#4`, merged il 20 settembre 2026 |
 | Snapshot storico usato per la patch di governance del 26 luglio | `Tretnix-knowledge-de29f4f3.zip` |
 | SHA-256 snapshot storico | `3cf34a6f145a1834d211f65917950dc92e940f259d7585f16342d1bb00730032` |
-| Ultima riconciliazione | 24 settembre 2026 |
+| Ultima riconciliazione inventario | 25 settembre 2026 |
 
 ### Ruolo canonico
 
-- identità e posizionamento Tretnix;
-- decisioni approvate;
+- identità e modello operativo stabile tramite `TRETNIX_MASTER_CONTEXT.md`;
+- decisioni approvate tramite `DECISIONS.md`;
 - standard condivisi;
-- indice dei repository;
+- inventario dei repository;
+- snapshot trasversale tramite `CURRENT_STATE.md`;
 - template e procedure;
-- adattatori attivi per ChatGPT e Codex, con Cursor opzionale e Lovable preservato come provenance storica;
+- adapter derivati per ChatGPT e Codex, con Cursor opzionale e Lovable preservato come provenance storica;
 - manifest, schema, CLI, cache ed evidence del Development OS;
 - skill operative, incluso Controlled Change Package v1.2;
 - kit di configurazione dei progetti;
@@ -470,17 +472,16 @@ trasversali soltanto tramite decisione/adoption separata.
 
 ### Regole
 
-- è la fonte canonica trasversale;
+- è la fonte canonica trasversale, ma ogni documento conserva un ruolo specifico;
 - gli adapter in `compiled/` sono derivati e non fonti autonome;
+- l'indice non sostituisce lo stato operativo del repository progetto;
 - non contiene bug temporanei o task correnti dei progetti;
 - ogni modifica significativa usa branch, diff e pull request;
 - la visibilità corrente resta governata da `TRX-DEC-031`;
 - durante la fase pubblica non contiene segreti, dati personali non necessari, dati cliente riservati o accessi di produzione;
-- il passaggio a privata richiede il relativo gate owner;
 - la validazione locale e CI non sostituisce la diff review umana.
 
 ---
-
 # 3. Mappa delle relazioni
 
 ```text
@@ -576,7 +577,7 @@ Per tutti i progetti: nessun URL, branch, commit, deploy, test o verifica viene 
 4. mantenere RITO Studio START e BUSINESS congelati sulle baseline correnti e preservare i tag storici;
 5. trattare RITO Studio BUSINESS PLUS `main@70a2317dcbcb98368ae8cab856308d51f9f681e7` come baseline sorgente corrente; production resta separata e non autorizzata;
 6. mantenere Tretnix.com `main@d860da0c3a1e121582ebe29f6f68e21da350392a` nel proprio workstream e non inferire production cutover dai PR che dichiarano production non toccata;
-7. trattare `Tretnix-knowledge main@e76b626355d5c3aed8a8b2c2905d4f1bde0090d2` come baseline trasversale finché un merge successivo non la sostituisce;
+7. risolvere da Git il ref reale di Tretnix Knowledge all'inizio di ogni task repository-dependent; questo indice non hardcodea il proprio `main` come baseline corrente;
 8. non avviare QUADRA o NODO senza i rispettivi gate;
 9. riconciliare nei documenti soltanto evidenze realmente ottenute e distinguere Git/source, staging e production;
 10. aggiornare il registro dei pattern canonici soltanto quando una decisione ne promuove esplicitamente il ruolo.

@@ -21,5 +21,13 @@ jobs:
         with:
           python-version: "3.13"
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
       - name: Validate knowledge repository
         run: python scripts/validate_knowledge.py
+
+      - name: Test Tretnix Development OS
+        run: node --test tools/tretnix/tests/tretnix.test.mjs

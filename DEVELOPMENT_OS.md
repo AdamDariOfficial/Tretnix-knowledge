@@ -1,8 +1,8 @@
 # Tretnix Development OS
 
-**Versione:** 1.5
-**Aggiornato:** 19 settembre 2026
-**Stato:** v1 e enablement del pilot applicativo merged nella Knowledge; gate tooling verificato per questo ciclo, prima adozione applicativa in corso
+**Versione:** 1.6
+**Aggiornato:** 25 settembre 2026
+**Stato:** v1 operativo nella Knowledge; prima adozione applicativa merged in RITO Studio BUSINESS PLUS; rollout successivi separati
 
 ---
 
@@ -163,14 +163,19 @@ I validator vengono selezionati da una allowlist del manifest e non passano da `
 
 Prima di ogni scrittura OS, inclusi preflight, context, validation, evidence e cache clear, Git deve confermare l'ignore dell'intera directory `.tretnix/` tramite il `.gitignore` radice tracciato. Ignore soltanto globali, `.git/info/exclude`, regole sui soli figli, negazioni della directory o runtime già tracciato sono insufficienti. `RUNTIME_NOT_IGNORED` interrompe il comando prima della creazione di directory/output e, per validation, prima dei validator. `doctor` controlla e segnala questa precondizione senza creare `.tretnix/`; il tooling non modifica `.gitignore` né rimuove sorgenti. Si usano le semantiche effettive Git: la regola vincente deve provenire dal `.gitignore` portabile del repository.
 
-Nell'adozione applicativa, adattare il project manifest e il task descriptor dei template, dichiarare validator reali e floor delle classi, e aggiungere `.tretnix/` al `.gitignore` radice tramite normale modifica Git revisionata prima del bootstrap. Eseguire inizialmente soltanto `doctor --repo <app> --knowledge <Knowledge>`; gli altri comandi che scrivono diventano utilizzabili dopo la precondizione di ignore. Una preparazione tecnica valida non chiude il gate del pilot né abilita azioni Git o live.
+Nell'adozione applicativa, adattare il project manifest e il task descriptor dei template, dichiarare validator reali e floor delle classi, e aggiungere `.tretnix/` al `.gitignore` radice tramite normale modifica Git revisionata prima del bootstrap. Eseguire inizialmente soltanto `doctor --repo <app> --knowledge <Knowledge>`; gli altri comandi che scrivono diventano utilizzabili dopo la precondizione di ignore. Una preparazione tecnica valida non abilita azioni Git o live.
 
-La v1 base è stata implementata e unita in `Tretnix-knowledge` con PR `#22`: source `0e5a9f03e1cd2774af4d40aeb441157bbda65446`, merge storico `main@5f9a7a1d669cea8b0165832017e81f24a94480f5`; la closure documentale iniziale è confluita nella PR `#23`. L'enablement del pilot applicativo è stato unito con PR `#27`: source `89341884d6b320d7d8c002987b2c0c495f5bc7c7`, merge `main@7c12a6ba5a843c31d21de143344be79ac03ed4fc`. La verifica post-merge su quel main ha chiuso OR-01 con regressioni mirate e suite `93/93 PASS`; F-01 e F-02 restano chiusi. Manifest, procedure e tooling sono canonici nella Knowledge. Le ulteriori modifiche mantengono review e autorizzazioni separate per commit, push, PR e merge.
+La v1 base è stata implementata e unita in `Tretnix-knowledge` con PR `#22`; la closure documentale iniziale è confluita nella PR `#23`. L'enablement del pilot applicativo è stato unito con PR `#27`. Questi checkpoint restano provenance storica del tooling.
 
-Il primo pilot applicativo è `IN PROGRESS` su RITO Studio BUSINESS PLUS, ma l'adozione nel repository applicativo non è ancora completata: `.tretnix/` deve entrare nel `.gitignore` radice tracciato con review, il manifest candidato deve essere finalizzato, poi vanno eseguiti doctor, preflight, context, validate ed evidence con la Knowledge canonica e misurate cache e limitazioni. Solo dopo si apre il gate parity/UI START/BUSINESS → PLUS. Il rollout generale resta sperimentale; nessun repository è automaticamente migrato o adottato. Il dogfood della Knowledge non completa il pilot applicativo. Tretnix.com resta nel workstream separato.
+La prima adozione applicativa è stata integrata in RITO Studio BUSINESS PLUS con PR `#4` il 20 settembre 2026. Questo prova l'adozione del manifest, del validator project-specific e dell'ignore `.tretnix/` in quel repository; non promuove automaticamente Development OS a tutti i progetti e non certifica browser/backend/staging/production.
+
+Ogni rollout successivo richiede un task, un manifest e gate propri. Tretnix.com resta un workstream separato.
+
+La CI della Knowledge esegue il validator cross-platform e la suite Development OS su pull request e push a `main`. Un PASS CI vale soltanto per il commit eseguito e non autorizza gate Git remoti, browser, backend, staging o produzione.
 
 Le metriche locali disponibili sono numero e dimensione delle fonti, righe/byte del context pack, hit/miss, validator eseguiti o riusati, durata e errori. Non viene inviata telemetria.
 
+---
 ## 10. Riferimenti operativi
 
 - [`tools/tretnix/README.md`](./tools/tretnix/README.md)
