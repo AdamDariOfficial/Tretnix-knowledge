@@ -2,8 +2,8 @@
 
 Fonte canonica per identità, decisioni, standard tecnici, repository, procedure operative e adattatori degli strumenti Tretnix.
 
-**Versione:** 1.14
-**Aggiornato:** 25 settembre 2026
+**Versione:** 1.15
+**Aggiornato:** 26 settembre 2026
 **Stato:** operativo
 **Visibilità corrente:** repository GitHub pubblica durante il completamento dell’audit e del consolidamento Tretnix
 **Visibilità successiva:** passaggio a privata soltanto dopo completamento del ciclo, verifica delle dipendenze di accesso e nuova conferma esplicita del proprietario (`TRX-DEC-031`)
@@ -227,6 +227,11 @@ Ogni kit conserva documenti, prompt, checklist e manifest. I prompt non autorizz
 ### `operations/development-launch-2026-07-25/`
 
 Contiene sequenza, checklist, handoff e messaggio di bootstrap per il primo ciclo di sviluppo.
+
+### `operations/tretnix-intelligence/`
+
+Contiene il runbook operativo della pipeline Tretnix Intelligence ricorrente su staging: scheduler/daemon, health check, semantic-call boundary, staging sync, human-review boundary, fail-closed e recovery. Non contiene secret e non autorizza production o Knowledge write automatici.
+
 
 ### `source-artifacts/`
 
